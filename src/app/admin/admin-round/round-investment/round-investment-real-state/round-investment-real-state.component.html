@@ -1,0 +1,270 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="box box-widget widget-user">
+          <div
+            class="widget-user-header bg-white"
+            [ngStyle]="{ background: 'url(' + banner + ') center center' }"
+          >
+            <h3 class="widget-user-username"></h3>
+            <h5 class="widget-user-desc"></h5>
+          </div>
+          <div class="widget-user-image">
+            <img class="img-circle" src="{{ logo }}" alt="User Avatar" />
+          </div>
+          <div class="box-footer">
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">R$ {{ maskMoney(total) }}</h5>
+                  <span class="description-text">INVESTIDOS</span>
+                </div>
+              </div>
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">
+                    R$ {{ maskMoney(objective) }}
+                  </h5>
+                  <span class="description-text">OBJETIVO</span>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">
+                    {{ returnTimeInMonths }} meses
+                  </h5>
+                  <span class="description-text">RETORNO</span>
+                </div>
+              </div>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="row quota">
+                <div class="col-md-10 col-md-offset-1">
+                  <ng5-slider
+                    [(value)]="value"
+                    [options]="options"
+                  ></ng5-slider>
+                </div>
+              </div>
+              <div class="row margin-t-30">
+                <div class="col-md-10 col-md-offset-1">
+                  <div class="col-xs-12 col-md-6">
+                    <p class="description-title">
+                      {{ value
+                      }}<span class="description-title-4"> cota(s)</span>
+                    </p>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <p class="description-title-2">
+                      <span class="description-title-4">R$ </span
+                      >{{ maskMoney(value * quotaValue) }}
+                    </p>
+                    <p class="description-title-3">Valor do investimento</p>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none" class="row margin-t-40">
+                <div class="col-md-12">
+                  <div class="col-xs-6">
+                    <app-form
+                      [label]="'Quantidade de cotas'"
+                      [errorMessage]="
+                        'O campo Quantidade de cotas é obrigatório.'
+                      "
+                    >
+                      <input
+                        [(ngModel)]="value"
+                        maxlength="10"
+                        type="text"
+                        formControlName="quotas"
+                        class="form-control number"
+                        disabled
+                      />
+                    </app-form>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12 text-center">
+                  <div class="form-group">
+                    <legend>
+                      <input
+                        type="checkbox"
+                        formControlName="publicAccess"
+                        class="flat-red"
+                      />
+                      Publicar meu nome como investidor na rodada. <br />
+                      (valor do investimento não será exibido)
+                    </legend>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12 text-center">
+                  <button
+                    type="submit"
+                    [disabled]="(form.invalid || loading)"
+                    class="btn btn-upangel margin-t-b-20"
+                  >
+                    Solicitar contrato
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="row margin">
+              <div class="col-sm-12">
+                <h2>{{ name }}</h2>
+                <p>
+                  <i class="fa fa-fw fa-stop"></i
+                  ><span style="color: #2e7e89"><b>Cotas disponíveis:</b></span>
+                  {{ quotas - quotasSold }}.
+                </p>
+                <p>
+                  <i class="fa fa-fw fa-stop"></i
+                  ><span style="color: #2e7e89"><b>Valor da cota:</b></span> R$
+                  {{ maskMoney(quotaValue) }}.
+                </p>
+                <p>
+                  <i class="fa fa-fw fa-stop"></i>Ao solicitar o contrato
+                  declaro ter lido o
+                  <strong>
+                    <a
+                      href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/TERMO_DE_CI%C3%8ANCIA_DE_RISCO_PESSOA_F%C3%8DSICA_-_FCJ_INVEST.pdf"
+                      target="_blank"
+                      >termo de ciência de risco
+                    </a>
+                  </strong>
+                  e
+                  <strong>
+                    <!-- href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/minihouse/MiniHouse_-_Contrato_de_Investimento.pdf" -->
+                    <a
+                      target="_blank"
+                      href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                      >minuta de contrato</a
+                    ></strong
+                  >.
+                </p>
+                <p>
+                  <i class="fa fa-fw fa-stop"></i>Você receberá instruções via
+                  e-mail para assinar seu Contrato de Investimento digitalmente.
+                </p>
+                <p>
+                  <i class="fa fa-fw fa-stop"></i>Seu investimento estará
+                  confirmado somente após assiná-lo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h4>RETORNO ANUAL</h4>
+            <div class="box-tools pull-right">
+              <p class="legend">
+                RETORNO:
+                {{
+                  (value * quotaValue +
+                    value * quotaValue * (current / 100) * (shortTerm / 100)) /
+                    (value * quotaValue) | number
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="box-body">
+            <p class="legend m-t-20">VALOR DA COTA</p>
+            <p class="value-quota">
+              <span class="m-r-30"> R$</span>
+              {{
+                maskMoney(
+                  value * quotaValue +
+                    value * quotaValue * (current / 100) * (shortTerm / 100)
+                )
+              }}
+              <span class="pull-right">
+                <i class="fa fa-fw fa-arrow-up arrow"></i>
+              </span>
+            </p>
+            <p class="legend m-t-20">VALORIZAÇÃO</p>
+            <p class="value">
+              <span class="m-r-30"> R$</span>
+              {{
+                maskMoney(
+                  value * quotaValue +
+                    value * quotaValue * (current / 100) * (shortTerm / 100) -
+                    value * quotaValue
+                )
+              }}
+              <span class="pull-right">
+                <i class="fa fa-fw fa-arrow-up arrow"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h4>TOTAL PROJETO</h4>
+            <div class="box-tools pull-right">
+              <p class="legend">
+                RETORNO:
+                {{
+                  (value * quotaValue +
+                    value * quotaValue * (current / 100) * (longTerm / 100)) /
+                    (value * quotaValue) | number
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="box-body">
+            <p class="legend m-t-20">VALOR DA COTA</p>
+            <p class="value-quota">
+              <span class="m-r-30"> R$</span>
+              {{
+                maskMoney(
+                  value * quotaValue +
+                    value *
+                      quotaValue *
+                      (returnTimeInMonths / 12) *
+                      (current / 100) *
+                      (longTerm / 100)
+                )
+              }}
+              <span class="pull-right">
+                <i class="fa fa-fw fa-arrow-up arrow"></i>
+              </span>
+            </p>
+            <p class="legend m-t-20">VALORIZAÇÃO</p>
+            <p class="value">
+              <span class="m-r-30"> R$</span>
+              {{
+                maskMoney(
+                  value * quotaValue +
+                    value *
+                      quotaValue *
+                      (returnTimeInMonths / 12) *
+                      (current / 100) *
+                      (longTerm / 100) -
+                    value * quotaValue
+                )
+              }}
+              <span class="pull-right">
+                <i class="fa fa-fw fa-arrow-up arrow"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

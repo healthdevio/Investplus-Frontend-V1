@@ -1,0 +1,150 @@
+<app-loader [loader]="loader"></app-loader>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section *ngIf="!loader" class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Geral</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <div class="row">
+                <div class="col-md-3">
+                  <app-form [label]="'Fundadores'" [errorMessage]="'Fundadores é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="founders" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Co-fundadores'" [errorMessage]="'Co-fundadores é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="coFounders" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Vesting'" [errorMessage]="'Vesting é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="vesting" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <app-form [label]="'Aceleradora'" [errorMessage]="'Aceleradora é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="accelerator" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Crowdfunding'" [errorMessage]="'Crowdfunding é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="crowdfunding" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Investidor anjo'" [errorMessage]="'Investidor anjo é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="angel" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Capital 1'" [errorMessage]="'Venture Capital 1 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="venture1" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Capital 2'" [errorMessage]="'Venture Capital 2 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="venture2" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Capital 3'" [errorMessage]="'Venture Capital 3 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="venture3" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Builder 1'" [errorMessage]="'Venture Builder 1 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="ventureBuilder1" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Builder 2'" [errorMessage]="'Venture Builder 2 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="ventureBuilder2" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Venture Builder 3'" [errorMessage]="'Venture Builder 3 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="ventureBuilder3" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <app-form [label]="'Fundo de Investimento 1'"
+                    [errorMessage]="'Fundo de Investimento 1 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="investmentFund1" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-md-3">
+                  <app-form [label]="'Fundo de Investimento 2'"
+                    [errorMessage]="'Fundo de Investimento 2 é um campo obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">%</span>
+                      <input type="text" formControlName="investmentFund2" class="money form-control" maxlength="13">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination-footer">
+        <div class="row mb-20">
+          <div class="col-xs-12">
+            <button *ngIf="captable == null" type="submit" [disabled]="loading" class="btn btn-upangel">Enviar</button>
+            <button *ngIf="captable != null" (click)="updateCaptable()" class="btn btn-upangel">Atualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

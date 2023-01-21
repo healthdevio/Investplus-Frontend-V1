@@ -1,0 +1,37 @@
+<section class="content">
+  <div class="box">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-4">
+            <app-form [label]="'CDI'" [errorMessage]="'CDI atual é um campo obrigatório.'">
+              <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" formControlName="current" class="money form-control" maxlength="13">
+              </div>
+            </app-form>
+          </div>
+          <div class="col-md-4">
+            <app-form [label]="'Valorização curto prazo'" [errorMessage]="'Valorização a curto prazo é um campo obrigatório.'">
+              <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" formControlName="shortTerm" class="money form-control" maxlength="13">
+              </div>
+            </app-form>
+          </div>
+          <div class="col-md-4">
+            <app-form [label]="'Valorização a longo prazo'" [errorMessage]="'Valorização a longo prazo é um campo obrigatório.'">
+              <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <input type="text" formControlName="longTerm" class="money form-control" maxlength="13">
+              </div>
+            </app-form>
+          </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <button type="submit" class="btn btn-upangel">Atualizar</button>
+      </div>
+    </form>
+  </div>
+</section>

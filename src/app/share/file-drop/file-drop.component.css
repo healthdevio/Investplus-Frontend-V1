@@ -1,0 +1,55 @@
+.m-drag-drop {
+    border-width: 2px;
+    border-radius: 16px;;
+    border-color: black;
+    border-style: dashed;
+    max-width: unset;
+    min-height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.file-drop-title {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 3px !important;
+    font-weight: bold;
+    color: #444;
+    font-size: 13px;
+    margin-right: 32px;
+}
+
+.m-drag-drop.over {
+    background-color: rgba(147, 147, 147, 0.5);
+}
+
+.attachment-preview {
+    display: flex;
+    align-items: center;
+}
+
+.attachment-preview .m-paragraph {
+    opacity: 1;
+    color: black;
+}
+
+.delete-icon {
+    padding: 4px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.delete-icon i {
+    font-size: 2rem;
+}
+
+.delete-icon:hover {
+    background-color: rgb(233 233 233);
+}

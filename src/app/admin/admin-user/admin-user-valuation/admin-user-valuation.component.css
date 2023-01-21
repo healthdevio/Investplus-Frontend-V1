@@ -1,0 +1,89 @@
+tr {
+  cursor: pointer;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+h4,
+.h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e7e89;
+  text-align: center;
+}
+
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.margin-t-40 {
+  margin-top: 40px;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 7px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 85px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.title-company {
+  color: #444;
+  font-size: 23px;
+  margin: 0px;
+}
+
+.description-company {
+  color: #777;
+  font-size: 13px;
+  margin: 0px;
+  font-weight: 500;
+}
+
+.post .user-block {
+  margin-bottom: 10px;
+}
+
+.user-block img {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+
+.user-block .username,
+.user-block .description,
+.user-block .comment {
+  display: block;
+  margin-left: 70px;
+}
+
+.content-header {
+  position: relative;
+  padding: 25px 15px 0 15px;
+}
+
+.img-logo {
+  border-radius: 15%;
+  border: 1px solid #ddd;
+}

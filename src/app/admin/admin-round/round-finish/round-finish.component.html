@@ -1,0 +1,144 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div class="row" *ngIf="responseError">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body">
+          <div class="contador">
+            {{ errorMessage }}
+          </div>
+          <div class="contador">
+            <strong>{{ suggestionMessage }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loader && !responseError">
+    <div *ngIf="rounds?.length > 0">
+      <div *ngFor="let round of rounds">
+        <div class="col-md-4">
+          <div class="box box-widget widget-user">
+            <div class="widget-user-header bg-black"
+              [ngStyle]="{'background': 'url(' + round.round.banner + ') center center'}">
+              <h3 class="widget-user-username"></h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+              <img class="img-circle" src="{{round.round.logo}}" alt="Company logo">
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 *ngIf="round.round.type == 'EXCLUSIVE'"><b>{{round.name}}</b><span
+                      class="badge bg-green">EXCLUSIVA</span></h4>
+                  <h4 *ngIf="round.round.type !== 'EXCLUSIVE'"><b>{{round.name}}</b></h4>
+                  <h3>
+                    <i class="fa fa-fw fa-rocket"></i>
+                    Startup
+                  </h3>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <ul class="list-group list-group-unbordered">
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                      <span class="description-text">INVESTIDOS</span> <a class="details pull-right">R$
+                        {{round.round.resume.total | moneyMask}}</a>
+                    </li>
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                      <span class="description-text">OBJETIVO</span> <a class="details pull-right">R$
+                        {{round.round.maximumValuation | moneyMask}}</a>
+                    </li>
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                      <span class="description-text">PARTICIPAÇÃO</span> <a class="details pull-right">
+                        {{round.round.partnerParticipation}}%</a>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="description-text">VALOR DA COTA</span> <a class="details pull-right">R$
+                        {{round.round.quotaValue | moneyMask}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <p class="min-h">{{maskDescription(round.round.business)}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <a routerLink="../../company/{{round.id}}/round/{{round.round.id}}" class="btn-upangel">Saiba Mais</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="realStates?.length > 0">
+      <div *ngFor="let realState of realStates">
+        <div class="col-md-4">
+          <div class="box box-widget widget-user">
+            <div class="widget-user-header bg-black"
+              [ngStyle]="{'background': 'url(' + realState.banner + ') center center'}">
+              <h3 class="widget-user-username"></h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+              <img class="img-circle" src="{{realState.logo}}" alt="Company logo">
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-12">                  
+                  <h4><b>{{realState.builder}}</b></h4>
+                  <h3>
+                    <i class="fa fa-fw fa-building"></i>
+                    Imobiliário
+                  </h3>
+                  <!-- <h3 *ngIf="round.id == 228929">
+                    <i class="fa fa-fw fa-bolt"></i>
+                    Tradicional
+                  </h3> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <ul class="list-group list-group-unbordered">
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                      <span class="description-text">INVESTIDOS</span> <a class="details pull-right">R$
+                          {{realState.resume.total | moneyMask}}</a>
+                    </li>
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                      <span class="description-text">OBJETIVO</span> <a class="details pull-right">R$
+                        {{realState.quotas * realState.quotaValue | moneyMask}}</a>
+                    </li>
+                    <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+                        <span class="description-text">VALOR DA COTA</span> <a class="details pull-right">R$
+                          {{realState.quotaValue | moneyMask}}</a>
+                      </li>
+                    <li class="list-group-item">
+                      <span class="description-text">TEMPO DE RETORNO</span> <a class="details pull-right">
+                        {{realState.returnTimeInMonths}} meses</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <p class="min-h">{{maskDescription(realState.description)}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <a routerLink="../../incorporator/round/{{realState.id}}" class="btn-upangel">Saiba
+                    Mais</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

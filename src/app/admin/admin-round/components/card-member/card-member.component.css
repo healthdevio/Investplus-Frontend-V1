@@ -1,0 +1,56 @@
+:host {
+  padding: 1.25rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+.fcji-card-user-icon {
+  display: flex;
+  align-items: center;
+  font-size: 5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.fcji-card-user-description {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 5rem);
+  margin-left: 1em;
+}
+
+.fcji-card-user-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.fcji-card-job-title {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.fcji-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fcji-card-button {
+  background: transparent;
+  border: none;
+}
+
+.isDisabled {
+  cursor: auto;
+  opacity: 0.5;
+}
+
+.isDisabled > a {
+  color: currentColor;
+  display: inline-block;
+  /* For IE11/ MS Edge bug */
+  pointer-events: none;
+  text-decoration: none;
+}

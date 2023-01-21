@@ -1,0 +1,47 @@
+<section class="content">
+    <app-loader [loader]="loader"></app-loader>
+    <div *ngIf="!loader" class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">
+              <b>Investimentos realizados</b>
+            </h3>
+          </div>
+          <div class="box-body">
+            <table id="example1" class="table table-striped table-responsive">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Perfil</th>
+                  <th>Vlr. Outras Plataformas</th>
+                  <th>Cotas</th>
+                  <th>Total</th>
+                  <th>%</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr (click)="showInvestment(investor)" 
+                *ngFor="let investor of investors | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <td>{{ investor.investor.fullName}}</td>
+                  <td>{{ maskPerfil(investor.investor.investorProfileStatement)}}</td>
+                  <td>{{ (investor.investor.totalInvestedOthers) | moneyMask}}</td>
+                  <td>{{ investor.quotas}}</td>
+                  <td>{{ (investor.value) | moneyMask}}</td>
+                  <td>{{ investor.roundPercent}}%</td>
+                  <td>{{ investor.date | date}}</td>
+                  <td>{{ maskStatus(investor.status)}}</td>
+                </tr>
+              </tbody>
+            </table> 
+            <app-count [count]="!(investors?.length > 0)" [textContador]="textRegister"></app-count>
+          <pagination-controls [previousLabel]="labels.previousLabel"
+            [nextLabel]="labels.nextLabel" [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

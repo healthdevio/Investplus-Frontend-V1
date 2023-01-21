@@ -1,0 +1,873 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="box">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-xs-4 col-md-2">
+                <div class="widget-user-image">
+                  <img
+                    width="80px"
+                    height="80px"
+                    class="img-logo"
+                    [src]="roundInvestment.round.docLogo"
+                    alt="Logo"
+                  />
+                </div>
+              </div>
+              <div class="col-xs-8 col-md-6">
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 no-padding">
+                    <h1>{{ roundInvestment.name }}</h1>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6 no-padding">
+                    <h2>
+                      <a href="{{ roundInvestment.website }}" target="_blank">{{
+                        roundInvestment.website
+                          .replace("http://", "")
+                          .replace("https://", "")
+                          .replace("/", "")
+                      }}</a>
+                    </h2>
+                  </div>
+                  <div class="col-xs-12 col-md-6 no-padding">
+                    <h3>MODALIDADE: {{ maskModel(roundInvestment.model) }}</h3>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-xs-10 col-md-2 col-md-offset-2 col-xs-offset-1">
+                <p class="description-title-3 margin-t-10">
+                  Score de<br />gestão
+                </p>
+                <p
+                  data-toggle="tooltip"
+                  data-original-title="Nota composta por indicadores financeiros, empresariais, econômicos e dossiê reputacional."
+                  class="description-score"
+                >
+                  {{ maskScore(score) }}
+                </p>
+              </div> -->
+            </div>
+            <div>
+              <p style="display: flex; justify-content: end;">
+                <span
+                  class="{{
+                    roundInvestment?.facebook == null ? 'isDisabled' : ''
+                  }}"
+                  ><a
+                    href="{{
+                      roundInvestment?.facebook == null
+                        ? '#'
+                        : roundInvestment?.facebook
+                    }}"
+                    target="_blank"
+                  >
+                    <i class="fa fa-fw fa-facebook-square"></i></a
+                ></span>
+                <span
+                  class="{{
+                    roundInvestment?.linkedin == null ? 'isDisabled' : ''
+                  }}"
+                  ><a
+                    href="{{
+                      roundInvestment?.linkedin == null
+                        ? '#'
+                        : roundInvestment?.linkedin
+                    }}"
+                    target="_blank"
+                  >
+                    <i class="fa fa-fw fa-linkedin-square"></i></a
+                ></span>
+                <span class="{{roundInvestment?.twitter == null ? 'isDisabled' : ''}}"><a
+                    href="{{roundInvestment?.twitter == null ? '#' : roundInvestment?.twitter}}" target="_blank"> <i
+                      class="fa fa-fw fa-twitter-square"></i></a></span>
+                <span class="{{roundInvestment?.website == null ? 'isDisabled' : ''}}"><a
+                    href="{{roundInvestment?.website == null ? '#' : roundInvestment?.website}}"
+                    target="_blank"> <i class="fa fa-fw fa-globe"></i></a></span>
+              </p>
+            </div>
+            <div class="row margin-t-20">
+              <div class="col-xs-12 col-md-12">
+                <hr />
+                <div class="row text-center">
+                  <div class="col-xs-6 col-md-2">
+                    <p class="description-title-3">Data inicial</p>
+                    <p class="description-title-2">{{ startedAt }}</p>
+                  </div>
+                  <div class="col-xs-6 col-md-2">
+                    <p class="description-title-3">Data final</p>
+                    <p class="description-title-2">{{ finishAt }}</p>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Participação Por Cota</p>
+                    <p class="description-title-2">
+                      <span *ngIf="roundInvestment.round.modality != 'SAFE'">{{ roundInvestment.round.partnerParticipation  * 100 / roundInvestment?.round?.quotas }}%</span>
+                      <span *ngIf="roundInvestment.round.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
+                    </p>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Status</p>
+                    <p class="description-title-2">
+                      {{ maskStatus(roundInvestment.round.status) }}
+                    </p>
+                  </div>
+                </div>
+                <div class="progress sm">
+                  <div
+                    [ngStyle]="{ width: porcent }"
+                    class="progress-bar progress-bar-aqua"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="row margin-t-20">
+              <div class="col-xs-12 col-md-3">
+                <div class="chart-responsive">
+                  <app-doughnut
+                    [nChart]="'1'"
+                    height="180"
+                    type="doughnut"
+                    [backgroundColor]="['#bbb', '#2e7e89']"
+                    [borderColor]="['#bbb', '#2e7e89']"
+                    [labels]="['Restante', 'Investido']"
+                    [data]="dataResume"
+                    [options]="optionsResume"
+                  >
+                  </app-doughnut>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-9">
+                <div class="row margin-t-30">
+                  <div class="col-xs-12 col-md-6">
+                    <p class="description-title-3">Objetivo</p>
+                    <p class="description-title-4">
+                      {{ roundInvestment.round.maximumValuation | moneyMask:true }}
+                    </p>
+                    <p class="description-title-3 margin-t-20">Investidos</p>
+                    <p class="description-title-1">
+                      {{ roundInvestment.round.resume.total | moneyMask:true }}
+                    </p>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <ul class="list-group list-group-unbordered">
+                          <li
+                            style="border-bottom: 1px solid #ddd;"
+                            class="list-group-item"
+                          >
+                            <span class="description-text">MODALIDADE</span>
+                            <a class="details pull-right">{{
+                              roundInvestment.round.modality == undefined
+                                ? "--"
+                                : maskModality(roundInvestment.round.modality)
+                            }}</a>
+                          </li>
+                          <li
+                            style="border-bottom: 1px solid #ddd;"
+                            class="list-group-item"
+                          >
+                            <span class="description-text">GARANTIA</span>
+                            <a class="details pull-right">{{
+                              roundInvestment.round.guarantee == undefined
+                                ? "--"
+                                : maskGuarantee(roundInvestment.round.guarantee)
+                            }}</a>
+                          </li>
+                          <li class="list-group-item">
+                            <span class="description-text">PRAZO MÁXIMO</span>
+                            <a class="details pull-right">{{
+                              roundInvestment.round.deadline == undefined
+                                ? "--"
+                                : roundInvestment.round.deadline + " ANO(S)"
+                            }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 margin-t-20">
+                <hr />
+              </div>
+              <div class="d-flex flex-wrap" >
+                <div
+                  class="col-xs-6 col-md-3"
+                  [ngClass]="{'isDisabled': !roundInvestment.round.presentationOffer}"
+                  style="margin-bottom: 1rem;"
+                >
+                  <a
+                    class="text-doc"
+                    target="_blank"
+                    download="{{ roundInvestment.round.presentationOffer }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docPresentationOffer)"
+                    ><i
+                      class="fa fa-file-pdf-o"
+                      style="color: #999; margin-right: 5px;"
+                    ></i>Oferta pública</a
+                  >
+                </div>
+                <div
+                  class="col-xs-6 col-md-3"
+                  [ngClass]="{'isDisabled': !roundInvestment.round.presentationInvestors}"
+                  style="margin-bottom: 1rem;"
+                >
+                  <a
+                    class="text-doc"
+                    target="_blank"
+                    download="{{ roundInvestment.round.presentationInvestors }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docPresentationInvestors)"
+                    ><i
+                      class="fa fa-file-pdf-o"
+                      style="color: #999; margin-right: 5px;"
+                    ></i>Apres. aos investidores</a
+                  >
+                </div>
+                <div
+                  class="col-xs-6 col-md-3"
+                  [ngClass]="{'isDisabled': !roundInvestment.round.legalDocuments}"
+                  style="margin-bottom: 1rem;"
+                >
+                  <a
+                    class="text-doc"
+                    target="_blank"
+                    download="{{ roundInvestment.round.legalDocuments }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docLegalDocuments)"
+                    ><i
+                      class="fa fa-file-pdf-o"
+                      style="color: #999; margin-right: 5px;"
+                    ></i>Doc. jurídicos</a
+                  >
+                </div>
+                <div
+                  class="col-xs-6 col-md-2"
+                  [ngClass]="{'isDisabled': !roundInvestment.round.valuationDoc}"
+                  style="margin-bottom: 1rem;"
+                >
+                  <a
+                    class="text-doc"
+                    target="_blank"
+                    download="{{ roundInvestment.round.valuationDoc }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docValuation)"
+                    ><i
+                      class="fa fa-file-pdf-o"
+                      style="color: #999; margin-right: 5px;"
+                    ></i
+                    >Valuation</a
+                  >
+                </div>
+                <div
+                  class="col-xs-6 col-md-3"
+                  [ngClass]="{'isDisabled': !roundInvestment.round.fiscalDossier}"
+                  style="margin-bottom: 1rem;"
+                >
+                  <a
+                    class="text-doc"
+                    target="_blank"
+                    download="{{ roundInvestment.round.fiscalDossier }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docFiscalDossier)"
+                    ><i
+                      class="fa fa-file-pdf-o"
+                      style="color: #999; margin-right: 5px;"
+                    ></i
+                    >Dossiê Fiscal</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">SIMULE SEU INVESTIMENTO</h3>
+          </div>
+          <div class="box-body no-padding">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="bg-simulator">
+                <div class="row">
+                  <div class="col-xs-10 col-xs-offset-1">
+                    <app-form
+                      [label]="'Quantidade'"
+                      [errorMessage]="
+                        'O campo de quantidade de cotas é obrigatório.'
+                      "
+                    >
+                      <input
+                        [(ngModel)]="amountQuota"
+                        min="1"
+                        [max]="quotas - quotasSold"
+                        maxlength="10"
+                        type="number"
+                        formControlName="quotas"
+                        class="form-control number"
+                      />
+                    </app-form>
+                  </div>
+                </div>
+              </div>
+              <div class="row quota margin-t-10">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <ng5-slider
+                    [(value)]="amountQuota"
+                    [options]="options"
+                  ></ng5-slider>
+                </div>
+              </div>
+              <div class="row margin-t-20">
+                <div class="col-xs-5 col-xs-offset-1 border-t">
+                  <p class="description-title-3">Quantidade cota(s)</p>
+                  <p class="description-title-2">{{ amountQuota }}</p>
+                </div>
+                <div class="col-xs-5 border-t">
+                  <p class="description-title-3">Valor investimento</p>
+                  <p
+                    data-toggle="tooltip"
+                    data-original-title="Valor total do investimento a ser realizado."
+                    class="description-title-2"
+                  >
+                    {{ amountQuota * quotaValue | moneyMask : true }}
+                  </p>
+                </div>
+              </div>
+              <div *ngIf="roundInvestment.model == 'TRADITIONAL'" class="row">
+                <div class="col-xs-5 col-xs-offset-1 border-t">
+                  <p class="description-title-3">
+                    Potencial<br />de lucro a.a.
+                  </p>
+                  <p class="description-title-2">
+                    {{
+                        amountQuota *
+                          quotaValue *
+                          ((roundInvestment.round.cdiValue *
+                            (roundInvestment.round.cdiPercentage / 100)) /
+                            100) *
+                          (1 - roundInvestment.round.upangelCost / 100)
+                      | moneyMask : true
+                    }}
+                  </p>
+                </div>
+                <div class="col-xs-5 border-t">
+                  <p class="description-title-3">Valorização<br />da cota</p>
+                  <p class="description-title-2">
+                    {{
+                        amountQuota * quotaValue +
+                          amountQuota *
+                            quotaValue *
+                            ((roundInvestment.round.cdiValue *
+                              (roundInvestment.round.valuation / 100)) /
+                              100)
+                      | moneyMask : true
+                    }}
+                  </p>
+                </div>
+              </div>
+              <div class="row margin-t-5">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <button
+                    [disabled]="(disabled || loading)"
+                    type="submit"
+                    class="btn btn-contract"
+                  >
+                    Investir
+                  </button>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="documents-info">
+                    Ao solicitar o contrato, declaro ter lido o
+                    <a
+                      href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/Termodecienciaderisco_fcj_invest.pdf"
+                      target="_blank"
+                      >termo de ciência de risco</a
+                    >
+                    <a
+                      href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                      target="_blank"
+                      >minuta de contrato</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="row margin-t-20">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <div class="form-group">
+                    <legend
+                      data-toggle="tooltip"
+                      data-original-title="Valor do investimento não será exibido."
+                    >
+                      <input
+                        type="checkbox"
+                        formControlName="publicAccess"
+                        class="flat-red"
+                      />
+                      Publicar meu nome como investidor na rodada
+                    </legend>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div [ngClass]="box">
+          <div class="box-header">
+            <h3 class="box-title">INFORMAÇÕES</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >O NEGÓCIO
+                </p>
+                <p class="description">{{ roundInvestment.round.business }}</p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >REALIZAÇÕES
+                </p>
+                <p class="description">
+                  {{ roundInvestment.round.achievements }}
+                </p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >MERCADO POTENCIAL
+                </p>
+                <p class="description">
+                  {{ roundInvestment.round.potentialMarket }}
+                </p>
+              </div>
+              <div class="col-xs-12 col-md-5 col-md-offset-1">
+                <br />
+                <!-- <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >RATING
+                </p>
+                <p class="description">
+                  Gráfico inspirado na estrutura de governança corporativa para
+                  startups e empresas com crescimento exponencial. Nela
+                  define-se se os processos macros de um negócio, onde a nota é
+                  calculada por meio de um diagnóstico empresarial e interações
+                  com sistemas de gestão.
+                </p>
+                <div class="chart-responsive margin-t-30">
+                  <app-radar
+                    borderColor="#2e7e89"
+                    label="Score"
+                    borderWidth="3"
+                    height="160"
+                    type="radar"
+                    [labels]="labelScore"
+                    [data]="dataScore"
+                    [options]="optionScore"
+                  >
+                  </app-radar>
+                </div> -->
+                <!-- <p class="text-center">
+                  <a
+                    download="{{ roundInvestment.round.reputationalDossier }}"
+                    [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment.round.docReputationalDossier)"
+                    target="_blank"
+                    ><button type="submit" class="btn btn-dossie">
+                      DOSSIÊ REPUTACIONAL
+                    </button></a
+                  >
+                </p> -->
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >METAS DE 12 MESES
+                </p>
+                <p class="description">{{ roundInvestment.round.targets }}</p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >ROADMAP DE PRODUTOS/MERCADO
+                </p>
+                <p class="description">{{ roundInvestment.round.roadmap }}</p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >FATORES DE RISCO
+                </p>
+                <p class="description">{{ roundInvestment.round.riskiness }}</p>
+
+                <p class="description">
+                  Deseja sanar alguma dúvida?
+                  <a routerLink="./forum">Clique aqui</a> e participe do fórum
+                  desta rodada.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">APRESENTAÇÃO</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe
+                    class="embed-responsive-item"
+                    [src]="offerVideo"
+                    frameborder="0"
+                    allowfullscreen=""
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="investments === undefined || investments?.length > 0"
+      class="row"
+    >
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">EQUIPE EXECUTIVA E CONSELHO</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body box-comments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box-comment" style="display: flex; flex-wrap: wrap;">
+                  <ng-container *ngFor="let member of roundInvestment.executives">
+                    <app-card-member
+                      [name]="member.fullName"
+                      [photo]="member.photo"
+                      [department]="member.role"
+                      [activities]="member.activities"
+                      [linkedin]="member.linkedin"
+                      class="col-md-4"
+                    >
+                    </app-card-member>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="investments === undefined || investments?.length > 0"
+      class="row"
+    >
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">INDICADORES</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body box-comments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box-comment">
+                  <ng-container *ngFor="let indicator of indicators">
+                    <div class="col-md-3" style="padding: 1.5rem;
+                    border-radius: 0.25rem;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                    margin-right: 1rem; margin-top: 1em; margin-bottom: 1em;">
+                      <div
+                        style="display: flex; justify-content: space-between;"
+                      >
+                        <p style="text-transform: uppercase;
+                        color: #444;
+                        font-size: 10px;
+                        font-weight: 700;
+                        font-family: 'Montserrat', sans-serif !important;
+                        line-height: 21px;">
+                          {{ indicator.label }}
+                        </p>
+                        <div>
+                          <i
+                            class="fa fa-question-circle-o"
+                            data-toggle="tooltip"
+                            [attr.data-original-title]="indicator.tooltip"
+                            style="margin-right: .5em"
+                          ></i>
+                          <i class="fa fa-bar-chart"></i>
+                        </div>
+                      </div>
+                      <p style="text-transform: uppercase;
+                      color: #444;
+                      font-family: 'Montserrat', sans-serif !important;
+                      line-height: 21px;
+                      font-size: 16px;">
+                        {{ indicator.value }}
+                      </p>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="investments === undefined || investments?.length > 0"
+      class="row"
+    >
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">CAPTABLE</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body box-comments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box-comment" style="display: flex; flex-wrap: wrap;">
+                  <div
+                    class="col-xs-12 col-md-4"
+                    style="margin-bottom: 2rem; margin-top: 2rem;"
+                    >
+                    <!-- *ngFor="let item of captable; let index = index" -->
+                    <!-- [labels]="[item.label]" -->
+                    <!-- [borderColor]="['#bbb', '#2e7e89']" -->
+                    <div class="chart-responsive">
+                      <app-doughnut
+                        [nChart]="2"
+                        height="270"
+                        width="270"
+                        type="pie"
+                        [labels]="captable.labels"
+                        [backgroundColor]="captable.colors"
+                        [data]="captable.data"
+                      >
+                      </app-doughnut>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="investments === undefined || investments?.length > 0"
+      class="row"
+    >
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">INVESTIDORES</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body box-comments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box-comment">
+                  <div
+                    class="col-md-1 col-xs-6 margin-t-20"
+                    *ngFor="let investment of investments"
+                  >
+                    <div class="row text-center">
+                      <div class="col-md-12">
+                        <img
+                          class="img-circle"
+                          src="{{
+                            investment.avatar == null
+                              ? './../../../assets/img/default-profile_01.png'
+                              : 'data:image/png;base64,' + investment.avatar
+                          }}"
+                          alt="User Image"
+                        />
+                      </div>
+                    </div>
+                    <div class="row margin-t-10 text-center">
+                      <div class="col-md-12">
+                        <div class="investors">
+                          <p>
+                            {{
+                              investment.fullName == null
+                                ? "Privado"
+                                : investment.fullName.substring(0, 7)
+                            }}
+                          </p>
+                        </div>
+
+                        <p>
+                          <span
+                            class="{{
+                              investment.facebook == null ? 'isDisabled' : ''
+                            }}"
+                            ><a
+                              href="{{
+                                investment.facebook == null
+                                  ? '#'
+                                  : investment.facebook
+                              }}"
+                              target="_blank"
+                            >
+                              <i class="fa fa-fw fa-facebook-square"></i></a
+                          ></span>
+                          <span
+                            class="{{
+                              investment.linkedin == null ? 'isDisabled' : ''
+                            }}"
+                            ><a
+                              href="{{
+                                investment.linkedin == null
+                                  ? '#'
+                                  : investment.linkedin
+                              }}"
+                              target="_blank"
+                            >
+                              <i class="fa fa-fw fa-linkedin-square"></i></a
+                          ></span>
+                          <!-- <span class="{{investment.twitter == null ? 'isDisabled' : ''}}"><a
+                              href="{{investment.twitter == null ? '#' : investment.twitter}}" target="_blank"> <i
+                                class="fa fa-fw fa-twitter-square"></i></a></span> -->
+                          <!-- <span class="{{investment.personalWebsite == null ? 'isDisabled' : ''}}"><a
+                              href="{{investment.personalWebsite == null ? '#' : investment.personalWebsite}}"
+                              target="_blank"> <i class="fa fa-fw fa-globe"></i></a></span></p> -->
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!--
+
+   -->
+</section>

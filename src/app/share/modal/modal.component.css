@@ -1,0 +1,45 @@
+.sshow {
+  display: block;
+}
+
+.hhidden {
+  display: none;
+}
+
+.mmodal {
+  background: #fff;
+  z-index: 1000;
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 80%;
+  max-width: 1000px;
+  border-radius: 10px;
+  border: #ccc 1px solid;
+  height: 80%;
+}
+.mmodal-body {
+  margin: 5px;
+  padding: 20px 40px 0px 40px;
+  text-align: left;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.mmodal-footer {
+  text-align: center;
+}
+
+.mmodal-background {
+  z-index: 900;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  opacity: 0.95;
+}

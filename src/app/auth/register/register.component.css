@@ -1,0 +1,102 @@
+.forgot-password {
+  margin-top: 25px;
+}
+.login-box {
+  margin: auto;
+}
+.login-box .login-logo {
+  padding: 10px;
+  margin-bottom: 0px;
+}
+.login-box .login-logo img {
+  margin: 0 auto;
+  width: 90%;
+}
+.login-page,
+.register-page {
+  background: url("../../../assets/img/banner-auth.jpg") fixed center center !important;
+}
+.banner {
+  /* background: url('../../../assets/img/banner-auth.jpg') fixed center center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  display: flex;
+}
+.text-box {
+  padding-bottom: 20px;
+}
+/* .text-box-footer{
+    padding-bottom: 20px;
+    padding-top: 20px;
+} */
+.text-box-footer label {
+  font-size: 14;
+  font-weight: 400;
+}
+.text-box-footer label a {
+  color: blue;
+}
+.text-box-footer p {
+  font-size: 12px;
+}
+.btn {
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  /* color: #fff;
+    background-color: #2e7e89; */
+  border-radius: 30px !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  margin-top: 5px !important;
+  padding: 8px 6px !important;
+}
+
+.btn-primary {
+  color: #fff !important;
+  background-color: #2e7e89 !important;
+  border-color: #2e7e89 !important;
+}
+
+.login-box,
+.register-box {
+  width: 430px;
+}
+
+@media (max-width: 768px) {
+  .login-box,
+  .register-box {
+    width: 370px;
+    margin-top: 20px;
+  }
+}
+
+a {
+  color: #333;
+}
+
+a:hover {
+  color: #2e7e89;
+}
+
+.login-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 300;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #333;
+  border: 0;
+}

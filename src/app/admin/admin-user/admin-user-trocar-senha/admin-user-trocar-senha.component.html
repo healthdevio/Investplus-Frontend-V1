@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <app-form [label]="'Senha atual'"
+                    [errorMessage]="'Senha é obrigatório'">
+                    <input type="password" formControlName="senhaAtual" class="form-control" />
+                </app-form>
+                <app-form [label]="'Nova senha'"
+                    [errorMessage]="'Nova senha é obrigatório'">
+                    <input type="password" formControlName="novaSenha" class="form-control" />
+                </app-form>
+                <app-form [label]="'Repetir nova senha'"
+                    [errorMessage]="'Nova senha é obrigatório'">
+                    <input type="password" formControlName="repetirSenha" class="form-control" />
+                </app-form>
+                <button class="btn" type="submit" [disabled]="(!form.valid || loading)">Alterar</button>
+            </div>
+        </div>
+    </section>
+</form>

@@ -1,0 +1,62 @@
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 3px !important;
+  font-weight: bold;
+  color: #444;
+  font-size: 13px;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #999;
+  font-weight: 400;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #999;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #999;
+}
+
+.form-group.has-success .form-control,
+.form-group.has-success .input-group-addon {
+  border-color: #d2d6de !important;
+  box-shadow: none;
+}
+
+.form-group.has-success label {
+  color: #2e7e89;
+}
+
+.form-group.has-error label {
+  color: #2e7e89;
+}
+
+.form-group.has-success .form-control,
+.form-group.has-success .input-group-addon {
+  border-color: #d2d6de;
+  box-shadow: none;
+}
+
+.form-group.has-error .form-control,
+.form-group.has-error .input-group-addon {
+  border-color: #d2d6de;
+  box-shadow: none;
+}
+
+.label-incomming {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 3px !important;
+  font-weight: 600 !important;
+  color: #444;
+  font-size: 9px !important;
+  font-family: "Montserrat", sans-serif !important;
+  margin-left: 50px !important;
+}

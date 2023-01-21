@@ -1,0 +1,27 @@
+export interface ICompany {
+    id: number,
+    name: string,
+    website: string,
+    score: number,
+    model: string,
+    round: {
+        id: 1,
+        status: string,
+        type: string,
+        logo: string,
+        banner: string,
+        quotas: number,
+        quotaValue: number,
+        resume: { quotasSold: number, total: number },
+        maximumValuation: number,
+        percentageOfIncome: number,
+        cdiPercentage: number,
+        cdiValue: number,
+        partnerParticipation: number,
+        deadline: number,
+        upangelCost: number,
+        modality: String,
+        guarantee: String,
+        valuation: number,
+    }
+}

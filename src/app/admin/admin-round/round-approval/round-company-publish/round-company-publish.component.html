@@ -1,0 +1,56 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content">
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body no-padding">
+            <form [formGroup]="form" style="width: 100%; margin-bottom: 3rem;">
+              <div>
+                <div class="input-group">
+                  <app-form [label]="'Status'">
+                    <div class="filtros">
+                      <select
+                        formControlName="status"
+                        class="form-control"
+                        (change)="getAllByStatus()"
+                      >
+                        <option value="PENDING" selected>Pendentes</option>
+                        <option value="IN_PROGRESS">Em Andamento</option>
+                      </select>
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+            </form>
+            <table class="table table-responsive">
+              <tr>
+                <th>Empresa</th>
+                <th>Modelo</th>
+                <th>Participação</th>
+                <th>Prazo</th>
+                <th>Objetivo</th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
+                <td>{{ round.name }}</td>
+                <td>{{ round.model }}</td>
+                <td>{{ round.round.partnerParticipation }}%</td>
+                <td>{{ round.round.deadline }} anos</td>
+                <td>{{ round.round.maximumValuation | moneyMask : true }}</td>
+                <td style="text-align: end;"><a class="btn-upangel" style="margin-bottom: 5px" [routerLink]="[ '/admin/rounds/company', round.id, 'update', round.round.id ]">Atualizar</a></td>
+                <td style="text-align: end;"><button (click)="publishRound(round.id, round.round.id)" class="btn-upangel" style="margin-bottom: 5px" *ngIf="round.round.status == 'PENDING'">Publicar</button></td>
+              </tr>
+            </table>
+            <app-count [count]="!(rounds?.length > 0)" [textContador]="textRegister"></app-count>
+            <div class="pagination-footer">
+              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,812 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="box">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-xs-4 col-md-2">
+                <div class="widget-user-image">
+                  <img
+                    width="80px"
+                    height="80px"
+                    class="img-logo"
+                    src="{{ logoDocUrl }}"
+                    alt="Logo"
+                  />
+                </div>
+              </div>
+              <div class="col-xs-8 col-md-6">
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 no-padding">
+                    <h1>{{ property }}</h1>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6 no-padding">
+                    <h2>
+                      <a href="#">{{ builder }}</a>
+                    </h2>
+                  </div>
+                  <div class="col-xs-12 col-md-6 no-padding">
+                    <!-- <h3>MODALIDADE: {{maskModel(roundInvestment.model)}}</h3> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-10 col-md-2 col-md-offset-2 col-xs-offset-1">
+                <!-- <p class="description-title-3 margin-t-10">Score de<br>gestão</p>
+                <p data-toggle="tooltip"
+                  data-original-title="Nota composta por indicadores financeiros, empresariais, econômicos e dossiê reputacional."
+                  class="description-score">{{maskScore(score)}}</p> -->
+              </div>
+            </div>
+            <div class="row margin-t-20">
+              <div class="col-xs-12 col-md-12">
+                <hr />
+                <div class="row text-center">
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Rentab. a.a projetada</p>
+                    <p class="description-title-2">
+                      {{ annualMinProfitability }}% a
+                      {{ annualMaxProfitability }}%
+                    </p>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Rentab. mínima</p>
+                    <p class="description-title-2">
+                      {{ minimalProfitability }}% do CDI
+                    </p>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Rentab. projetada (ROI)</p>
+                    <p class="description-title-2">
+                      {{ projectedMinProfitability }}% a
+                      {{ projectedMaxProfitability }}%
+                    </p>
+                  </div>
+                  <div class="col-xs-6 col-md-3">
+                    <p class="description-title-3">Tempo de retorno total</p>
+                    <p class="description-title-2">
+                      {{ returnTimeInMonths }} meses
+                    </p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row text-center">
+                  <div class="col-xs-6 col-md-4">
+                    <p class="description-title-3">Data de início</p>
+                    <p class="description-title-2">
+                      {{ startedAt }}
+                    </p>
+                  </div>
+                  <div class="col-xs-6 col-md-4">
+                    <p class="description-title-3">Data final</p>
+                    <p class="description-title-2">
+                      {{ finishAt }}
+                    </p>
+                  </div>
+                  <div class="col-xs-12 col-md-4">
+                    <p class="description-title-3">Captação mínima</p>
+                    <p class="description-title-2">
+                      {{ minimalQuotas }}
+                    </p>
+                  </div>
+                </div>
+                <div class="progress sm">
+                  <div
+                    [ngStyle]="{ width: porcent }"
+                    class="progress-bar progress-bar-aqua"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="row margin-t-20">
+              <div class="col-xs-6 col-md-3">
+                <div class="chart-responsive">
+                  <app-doughnut
+                    nChart="'1'"
+                    height="180"
+                    type="doughnut"
+                    [backgroundColor]="['#bbb', '#2e7e89']"
+                    [borderColor]="['#bbb', '#2e7e89']"
+                    [labels]="['Restante', 'Investido']"
+                    [data]="dataResume"
+                    [options]="optionsResume"
+                  >
+                  </app-doughnut>
+                </div>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <p class="description-title-3 margin-t-30">Objetivo</p>
+                <p class="description-title-4">
+                  {{ quotas * quotaValue | moneyMask : true }}
+                </p>
+                <p class="description-title-3 margin-t-20">Investidos</p>
+                <p class="description-title-1">R$ {{ total }}</p>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <div class="chart-responsive">
+                  <app-doughnut
+                    nChart="'2'"
+                    height="180"
+                    type="doughnut"
+                    [backgroundColor]="['#bbb', '#2e7e89']"
+                    [borderColor]="['#bbb', '#2e7e89']"
+                    [labels]="['Restante', 'Investido']"
+                    [data]="dataApartments"
+                    [options]="optionsResume"
+                  >
+                  </app-doughnut>
+                </div>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <p class="description-title-3 margin-t-30">
+                  Unidades disponíveis
+                </p>
+                <p class="description-title-4">{{ availableApartments }}</p>
+                <p class="description-title-3 margin-t-20">Unidades vendidas</p>
+                <p class="description-title-1">
+                  {{ totalApartments - availableApartments }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">SIMULE SEU INVESTIMENTO</h3>
+          </div>
+          <div class="box-body no-padding">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="bg-simulator">
+                <div class="row">
+                  <div class="col-xs-10 col-xs-offset-1">
+                    <app-form
+                      [label]="'Quantidade'"
+                      [errorMessage]="
+                        'O campo de quantidade de cotas é obrigatório.'
+                      "
+                    >
+                      <input
+                        [(ngModel)]="amountQuota"
+                        min="1"
+                        [max]="quotas - quotasSold"
+                        maxlength="10"
+                        type="number"
+                        formControlName="quotas"
+                        class="form-control number"
+                      />
+                    </app-form>
+                  </div>
+                </div>
+              </div>
+              <div class="row quota margin-t-10">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <ng5-slider
+                    [(value)]="amountQuota"
+                    [options]="options"
+                  ></ng5-slider>
+                </div>
+              </div>
+              <div class="row margin-t-20">
+                <div class="col-xs-5 col-xs-offset-1 border-t">
+                  <p class="description-title-3">Quantidade cota(s)</p>
+                  <p class="description-title-2">{{ amountQuota }}</p>
+                </div>
+                <div class="col-xs-5 border-t">
+                  <p class="description-title-3">Valor investimento</p>
+                  <p
+                    data-toggle="tooltip"
+                    data-original-title="Valor total do investimento a ser realizado."
+                    class="description-title-2"
+                  >
+                    {{ amountQuota * quotaValue | moneyMask : true}}
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5 col-xs-offset-1 border-t">
+                  <p class="description-title-3">Retorno anual</p>
+                  <p
+                    data-toggle="tooltip"
+                    data-original-title="Estimativa equivalente ao valuation de curto prazo."
+                    class="description-title-2"
+                  >
+                    {{
+                        amountQuota * quotaValue +
+                          amountQuota *
+                            quotaValue *
+                            (current / 100) *
+                            (shortTerm / 100)
+                            | moneyMask : true
+                    }}
+                  </p>
+                </div>
+                <div class="col-xs-5 border-t">
+                  <p class="description-title-3">Total projeto</p>
+                  <p
+                    data-toggle="tooltip"
+                    data-original-title="Estimativa equivalente ao valuation de longo prazo."
+                    class="description-title-2"
+                  >
+                    {{
+                        amountQuota * quotaValue +
+                          amountQuota *
+                            quotaValue *
+                            (returnTimeInMonths / 12) *
+                            (current / 100) *
+                            (longTerm / 100)
+                      | moneyMask : true
+                    }}
+                  </p>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 border-t">
+                  <app-form
+                    [label]="'Parcelamento'"
+                    [errorMessage]="'Parcelamento é um campo obrigatório.'"
+                  >
+                    <select formControlName="installments" class="form-control">
+                      <option value="1">Parcelamento 1x</option>
+                      <option value="2">Parcelamento 2x</option>
+                    </select>
+                  </app-form>
+                </div>
+              </div> -->
+              <div class="row margin-t-5">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <button
+                    [disabled]="(disabled || loading)"
+                    type="submit"
+                    class="btn btn-contract"
+                  >
+                    Investir
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="documents-info">
+                    Ao solicitar o contrato, declaro ter lido o
+<!--                     href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/TERMO_DE_CI%C3%8ANCIA_DE_RISCO_PESSOA_F%C3%8DSICA_-_FCJ_INVEST.pdf" -->
+                    <a
+                      href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/Termodecienciaderisco_fcj_invest.pdf"
+                      target="_blank"
+                      >termo de ciência de risco</a
+                    >
+                    e
+                    <!-- href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/minihouse/MiniHouse_-_Contrato_de_Investimento.pdf" -->
+                    <a
+                      href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                      target="_blank"
+                      >minuta de contrato</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="row margin-t-20">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <div class="form-group">
+                    <legend
+                      data-toggle="tooltip"
+                      data-original-title="Valor do investimento não será exibido."
+                    >
+                      <input
+                        type="checkbox"
+                        formControlName="publicAccess"
+                        class="flat-red"
+                      />
+                      Publicar meu nome como investidor na rodada
+                    </legend>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">DOCUMENTOS</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div *ngIf="propertyDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ propertyDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  O empreendimento</a
+                >
+              </div>
+              <div *ngIf="builderDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ builderDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  A construtora</a
+                >
+              </div>
+              <div *ngIf="viabilityDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ viabilityDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  Viabilidade</a
+                >
+              </div>
+              <div *ngIf="legalDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ legalDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  Doc. jurídicos</a
+                >
+              </div>
+              <div *ngIf="roundDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ roundDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  Oferta Pública</a
+                >
+              </div>
+              <div *ngIf="taxationDoc != undefined" class="col-xs-6 col-md-2">
+                <a class="text-doc" target="_blank" href="{{ taxationDocUrl }}"
+                  ><i
+                    class="fa fa-file-pdf-o"
+                    style="color: #999; margin-right: 5px"
+                  ></i>
+                  Oferta e Tributação</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">INFORMAÇÕES</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >O NEGÓCIO
+                </p>
+                <p class="description">{{ business }}</p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >REALIZAÇÕES DA CONSTRUTORA
+                </p>
+                <p class="description">{{ achievements }}</p>
+
+                <br />
+              </div>
+              <div class="col-xs-12 col-md-5 col-md-offset-1">
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >DETALHES DO EMPREENDIMENTO
+                </p>
+                <p class="description">{{ description }}</p>
+
+                <br />
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >FATORES DE RISCO
+                </p>
+                <p class="description">{{ riskiness }}</p>
+
+                <p class="container-description">
+                  <span
+                    style="
+                      color: #2e7e89;
+                      font-size: 6px;
+                      margin-right: 10px;
+                      vertical-align: 3px;
+                    "
+                    ><i class="fa fa-fw fa-stop"></i></span
+                  >DETALHES
+                </p>
+                <p class="description">
+                  <b>Status: </b>{{ maskStatus(status) }} <br />
+                  <b>Duração da rodada: </b>{{ duration }} dias <br />
+                  <b>Data de início: </b>{{ startedAt }} <br />
+                  <b>Data final: </b>{{ finishAt }}
+                </p>
+
+                <p class="description">
+                  Deseja sanar alguma dúvida?
+                  <a routerLink="./forum">Clique aqui</a>
+                  e participe do fórum desta rodada.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">APRESENTAÇÃO</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row text-center">
+              <div class="col-md-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe
+                    class="embed-responsive-item"
+                    [src]="offerVideo"
+                    frameborder="0"
+                    allowfullscreen=""
+                  ></iframe>
+                </div>
+              </div>
+              <!--div class="col-md-6">
+                <div
+                  id="carousel-example-generic"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="item">
+                      <img
+                        src="https://upangel-app.s3.amazonaws.com/companies/pittelli/img/img4.jpg"
+                      />
+                    </div>
+                    <div class="item">
+                      <img
+                        src="https://upangel-app.s3.amazonaws.com/companies/pittelli/img/img1.jpg"
+                      />
+                    </div>
+                    <div class="item">
+                      <img
+                        src="https://upangel-app.s3.amazonaws.com/companies/pittelli/img/img3.jpg"
+                      />
+                    </div>
+                    <div class="item active">
+                      <img
+                        src="https://upangel-app.s3.amazonaws.com/companies/pittelli/img/img2.jpg"
+                      />
+                    </div>
+                  </div>
+                  <a
+                    class="left carousel-control"
+                    href="#carousel-example-generic"
+                    data-slide="prev"
+                  >
+                    <span class="fa fa-angle-left"></span>
+                  </a>
+                  <a
+                    class="right carousel-control"
+                    href="#carousel-example-generic"
+                    data-slide="next"
+                  >
+                    <span class="fa fa-angle-right"></span>
+                  </a>
+                </div>
+              </-div -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">LOCALIZAÇÃO</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="location margin-t-20">
+                  <p>{{ location }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <iframe
+                  [src]="locationLink"
+                  width="100%"
+                  height="300"
+                  frameborder="0"
+                  style="border: 0"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngIf="executives?.length > 0" class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default  collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">EQUIPE EXECUTIVA</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngIf="executives?.length > 0">
+                  <div *ngFor=" let executive of executives">
+                    <div class="col-md-3">
+                      <div class="box box-widget widget-user margin-t-90">
+                        <div class="widget-user-image-executive">
+                          <img class="img-circle img-executive"
+                            src="{{ executive.photo === undefined || executive.photo === '' ? './../../../assets/img/default-profile_01.png' : 'data:image/png;base64,' + executive.photo }}"
+                            alt="Equipe">
+                        </div>
+                        <div class="box-footer-executive">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <h4>{{executive.fullName}}
+                                <span class="{{executive.linkedin == null ? 'isDisabled' : ''}}"><a
+                                    href="{{executive.linkedin == null ? '#' : executive.linkedin}}" target="_blank">
+                                    <i class="fa fa-fw fa-linkedin-square"></i></a></span>
+                                <span class="{{executive.email == null ? 'isDisabled' : ''}}"><a
+                                    href="{{executive.email == null ? '#' : 'mailto:' + executive.email}}"
+                                    target="_blank"> <i class="fa fa-fw fa-envelope-square"></i></a></span>
+                              </h4>
+                              <h4><b>{{executive.role}}</b></h4>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <p class="min-h">{{executive.activities}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="advices?.length > 0" class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default  collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">CONSELHO</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngIf="advices?.length > 0">
+                  <div *ngFor="let advice of advices">
+                    <div class="col-md-3">
+                      <div class="box box-widget widget-user margin-t-90">
+                        <div class="widget-user-image-executive">
+                          <img class="img-circle img-executive"
+                            src="{{ advice.photo === undefined || advice.photo === '' ? './../../../assets/img/default-profile_01.png' : 'data:image/png;base64,' + advice.photo }}"
+                            alt="Equipe">
+                        </div>
+                        <div class="box-footer-executive">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <h4>{{advice.fullName}}
+                                <span class="{{advice.linkedin == null ? 'isDisabled' : ''}}"><a
+                                    href="{{advice.linkedin == null ? '#' : advice.linkedin}}" target="_blank"> <i
+                                      class="fa fa-fw fa-linkedin-square"></i></a></span>
+                                <span class="{{advice.email == null ? 'isDisabled' : ''}}"><a
+                                    href="{{advice.email == null ? '#' : 'mailto:' + advice.email}}" target="_blank">
+                                    <i class="fa fa-fw fa-envelope-square"></i></a></span>
+                              </h4>
+                              <h4><b>{{advice.role}}</b></h4>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <p class="min-h">{{advice.activities}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div
+      *ngIf="investments === undefined || investments?.length > 0"
+      class="row"
+    >
+      <div class="col-xs-12 col-md-12">
+        <div class="box box-default collapsed-box">
+          <div class="box-header">
+            <h3 class="box-title">INVESTIDORES</h3>
+            <div class="box-tools pull-right">
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="box-body box-comments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box-comment">
+                  <div
+                    class="col-md-1 col-xs-6 margin-t-20"
+                    *ngFor="let investment of investments"
+                  >
+                    <div class="row text-center">
+                      <div class="col-md-12">
+                        <img
+                          class="img-circle"
+                          src="{{
+                            investment.avatar == null
+                              ? '/assets/img/default-profile_01.png'
+                              : 'data:image/png;base64,' + investment.avatar
+                          }}"
+                          alt="User Image"
+                        />
+                      </div>
+                    </div>
+                    <div class="row margin-t-10 text-center">
+                      <div class="col-md-12">
+                        <div class="investors">
+                          <p>
+                            {{
+                              investment.fullName == null
+                                ? "Privado"
+                                : investment.fullName.substring(0, 7)
+                            }}
+                          </p>
+                        </div>
+
+                        <p>
+                          <span
+                            class="{{
+                              investment.facebook == null ? 'isDisabled' : ''
+                            }}"
+                            ><a
+                              href="{{
+                                investment.facebook == null
+                                  ? '#'
+                                  : investment.facebook
+                              }}"
+                              target="_blank"
+                            >
+                              <i class="fa fa-fw fa-facebook-square"></i></a
+                          ></span>
+                          <span
+                            class="{{
+                              investment.linkedin == null ? 'isDisabled' : ''
+                            }}"
+                            ><a
+                              href="{{
+                                investment.linkedin == null
+                                  ? '#'
+                                  : investment.linkedin
+                              }}"
+                              target="_blank"
+                            >
+                              <i class="fa fa-fw fa-linkedin-square"></i></a
+                          ></span>
+                          <!-- <span class="{{investment.twitter == null ? 'isDisabled' : ''}}"><a
+                              href="{{investment.twitter == null ? '#' : investment.twitter}}" target="_blank"> <i
+                                class="fa fa-fw fa-twitter-square"></i></a></span> -->
+                          <!-- <span class="{{investment.personalWebsite == null ? 'isDisabled' : ''}}"><a
+                              href="{{investment.personalWebsite == null ? '#' : investment.personalWebsite}}"
+                              target="_blank"> <i class="fa fa-fw fa-globe"></i></a></span></p> -->
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

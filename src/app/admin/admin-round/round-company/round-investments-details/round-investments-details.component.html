@@ -1,0 +1,92 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content">
+  <div *ngIf="!loader" class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table table-striped table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Perfil</th>
+                <th>Vlr. Outras Plataformas</th>
+                <th>Cotas</th>
+                <th>Total</th>
+                <th>Parc.</th>
+                <th>%</th>
+                <th>Data</th>
+                <th>Contrato</th>
+                <th>Pagamento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let investment of investments | paginate: { itemsPerPage: 12, currentPage: p }">
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.investor.fullName}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{maskPerfil(investment.investor.investorProfileStatement)}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.investor.totalInvestedOthers | moneyMask : true}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.quotas}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.value | moneyMask : true}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.installments}}x</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.roundPercent}}%</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.date | date}}</td>
+                <td style="vertical-align: middle;">
+                  <ng-template #tooltipStatusContratoPorInvestidor>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>
+                            Investidor
+                          </th>
+                          <th>
+                            Contrato
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let contract of investment.contracts">
+                          <td>{{ contract.nameResponsible || 'Não identificado'}}</td>
+                          <td>&nbsp;{{contract.status | contractStatusPipe}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-template>
+                  {{investment.contractStatus | contractStatusPipe}} &nbsp;
+                  <i class="fa fa-file-text-o" [tooltip]="tooltipStatusContratoPorInvestidor" contianer="body" placement="left"></i>
+                </td>
+                <td style="vertical-align: middle;">{{investment.status | contractStatusPipe}}</td>
+                <td style="vertical-align: middle;"><button class="btn" (click)="generateBillets(investment)" [disabled]="investment?.loading || investment.contractStatus != 'SIGNED'">Gerar boleto</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <app-count [count]="!(investments?.length > 0)" [textContador]="textRegister"></app-count>
+          <div class="pagination-footer">
+            <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+              [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <ng-template #tooltipStatusContratoPorInvestidor>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Investidor
+        </th>
+        <th>
+          Contrato
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Raul Cardenas Mariano</td>
+        <td>Emitido</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template> -->

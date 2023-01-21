@@ -1,0 +1,94 @@
+<header class="main-header">
+  <a class="logo" href="https://fcjinvest.com.br/">
+    <span class="logo-mini"
+      ><img src="/assets/img/logo_fcjinvest_mini.png" alt="Logo"
+    /></span>
+
+    <span class="logo-lg"
+      ><img src="/assets/img/logo_fcjinvest_hor_transparent2.png" alt="Logo"
+    /></span>
+  </a>
+  <nav class="navbar navbar-fixed-top">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="title-header">{{ titleHeader.title }}</span>
+    </a>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li class="dropdown notifications-menu">
+          <a
+            style="font-size: 17px;"
+            href="https://imob.fcjinvest.com.br/saiba-mais/"
+            class="dropdown-toggle"
+            target="_blank"
+          >
+            <i class="fa fa-question"></i>
+          </a>
+        </li>
+        <li class="dropdown notifications-menu">
+          <a
+            style="font-size: 16px;"
+            href="#"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+          >
+            <i class="fa fa-bell-o"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="header">
+              <p>
+                <img
+                  class="notification"
+                  width="20"
+                  src="/assets/img/notification.png"
+                />Nenhuma notificação.
+              </p>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="name-user">{{
+              investor?.fullName.split(" ")[0].toUpperCase()
+            }}</span>
+            <i
+              style="color: #fff; margin-left: 5px;"
+              class="fa fa-fw fa-angle-down"
+            ></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="user-header" style="background-color: #fff;">
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="name">
+                    {{ investor?.fullName }} <br /><span class="email">{{
+                      investor?.email
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="user-footer">
+              <a routerLink="./user" class="menu-link">Perfil</a>
+            </li>
+            <li class="user-footer">
+              <a routerLink="./user/trocar-senha" class="menu-link">Trocar Senha</a>
+            </li>
+            <li class="user-footer">
+              <a routerLink="./portfolio" class="menu-link">Meus Ativos</a>
+            </li>
+            <li class="user-footer">
+              <a routerLink="./rounds/token" class="menu-link"
+                >Rodadas Exclusivas</a
+              >
+            </li>
+            <li class="user-end">
+              <a (click)="logout()" class="logoff"
+                >Sair <i class="fa fa-fw fa-long-arrow-right"></i
+              ></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

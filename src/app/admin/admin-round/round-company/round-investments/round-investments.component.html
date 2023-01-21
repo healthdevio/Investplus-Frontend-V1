@@ -1,0 +1,41 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content-header">
+  <div class="row" *ngIf="!loader">
+    <div class="col-xs-12 col-md-12">
+      <button class="btn-upangel pull-right" (click)="exportAsXLSX()">Exportar <i
+          class="fa fa-fw fa-download"></i></button>
+    </div>
+  </div>
+</section>
+<section class="content">
+  <div class="row" *ngIf="!loader">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table table-striped table-responsive">
+            <tr>
+              <th>Empresa</th>
+              <th>Total de cotas</th>
+              <th>Cotas vendidas</th>
+              <th>Cotas restantes</th>
+              <th>Valor investido</th>
+            </tr>
+            <tr routerLink="./{{round.round.id}}"
+              *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
+              <td>{{round.name}}</td>
+              <td>{{round.round.quotas}}</td>
+              <td>{{round.round.resume.quotasSold}}</td>
+              <td>{{round.round.quotas - round.round.resume.quotasSold}}</td>
+              <td>R$ {{round.round.resume.total | moneyMask : true }}</td>
+            </tr>
+          </table>
+          <app-count [count]="!(rounds?.length > 0)" [textContador]="textRegister"></app-count>
+          <div class="pagination-footer">
+            <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+              [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

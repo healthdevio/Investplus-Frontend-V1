@@ -1,0 +1,610 @@
+<div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader">
+  <section class="content">
+    <div class="box">
+      <div class="row">
+        <div class="box-body">
+          <div class="col-xs-12 col-md-3">
+            <div (click)="activePortfolio(0)" class="info-box">
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <p class="company-card t-10">FCJ Invest</p>
+                </div>
+                <div class="col-xs-6 col-md-6"></div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <p class="description-card t-10">PATRIMÔNIO TOTAL</p>
+                  <p class="total-card">
+                    R$ {{ (sumStartup + sumReal + sumCompany) | moneyMask}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-9">
+            <div
+              id="carousel-example-generic"
+              class="carousel slide"
+              data-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="item active">
+                  <div class="row" *ngIf="companies?.length > 0">
+                    <div
+                      *ngFor="
+                        let company of companies.slice(0, 3);
+                        let i = index
+                      "
+                      class="col-xs-12 col-md-4"
+                    >
+                      <div
+                        (click)="activePortfolio(company.companyId)"
+                        class="info-box"
+                      >
+                        <div class="row">
+                          <div class="col-xs-6 col-md-9">
+                            <p class="company-card t-10">
+                              {{ company.company }}
+                            </p>
+                          </div>
+                          <div class="col-xs-6 col-md-3">
+                            <img
+                              class="img-company t-10"
+                              height="25"
+                              src="{{ company.logo }}"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 col-md-5">
+                            <p class="description-card t-10">COTAS</p>
+                            <p class="total-card">{{ company.quotas }}</p>
+                          </div>
+                          <div class="col-xs-6 col-md-7">
+                            <p class="description-card t-10">VALOR</p>
+                            <p class="total-card">
+                              R$ {{ (company.value) | moneyMask }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="companies?.length > 3" class="item">
+                  <div class="row">
+                    <div
+                      *ngFor="
+                        let company of companies.slice(3, 6);
+                        let i = index
+                      "
+                      class="col-xs-12 col-md-4"
+                    >
+                      <div
+                        (click)="activePortfolio(company.companyId)"
+                        class="info-box"
+                      >
+                        <div class="row">
+                          <div class="col-xs-6 col-md-9">
+                            <p class="company-card t-10">
+                              {{ company.company }}
+                            </p>
+                          </div>
+                          <div class="col-xs-6 col-md-3">
+                            <img
+                              class="img-company t-10"
+                              height="25"
+                              src="{{ company.logo }}"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 col-md-5">
+                            <p class="description-card t-10">COTAS</p>
+                            <p class="total-card">{{ company.quotas }}</p>
+                          </div>
+                          <div class="col-xs-6 col-md-7">
+                            <p class="description-card t-10">VALOR</p>
+                            <p class="total-card">
+                              R$ {{ (company.value) | moneyMask }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="companies?.length > 6" class="item">
+                  <div class="row">
+                    <div
+                      *ngFor="
+                        let company of companies.slice(6, 9);
+                        let i = index
+                      "
+                      class="col-xs-12 col-md-4"
+                    >
+                      <div
+                        (click)="activePortfolio(company.companyId)"
+                        class="info-box"
+                      >
+                        <div class="row">
+                          <div class="col-xs-6 col-md-9">
+                            <p class="company-card t-10">
+                              {{ company.company }}
+                            </p>
+                          </div>
+                          <div class="col-xs-6 col-md-3">
+                            <img
+                              class="img-company t-10"
+                              height="25"
+                              src="{{ company.logo }}"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 col-md-5">
+                            <p class="description-card t-10">COTAS</p>
+                            <p class="total-card">{{ company.quotas }}</p>
+                          </div>
+                          <div class="col-xs-6 col-md-7">
+                            <p class="description-card t-10">VALOR</p>
+                            <p class="total-card">
+                              R$ {{ (company.value) | moneyMask}}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="companies?.length > 9" class="item">
+                  <div class="row">
+                    <div
+                      *ngFor="
+                        let company of companies.slice(9, 12);
+                        let i = index
+                      "
+                      class="col-xs-12 col-md-4"
+                    >
+                      <div
+                        (click)="activePortfolio(company.companyId)"
+                        class="info-box"
+                      >
+                        <div class="row">
+                          <div class="col-xs-6 col-md-9">
+                            <p class="company-card t-10">
+                              {{ company.company }}
+                            </p>
+                          </div>
+                          <div class="col-xs-6 col-md-3">
+                            <img
+                              class="img-company t-10"
+                              height="25"
+                              src="{{ company.logo }}"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 col-md-5">
+                            <p class="description-card t-10">COTAS</p>
+                            <p class="total-card">{{ company.quotas }}</p>
+                          </div>
+                          <div class="col-xs-6 col-md-7">
+                            <p class="description-card t-10">VALOR</p>
+                            <p class="total-card">
+                              R$ {{ (company.value)| moneyMask }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="companies?.length > 12" class="item">
+                  <div class="row">
+                    <div
+                      *ngFor="
+                        let company of companies.slice(12, 15);
+                        let i = index
+                      "
+                      class="col-xs-12 col-md-4"
+                    >
+                      <div
+                        (click)="activePortfolio(company.companyId)"
+                        class="info-box"
+                      >
+                        <div class="row">
+                          <div class="col-xs-6 col-md-9">
+                            <p class="company-card t-10">
+                              {{ company.company }}
+                            </p>
+                          </div>
+                          <div class="col-xs-6 col-md-3">
+                            <img
+                              class="img-company t-10"
+                              height="25"
+                              src="{{ company.logo }}"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 col-md-5">
+                            <p class="description-card t-10">COTAS</p>
+                            <p class="total-card">{{ company.quotas }}</p>
+                          </div>
+                          <div class="col-xs-6 col-md-7">
+                            <p class="description-card t-10">VALOR</p>
+                            <p class="total-card">
+                              {{ (company.value) | moneyMask : true}}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a
+                class="right carousel-control"
+                href="#carousel-example-generic"
+                data-slide="next"
+              >
+                <span class="fa fa-angle-right"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <hr />
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="box-group" id="accordion">
+          <div class="panel box box-primary">
+            <div class="box-header with-border">
+              <h4 class="box-title">
+                <a
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#collapseOne"
+                  aria-expanded="true"
+                  class=""
+                >
+                  MEUS INVESTIMENTOS
+                </a>
+              </h4>
+            </div>
+            <div
+              id="collapseOne"
+              class="panel-collapse collapse in"
+              aria-expanded="true"
+              style=""
+            >
+              <div class="box-body">
+                <div class="row t-10">
+                  <div class="col-xs-12 col-md-5">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-4">
+                        <h3 class="box-history">MEUS ATIVOS</h3>
+                        <div class="chart-responsive">
+                          <app-doughnut
+                            nChart="'3'"
+                            [backgroundColor]="[
+                              '#0cb8b6',
+                              '#8c2e5b',
+                              '#2e7e89'
+                            ]"
+                            [borderColor]="['#0cb8b6', '#8c2e5b', '#2e7e89']"
+                            type="doughnut"
+                            [labels]="['Startup', 'Imobiliário', 'Empresa']"
+                            [data]="dataPie"
+                            height="180"
+                            [options]="optionsPie"
+                          >
+                          </app-doughnut>
+                        </div>
+                      </div>
+                      <div class="col-xs-6 col-md-8">
+                        <div class="row percent">
+                          <!--div class="col-xs-12 col-md-5">
+                            <p class="description-label t-20">
+                              <i class="fa fa-circle-o fa-startup"></i> STARTUP
+                            </p>
+                            <p class="value-label">
+                              R$ {{ sumStartup  | moneyMask }}
+                            </p>
+                          </!--div>
+                          <div-- class="col-xs-12 col-md-6">
+                            <p class="description-label t-20">
+                              <i class="fa fa-circle-o fa-company"></i> EMPRESA
+                            </p>
+                            <p class="value-label">
+                              R$ {{ sumCompany  | moneyMask }}
+                            </p>
+                          </div-->
+                          <div class="col-xs-12 col-md-12">
+                            <p class="description-label t-20">
+                              <i
+                                class="fa fa-circle-o fa-company"
+                                style="color: #8c2e5b;"
+                              ></i>
+                              IMOBILIÁRIO
+                            </p>
+                            <p class="value-label">
+                              {{ (sumReal)  | moneyMask : true}}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 col-md-12">
+                            <p class="description-label t-20">
+                              TOTAL DE ATIVOS
+                            </p>
+                            <p class="total-label">
+                              R$
+                              {{ (sumStartup + sumReal + sumCompany) | moneyMask }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-7">
+                    <h3 class="box-history">HISTÓRICO DE INVESTIMENTOS</h3>
+                    <div class="chart">
+                      <app-bar
+                        nChart="'4'"
+                        type="bar"
+                        [data]="dataBar"
+                        height="180"
+                        [options]="optionsBar"
+                      >
+                      </app-bar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel box box-danger">
+            <div class="box-header with-border">
+              <h4 class="box-title">
+                <a
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#collapseTwo"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  MEUS RENDIMENTOS
+                </a>
+              </h4>
+            </div>
+            <div
+              id="collapseTwo"
+              class="panel-collapse collapse"
+              aria-expanded="false"
+              style="height: 0px;"
+            >
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-xs-12 col-md-10">
+                    <div class="row">
+                      <!-- <div class="col-xs-12 col-md-12">
+                        <h3 class="box-history">MEUS RENDIMENTOS</h3>
+                      </div> -->
+                      <div class="col-xs-12 col-md-3">
+                        <p class="incomming">PAGOS</p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TRIMESTRAL</p>
+                        <p class="incomming-label">
+                          {{ (sumQuarterlyPaid)| moneyMask: true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">ANUAL</p>
+                        <p class="incomming-label">
+                          {{ (sumAnnualyPaid) | moneyMask: true}}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TOTAL</p>
+                        <p class="incomming-label">
+                          {{ (sumTotalPaid) | moneyMask: true}}
+                        </p>
+                      </div>
+                      <div class="col-xs-12 col-md-12">
+                        <hr />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3">
+                        <p class="incomming">EM ABERTO</p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TRIMESTRAL</p>
+                        <p class="incomming-label">
+                          {{ (sumQuarterlyOpen) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">ANUAL</p>
+                        <p class="incomming-label">
+                          {{ (sumAnnualyOpen) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TOTAL</p>
+                        <p class="incomming-label">
+                          {{ (sumTotalOpen) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-12 col-md-12">
+                        <hr />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3">
+                        <p class="incomming">PROJETADO</p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TRIMESTRAL</p>
+                        <p class="incomming-label">
+                          {{ (sumQuarterlyProjected) | moneyMask : true}}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">ANUAL</p>
+                        <p class="incomming-label">
+                          {{ (sumAnnualyProjected) | moneyMask : true}}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-3">
+                        <p class="description-label">TOTAL</p>
+                        <p class="incomming-label">
+                          {{ (sumTotalProjected) | moneyMask : true}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel box box-success">
+            <div class="box-header with-border">
+              <h4 class="box-title">
+                <a
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#collapseThree"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  VALORIZAÇÃO DO INVESTIMENTO
+                </a>
+              </h4>
+            </div>
+            <div
+              id="collapseThree"
+              class="panel-collapse collapse"
+              aria-expanded="false"
+              style="height: 0px;"
+            >
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-xs-12 col-md-10">
+                    <div class="row">
+                      <div class="col-xs-12 col-md-12">
+                        <!-- <h3 class="box-history">VALORIZAÇÃO DO INVESTIMENTO</h3> -->
+                        <p class="alert-portfolio" *ngIf="!portfolio">
+                          Selecione um ativo para mais detalhes.
+                        </p>
+                      </div>
+                    </div>
+                    <div *ngIf="portfolio" class="row">
+                      <div class="col-xs-2 col-md-1">
+                        <img
+                          class="img-company"
+                          width="25"
+                          src="{{ valuationProjected.logo }}"
+                        />
+                      </div>
+                      <div class="col-xs-10 col-md-4">
+                        <p class="company-card">
+                          {{ valuationProjected.company }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-3">
+                        <p class="description-label">VALOR</p>
+                        <p class="incomming-label">
+                          {{ (valuationProjected.value) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-4 col-md-4">
+                        <p class="description-label">PRAZO</p>
+                        <p class="incomming-label">
+                          {{ valuationProjected.deadline }} anos
+                        </p>
+                      </div>
+                      <div class="col-xs-12 col-md-12">
+                        <hr />
+                      </div>
+                    </div>
+                    <div *ngIf="portfolio" class="row">
+                      <div class="col-xs-12 col-md-2">
+                        <p class="incomming">PROJETADO</p>
+                      </div>
+                      <div class="col-xs-3 col-md-3">
+                        <p class="description-label">TOTAL</p>
+                        <p class="incomming-label">
+                          {{ (valuationProjected.total) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-3">
+                        <p class="description-label">% SOBRE VALOR</p>
+                        <p class="incomming-label">
+                          {{ (valuationProjected.percentValue) | moneyMask }}%
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-2">
+                        <p class="description-label">% CDI</p>
+                        <p class="incomming-label">
+                          {{ (valuationProjected.percentCdi) | moneyMask }}%
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-2">
+                        <p class="description-label">% ANUAL</p>
+                        <p class="incomming-label">
+                          {{ (valuationProjected.percentAnnual) | moneyMask }}%
+                        </p>
+                      </div>
+                      <div class="col-xs-12 col-md-12">
+                        <hr />
+                      </div>
+                    </div>
+                    <div *ngIf="portfolio" class="row">
+                      <div class="col-xs-12 col-md-2">
+                        <p class="incomming">GARANTIDO</p>
+                      </div>
+                      <div class="col-xs-3 col-md-3">
+                        <p class="description-label">TOTAL</p>
+                        <p class="incomming-label">
+                          {{ (valuationGuaranteed.total) | moneyMask : true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-3">
+                        <p class="description-label">% SOBRE VALOR</p>
+                        <p class="incomming-label">
+                          {{ (valuationGuaranteed.percentValue) | moneyMask }}%
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-2">
+                        <p class="description-label">% CDI</p>
+                        <p class="incomming-label">
+                          {{ (valuationGuaranteed.percentCdi) | moneyMask }}%
+                        </p>
+                      </div>
+                      <div class="col-xs-3 col-md-2">
+                        <p class="description-label">% ANUAL</p>
+                        <p class="incomming-label">
+                          {{ (valuationGuaranteed.percentAnnual) | moneyMask }}%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

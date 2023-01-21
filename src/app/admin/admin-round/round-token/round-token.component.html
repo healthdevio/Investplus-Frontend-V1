@@ -1,0 +1,23 @@
+<section class="content">
+  <div class="box">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <p> Insira abaixo o seu token para ter acesso a rodada exclusiva. </p>
+          </div>
+        </div>
+        <div class="row margin-t-20">
+          <div class="col-sm-4">
+            <app-form [label]="'Token'" [errorMessage]="'Token é um campo obrigatório.'">
+              <input type="text" formControlName="token" class="form-control">
+            </app-form>
+          </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <button type="submit" [disabled]="loading" class="btn btn-upangel">Enviar</button>
+      </div>
+    </form>
+  </div>
+</section>

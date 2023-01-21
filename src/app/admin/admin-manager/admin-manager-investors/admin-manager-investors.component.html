@@ -1,0 +1,42 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content-header">
+  <div class="row" *ngIf="!loader">
+    <div class="col-xs-12 col-md-12">
+      <button class="btn-upangel pull-right" (click)="exportAsXLSX()">Exportar <i
+          class="fa fa-fw fa-download"></i></button>
+    </div>
+  </div>
+</section>
+<section class="content">
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-striped">
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>CPF/CNPJ</th>
+                <th>RG</th>
+              </tr>
+              <tr *ngFor="let investor of investors | paginate: { itemsPerPage: 11, currentPage: p }">
+                <td>{{ investor.fullName }}</td>
+                <td>{{ investor.email }}</td>
+                <td>{{ investor.phone | phone }}</td>
+                <td>{{ investor.cpf | cpf }} {{ investor.cnpj | cnpj }}</td>
+                <td>{{ investor.rg }}</td>
+              </tr>
+            </table>
+            <app-count [count]="!(investors?.length > 0)" [textContador]="textRegister"></app-count>
+            <div class="pagination-footer">
+              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,104 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content">
+  <div *ngIf="!loader" class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><b>Nome:</b> {{  investment.investor.fullName }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>Agente:</b> {{  (investment.investor.agent == null ? ''  : investment.investor.agent) }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>Profissão:</b> {{  investment.investor.profession }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>E-mail:</b> {{  investment.investor.email }}</p>
+            </div>
+            <div class="col-md-6">
+              <p> <b>CPF/CNPJ: </b>
+                {{  investment.investor.cnpj === undefined ? (investment.investor.cpf | cpf) : (investment.investor.cnpj | cnpj) }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <p><b>Politicamente exposta:</b> {{  (investment.investor.publicFigure === true ? 'Sim' : 'Não') }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>RG:</b> {{  investment.investor.rg }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>Orgão emissor:</b> {{  investment.investor.rgEmitter }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><b>Data de aniversário:</b> {{  investment.investor.dateOfBirth | date }}</p>
+            </div>
+            <div class="col-md-12">
+              <hr style="border-top: 1px solid #ddd;">
+              <p><b>Endereço:</b> {{  investment.investor.address.street + ', '  + investment.investor.address.number }}
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Bairro:</b> {{  investment.investor.address.neighborhood }}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Complemento:</b>
+                {{  (investment.investor.address.complement == null ? '' : investment.investor.address.complement) }}
+              </p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>CEP:</b> {{  investment.investor.address.zipCode | cep }}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Cidade:</b> {{  investment.investor.address.city +  '-'  + investment.investor.address.uf }}</p>
+            </div>
+            <div class="col-md-12">
+              <hr style="border-top: 1px solid #ddd;">
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Data Assinatura:</b> {{  investment.contractSignedAt | date }}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Data Aporte:</b> {{  investment.confirmedAt | date }}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <p><b>Valor do investimento:</b> {{ investment.value | moneyMask : true }}</p>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-xs-8 col-md-6">
+              <div class="form-group">
+                <label class="control-label" for="contractExternalId">Chave Clicksign</label>
+                <input value="{{(investment.contractExternalId == null ? '' : investment.contractExternalId)}}"
+                  class="form-control" maxlength="40" type="text" id="contractExternalId"
+                  [disabled]="investment.status !== 'PENDING'">
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-3">
+              <div class="form-group">
+                <label class="control-label" for="status">Status</label>
+                <select class="form-control" id="status">
+                  <option [selected]="investment.status==='PENDING'" value="PENDING">Pendente</option>
+                  <option [selected]="investment.status==='CONTRACT_SEND'" value="CONTRACT_SEND">Enviado</option>
+                  <option [selected]="investment.status==='CONTRACT_SIGNED'" value="CONTRACT_SIGNED">Assinado</option>
+                  <option [selected]="investment.status==='CONFIRMED'" value="CONFIRMED">Confirmado</option>
+                </select>
+              </div>
+            </div>
+
+          </div> -->
+        </div>
+        <!-- <div class="pagination-footer">
+          <div class="row mb-20">
+            <div class="col-xs-12 col-md-12">
+              <button (click)="updateStatus(investment.id)" class="btn-submit">Atualizar</button>
+              <button *ngIf="investment.status==='CONFIRMED'" class="btn-submit"
+                [routerLink]="'/admin/rounds/company/investments/installments/'+investmentId">Visualizar
+                parcelas</button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>

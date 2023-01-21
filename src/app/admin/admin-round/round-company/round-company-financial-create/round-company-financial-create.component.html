@@ -1,0 +1,81 @@
+<app-loader [loader]="loader"></app-loader>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section *ngIf="!loader" class="content">
+    <div *ngIf="!loader" class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body">
+
+            <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Geral</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                      <app-form [label]="'Data'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-fw fa-calendar-o"></i></span>
+                          <input type="text" (blur)="validateDate()" formControlName="date" class="form-control date">
+                        </div>
+                      </app-form>
+                    </div>
+                    <div class="col-md-3">
+                      <app-form [label]="'Receita'" [errorMessage]="'Receita é um campo obrigatório.'">
+                        <div class="input-group">
+                          <span class="input-group-addon">R$</span>
+                          <input type="text" formControlName="revenueAmount" class="money form-control" maxlength="13">
+                        </div>
+                      </app-form>
+                    </div>
+                    <div class="col-md-3">
+                      <app-form [label]="'Despesa'" [errorMessage]="'Despesa é um campo obrigatório.'">
+                        <div class="input-group">
+                          <span class="input-group-addon">%</span>
+                          <input type="text" formControlName="expenseAmount" class="money form-control" maxlength="13">
+                        </div>
+                      </app-form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <div class="row mb-20">
+              <div class="col-xs-12">
+                <button type="submit" [disabled]="loading" class="btn btn-upangel">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!loader" class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body no-padding">
+            <table class="table table-striped table-responsive">
+              <tr>
+                <th>Data</th>
+                <th>Receita</th>
+                <th>Despesa</th>
+              </tr>
+              <tr *ngFor="let financial of financials | paginate: { itemsPerPage: 5, currentPage: p }">
+                <td>{{ financial.date | date }}</td>
+                <td>{{ financial.revenueAmount | moneyMask : true }}</td>
+                <td>{{ financial.expenseAmount | moneyMask : true }}</td>
+              </tr>
+            </table>
+            <app-count [count]="!(financials?.length > 0)" [textContador]="textRegister"></app-count>
+            <div class="pagination-footer">
+              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

@@ -1,0 +1,170 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div *ngIf="!loader">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-xs-12 col-md-8">
+            <div class="row">
+              <div class="col-xs-4 col-md-2">
+                <div class="widget-user-image">
+                  <img
+                    width="80px"
+                    height="80px"
+                    class="img-logo"
+                    src="{{ logo }}"
+                    alt="Logo"
+                  />
+                </div>
+              </div>
+              <div class="col-xs-8 col-md-6">
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 no-padding">
+                    <h1>{{ name }}</h1>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 no-padding">
+                    <h2>FÓRUM DA RODADA</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <hr />
+          </div>
+        </div>
+        <div class="row margin-t-20 text-justify">
+          <div class="col-xs-12 col-md-8">
+            <p>
+              Seja bem-vindo(a) ao fórum da rodada de investimento da
+              <b>{{ name }}</b
+              >.
+            </p>
+            <p>
+              Assim como no e-mail contato@fcjinvest.com, o fórum possibilita
+              sanar quaisquer dúvidas sobre o interesse em investir na
+              {{ name }}.
+            </p>
+            <p>
+              Para uma utilização correta do canal, reforçamos a leitura dos
+              <general-terms></general-terms>.
+            </p>
+          </div>
+        </div>
+        <div *ngIf="posts?.length > 0" class="row margin-t-30 text-justify">
+          <div class="col-xs-12 col-md-11">
+            <ul class="timeline">
+              <li [id]="'post' + post.id" *ngFor="let post of posts">
+                <i class="fa fa-user bg-gray"></i>
+                <div class="timeline-item">
+                  <span class="time"
+                    ><span *ngIf="post.edited" style="margin-right: 10px"
+                      >Editado</span
+                    >
+                    <i class="fa fa-clock-o"></i> {{ post.at }}</span
+                  >
+                  <h3 class="timeline-header">{{ post.fullName }}</h3>
+                  <div class="timeline-body">
+                    {{ post.description }}
+                  </div>
+                  <div class="timeline-footer">
+                    <a routerLink="./{{ post.id }}" class="btn btn-flat btn-xs"
+                      ><i class="fa fa-share margin-r-5"></i> Responder</a
+                    >
+                    <!-- <a *ngIf="investors.nickname === post.author" class="btn btn-flat btn-xs">Editar</a> -->
+                    <a
+                      *ngIf="investors.nickname === post.nickname"
+                      class="btn btn-flat btn-xs text-red"
+                      (click)="postDelete(post.id)"
+                      >Excluir</a
+                    >
+                    <div class="row" style="margin-top: 20px">
+                      <ul class="timeline">
+                        <li
+                          [id]="'comment' + comment.id"
+                          *ngFor="let comment of post.comments"
+                        >
+                          <i class="fa fa-comments bg-gray"></i>
+                          <div class="timeline-item">
+                            <span class="time"
+                              ><span
+                                *ngIf="comment.edited"
+                                style="margin-right: 10px"
+                                >Editado</span
+                              >
+                              <i class="fa fa-clock-o"></i>
+                              {{ comment.at }}</span
+                            >
+                            <h3 class="timeline-header">
+                              {{ comment.fullName }}
+                            </h3>
+                            <div class="timeline-body">
+                              {{ comment.description }}
+                            </div>
+                            <div class="timeline-footer">
+                              <!-- <a routerLink="./post/{{post.id}}" class="btn btn-flat btn-xs">Responder</a> -->
+                              <a
+                                *ngIf="investors.nickname === comment.nickname"
+                                routerLink="./{{ post.id }}/comment/{{
+                                  comment.id
+                                }}"
+                                class="btn btn-flat btn-xs"
+                                ><i class="fa fa-edit margin-r-5"></i>Editar</a
+                              >
+                              <a
+                                *ngIf="investors.nickname === comment.nickname"
+                                class="btn btn-flat btn-xs text-red"
+                                (click)="commentDelete(post.id, comment.id)"
+                                >Excluir</a
+                              >
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row margin-t-10">
+          <div *ngIf="!newPost" class="text-left">
+            <div class="col-xs-12">
+              <button (click)="alterPost()" class="btn-upangel">
+                POSTAR NOVA PERGUNTA
+              </button>
+            </div>
+          </div>
+          <div *ngIf="newPost" class="text-left">
+            <div class="col-xs-12 col-md-8">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <app-form [errorMessage]="'Campo obrigatório.'">
+                  <textarea
+                    rows="5"
+                    formControlName="description"
+                    class="form-control"
+                  ></textarea>
+                </app-form>
+                <button
+                  type="submit"
+                  [disabled]="(form.invalid || loading)"
+                  class="btn-upangel"
+                >
+                  ENVIAR
+                </button>
+                <button (click)="alterPost()" class="btn-upangel">
+                  CANCELAR
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

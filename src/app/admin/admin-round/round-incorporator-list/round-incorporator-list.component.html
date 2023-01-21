@@ -1,0 +1,69 @@
+<div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader && !responseError">
+  <section class="content-header">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h1>Explore as oportunidades</h1>
+        <p>
+          Selecione um ativo, visualize os detalhes e realize seu investimento.
+        </p>
+      </div>
+      <div class="col-xs-12 col-md-6 filter">
+        <form [formGroup]="form">
+          <div class="col-xs-12 col-md-6 pull-right">
+            <div class="input-group">
+              <!-- <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span> -->
+              <app-form [label]="''" [errorMessage]="'Erro'">
+                <div class="d-flex">
+                  <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
+                    <option value="">Todas oportunidades</option>
+                    <option value="IN_PROGRESS">Andamento</option>
+                    <option value="FINISHED">Concluídas</option>
+                  </select>
+                  <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
+                    <option value="">Todas oportunidades</option>
+                    <option value="IN_PROGRESS">Andamento</option>
+                    <option value="FINISHED">Concluídas</option>
+                  </select>
+                </div>
+              </app-form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row" *ngIf="responseError">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body">
+            <div class="contador">
+              {{ errorMessage }}
+            </div>
+            <div class="contador">
+              <strong>{{ suggestionMessage }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="rounds?.length > 0">
+        <div *ngFor="
+            let round of rounds
+              | filter: filterInvestment
+              | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel' }
+          ">
+          <div class="col-md-4">
+            <admin-round-incorporator [incorporator]="round"></admin-round-incorporator>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [responsive]="responsive"
+      (pageChange)="p = $event" id="upangel"></pagination-controls>
+  </section>
+</div>

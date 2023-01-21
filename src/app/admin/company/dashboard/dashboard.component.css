@@ -1,0 +1,21 @@
+.info-box-icon {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.info-box-icon svg {
+  width: 50px;
+  height: 50px;
+}
+.info-box-number {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  color: #0e6a77;
+}
+.bg-background {
+  background: #c8d6da;
+}

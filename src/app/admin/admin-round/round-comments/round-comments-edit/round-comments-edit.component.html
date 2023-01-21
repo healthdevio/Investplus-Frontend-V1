@@ -1,0 +1,73 @@
+<section class="content">
+  <app-loader [loader]="loader"></app-loader>
+  <div *ngIf="!loader">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-xs-12 col-md-8">
+            <div class="row">
+              <div class="col-xs-4 col-md-2">
+                <div class="widget-user-image">
+                  <img
+                    width="80px"
+                    height="80px"
+                    class="img-logo"
+                    src="{{ logo }}"
+                    alt="Logo"
+                  />
+                </div>
+              </div>
+              <div class="col-xs-8 col-md-6">
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 no-padding">
+                    <h2>{{ name }}</h2>
+                  </div>
+                </div>
+                <!--div class="row">
+                  <div class="col-xs-4 col-md-3 no-padding">
+                    <h3>EMPRESA</h3>
+                  </div>
+                  <div class="col-xs-4 col-md-3 no-padding">
+                    <h3 class="gray">R$ {{quotaValueI | moneyMask : true}}</h3>
+                  </div>
+                  <div class="col-xs-4 col-md-4 no-padding">
+                    <h3 *ngIf="roundId !== 65" class="green">{{partnerParticipation}}% </h3>
+                    <h3 *ngIf="roundId == 65" class="green">9% a.a.</h3>
+                  </div>
+                </div-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <hr />
+          </div>
+        </div>
+        <div class="row text-justify">
+          <div class="col-xs-12 col-md-11">
+            <p class="description">{{ post }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-11">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <app-form [errorMessage]="'Campo de resposta é obrigatório.'">
+                <textarea
+                  [(ngModel)]="comment"
+                  rows="5"
+                  formControlName="description"
+                  class="form-control"
+                ></textarea>
+              </app-form>
+              <button type="submit" [disabled]="loading" class="btn-upangel">EDITAR</button>
+              <button class="btn-upangel" type="button" (click)="goBack()">
+                VOLTAR
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

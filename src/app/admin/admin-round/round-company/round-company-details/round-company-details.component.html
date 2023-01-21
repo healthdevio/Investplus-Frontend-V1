@@ -1,0 +1,373 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#tab_1" data-toggle="tab" aria-expanded="true">Geral</a>
+            </li>
+            <li class="">
+              <a href="#tab_2" data-toggle="tab" aria-expanded="true">Valores</a>
+            </li>
+            <li class="">
+              <a href="#tab_3" data-toggle="tab" aria-expanded="true">Resumo</a>
+            </li>
+            <li class="">
+              <a href="#tab_4" data-toggle="tab" aria-expanded="true">Documentos</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Tipo da rodada'" [errorMessage]="'Tipo da rodada é um campo obrigatório.'">
+                    <select formControlName="type" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="PUBLIC"> Pública </option>
+                      <option value="EXCLUSIVE"> Exclusiva </option>
+                    </select>
+                  </app-form>
+                  <app-form [label]="'Data de início'" [errorMessage]="'Data de início é um campo obrigatório.'">
+                    <input type="date" name="startedAt" id="startedAt" formControlName="startedAt" class="form-control">
+                  </app-form>
+                </div>
+                <div [hidden]="form.controls.type.value !== 'EXCLUSIVE'" class="col-xs-12 col-md-3">
+                  <app-form [label]="'Token'">
+                    <input type="text" formControlName="token" class="form-control" />
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Vídeo da oferta'" [errorMessage]="'O campo Vídeo da oferta é obrigatório.'">
+                    <input type="text"
+                      placeholder="URL do vídeo (Vimeo ou Youtube), descrevendo a oferta em no máximo 5 minutos."
+                      formControlName="offerVideo" class="form-control" />
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Logo'" [errorMessage]="'O campo Logo é obrigatório.'">
+                    <input type="text" formControlName="logo" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Logo</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('logo').value ?? 'Selecione o Logo.'}}</button>
+                      <input
+                        title="Selecione o Logo."
+                        type="file"
+                        (change)="uploadFile($event, 'logo', 'docLogo')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="upload-btn-wrapper">
+                    <label for="">Banner</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('banner').value ?? 'Selecione o banner.'}}</button>
+                      <input
+                        title="Selecione o banner."
+                        type="file"
+                        (change)="uploadFile($event, 'banner', 'docBanner')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab_2">
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Valor da captação mínima'" [errorMessage]="
+                      'O campo Valor da captação mínima é obrigatório.'
+                    ">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="minimumValuation" class="form-control" currencyMask />
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Valor da captação máxima'" [errorMessage]="
+                      'O campo Valor da captação máxima é obrigatório.'
+                    ">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="maximumValuation" class="form-control" currencyMask />
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Participação societária (%)'" [errorMessage]="
+                      'O campo Participação societária é obrigatório.'
+                    ">
+                    <input type="text" formControlName="partnerParticipation" class="form-control" currencyMask />
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Quantidade de cotas'" [errorMessage]="
+                      'O campo Quantidade de cotas é obrigatório.'
+                    ">
+                    <input type="text" formControlName="quotas" class="form-control number" />
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Duração da rodada (dias)'"
+                    [errorMessage]="'O campo Duração da rodada é obrigatório.'">
+                    <input type="text" formControlName="duration" class="form-control number" />
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Valor da cota'" [errorMessage]="'O campo Valor da cota é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="quotaValue" class="form-control" currencyMask />
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Modalidade'" [errorMessage]="'Modalidade é um campo obrigatório.'">
+                    <select formControlName="modality" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option [value]="modality.initials" *ngFor="let modality of modalities">{{ modality.description }}</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Garantia'" [errorMessage]="'Garantia é um campo obrigatório.'">
+                    <select formControlName="guarantee" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="T"> Título conversível </option>
+                      <option value="A"> Avalista </option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Custo FCJ Invest (%)'" [errorMessage]="'O campo Custo FCJ Invest é obrigatório.'">
+                    <input type="text" formControlName="upangelCost" class="form-control" currencyMask />
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Duração máxima'" [errorMessage]="'O campo Duração máxima é obrigatório.'">
+                    <input type="text" formControlName="deadline" class="form-control number" />
+                  </app-form>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab_3">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Negócio'" [errorMessage]="'O campo Negócio' + textValidator">
+                    <textarea rows="5" placeholder="Descrição do negócio" formControlName="business"
+                      class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Realizações'" [errorMessage]="'O campo Realizações' + textValidator">
+                    <textarea rows="5" formControlName="achievements" class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Mercado potencial'" [errorMessage]="'O campo Mercado potencial' + textValidator">
+                    <textarea rows="5" formControlName="potentialMarket" class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Metas de 12 meses com o investimento'"
+                    [errorMessage]="'O campo Meta portencial' + textValidator">
+                    <textarea rows="5" formControlName="targets" class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Roadmap'" [errorMessage]="'O campo Roadmap' + textValidator">
+                    <textarea rows="5" placeholder="Roadmap de produtos e serviços" formControlName="roadmap"
+                      class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Fatores de riscos'" [errorMessage]="'O campo Fatores de riscos' + textValidator">
+                    <textarea rows="5" formControlName="riskiness" class="form-control"></textarea>
+                  </app-form>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab_4">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <small class="text-danger" style="display: block;"><strong>*Tamanho máximo de 2Mb</strong></small>
+                  <br/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Apresentação da oferta'" [errorMessage]="
+                      'Apresentação da oferta é um campo obrigatório'
+                    ">
+                    <input type="text" formControlName="presentationOffer" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Apresentação da oferta</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('presentationOffer').value ?? 'Selecione a apresentação da oferta.'}}</button>
+                      <input
+                        title="Selecione a apresentação da oferta."
+                        type="file"
+                        (change)="uploadFile($event, 'presentationOffer', 'docPresentationOffer')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Apresentação aos investidores'" [errorMessage]="
+                      'Apresentação aos investidores é um campo obrigatório'
+                    ">
+                    <input type="text" formControlName="presentationInvestors" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Apresentação aos investidores</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('presentationInvestors').value ?? 'Selecione a apresentação aos investidores.'}}</button>
+                      <input
+                        title="Selecione a apresentação aos investidores."
+                        type="file"
+                        (change)="uploadFile($event, 'presentationInvestors', 'docPresentationInvestors')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Documentos jurídicos'" [errorMessage]="
+                      'Documentos jurídicos é um campo obrigatório'
+                    ">
+                    <input type="text" formControlName="legalDocuments" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Documentos jurídicos</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('legalDocuments').value ?? 'Selecione os documentos jurídicos.'}}</button>
+                      <input
+                        title="Selecione os documentos jurídicos."
+                        type="file"
+                        (change)="uploadFile($event, 'legalDocuments', 'docLegalDocuments')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Valuation'" [errorMessage]="'Valuation é um campo obrigatório'">
+                    <input type="text" formControlName="valuationDoc" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Valuation</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('valuationDoc').value ?? 'Selecione o valuation.'}}</button>
+                      <input
+                        title="Selecione o valuation."
+                        type="file"
+                        (change)="uploadFile($event, 'valuationDoc', 'docValuation')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Dossiê Reputacional'" [errorMessage]="
+                      'Dossiê Reputacional é um campo obrigatório'
+                    ">
+                    <input type="text" formControlName="reputationalDossier" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Dossiê Reputacional</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('reputationalDossier').value ?? 'Selecione o dossiê reputacional.'}}</button>
+                      <input
+                        title="Selecione o dossiê reputacional."
+                        type="file"
+                        (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <!-- <app-form [label]="'Dossiê Fiscal'" [errorMessage]="'Dossiê Fiscal é um campo obrigatório'">
+                    <input type="text" formControlName="fiscalDossier" class="form-control" />
+                  </app-form> -->
+                  <div class="upload-btn-wrapper">
+                    <label for="">Dossiê Fiscal</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('fiscalDossier').value ?? 'Selecione o dossiê fiscal.'}}</button>
+                      <input
+                        title="Selecione o dossiê fiscal."
+                        type="file"
+                        (change)="uploadFile($event, 'fiscalDossier', 'docFiscalDossier')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="upload-btn-wrapper">
+                    <label for="">Plano de expansão</label>
+                    <div>
+                      <button class="btn-photo">{{ form.get('expansionPlan').value ?? 'Selecione o plano de expansão.'}}</button>
+                      <input
+                        title="Selecione o plano de expansão."
+                        type="file"
+                        (change)="uploadFile($event, 'expansionPlan', 'docExpansionPlan')"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <file-drop label="Documentos" (onFile)="onDocumentoFileChange($event)"
+                    [wrongFileTypeMessage]="'Formato inválido. Envie apenas PDFS'"></file-drop>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="pagination-footer">
+          <div class="row mb-20">
+            <div class="col-xs-12 col-md-12">
+              <button class="btn" [disabled]="loading">Atualizar Rodada</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

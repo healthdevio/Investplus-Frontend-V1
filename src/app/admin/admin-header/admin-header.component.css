@@ -1,0 +1,171 @@
+.main-header {
+  box-shadow: 1px 0 12px #888;
+}
+
+.main-header .logo {
+  background-color: #2e7e89;
+  color: #fff;
+  border-bottom: 0 solid transparent;
+  text-align: left !important;
+}
+
+.main-header .navbar {
+  background-color: #2e7e89;
+}
+
+.logo-lg img {
+  width: 150px;
+}
+
+.logo-mini img {
+  width: 40px;
+  margin-left: -5px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer {
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  margin: 0px 10px;
+  padding: 0px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-end {
+  background-color: #fff;
+  margin: 0px 10px;
+  padding: 0px;
+}
+
+.menu-link {
+  font-size: 13px;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.menu-link:hover {
+  background-color: #fff;
+  padding: 10px;
+}
+
+p {
+  font-size: 13px;
+}
+
+.margin-t-20 {
+  margin-top: 20px;
+}
+
+.logoff {
+  color: #fff !important;
+  text-decoration: none;
+  padding: 7px 15px !important;
+  background-color: #2e7e89 !important;
+  border-radius: 4px;
+  margin: 30px 10px 30px 10px;
+  width: 70px;
+  font-size: 13px;
+}
+
+.logoff:hover {
+  cursor: pointer;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+  height: auto;
+  margin: 10px;
+  text-align: left;
+}
+
+.b-b {
+  border-bottom: 1px solid #ccc;
+}
+
+.name {
+  font-size: 15px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.email {
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif !important;
+}
+
+.padding-l {
+  padding-left: 0px !important;
+}
+
+.profile-user-img {
+  margin: 0 auto;
+  width: 66px;
+  height: 66px;
+  padding: 3px;
+  border: 1px solid #ccc;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu,
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+  background-color: #2e7e89 !important;
+}
+
+@media (max-width: 991px) {
+  .navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+    position: absolute;
+    right: 0%;
+    left: auto;
+    border: 1px solid #ddd;
+    background: #fff;
+  }
+
+  .menu-link {
+    background: #fff !important;
+    color: #777 !important;
+    padding: 10px !important;
+  }
+}
+
+.title-header {
+  font-size: 13px;
+  text-align: left;
+  margin: 0px 10px !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 400;
+  color: #fff;
+}
+
+.navbar-nav > .notifications-menu > .dropdown-menu > li.header,
+.navbar-nav > .messages-menu > .dropdown-menu > li.header,
+.navbar-nav > .tasks-menu > .dropdown-menu > li.header {
+  padding: 15px 5px 15px 5px;
+  margin: 10px 10px;
+  border-bottom: 0px solid #ddd;
+}
+
+.notification {
+  margin-right: 20px;
+  margin-bottom: 0px;
+}
+
+@media (max-width: 767px) {
+  .title-header {
+    display: none;
+  }
+}
+
+.name-user {
+  font-size: 11px !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.main-header .logo {
+  height: 51px !important;
+}

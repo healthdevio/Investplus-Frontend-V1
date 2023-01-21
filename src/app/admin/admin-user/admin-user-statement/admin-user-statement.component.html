@@ -1,0 +1,382 @@
+<app-loader [loader]="loader"></app-loader>
+<div>
+  <section class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+          <form [formGroup]="form" style="display: flex; align-items: end; margin-bottom: 1rem;">
+            <div class="form-group col-md-3" style="margin-bottom: 0;">
+              <label for="nomeEmpresa">Empresa</label>
+              <input type="text" class="form-control" placeholder="Nome da empresa" formControlName="companyName">
+            </div>
+            <div class="form-group col-md-3" style="margin-bottom: 0;">
+              <label for="dataInicial">Data Inicial</label>
+              <input type="text" formControlName="dataInicial" class="form-control" placeholder="Data inicial" bsDatepicker>
+            </div>
+            <div class="form-group col-md-3" style="margin-bottom: 0;">
+              <label for="dataFinal">Data Final</label>
+              <input formControlName="dataFinal" type="text" class="form-control" placeholder="Data final" bsDatepicker>
+            </div>
+            <button type="button" class="btn" (click)="onFilter()">Pesquisar</button>
+          </form>
+          <table class="table table-striped" *ngIf="investments.length">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Valor investido</th>
+                <th>Data do investimento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of investments | paginate: { itemsPerPage: 20, currentPage: p }">
+                <td>{{ item.id }}</td>
+                <td>{{ item.company }}</td>
+                <td>{{ item.value | currency:'BRL' }}</td>
+                <td>{{ item.created | date: 'dd/MM/yyyy HH:mm'}}</td>
+                <td>
+                  <div class="d-flex">
+                    <i (click)="getContracts(item.contract); contratosModal.show()" class="fa fa-file-text-o" style="cursor: pointer;"></i>
+                    <i (click)="getInstallments(item.id); billetsModal.show()" class="fa fa-credit-card" style="margin-left: 1em; cursor: pointer;" *ngIf="item.hasBillet"></i>
+                    <i disabled="tree" class="fa fa-credit-card" style="margin-left: 1em" *ngIf="!item.hasBillet"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <app-count [count]="!(investments?.length > 0) && !loader" [textContador]="textRegister"></app-count>
+          <div class="pagination-footer">
+            <pagination-controls
+              [previousLabel]="labels.previousLabel"
+              [nextLabel]="labels.nextLabel"
+              [responsive]="responsive"
+              (pageChange)="p = $event"
+            >
+          </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="modal fade" bsModal #contratosModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Contratos</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="contratosModal.hide()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!contratosLoading && contracts?.length">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Download</th>
+                <th>Status</th>
+                <th><span *ngIf="item?.status != 'SIGNED'">Assinatura</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of contracts">
+                <td><a [href]="item.download" class="text-truncate" target="_blank">{{ item.name }}</a></td>
+                <td><a class="text-truncate">{{ item.status | contractStatusPipe }}</a></td>
+                <td><a [href]="item.sign" class="text-truncate" target="_blank" *ngIf="item?.status != 'SIGNED'">Contrato&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center;"  *ngIf="!contratosLoading && !contracts?.length">
+          <i class="fa fa-inbox" aria-hidden="true" style="margin-right: .25em;"></i>
+          <span>Nenhum contrato encontrado.</span>
+        </div>
+        <div *ngIf="contratosLoading">
+          loading...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #billetsModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Boletos</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="billetsModal.hide()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!investmentInstallmentsLoading && investmentInstallments?.length">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Valor</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of investmentInstallments">
+                <td>{{ item.id }}</td>
+                <td>{{ item.paymentValue | currency: 'BRL'}}</td>
+                <td>{{ item.status | contractStatusPipe }}</td>
+                <td><a [href]="item.billetUrl" class="text-truncate" target="_blank" *ngIf="item.billetUrl && item.status != 'SIGNED'">Boleto&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center;"  *ngIf="!investmentInstallmentsLoading && !investmentInstallments?.length">
+          <i class="fa fa-inbox" aria-hidden="true" style="margin-right: .25em;"></i>
+          <span>Nenhum boleto encontrado.</span>
+        </div>
+        <div *ngIf="investmentInstallmentsLoading">
+          loading...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader">
+  <section class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-8">
+            <ul class="timeline">
+              <li
+                *ngFor="
+                  let installment of dataInstallmentsFilter
+                    | paginate: { itemsPerPage: 5, currentPage: p }
+                "
+              >
+                <i class="fa fa-circle-thin bg-gray"></i>
+                <div class="timeline-item">
+                  <span
+                    [ngClass]="{
+                      green: installment.status == 'CONFIRMED',
+                      orange: installment.status != 'CONFIRMED'
+                    }"
+                    class="time"
+                  >
+                    <i
+                      *ngIf="installment.status == 'CONFIRMED'"
+                      class="fa fa-fw fa-check-circle-o"
+                    ></i>
+                    <i
+                      *ngIf="installment.status != 'CONFIRMED'"
+                      class="fa fa-fw fa-times-circle-o"
+                    ></i>
+                    {{ maskStatus(installment.status) }}</span
+                  >
+                  <h3 class="timeline-header">
+                    <i class="fa fa-fw fa-calendar-o"></i>
+                    {{ installment.dueDate | date }}
+                  </h3>
+                  <div class="timeline-body">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">CDI</p>
+                        <p class="total-incomming">
+                          {{ (installment.cdiValue)  | moneyMask}}%
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">PRINCIPAL</p>
+                        <p class="total-incomming">
+                          {{ (installment.profitValue) | moneyMask:true }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">PLATAFORMA</p>
+                        <p class="total-incomming">
+                          R$
+                          {{
+
+                              installment.profitValue -
+                                installment.profitValue *
+                                  (1 - installment.percentageCost)
+                                  | moneyMask
+                          }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">
+                          IR ({{ installment.percentageIr }}%)
+                        </p>
+                        <p class="total-incomming">
+                          R$
+                          {{
+
+                              (installment.profitValue *
+                                (1 - installment.percentageCost) *
+                                installment.percentageIr) /
+                                100
+                                | moneyMask
+                          }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">LÍQUIDO</p>
+                        <p class="total-incomming">
+                          R$
+                          {{
+
+                              installment.profitValue *
+                                (1 - installment.percentageCost) -
+                                (installment.profitValue *
+                                  (1 - installment.percentageCost) *
+                                  installment.percentageIr) /
+                                  100
+                                  | moneyMask
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-circle-thin bg-gray"></i>
+              </li>
+            </ul>
+            <div class="pagination-footer">
+              <pagination-controls
+                [previousLabel]="labels.previousLabel"
+                [nextLabel]="labels.nextLabel"
+                [responsive]="responsive"
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <div class="box">
+              <div class="row">
+                <form [formGroup]="form">
+                  <div class="col-xs-6 col-md-6">
+                    <app-form
+                      [class]="'label-incomming'"
+                      [label]="'DATA INICIAL'"
+                      [errorMessage]="'Insira uma data válida.'"
+                    >
+                      <div class="input-group">
+                        <span class="input-group-addon"
+                          ><i class="fa fa-fw fa-calendar-o"></i
+                        ></span>
+                        <input
+                          (focus)="clearInitial()"
+                          (blur)="filterInvestment()"
+                          type="text"
+                          formControlName="initialDate"
+                          class="dateOfInvestment form-control"
+                        />
+                      </div>
+                    </app-form>
+                  </div>
+                  <div class="col-xs-6 col-md-6">
+                    <app-form
+                      [class]="'label-incomming'"
+                      [label]="'DATA FINAL'"
+                      [errorMessage]="'Insira uma data válida'"
+                    >
+                      <div class="input-group">
+                        <span class="input-group-addon"
+                          ><i class="fa fa-fw fa-calendar-o"></i
+                        ></span>
+                        <input
+                          (focus)="clearFinal()"
+                          (blur)="filterInvestment()"
+                          type="text"
+                          formControlName="finalDate"
+                          class="dateOfInvestment form-control"
+                        />
+                      </div>
+                    </app-form>
+                  </div>
+                </form>
+              </div>
+              <div class="box-header t-10">
+                <h3 class="box-title">RESUMO</h3>
+              </div>
+              <div class="box-body no-padding">
+                <div class="row">
+                  <div class="col-xs-5 col-xs-offset-1">
+                    <p class="description-card t-10">TOTAL PRINCIPAL</p>
+                    <p class="total-card">
+                      {{ (sumInstallments) | moneyMask : true }}
+                    </p>
+                  </div>
+                  <div class="col-xs-5">
+                    <p class="description-card t-10">TOTAL FCJ Invest</p>
+                    <p class="total-card">
+                      {{ (sumInstallmentsCost) | moneyMask : true }}
+                    </p>
+                  </div>
+                </div>
+                <div class="row margin-t-20">
+                  <div class="col-xs-5 col-xs-offset-1">
+                    <p class="description-card t-10">TOTAL IR</p>
+                    <p class="total-card">
+                      {{ (sumInstallmentsIr) | moneyMask : true }}
+                    </p>
+                  </div>
+                  <div class="col-xs-5">
+                    <p class="description-card t-10">TOTAL ADICIONAIS</p>
+                    <p class="total-card">{{ (0) | moneyMask : true }}</p>
+                  </div>
+                </div>
+                <div class="bg-simulator margin-t-20">
+                  <div class="row">
+                    <div class="col-xs-5 col-xs-offset-1">
+                      <p class="description-card">TOTAL LÍQUIDO</p>
+                      <p class="total-liquid-card">
+                        {{ sumInstallmentsLiquid | moneyMask : true }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="dataInstallments != null" class="row t-40">
+                  <div class="col-xs-5 col-xs-offset-1">
+                    <div class="chart-responsive">
+                      <app-doughnut
+                        nChart="'1'"
+                        height="90"
+                        type="doughnut"
+                        [backgroundColor]="['#ff851b', '#00a65a']"
+                        [borderColor]="['#ff851b', '#00a65a']"
+                        [labels]="['Pendente', 'Confirmado']"
+                        [data]="dataInstallment"
+                        [options]="optionsInstallment"
+                      >
+                      </app-doughnut>
+                    </div>
+                  </div>
+                  <div class="col-xs-5">
+                    <p class="legend t-10">
+                      <span class="orange"
+                        ><i class="fa fa-fw fa-circle"></i>PENDENTES</span
+                      >
+                    </p>
+                    <p class="legend">
+                      <span class="green"
+                        ><i class="fa fa-fw fa-circle"></i>CONFIRMADOS</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ -->

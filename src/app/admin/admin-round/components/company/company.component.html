@@ -1,0 +1,98 @@
+<div class="box box-widget widget-user" *ngIf="company">
+  <div class="box-header">
+    <div class="row">
+      <div class="col-xs-3 col-md-3">
+        <img width="80px" height="80px" class="img-logo" [src]="company.round.docLogo" alt="Logo">
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <h4>{{company.name}}</h4>
+        <h4>{{maskStatus(company.round.status)}}</h4>
+        <h4 class="display-filter">{{ company.round.status }}</h4>
+      </div>
+      <div class="col-xs-3 col-md-3">
+        <p class="description-title-3">VLR.MÍNIMO</p>
+        <p class="description-title-4">{{company.round.quotaValue | moneyMask}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+    <!-- <div class="row">
+      <div class="col-xs-6 col-md-6">
+        <p class="description-title-3">POTENCIAL<br>DE LUCRO</p>
+        <p class="description-title-5">
+          {{company.round.cdiPercentage == indefined ? 0 : '+ ' + ((company.round.cdiPercentage / 100) *
+          company.round.cdiValue).toFixed(2)}}%
+        </p>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <p class="description-title-3">VALORIZAÇÃO<br>DA COTA</p>
+        <p class="description-title-5">
+          {{company.round.valuation == indefined ? 0 : '+ ' + ((company.round.valuation / 100) *
+          company.round.cdiValue).toFixed(2)}}%
+        </p>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="list-group list-group-unbordered">
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">MODALIDADE</span> <a class="details pull-right">{{company.round.modality ==
+              undefined ? '--' : maskModality(company.round.modality)}}</a>
+          </li>
+          <li *ngIf="company.round.status == 'IN_PROGRESS'" style="border-bottom: 1px solid #eee;"
+            class="list-group-item">
+            <span class="description-text">PRAZO MÁXIMO</span> <a class="details pull-right">{{company.round.deadline +
+              ' ANO(S)'}}</a>
+          </li>
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">PARTICIPAÇÃO POR COTA</span> 
+            <a class="details pull-right">
+              <span *ngIf="company.round.modality != 'SAFE'">{{company.round.partnerParticipation * 100 / company?.round?.quotas}}%</span>
+              <span *ngIf="company.round.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">VALUATION</span>
+            <a class="details pull-right">
+              <span *ngIf="company.round.modality != 'SAFE'">R$ {{company?.valuation?.current | moneyMask}}</span>
+              <span *ngIf="company.round.modality == 'SAFE'" class="description-title-3">20% Desconto, Máx. 7,8 Milhões</span>
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">PARTICIPAÇÃO TOTAL</span>
+            <a class="details pull-right">
+              <span *ngIf="company.round.modality != 'SAFE'">{{company?.round?.partnerParticipation * 100}}%</span>
+              <span *ngIf="company.round.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="company.round.status == 'FINISHED'" class="row">
+      <div class="col-sm-12 text-center">
+        <a routerLink="../../company/{{round.id}}/round/{{company.round.id}}" class="btn-about">Oferta Pública
+          Inicial</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <p class="progress-text">{{company.round.resume.total * 100 / company.round.maximumValuation | number : '1.2-2' }}% de
+          {{company.round.maximumValuation | moneyMask}}</p>
+        <div class="progress sm">
+          <div [ngStyle]="{'width': maskProgress(company.round.resume.total, company.round.maximumValuation)}"
+            class="progress-bar progress-bar-aqua">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <a *ngIf="company.round.status == 'IN_PROGRESS'"
+          [routerLink]="['../../company', company.id, 'round', company.round.id]" class="btn-upangel">Investir</a>
+        <a *ngIf="company.round.status == 'FINISHED'"
+          routerLink="../../indicators/company/{{company.id}}/round/{{company.round.id}}" class="btn-upangel">Gestão de
+          indicadores</a>
+      </div>
+    </div>
+  </div>
+</div>

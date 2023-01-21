@@ -1,0 +1,117 @@
+<app-loader [loader]="loader"></app-loader>
+<section *ngIf="!loader && round && valuation" class="content-header">
+  <div class="post">
+    <div class="user-block">
+      <img class="img-logo img-bordered-md" src="{{round.round.logo}}" alt="user company">
+      <span class="username">
+          <p class="title-company">{{round.name}}</p>
+          <p class="description-company">Contrato {{maskContract(investment?.contractExternalId)}}</p>
+      </span>
+    </div>
+  </div>
+</section>
+<section class="content">    
+  <div *ngIf="!loader && round && valuation">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">Valuation da rodada</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <p class="detail"><b>Valor:</b></p>
+                  </div>
+                  <div class="col-xs-8 text-right">
+                    <p class="detail">R$ {{ ((round.round.maximumValuation * 100) / (round.round.partnerParticipation)) | moneyMask }}
+                      <span class="badge bg-green">100%</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <p class="detail"><b>Investido:</b></p>
+                  </div>
+                  <div class="col-xs-8 text-right">
+                    <p class="detail">R$ {{ (investment?.value) | moneyMask }}
+                      <span class="badge bg-green">{{ investment?.roundPercent }} %</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">Valuation atual</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <p class="detail"><b>Valor:</b></p>
+                  </div>
+                  <div class="col-xs-8 text-right">
+                    <p class="detail">{{ (valuation.current) | moneyMask : true}}
+                      <span class="badge bg-green">100%</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-5">
+                    <p class="detail"><b>Valor da cota:</b></p>
+                  </div>
+                  <div class="col-xs-7 text-right">
+                    <p class="detail">{{ (((100 * investment?.value / ((round.round.maximumValuation * 100) / (round.round.partnerParticipation))) * valuation.current) / 100) | moneyMask : true}}
+                      <span class="badge bg-green"> {{ investment?.roundPercent }} %</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <p class="detail"><b>Retorno:</b></p>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="detail">
+                      {{ (valuation.current / ((round.round.maximumValuation * 100) / (round.round.partnerParticipation))) | number }}
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <p class="detail"><b>Valor valorizado:</b></p>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="detail">{{ ((((100 * investment?.value / ((round.round.maximumValuation * 100) / (round.round.partnerParticipation))) * valuation.current) / 100) - investment?.value)  | moneyMask : true}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title">Valorização da Empresa</h3>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart-responsive">
+                  <app-chartjs type="line" [labels]="labels" label="Valorização da Empresa" borderColor="#26A69A"
+                    [data]="list" borderWidth="1" fill="false" yAxes="money" height="262">
+                  </app-chartjs>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

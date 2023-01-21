@@ -1,0 +1,164 @@
+<div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader">
+  <section class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+          <form [formGroup]="form">
+            <div class="col-xs-12 col-md-3 col-md-offset-1">
+              <app-form
+                [class]="'label-incomming'"
+                [label]="'DATA INICIAL'"
+                [errorMessage]="'Insira uma data válida.'"
+              >
+                <div class="input-group">
+                  <span class="input-group-addon"
+                    ><i class="fa fa-fw fa-calendar-o"></i
+                  ></span>
+                  <input
+                    (focus)="clearInitial()"
+                    (blur)="filterInvestment()"
+                    type="text"
+                    formControlName="initialDate"
+                    class="dateOfInvestment form-control"
+                  />
+                </div>
+              </app-form>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="description-card t-10">VALOR PATRIMONIAL</p>
+              <p class="total-card">R$ {{ sumInvestment | moneyMask }}</p>
+            </div>
+            <div class="col-xs-12 col-md-3">
+              <app-form
+                [class]="'label-incomming'"
+                [label]="'DATA FINAL'"
+                [errorMessage]="'Insira uma data válida'"
+              >
+                <div class="input-group">
+                  <span class="input-group-addon"
+                    ><i class="fa fa-fw fa-calendar-o"></i
+                  ></span>
+                  <input
+                    (focus)="clearFinal()"
+                    (blur)="filterInvestment()"
+                    type="text"
+                    formControlName="finalDate"
+                    class="dateOfInvestment form-control"
+                  />
+                </div>
+              </app-form>
+            </div>
+          </form>
+        </div>
+        <div class="row t-20">
+          <div class="col-md-12">
+            <ul class="timeline">
+              <li
+                *ngFor="
+                  let incomming of dataInvestmentFilter
+                    | paginate: { itemsPerPage: 4, currentPage: p }
+                "
+              >
+                <i class="fa fa-circle-thin bg-gray"></i>
+                <div class="timeline-item">
+                  <span
+                    [ngClass]="{
+                      green: incomming.status == 'CONFIRMED',
+                      orange: incomming.status != 'CONFIRMED'
+                    }"
+                    class="time"
+                  >
+                    <i
+                      *ngIf="incomming.status == 'CONFIRMED'"
+                      class="fa fa-fw fa-check-circle-o"
+                    ></i>
+                    <i
+                      *ngIf="incomming.status == 'PENDING'"
+                      class="fa fa-fw fa-times-circle-o"
+                    ></i>
+                    <i
+                      *ngIf="
+                        incomming.status == 'CONTRACT_SIGNED' ||
+                        incomming.status == 'CONTRACT_SEND'
+                      "
+                      class="fa fa-fw fa-clock-o"
+                    ></i>
+                    {{ maskStatus(incomming.status) }}</span
+                  >
+                  <h3 class="timeline-header">
+                    <span style="margin-right: 30px"
+                      ><i class="fa fa-fw fa-calendar-o"></i>
+                      {{ incomming.date | date }}</span
+                    >
+                    CONTRATO: {{ maskContract(incomming.contractExternalId) }}
+                  </h3>
+                  <div class="timeline-body">
+                    <div class="row">
+                      <div class="col-xs-12 col-md-3">
+                        <p class="description-incomming">EMPREENDIMENTO</p>
+                        <p class="company-card t-10">
+                          {{ incomming.company }}
+                          {{ incomming.property }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">COTAS</p>
+                        <p class="total-incomming">{{ incomming.quotas }}</p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">VALOR</p>
+                        <p class="total-incomming">
+                          R$ {{ incomming.value | moneyMask }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">DT. ASSINATURA</p>
+                        <p class="total-incomming">
+                          {{ maskSigned(incomming.contractSignedAt) }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-2">
+                        <p class="description-incomming">PARCELAMENTO</p>
+                        <p class="total-incomming">
+                          {{ incomming.installments }}
+                        </p>
+                      </div>
+                      <div class="col-xs-6 col-md-1">
+                        <p class="description-incomming">documentos</p>
+                        <p
+                          *ngIf="incomming.evolutionDoc"
+                          class="total-incomming"
+                        >
+                          <a
+                            target="_blank"
+                            href="{{ incomming.evolutionDoc }}"
+                          >
+                            Evolução da oferta
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-circle-thin bg-gray"></i>
+              </li>
+            </ul>
+            <div class="pagination-footer">
+              <pagination-controls
+                [previousLabel]="labels.previousLabel"
+                [nextLabel]="labels.nextLabel"
+                [responsive]="responsive"
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

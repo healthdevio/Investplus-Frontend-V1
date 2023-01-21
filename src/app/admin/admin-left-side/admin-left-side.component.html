@@ -1,0 +1,199 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li routerLinkActive="active">
+        <a routerLink="./user">
+          <!-- <i class="fa fa-user"></i>  -->
+          <span>Meus Dados</span>
+        </a>
+      </li>
+
+      <!--
+      <li routerLinkActive="active">
+        <a routerLink="./rounds/company/list">
+          <span>Rodadas de Investimento</span>
+        </a>
+      </li>
+    -->
+
+      <li routerLinkActive="active">
+        <a routerLink="./rounds/assets/list">
+          <!-- <i class="fa fa-bar-chart"></i>  -->
+          <span>Rodadas Ofertas Públicas</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="./portfolio">
+          <!-- <i class="fa fa-diamond"></i>  -->
+          <span>Análise da Carteira</span>
+        </a>
+      </li>
+
+      <!-- <i class="fa fa-diamond"></i>  -->
+      <!-- <li routerLinkActive="active">
+        <a routerLink="./incomming">
+          <span>Meus Investimentos</span>
+        </a>
+      </li> -->
+
+      <li routerLinkActive="active">
+        <a routerLink="./statement">
+          <!-- <i class="fa fa-diamond"></i>  -->
+          <span>Extrato Financeiro</span>
+        </a>
+      </li>
+
+      <!--
+      <li routerLinkActive="active">
+        <a routerLink="./rounds/token">
+
+          <span>Token</span>
+        </a>
+      </li>
+      -->
+
+      <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
+        <a href="#">
+          <span class="header-menu">EMPRESAS</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a routerLink="./investors" class="left-side-admin">
+              <span>Investidores</span>
+            </a>
+          </li>
+
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a href="#" class="left-side-admin">
+              <span>Publicação</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval/create">Cadastrar Empresa</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval">Atualizar Dados</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval/company/final">Criar Rodada</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval/company/publish"
+                  >Atualizar Rodada</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a href="#" class="left-side-admin">
+              <span>Atualizações</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval">Dados gerais</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/valuation">Valuation</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/captable">Captable</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/financial">Receita e Despesa</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/admin">Administradores</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/team">Equipe Executiva</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/partners">Quadro societário</a>
+              </li>
+            </ul>
+          </li>
+
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a href="#" class="left-side-admin">
+
+              <span>Investimentos</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/company/investments"
+                  >Investimentos Realizados</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
+        <a href="#">
+          <span class="header-menu">INCORPORADORAS</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a href="#" class="left-side-admin">
+              <span>Aprovação</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/incorporator/create">Criar Rodada</a>
+              </li>
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/approval/incorporator/publish"
+                  >Publicar Rodada</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li routerLinkActive="active" *ngIf="scopes.ROLE_ADMIN">
+            <a href="#" class="left-side-admin">
+              <span>Investimentos</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li routerLinkActive="active">
+                <a routerLink="./rounds/incorporator/investments"
+                  >Investimentos Realizados</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!--li class="header" *ngIf="scopes.ROLE_COMPANY">Empresa</!--li>
+          <li-- routerLinkActive="active" *ngIf="scopes.ROLE_COMPANY">
+            <a routerLink="./company/investors/list" class="left-side-admin">
+              <span>Investidores</span>
+            </a>
+          </li-->
+        </ul>
+      </li>
+    </ul>
+  </section>
+</aside>

@@ -1,0 +1,35 @@
+<app-loader [loader]="loader"></app-loader>
+<section class="content">
+  <div *ngIf="!loader">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body no-padding">
+            <table class="table table-responsive">
+              <tr>
+                <th>Empresa</th>
+                <th>Nome do responsável</th>
+                <th>CNPJ</th>
+                <th>Modelo</th>
+              </tr>
+              <tr [routerLink]="'/admin/rounds/approval/'+company.id+'/details'"
+                *ngFor="let company of companies | paginate: { itemsPerPage: 12, currentPage: p }">
+                <td>{{ company.name }}</td>
+                <td>{{ company.responsible.name }}</td>
+                <td>{{ company.cnpj | cnpj }}</td>
+                <td>
+                  <span class="label label-success">{{ maskModel(company.model) }}</span>
+                </td>
+              </tr>
+            </table>
+            <app-count [count]="!(companies?.length > 0)" [textContador]="textRegister"></app-count>
+            <div class="pagination-footer">
+              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

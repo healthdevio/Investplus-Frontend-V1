@@ -1,0 +1,112 @@
+<div class="banner">
+  <div class="login-box">
+    <div class="login-box-body">
+      <div class="login-logo text-center">
+        <a routerLink="/">
+          <img
+            src="/assets/img/logo_fcjinvest_hor_transparent.png"
+            alt=""
+            class="img-responsive"
+          />
+        </a>
+      </div>
+      <app-loader [loader]="loader"></app-loader>
+      <div *ngIf="!loader">
+        <div class="row text-box">
+          <div class="col-xs-12 text-center">
+            <a routerLink="/auth/login">
+              Já possui conta? Clique aqui para fazer login.
+            </a>
+          </div>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <app-form
+            [label]="'Nome Completo'"
+            [errorMessage]="'O campo nome é obrigatório'"
+          >
+            <input
+              type="text"
+              formControlName="fullName"
+              class="form-control"
+            />
+          </app-form>
+
+          <app-form
+            [label]="'Usuário'"
+            [errorMessage]="'O campo usuário é obrigatório'"
+          >
+            <input
+              type="text"
+              formControlName="nickname"
+              class="form-control"
+            />
+          </app-form>
+
+          <app-form
+            [label]="'E-mail'"
+            [errorMessage]="'O campo e-mail é obrigatório'"
+          >
+            <input type="email" formControlName="email" class="form-control" />
+          </app-form>
+
+          <app-form
+            [label]="'Quero investir como'"
+            [errorMessage]="'Esta campo é obrigatório'"
+          >
+            <select
+              formControlName="typeDocument"
+              (change)="changeDocument(form.value.typeDocument)"
+              class="form-control"
+            >
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="cpf">Pessoa física</option>
+              <option value="cnpj">Pessoa jurídica</option>
+            </select>
+          </app-form>
+
+          <div
+            *ngIf="
+              form.value.typeDocument != null && form.value.typeDocument != ''
+            "
+          >
+            <app-form
+              [label]="form.value.typeDocument.toUpperCase()"
+              [errorMessage]="cpfValidator"
+            >
+              <input
+                type="text"
+                (blur)="validate()"
+                formControlName="document"
+                class="form-control {{ documentClass }}"
+              />
+            </app-form>
+          </div>
+
+          <div class="row text-box-footer">
+            <div class="col-xs-12 text-center">
+              <div class="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    formControlName="termosGerais"
+                    class="flat-red"
+                  />
+                  Li e concordo com os <general-terms></general-terms>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <button type="submit" [disabled]="loader" class="btn btn-primary btn-flat">
+                Cadastrar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

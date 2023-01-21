@@ -1,0 +1,239 @@
+<div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader">
+  <section class="content-header">
+    <div class="row margin-top-20">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-4">
+            <div class="post">
+              <div class="user-block">
+                <img class="img-logo img-bordered-md" src="{{logo}}" alt="">
+                <span class="username">
+                  <p class="title-company">{{name}}</p>
+                  <p class="description-company">{{maskModel(model)}}</p>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="indicators.cac != null">
+            <div class="col-xs-6 col-md-2">
+              <p class="label-info">Clientes ativos </p>
+              <p class="p-info"> {{indicators.activeCustomers}} <i class="fa fa-fw fa-arrow-up arrow-up"></i></p>
+            </div>
+            <div class="col-xs-6 col-md-2">
+              <p class="label-info">CAC</p>
+              <p class="p-info">{{indicators.cac | moneyMask}} <i class="fa fa-fw fa-arrow-down arrow-down"></i></p>
+            </div>
+            <div class="col-xs-6 col-md-2">
+              <p class="label-info">Ticket médio</p>
+              <p class="p-info">{{indicators.averageTicket | moneyMask}} <i class="fa fa-fw fa-arrow-up arrow-up"></i>
+              </p>
+            </div>
+            <div class="col-xs-6 col-md-2">
+              <p class="label-info">LTV</p>
+              <p class="p-info">{{indicators.ltv | moneyMask}} <i class="fa fa-fw fa-arrow-up arrow-up"></i></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="box">
+      <div class="box-header">CAPTABLE ATUAL</div>
+      <div class="box-body no-padding">
+        <div *ngIf="captable != null" class="row">
+          <div class="col-xs-12 col-md-4">
+            <table class="table table-striped table-responsive">
+              <tr>
+                <th>PARTICIPAÇÃO</th>
+                <th>%</th>
+              </tr>
+              <tr>
+                <td>Fundadores</td>
+                <td>{{captable.founders | number}}%</td>
+              </tr>
+              <tr>
+                <td>Co-fundadores</td>
+                <td>{{captable.coFounders | number}}%</td>
+              </tr>
+              <tr>
+                <td>Vesting</td>
+                <td>{{captable.vesting | number}}%</td>
+              </tr>
+              <tr>
+                <td>Aceleradora</td>
+                <td>{{captable.accelerator | number}}%</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <table class="table table-striped table-responsive">
+              <tr>
+                <th>PARTICIPAÇÃO</th>
+                <th>%</th>
+              </tr>
+              <tr>
+                <td>Crowdfunding</td>
+                <td>{{captable.crowdfunding | number}}%</td>
+              </tr>
+              <tr>
+                <td>Investidor anjo</td>
+                <td>{{captable.angel | number}}%</td>
+              </tr>
+              <tr>
+                <td>Venture Capital 1</td>
+                <td>{{captable.venture1 | number}}%</td>
+              </tr>
+              <tr>
+                <td>Venture Capital 2</td>
+                <td>{{captable.venture2 | number}}%</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <table class="table table-striped table-responsive">
+              <tr>
+                <th>PARTICIPAÇÃO</th>
+                <th>%</th>
+              </tr>
+              <tr>
+                <td>Venture Capital 3</td>
+                <td>{{captable.venture3 | number }}%</td>
+              </tr>
+              <tr>
+                <td>Fundo de investimento 1</td>
+                <td>{{captable.investmentFund1 | number }}%</td>
+              </tr>
+              <tr>
+                <td>Fundo de investimento 2</td>
+                <td>{{captable.investmentFund2 | number }}%</td>
+              </tr>
+              <tr>
+                <td><b>Total</b></td>
+                <td><b>{{100 | number}}%</b></td>
+              </tr>
+            </table>
+          </div>
+        </div>        
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box-header">RECEITAS E DESPESAS</div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table  table-striped">
+              <tr>
+                <th>INDICADORES</th>
+                <th>{{datas[0].toUpperCase()}}</th>
+                <th>{{datas[1].toUpperCase()}}</th>
+                <th>{{datas[2].toUpperCase()}}</th>
+                <th>{{datas[3].toUpperCase()}}</th>
+                <th>{{datas[4].toUpperCase()}}</th>
+                <th>{{datas[5].toUpperCase()}}</th>
+                <th>{{datas[6].toUpperCase()}}</th>
+                <th>{{datas[7].toUpperCase()}}</th>
+                <th>{{datas[8].toUpperCase()}}</th>
+                <th>{{datas[9].toUpperCase()}}</th>
+                <th>{{datas[10].toUpperCase()}}</th>
+                <th>{{datas[11].toUpperCase()}}</th>
+              </tr>
+              <tr>
+                <td>Receitas</td>
+                <td>{{dataRevenue[0] | number}}</td>
+                <td>{{dataRevenue[1] | number}}</td>
+                <td>{{dataRevenue[2] | number}}</td>
+                <td>{{dataRevenue[3] | number}}</td>
+                <td>{{dataRevenue[4] | number}}</td>
+                <td>{{dataRevenue[5] | number}}</td>
+                <td>{{dataRevenue[6] | number}}</td>
+                <td>{{dataRevenue[7] | number}}</td>
+                <td>{{dataRevenue[8] | number}}</td>
+                <td>{{dataRevenue[9] | number}}</td>
+                <td>{{dataRevenue[10] | number}}</td>
+                <td>{{dataRevenue[11] | number}}</td>
+              </tr>
+              <tr>
+                <td>Despesas</td>
+                <td>{{dataExpense[0] > 0 ? '-' + (dataExpense[0] | number) : (dataExpense[0] | number)}}</td>
+                <td>{{dataExpense[1] > 0 ? '-' + (dataExpense[1] | number) : (dataExpense[1] | number)}}</td>
+                <td>{{dataExpense[2] > 0 ? '-' + (dataExpense[2] | number) : (dataExpense[2] | number)}}</td>
+                <td>{{dataExpense[3] > 0 ? '-' + (dataExpense[3] | number) : (dataExpense[3] | number)}}</td>
+                <td>{{dataExpense[4] > 0 ? '-' + (dataExpense[4] | number) : (dataExpense[4] | number)}}</td>
+                <td>{{dataExpense[5] > 0 ? '-' + (dataExpense[5] | number) : (dataExpense[5] | number)}}</td>
+                <td>{{dataExpense[6] > 0 ? '-' + (dataExpense[6] | number) : (dataExpense[6] | number)}}</td>
+                <td>{{dataExpense[7] > 0 ? '-' + (dataExpense[7] | number) : (dataExpense[7] | number)}}</td>
+                <td>{{dataExpense[8] > 0 ? '-' + (dataExpense[8] | number) : (dataExpense[8] | number)}}</td>
+                <td>{{dataExpense[9] > 0 ? '-' + (dataExpense[9] | number) : (dataExpense[9] | number)}}</td>
+                <td>{{dataExpense[10] > 0 ? '-' + (dataExpense[10] | number) : (dataExpense[10] | number)}}</td>
+                <td>{{dataExpense[11] > 0 ? '-' + (dataExpense[11] | number) : (dataExpense[11] | number)}}</td>
+              </tr>
+              <tr>
+                <td>Lucro/Prejuízo</td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[0] >= 0, 'bg-red':  dataProfit[0] < 0}"
+                    class="badge">{{dataProfit[0]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[1] >= 0, 'bg-red':  dataProfit[1] < 0}"
+                    class="badge">{{dataProfit[1]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[2] >= 0, 'bg-red':  dataProfit[2] < 0}"
+                    class="badge">{{dataProfit[2]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[3] >= 0, 'bg-red':  dataProfit[3] < 0}"
+                    class="badge">{{dataProfit[3]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[4] >= 0, 'bg-red':  dataProfit[4] < 0}"
+                    class="badge">{{dataProfit[4]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[5] >= 0, 'bg-red':  dataProfit[5] < 0}"
+                    class="badge">{{dataProfit[5]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[6] >= 0, 'bg-red':  dataProfit[6] < 0}"
+                    class="badge">{{dataProfit[6]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[7] >= 0, 'bg-red':  dataProfit[7] < 0}"
+                    class="badge">{{dataProfit[7]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[8] >= 0, 'bg-red':  dataProfit[8] < 0}"
+                    class="badge">{{dataProfit[8]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[9] >= 0, 'bg-red':  dataProfit[9] < 0}"
+                    class="badge">{{dataProfit[9]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[10] >= 0, 'bg-red':  dataProfit[10] < 0}"
+                    class="badge">{{dataProfit[10]  | number}}</span></td>
+                <td><span [ngClass]="{'bg-green':  dataProfit[11] >= 0, 'bg-red':  dataProfit[11] < 0}"
+                    class="badge">{{dataProfit[11]  | number}}</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="legend"><span class="blue"><i class="fa fa-fw fa-circle"></i>RECEITA</span>
+                  <span class="orange l-20"><i class="fa fa-fw fa-circle"></i>DESPESA</span>
+                  <span class="black l-20"><i class="fa fa-fw fa-circle"></i>LUCRO/PREJUÍZO</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart">
+                  <app-t-chartjs type="line" [labels]="datasLabel" label1="Receita" label2="Despesa" label3="Lucro/Prejuízo"
+                    borderColor1="#0073b7" borderColor2="#FF851B" borderColor3="#000" [data1]="dataRevenue"
+                    [data2]="dataExpense" [data3]="dataProfit" borderWidth="1" fill="false" yAxes="money" height="270">
+                  </app-t-chartjs>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

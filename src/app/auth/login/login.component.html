@@ -1,0 +1,132 @@
+<div class="login-box">
+  <!-- Box do login -->
+  <div *ngIf="!mfaStep">
+    <div class="login-box-body">
+      <div *ngIf="login">
+        <div class="login-logo text-center">
+          <a href="https://fcjinvest.com.br/">
+            <img src="/assets/img/logo_fcjinvest_hor_transparent.png" alt="" />
+          </a>
+        </div>
+        <p class="text-center">Entre para iniciar sua sessão</p>
+
+        <form class="form-signin" method="POST" action="#" role="form">
+          <!-- <app-form [label]="'Nome de Usuário'" [errorMessage]="'Usuário Obrigatória'"> -->
+          <div class="form-group">
+            <label class="control-label" for="signupEmail">E-mail</label>
+            <input
+              (blur)="validateEmail()"
+              id="signupEmail"
+              required
+              type="email"
+              maxlength="100"
+              class="form-control"
+              [(ngModel)]="email"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <span
+              class="glyphicon glyphicon-envelope form-control-feedback"
+            ></span>
+            <span *ngIf="emailValidator" class="help-block"
+              ><i class="fa fa-remove"></i> {{ emailError }}
+            </span>
+          </div>
+          <!-- </app-form> -->
+
+          <!-- <app-form [label]="'Senha'" [errorMessage]="'Senha Obrigatória'"> -->
+          <div class="form-group">
+            <label class="control-label" for="signupEmail">Senha</label>
+            <input
+              id="signupPassword"
+              required
+              type="password"
+              maxlength="25"
+              class="form-control"
+              length="40"
+              [(ngModel)]="password"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <div class="forgot-password">
+              <a [routerLink]="['/auth/forgot']">Esqueceu sua senha?</a><br />
+            </div>
+          </div>
+          <!-- </app-form> -->
+
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <button
+                (click)="onLogin()"
+                id="signupSubmit"
+                type="submit"
+                class="col-md-6 btn btn-primary btn-flat"
+                [disabled]="loading"
+              >
+                Entrar
+              </button>
+              <button
+                id="registerSubmit"
+                (click)="registerUser()"
+                class="col-md-6 btn btn-warning btn-flat"
+              >
+                Cadastrar-se
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="!login">
+        <form class="form-signin" method="POST" action="#" role="form">
+          <p class="login-box-msg text-center">
+            Digite por favor sua senha definitiva para entrar na plataforma.
+          </p>
+          <!-- <div class="callout callout-info">
+                        <h4>Regras de segurança</h4>
+                        <p>A senha deve conter no mínimo 6 caracteres, incluindo uma letra maiúscula e um numeral.</p>
+                    </div> -->
+          <div class="form-group">
+            <label class="control-label" for="signupPassword"
+              >Digite sua nova senha *</label
+            >
+            <input
+              id="signupPassword"
+              type="password"
+              maxlength="25"
+              class="form-control"
+              placeholder="Digite pelo menos 8 caracteres"
+              length="40"
+              [(ngModel)]="registrationUser.password"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </div>
+          <div class="form-group text-center">
+            <button
+              (click)="onRegister()"
+              id="signupSubmit"
+              type="submit"
+              class="btn btn-primary"
+            >
+              Confirmar
+            </button>
+          </div>
+          <p class="login-box-password">
+            * A senha deve conter no mínimo 6 caracteres, incluindo uma letra
+            maiúscula e um numeral.
+          </p>
+          <!-- <hr>
+                    <p>Já possui conta? <a [routerLink]="['/home/login']"> <i class="fa fa-fw fa-lock"></i>Login</a></p> -->
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="form-group" *ngIf="mfaStep">
+        <app-mfa [destination]="mfaData.destination" [onSubmit]="mfaData.callback"></app-mfa>
+        <hr>
+        <a (click)="cancelMFA()" href="">Cancel</a>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible text-center" *ngIf="statusError">
+        <b>{{ errorMessage }}</b>
+    </div> -->
+</div>

@@ -1,0 +1,16 @@
+.contador{
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+    color: #555;
+    text-transform: none;
+    font-weight: 500;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

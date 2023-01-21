@@ -1,0 +1,541 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section class="content">
+    <div class="box">
+      <div class="box-body">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Geral</a></li>
+            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="true">Responsável</a></li>
+            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Endereço</a></li>
+            <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Indicadores</a></li>
+            <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="true">Dados bancários</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Nome da empresa'" [errorMessage]="'Nome da empresa é um campo obrigatório.'">
+                    <input type="text" formControlName="name" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Razão Social da empresa'"
+                    [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                    <input type="text" formControlName="businessName" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Site da empresa'" [errorMessage]="'Site é um campo obrigatório.'">
+                    <input type="text" formControlName="website" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Linkedin'" [errorMessage]="'Linkedin é um campo obrigatório.'">
+                    <input type="text" formControlName="linkedin" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Twitter'" [errorMessage]="'Twitter é um campo obrigatório.'">
+                    <input type="text" formControlName="twitter" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <app-form [label]="'Facebook'" [errorMessage]="'Facebook é um campo obrigatório.'">
+                    <input type="text" formControlName="facebook" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <app-form [label]="'CNPJ'" [errorMessage]="'CNPJ é um campo obrigatório.'">
+                    <input type="text" formControlName="cnpj" class="form-control cnpj">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <app-form [label]="'NIRE'" [errorMessage]="'NIRE é um campo obrigatório.'">
+                    <input type="text" formControlName="nire" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <app-form [label]="'CNAE'" [errorMessage]="'CNAE é um campo obrigatório.'">
+                    <input type="text" formControlName="cnae" class="form-control">
+                  </app-form>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-xs-12 col-md-4">
+                  <label>Tipo de natureza jurídica</label>
+                  <app-radio [options]="legalType" formControlName="legalType"></app-radio>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                    <label>Modelo de empresa</label>
+                    <app-radio [options]="model" formControlName="model"></app-radio>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab_2">
+              <div formGroupName="responsible">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <app-form [label]="'Nome do responsável'" [errorMessage]="'Nome do responsável é obrigatório.'">
+                      <input type="text" formControlName="name" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <app-form [label]="'Profissão'" [errorMessage]="'Profissão é obrigatório.'">
+                      <input type="text" formControlName="profession" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-3">
+                    <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é obrigatório.'">
+                      <input type="text" formControlName="dateOfBirth" class="form-control dateOfBirth">
+                    </app-form>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <app-form [label]="'RG'" [errorMessage]="'RG é obrigatório.'">
+                      <input type="text" formControlName="rg" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <app-form [label]="'E-mail'" [errorMessage]="'E-mail é obrigatório.'">
+                      <input type="text" formControlName="email" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-3">
+                    <app-form [label]="'CPF'" [errorMessage]="'CPF é obrigatório.'">
+                      <input type="text" formControlName="cpf" class="form-control cpf">
+                    </app-form>
+                  </div>
+                  <div class="col-xs-12 col-md-3">
+                    <app-form [label]="'Telefone'" [errorMessage]="'Telefone é obrigatório.'">
+                      <input type="text" formControlName="phone" class="form-control phone">
+                    </app-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_3">
+              <div formGroupName="address">
+                <div class="row">
+                  <div class="col-md-3">
+                    <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">
+                      <input type="text" (blur)="getCep()" formControlName="zipCode" class="form-control zipCode">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <app-form [label]="'Logradouro'" [errorMessage]="'Logradouro é um campo obrigatório.'">
+                      <input type="text" formControlName="street" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <app-form [label]="'Número'" [errorMessage]="'Número é um campo obrigatório.'">
+                      <input type="text" formControlName="number" class="number form-control">
+                    </app-form>
+                  </div>
+                  <div class="col-md-3">
+                    <app-form [label]="'Complemento'" [errorMessage]="'Complemento é um campo obrigatório.'">
+                      <input type="text" formControlName="complement" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <app-form [label]="'Cidade'" [errorMessage]="'Cidade é um campo obrigatório.'">
+                      <input type="text" formControlName="city" class="form-control">
+                    </app-form>
+                  </div>
+                  <div class="col-md-3">
+                    <app-form [label]="'Bairro'" [errorMessage]="'Bairro é um campo obrigatório.'">
+                      <input type="text" formControlName="neighborhood" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
+                      <input type="text" formControlName="uf" class="form-control">
+                    </app-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_4">
+              <!-- <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Upgestão'" [errorMessage]="'Upgestão é um campo obrigatório.'">
+                    <input type="text" formControlName="upgestao" class="form-control">
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Banco'" [errorMessage]="'Banco é um campo obrigatório.'">
+                    <input type="text" formControlName="bank" class="form-control">
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Pagamento'" [errorMessage]="'Pagamento é um campo obrigatório.'">
+                    <input type="text" formControlName="payment" class="form-control">
+                  </app-form>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'CAC'" [errorMessage]="'O campo CAC é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="cac" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Ticket médio'" [errorMessage]="'O campo Ticket médio é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="averageTicket" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'LTV'" [errorMessage]="'O campo LTV é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="ltv" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'CMV'" [errorMessage]="'O campo CMV é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="text" formControlName="cmv" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+                <!-- <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Score'" [errorMessage]="'Score é um campo obrigatório.'">
+                    <select formControlName="score" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="5">A</option>
+                      <option value="4">B</option>
+                      <option value="3">C</option>
+                      <option value="2">D</option>
+                      <option value="1">E</option>
+                    </select>
+                  </app-form>
+                </div> -->
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Clientes Ativos'" [errorMessage]="'O campo Clientes é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon"></span>
+                      <input type="number" formControlName="activeCustomers" class="form-control">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Cashburn'" [errorMessage]="'O campo Cashburn é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="string" formControlName="cashburnIndicator" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Preço por ação'" [errorMessage]="'O campo Preço por ação é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="string" formControlName="sharePriceIndicator" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Valuation'" [errorMessage]="'O campo Valuation é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="string" formControlName="valuation" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'LTV/CAC'" [errorMessage]="'O campo LTV/CAC é obrigatório.'">
+                    <div class="input-group">
+                      <span class="input-group-addon">R$</span>
+                      <input type="string" formControlName="ltvCac" class="form-control money">
+                    </div>
+                  </app-form>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Gestão'" [errorMessage]="'Gestão é um campo obrigatório.'">
+                    <select formControlName="managementIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Tecnologia'" [errorMessage]="'Tecnologia é um campo obrigatório.'">
+                    <select formControlName="technologyIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Estratégia'" [errorMessage]="'Estratégia é um campo obrigatório.'">
+                    <select formControlName="strategicIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+              </div> -->
+              <!-- <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Intelectual'" [errorMessage]="'Intelectual é um campo obrigatório.'">
+                    <select formControlName="intellectualIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Sociedade'" [errorMessage]="'Sociedade é um campo obrigatório.'">
+                    <select formControlName="societyIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Pessoas'" [errorMessage]="'Pessoas é um campo obrigatório.'">
+                    <select formControlName="peopleIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Processos'" [errorMessage]="'Processos é um campo obrigatório.'">
+                    <select formControlName="processIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                  <app-form [label]="'Recursos'" [errorMessage]="'Recursos é um campo obrigatório.'">
+                    <select formControlName="resourceIndicator" class="form-control">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </app-form>
+                </div>
+              </div> -->
+            </div>
+            <div class="tab-pane" id="tab_5">
+              <div class="row margin-t-20">
+                <div class="col-xs-12 col-md-8">
+                  <app-form
+                    [label]="'Instituição'"
+                    [errorMessage]="'Instituição é um campo obrigatório.'"
+                  >
+                    <select
+                      formControlName="accountBank"
+                      class="form-control"
+                    >
+                      <option [ngValue]="null"
+                        >Selecione uma opção...</option
+                      >
+                      <ng-container *ngFor="let bank of banks">
+                        <option [value]="bank?.code">{{ bank?.name }}</option>
+                      </ng-container>
+
+                    </select>
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-3">
+                  <app-form
+                    [label]="'Agência'"
+                    [errorMessage]="'Agência é um campo obrigatório.'"
+                  >
+                    <input
+                      type="text"
+                      formControlName="accountAgency"
+                      class="form-control"
+                    />
+                  </app-form>
+                </div>
+                <div class="col-xs-8 col-md-5">
+                  <app-form
+                    [label]="'Conta Corrente (com dígito)'"
+                    [errorMessage]="'Conta é um campo obrigatório.'"
+                  >
+                    <input
+                      type="text"
+                      formControlName="accountNumber"
+                      class="form-control"
+                    />
+                  </app-form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-5">
+                  <app-form
+                    [label]="'Id Voluti'"
+                    [errorMessage]="'Id Voluti é um campo obrigatório.'"
+                  >
+                    <input
+                      type="text"
+                      formControlName="volutiId"
+                      class="form-control"
+                    />
+                  </app-form>
+                </div>
+              </div>
+            </div>
+            <!-- /.tab-pane -->
+            <!-- <div class="tab-pane" id="tab_5">
+              <div class="row">
+                <div class="col-xs-12 col-md-6" style="margin-bottom: 16px;">
+                  <button type="button" class="btn" (click)="addPartner()" style="padding-left: 0px; padding-right: 0;">Adicionar sócio</button>
+                </div>
+              </div>
+              <fieldset
+                *ngFor="let control of partners.controls; let index = index;"
+                style="box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important; padding: 1em; margin-bottom: 2rem;">
+                <button
+                  class="btn"
+                  type="button"
+                  style="background-color: red; border-color: red; float: right;"
+                  (click)="removePartner(index)"
+                >
+                  Remover
+                </button>
+                <div [formGroup]="control">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Nome'" [errorMessage]="'Nome é um campo obrigatório.'">
+                        <input type="text" formControlName="name" class="form-control">
+                      </app-form>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Email'" [errorMessage]="'Email é um campo obrigatório.'">
+                        <input type="email" formControlName="email" class="form-control">
+                      </app-form>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Celular'" [errorMessage]="'Celular é um campo obrigatório.'">
+                        <input type="text" formControlName="cellphone" class="form-control">
+                      </app-form>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Cpf'" [errorMessage]="'Cpf é um campo obrigatório.'">
+                        <input type="text" formControlName="cpf" class="form-control cpf">
+                      </app-form>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Rg'" [errorMessage]="'RG é um campo obrigatório.'">
+                        <input type="text" formControlName="rg" class="form-control">
+                      </app-form>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <app-form [label]="'Data de nascimento'" [errorMessage]="'RG é um campo obrigatório.'">
+                        <input type="date" formControlName="dateOfBirth" class="form-control">
+                      </app-form>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div> -->
+            <!-- /.tab-pane -->
+          </div>
+          <!-- /.tab-content -->
+        </div>
+        <div class="pagination-footer">
+          <div class="row mb-20">
+            <div class="col-xs-12 col-md-12">
+              <button class="btn" [disabled]="loading" style="margin-right: 5px;">Atualizar</button>
+              <button (click)="approveDocuments()" class="btn">Aprovar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

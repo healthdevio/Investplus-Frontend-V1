@@ -1,0 +1,24 @@
+<div class="attachment-preview mb-2">
+    <div class="file-drop-title" *ngIf="file.getValue()">
+        {{file.getValue().name}}
+    </div>
+    <div class="file-drop-title" *ngIf="!file.getValue()">
+        {{label}}
+    </div>
+    <div *ngIf="file.getValue()">
+        <div class="m-btn-icon mr-2" *ngIf="canSeeFile" (click)="showFile()">
+            <i class="fa fa-solid fa-eye"></i>
+        </div>
+        <div class="delete-icon" (click)="deleteAttachment()"><i class="fa fa-solid fa-trash"></i></div>
+    </div>
+</div>
+<div [ngClass]="{over: isDragging}" [ngStyle]="{display: !file.getValue() ? 'flex' : 'none'}" class="m-drag-drop" #dropZoneRef>
+    <input type="file" id="file" style="display: none" (change)="onChange($event)" [multiple]="multiple" />
+    <label for="file">
+        <div class="btn">
+            <i class="fa fa-solid fa-cloud-arrow-up"></i>
+            <span>Selecionar arquivo</span>
+        </div>
+    </label>
+    <div class="m-paragraph small mt-3">Ou arraste e solte seu arquivo</div>
+</div>

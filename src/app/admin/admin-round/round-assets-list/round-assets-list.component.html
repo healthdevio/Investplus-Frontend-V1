@@ -1,0 +1,72 @@
+<div *ngIf="loader">
+  <app-loader [loader]="loader"></app-loader>
+</div>
+<div *ngIf="!loader && !responseError">
+  <section class="content-header">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h1>Explore as oportunidades</h1>
+        <p>Selecione um ativo, visualize os detalhes e realize seu investimento.</p>
+      </div>
+      <div class="col-xs-12 col-md-6 filter">
+        <form [formGroup]="form" style="width: 100%;">
+          <div class="col-xs-12 col-md-8 pull-right">
+            <div class="input-group">
+              <!-- <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span> -->
+              <app-form [label]="''" [errorMessage]="'Erro'">
+                <div class="filtros">
+                  <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
+                    <option value="">Todas oportunidades</option>
+                    <option value="IN_PROGRESS">Andamento</option>
+                    <option value="FINISHED">Concluídas</option>
+                  </select>
+                  <select formControlName="typeAsset" class="form-control" [(ngModel)]="filterAtivoType" style="margin-left: 16px;">
+                    <option *ngFor="let tipo of tiposAtivos" [value]="tipo.value">{{tipo.name}}</option>
+                  </select>
+                </div>
+              </app-form>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="row" *ngIf="responseError">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body">
+            <div class="contador">
+              {{ errorMessage }}
+            </div>
+            <div class="contador">
+              <strong>{{ suggestionMessage }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
+        <div
+          *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+          <div class="col-md-4">
+            <admin-round-incorporator [incorporator]="imobiliaria"></admin-round-incorporator>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
+        <div
+          *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+          <div class="col-md-4">
+            <admin-round-company [company]="empresa"></admin-round-company>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-footer">
+      <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+        [responsive]="responsive" (pageChange)="p = $event" id="upangel"></pagination-controls>
+    </div>
+  </section>
+</div>

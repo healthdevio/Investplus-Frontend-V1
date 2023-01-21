@@ -1,0 +1,48 @@
+<div class="fcji-card">
+  <div style="display: flex;">
+    <div class="fcji-card-user-icon">
+      <img
+        [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + photo)"
+        alt="foto"
+        *ngIf="photo"
+        width="100%"
+      >
+      <i class="fa fa-user-circle-o" *ngIf="!photo"></i>
+    </div>
+    <div class="fcji-card-user-description">
+      <div style="width: 100%">
+        <span style="display: block;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 90%;
+          overflow: hidden;">{{ name }}</span>
+          <span>{{ department }}</span>
+      </div>
+      <a [ngClass]="!linkedin ? 'isDisabled' : ''" target="_blank" [href]="sanitizer.bypassSecurityTrustResourceUrl(linkedin ?? 'javascript:void(0)')">
+        <i class="fa fa-fw fa-linkedin-square"></i>
+      </a>
+    </div>
+  </div>
+  <div class="fcji-card-job-title">
+    {{ activities }}
+  </div>
+  <div>
+    {{ description }}
+  </div>
+  <div class="fcji-card-footer" *ngIf="showButtonAction">
+    <button
+      type="button"
+      class="fcji-card-button"
+      (click)="onEdit()"
+    >
+      <i class="fa fa-pencil-square-o"></i>
+    </button>
+    <button
+      type="button"
+      class="fcji-card-button"
+      (click)="onRemove()"
+    >
+        <i class="fa fa-trash"></i>
+    </button>
+  </div>
+</div>

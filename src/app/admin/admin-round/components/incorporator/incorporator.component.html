@@ -1,0 +1,103 @@
+<div class="box box-widget widget-user">
+  <div class="box-header">
+    <div class="row">
+      <div class="col-xs-2 col-md-2">
+        <img width="50px" height="50px" class="img-logo" src="{{ incorporator.logoDocUrl }}" alt="Logo" />
+      </div>
+      <div class="col-xs-7 col-md-7">
+        <h4>{{ incorporator.property }}</h4>
+        <h3>{{ maskStatus(incorporator.status) }}</h3>
+        <h3 class="display-filter">{{ incorporator.status }}</h3>
+      </div>
+      <div class="col-xs-3 col-md-3">
+        <p class="description-title-3">VLR.MÍNIMO</p>
+        <p class="description-title-4">
+          {{incorporator.quotaValue | moneyMask }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+    <div class="row">
+      <!-- <div class="col-xs-4 col-md-4">
+        <p class="description-title-3">RENTABILIDADE<br />ANUAL</p>
+        <p class="description-title-5">
+          {{ incorporator.annualMaxProfitability.toFixed(2) }}%
+        </p>
+      </div> -->
+      <div class="col-xs-4 col-md-4">
+        <p class="description-title-3">
+          RENTABILIDADE<br />PROJETADA
+        </p>
+        <p class="description-title-5">
+          {{ incorporator.projectedMaxProfitability?.toFixed(2) }}%
+        </p>
+      </div>
+      <div class="col-xs-4 col-md-4">
+        <p class="description-title-3">UNIDADES<br />DISPONÍVEIS</p>
+        <p class="description-title-5">
+          {{ incorporator.availableApartments }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="list-group list-group-unbordered">
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">CONSTRUTORA</span>
+            <a class="details pull-right">
+              {{ incorporator.builder }}
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">DURAÇÃO DA RODADA</span>
+            <a class="details pull-right">{{ incorporator.duration }} DIAS</a>
+          </li>
+          <li *ngIf="incorporator.status == 'IN_PROGRESS'" style="border-bottom: 1px solid #eee;"
+            class="list-group-item">
+            <span class="description-text">COTAS DISPONÍVEIS</span>
+            <a class="details pull-right">{{
+              incorporator.quotas - incorporator.resume.quotasSold
+              }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="incorporator.status == 'FINISHED'" class="row">
+      <div class="col-sm-12 text-center">
+        <a routerLink="../../incorporator/round/{{ incorporator.id }}" class="btn-about">Oferta Pública Inicial</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <p class="progress-text">
+          {{
+          maskProgress(
+          incorporator.resume.total,
+          incorporator.quotas * incorporator.quotaValue
+          )
+          }}
+          de {{ incorporator.quotas * incorporator.quotaValue | moneyMask }}
+        </p>
+        <div class="progress sm">
+          <div [ngStyle]="{
+              width: maskProgress(
+                incorporator.resume.total,
+                incorporator.quotas * incorporator.quotaValue
+              )
+            }" class="progress-bar progress-bar-aqua"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <a *ngIf="incorporator.status == 'IN_PROGRESS'"
+        [routerLink]="['../../incorporator/round', incorporator.id]"
+          class="btn-upangel">Investir</a>
+        <!-- <a *ngIf="round.status == 'FINISHED'"
+          routerLink="../../indicators/company/{{round.id}}/round/{{round.round.id}}"
+          class="btn-upangel">Gestão de indicadores</a> -->
+      </div>
+    </div>
+  </div>
+</div>
