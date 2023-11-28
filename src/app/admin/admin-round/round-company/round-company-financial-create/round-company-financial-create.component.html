@@ -16,7 +16,7 @@
                     <div class="col-xs-12 col-md-3">
                       <app-form [label]="'Data'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
                         <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-fw fa-calendar-o"></i></span>
+                          <span style="width: 30px;" class="input-group-addon"><i class="fa fa-fw fa-calendar-o"></i></span>
                           <input type="text" (blur)="validateDate()" formControlName="date" class="form-control date">
                         </div>
                       </app-form>
@@ -24,7 +24,7 @@
                     <div class="col-md-3">
                       <app-form [label]="'Receita'" [errorMessage]="'Receita é um campo obrigatório.'">
                         <div class="input-group">
-                          <span class="input-group-addon">R$</span>
+                          <span style="width: 33px;" class="input-group-addon">R$</span>
                           <input type="text" formControlName="revenueAmount" class="money form-control" maxlength="13">
                         </div>
                       </app-form>
@@ -32,7 +32,7 @@
                     <div class="col-md-3">
                       <app-form [label]="'Despesa'" [errorMessage]="'Despesa é um campo obrigatório.'">
                         <div class="input-group">
-                          <span class="input-group-addon">%</span>
+                          <span style="width: 43px;" class="input-group-addon">%</span>
                           <input type="text" formControlName="expenseAmount" class="money form-control" maxlength="13">
                         </div>
                       </app-form>

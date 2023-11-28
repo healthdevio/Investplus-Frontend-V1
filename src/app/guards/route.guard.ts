@@ -36,7 +36,7 @@ export class RouteGuard implements CanLoad, CanActivate, CanActivateChild {
     if (cognitoUser != null) {
       cognitoUser.getSession(function (err, session) {
         if (err) {
-          toastr.error('Sua sessão espirou, favor entrar novamente');
+          toastr.error('Sua sessão expirou, favor entrar novamente');
           $this.authService.returnLogin();
           return false;
         }

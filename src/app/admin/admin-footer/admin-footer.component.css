@@ -1,4 +1,4 @@
-/* .control-sidebar.control-sidebar-open,
+.control-sidebar.control-sidebar-open,
 .control-sidebar.control-sidebar-open+.control-sidebar-bg {
   right: 0;
   height: 100%;
@@ -82,4 +82,13 @@ h4 {
 
 a {
     color: #333;
-} */
+}
+
+footer {
+  /* position: absolute; */
+  bottom: 0;
+  width: auto;
+  height: auto;
+  border: 1px solid #dddddd54;
+  text-align: center;
+}

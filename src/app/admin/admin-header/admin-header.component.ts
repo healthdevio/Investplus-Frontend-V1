@@ -32,7 +32,7 @@ export class AdminHeaderComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    window.location.href = "https://fcjinvest.com/";
+    window.location.href = "https://investplus.vc/";
   }
 
   getUser() {
