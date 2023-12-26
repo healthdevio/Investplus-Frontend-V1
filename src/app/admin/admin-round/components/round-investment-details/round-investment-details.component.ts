@@ -2,7 +2,7 @@ import { LoaderService } from './../../../../core/service/loader.service';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
 import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, SecurityContext } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RoundService } from "../../../../core/service/round.service";
 import { Router } from "@angular/router";
@@ -105,7 +105,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     private dateMask: DateMaskPipe,
     private loaderService: LoaderService,
     private captableService: CompanyCaptableService,
-    private modalityService: ModalityService
+    private modalityService: ModalityService,
   ) { }
 
   ngOnInit() {
@@ -146,9 +146,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
               100
             ).toFixed(0)
           ) + "%";
-        this.offerVideo = this.sanitizer.bypassSecurityTrustResourceUrl(
-          response.round.offerVideo
-        );
+        this.offerVideo = this.getEmbeddedVideoUrl(this.sanitizer.bypassSecurityTrustResourceUrl(response.round.offerVideo));
         this.quotas = response.round.quotas;
         this.quotasSold = response.round.resume.quotasSold;
         this.executives = response.executives;
@@ -217,6 +215,24 @@ export class RoundInvestmentDetailsComponent implements OnInit {
 
         this.loader = false;
       });
+  }
+
+  getEmbeddedVideoUrl(url: SafeResourceUrl): SafeResourceUrl {
+    const videoId = this.extractVideoId(url);
+  
+    const embeddedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+  
+    return embeddedUrl;
+  }
+  
+  private extractVideoId(url: SafeResourceUrl): string | null {
+    const urlString = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
+  
+    const match = urlString?.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))(.*?)(?:[?&]t=|&|$)/
+    );
+  
+    return match && match[1] ? match[1] : null;
   }
 
   private initForm(): void {

@@ -1,7 +1,7 @@
 import { LoaderService } from './../../../../core/service/loader.service';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, SecurityContext } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RealStateService } from "../../../../core/service/real-state.service";
 import { Round } from "../../../../core/interface/round";
@@ -135,9 +135,7 @@ export class RoundInvestmentRealStateDetailsComponent implements OnInit {
       this.investments = response.investments;
       this.property = response.property;
       this.builder = response.builder;
-      this.offerVideo = this.sanitizer.bypassSecurityTrustResourceUrl(
-        response.offerVideo
-      );
+      this.offerVideo = this.getEmbeddedVideoUrl(this.sanitizer.bypassSecurityTrustResourceUrl(response.offerVideo));
       this.logo = response.logo;
       this.logoDocUrl = response.logoDocUrl;
       this.id = response.id;
@@ -231,6 +229,24 @@ export class RoundInvestmentRealStateDetailsComponent implements OnInit {
         cutoutPercentage: 95,
       };
     });
+  }
+  
+  getEmbeddedVideoUrl(url: SafeResourceUrl): SafeResourceUrl {
+    const videoId = this.extractVideoId(url);
+  
+    const embeddedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+  
+    return embeddedUrl;
+  }
+  
+  private extractVideoId(url: SafeResourceUrl): string | null {
+    const urlString = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
+  
+    const match = urlString?.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))(.*?)(?:[?&]t=|&|$)/
+    );
+  
+    return match && match[1] ? match[1] : null;
   }
 
   private getCDI(): void {
