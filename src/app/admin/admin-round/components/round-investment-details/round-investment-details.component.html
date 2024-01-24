@@ -133,7 +133,7 @@
                     type="doughnut"
                     [backgroundColor]="['#bbb', '#2e7e89']"
                     [borderColor]="['#bbb', '#2e7e89']"
-                    [labels]="['Restante', 'Investido']"
+                    [labels]="['Restante em (%)', 'Investido em (%)']"
                     [data]="dataResume"
                     [options]="optionsResume"
                   >
@@ -145,11 +145,11 @@
                   <div class="col-xs-12 col-md-6">
                     <p class="description-title-3">Objetivo</p>
                     <p class="description-title-4">
-                      {{ roundInvestment.round.maximumValuation | moneyMask:true }}
+                      {{ this.companyDataComplete.round.maximumValuation | moneyMask:true }}
                     </p>
                     <p class="description-title-3 margin-t-20">Investidos</p>
                     <p class="description-title-1">
-                      {{ roundInvestment.round.resume.total | moneyMask:true }}
+                      {{ this.companyDataComplete.round.resume.total | moneyMask:true }}
                     </p>
                   </div>
                   <div class="col-xs-12 col-md-6">

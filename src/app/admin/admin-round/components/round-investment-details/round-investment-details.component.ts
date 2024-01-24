@@ -37,7 +37,9 @@ declare var moment: any;
   styleUrls: ["./round-investment-details.component.css"],
 })
 export class RoundInvestmentDetailsComponent implements OnInit {
+  companyDataComplete: any;
   form: FormGroup;
+  companyData: any;
   titleHeader: TitleHeader;
   roundInvestment: any;
   companyInvestment: any;
@@ -111,7 +113,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   ngOnInit() {
     this.activedRouter.params.subscribe((params) => {
       this.company = params["id"];
-      this.rounds = params["id2"];
+      this.rounds = Number(params["id2"]);
     });
 
     this.loader = true;
@@ -121,6 +123,15 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.initForm();
     this.getValuation();
     this.getCaptable();
+
+    const localStorageData = localStorage.getItem('companyData');
+
+    if(localStorageData){ 
+      const localStorageObject = JSON.parse(localStorageData);
+      if(localStorageObject.round.id === this.rounds){
+        this.companyDataComplete = localStorageObject;
+      }
+    }
 
     const $this = this;
     setTimeout(function () {
@@ -139,10 +150,12 @@ export class RoundInvestmentDetailsComponent implements OnInit {
           .add("days", response.round.duration)
           .format("DD/MM/YYYY");
         this.status = response.round.status;
+        console.log(this.companyDataComplete.round.resume.total)
+        console.log(this.companyDataComplete.round.maximumValuation)
         this.porcent =
           Number(
             (
-              (response.round.resume.total / response.round.maximumValuation) *
+              (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
               100
             ).toFixed(0)
           ) + "%";
@@ -178,22 +191,22 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         this.dataResume = [
           (
             100 -
-            (response.round.resume.total / response.round.maximumValuation) *
+            (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
             100
-          ).toFixed(2),
+          ).toFixed(1),
           (
-            (response.round.resume.total / response.round.maximumValuation) *
+            (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
             100
-          ).toFixed(2),
+          ).toFixed(1),
         ];
         this.optionsResume = {
           legend: {
             display: false,
           },
           animation: {
-            duration: 4000,
+            duration: 1000,
           },
-          cutoutPercentage: 95,
+          cutoutPercentage: 90.
         };
 
         this.optionScore = {

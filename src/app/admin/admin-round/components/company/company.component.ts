@@ -17,6 +17,11 @@ export class RoundCompanyComponent {
     private modalityService: ModalityService
   ) { }
 
+  ngOnInit() {
+    const companyData = JSON.stringify(this.company);
+    localStorage.setItem('companyData', companyData);
+  }
+
   maskStatus(status: string): string {
     if (status === 'IN_PROGRESS') {
       return 'ANDAMENTO';
