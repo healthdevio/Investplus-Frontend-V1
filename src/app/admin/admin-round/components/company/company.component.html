@@ -88,7 +88,8 @@
     <div class="row">
       <div class="col-sm-12 text-center">
         <a *ngIf="company.round.status == 'IN_PROGRESS'"
-          [routerLink]="['../../company', company.id, 'round', company.round.id]" class="btn-upangel">Investir</a>
+        [routerLink]="['../../company', company.id, 'round', company.round.id]"
+        (click)="handleClick()" class="btn-upangel">Investir</a>        
         <a *ngIf="company.round.status == 'FINISHED'"
           routerLink="../../indicators/company/{{company.id}}/round/{{company.round.id}}" class="btn-upangel">Gestão de
           indicadores</a>

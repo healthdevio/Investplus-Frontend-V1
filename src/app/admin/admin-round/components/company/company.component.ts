@@ -31,6 +31,31 @@ export class RoundCompanyComponent {
       return '';
     }
   }
+  
+  atualizarRound() {
+    const roundId = this.company.round.id;
+    const localStorageData = localStorage.getItem('companyData');
+    let localStorageArray = [];
+  
+    if (localStorageData) {
+      localStorageArray = JSON.parse(localStorageData);
+    }
+  
+    const existingIndex = localStorageArray.findIndex(obj => obj.round.id === roundId);
+  
+    if (existingIndex !== -1) {
+      localStorageArray[existingIndex] = this.company;
+    } else {
+      localStorageArray.push(this.company);
+    }
+  
+    localStorage.setItem('companyData', JSON.stringify(localStorageArray));
+  }  
+
+  handleClick() {
+    this.atualizarRound();
+  }
+  
 
   maskModality(modality: string): string {
     return this.modalityService.getModality(modality)?.description;
