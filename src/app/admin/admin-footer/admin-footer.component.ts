@@ -47,7 +47,7 @@ export class AdminFooterComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    window.location.href = "https://imob.fcjinvest.com.br";
+    window.location.href = "https://investplus.vc";
   }
 
   getUser() {
