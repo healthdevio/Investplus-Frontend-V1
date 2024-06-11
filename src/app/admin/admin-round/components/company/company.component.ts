@@ -9,7 +9,7 @@ import { ICompany } from './ICompany';
   styleUrls: ['./company.component.css']
 })
 
-export class RoundCompanyComponent {
+export class RoundCompanyComponent implements OnInit {
   @Input() company: ICompany = null;
 
   constructor(
@@ -18,7 +18,7 @@ export class RoundCompanyComponent {
   ) { }
 
   ngOnInit() {
-    const companyData = JSON.stringify(this.company);
+    const companyData = JSON.stringify([this.company]); 
     localStorage.setItem('companyData', companyData);
   }
 
@@ -38,7 +38,16 @@ export class RoundCompanyComponent {
     let localStorageArray = [];
   
     if (localStorageData) {
-      localStorageArray = JSON.parse(localStorageData);
+      try {
+        localStorageArray = JSON.parse(localStorageData);
+
+        if (!Array.isArray(localStorageArray)) {
+          localStorageArray = [localStorageArray]; 
+        }
+      } catch (error) {
+        console.error('Erro ao parsear localStorageData', error);
+        localStorageArray = [];
+      }
     }
   
     const existingIndex = localStorageArray.findIndex(obj => obj.round.id === roundId);
@@ -94,6 +103,11 @@ export class RoundCompanyComponent {
         break;
     }
     return maskScore;
+  }
+
+  formatParticipation(value: number): string {
+    const percentage = (value * 100).toFixed(6);
+    return parseFloat(percentage) === 0 ? "<0.000001%" : `${percentage}%`;
   }
 
   maskProgress(total, maximumValuation): string {

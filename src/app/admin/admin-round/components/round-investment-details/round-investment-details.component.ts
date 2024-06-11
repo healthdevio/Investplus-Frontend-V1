@@ -37,11 +37,12 @@ declare var moment: any;
   styleUrls: ["./round-investment-details.component.css"],
 })
 export class RoundInvestmentDetailsComponent implements OnInit {
+  
   companyDataComplete: any;
   form: FormGroup;
   companyData: any;
   titleHeader: TitleHeader;
-  roundInvestment: any;
+  roundInvestment: any = {}; // Inicializar com objeto vazio
   companyInvestment: any;
   quotaValue = 0;
   startedAt: any;
@@ -128,7 +129,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
 
     if(localStorageData){ 
       const localStorageObject = JSON.parse(localStorageData);
-      if(localStorageObject.round.id === this.rounds){
+      if(localStorageObject.round?.id === this.rounds){
         this.companyDataComplete = localStorageObject;
       }
     }
@@ -143,28 +144,28 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.roundService
       .getRound(this.company, this.rounds)
       .subscribe((response) => {
-        this.roundInvestment = response;
-        this.quotaValue = response.round.quotaValue;
-        this.startedAt = this.dateMask.transform(response.round.startedAt);
+        this.roundInvestment = response || {}; // Garantir que roundInvestment é sempre um objeto
+        this.quotaValue = response.round?.quotaValue ?? 0;
+        this.startedAt = this.dateMask.transform(response.round?.startedAt);
         this.finishAt = moment(this.startedAt, "DD-MM-YYYY")
-          .add("days", response.round.duration)
+          .add("days", response.round?.duration)
           .format("DD/MM/YYYY");
-        this.status = response.round.status;
-        console.log(this.companyDataComplete.round.resume.total)
-        console.log(this.companyDataComplete.round.maximumValuation)
-        this.porcent =
-          Number(
-            (
-              (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
-              100
-            ).toFixed(0)
-          ) + "%";
-        this.offerVideo = this.getEmbeddedVideoUrl(this.sanitizer.bypassSecurityTrustResourceUrl(response.round.offerVideo));
-        this.quotas = response.round.quotas;
-        this.quotasSold = response.round.resume.quotasSold;
-        this.executives = response.executives;
-        this.advices = response.advices;
-        this.investments = response.round.investments;
+        this.status = response.round?.status ?? '';
+        if (this.companyDataComplete?.round) {
+          this.porcent =
+            Number(
+              (
+                (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
+                100
+              ).toFixed(0)
+            ) + "%";
+        }
+        this.offerVideo = this.getEmbeddedVideoUrl(this.sanitizer.bypassSecurityTrustResourceUrl(response.round?.offerVideo ?? ''));
+        this.quotas = response.round?.quotas ?? 0;
+        this.quotasSold = response.round?.resume?.quotasSold ?? 0;
+        this.executives = response.executives || [];
+        this.advices = response.advices || [];
+        this.investments = response.round?.investments || [];
         this.options.ceil = this.quotas - this.quotasSold;
 
         this.data.currentMessage.subscribe(
@@ -172,7 +173,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         );
         this.titleHeader.title =
           "Investimentos / Oportunidades / " +
-          this.titleCase(this.roundInvestment.name);
+          this.titleCase(this.roundInvestment?.name ?? '');
         this.data.changeTitle(this.titleHeader);
 
         switch (this.status) {
@@ -181,24 +182,27 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             break;
           default:
             this.disabled = true;
-            this.form.get("installments").disable();
-            this.form.get("publicAccess").disable();
-            this.form.get("quotas").disable();
+            this.form.get("installments")?.disable();
+            this.form.get("publicAccess")?.disable();
+            this.form.get("quotas")?.disable();
             this.options.disabled = true;
             break;
         }
 
-        this.dataResume = [
-          (
-            100 -
-            (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
-            100
-          ).toFixed(1),
-          (
-            (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
-            100
-          ).toFixed(1),
-        ];
+        if (this.companyDataComplete?.round) {
+          this.dataResume = [
+            (
+              100 -
+              (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
+              100
+            ).toFixed(1),
+            (
+              (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
+              100
+            ).toFixed(1),
+          ];
+        }
+
         this.optionsResume = {
           legend: {
             display: false,
@@ -206,7 +210,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
           animation: {
             duration: 1000,
           },
-          cutoutPercentage: 90.
+          cutoutPercentage: 90
         };
 
         this.optionScore = {
@@ -232,19 +236,14 @@ export class RoundInvestmentDetailsComponent implements OnInit {
 
   getEmbeddedVideoUrl(url: SafeResourceUrl): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
-  
-    const embeddedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
-  
-    return embeddedUrl;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
   }
   
   private extractVideoId(url: SafeResourceUrl): string | null {
     const urlString = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
-  
     const match = urlString?.match(
       /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))(.*?)(?:[?&]t=|&|$)/
     );
-  
     return match && match[1] ? match[1] : null;
   }
 
@@ -446,22 +445,10 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       this.labelScore = [
         "Tecnologia",
         "Estratégia",
-        // "Propr. Intelectual",
-        // "Sociedade",
-        // "Pessoas",
-        // "Recursos",
-        // "Processos",
-        // "Gestão Financeira",
       ];
       this.dataScore = [
         response.technologyIndicator,
         response.strategicIndicator,
-        // response.intellectualIndicator,
-        // response.societyIndicator,
-        // response.peopleIndicator,
-        // response.resourceIndicator,
-        // response.processIndicator,
-        // response.managementIndicator,
       ];
     });
   }
@@ -574,7 +561,6 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       .getCaptable(this.company)
       .subscribe({
         next: (response) => {
-
           for (const key in response) {
             if(response[key] > 0 && key != "id"){
               this.captable.data.push((response[key]).toFixed(2));
@@ -582,7 +568,6 @@ export class RoundInvestmentDetailsComponent implements OnInit {
               this.captable.colors.push(this.getColor(key));
             }
           }
-
         }
       });
   }
@@ -639,8 +624,13 @@ export class RoundInvestmentDetailsComponent implements OnInit {
 
   }
 
+  formatParticipation(value: number): string {
+    const percentage = (value * 100).toFixed(6); 
+    return parseFloat(percentage) === 0 ? "<0.000001%" : `${percentage}%`;
+  }
+  
+
   randomColors(n: number){
-    //`#${Math.floor(Math.random()*16777215).toString(16)}`;
     const colors = [
       "#808080",
       "#B09784",
@@ -659,6 +649,5 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     ];
 
     return colors.slice(0, n);
-
   }
 }
