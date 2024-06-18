@@ -411,7 +411,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-12">
-        <div [ngClass]="box">
+        <div class="box box-default collapsed-box">
           <div class="box-header">
             <h3 class="box-title">INFORMAÇÕES</h3>
             <div class="box-tools pull-right">
@@ -528,7 +528,6 @@
       </div>
     </div>
     <div
-      *ngIf="investments === undefined || investments?.length > 0"
       class="row"
     >
       <div class="col-xs-12 col-md-12">
@@ -569,7 +568,6 @@
     </div>
 
     <div
-      *ngIf="investments === undefined || investments?.length > 0"
       class="row"
     >
       <div class="col-xs-12 col-md-12">
@@ -634,7 +632,6 @@
     </div>
 
     <div
-      *ngIf="investments === undefined || investments?.length > 0"
       class="row"
     >
       <div class="col-xs-12 col-md-12">
@@ -680,10 +677,7 @@
       </div>
     </div>
 
-    <div
-      *ngIf="investments === undefined || investments?.length > 0"
-      class="row"
-    >
+    <div class="row">
       <div class="col-xs-12 col-md-12">
         <div class="box box-default collapsed-box">
           <div class="box-header">
@@ -702,68 +696,73 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="box-comment">
-                  <div
-                    class="col-md-1 col-xs-6 margin-t-20"
-                    *ngFor="let investment of investments"
-                  >
-                    <div class="row text-center">
-                      <div class="col-md-12">
-                        <img
-                          class="img-circle"
-                          src="{{
-                            investment.avatar == null
-                              ? './../../../assets/img/default-profile_01.png'
-                              : 'data:image/png;base64,' + investment.avatar
-                          }}"
-                          alt="User Image"
-                        />
+                  <div *ngIf="investments && investments.length > 0; else noInvestors">
+                    <div
+                      class="col-md-1 col-xs-6 margin-t-20"
+                      *ngFor="let investment of investments"
+                    >
+                      <div class="row text-center">
+                        <div class="col-md-12">
+                          <img
+                            class="img-circle"
+                            src="{{
+                              investment.avatar == null
+                                ? './../../../assets/img/default-profile_01.png'
+                                : 'data:image/png;base64,' + investment.avatar
+                            }}"
+                            alt="User Image"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div class="row margin-t-10 text-center">
-                      <div class="col-md-12">
-                        <div class="investors">
+                      <div class="row margin-t-10 text-center">
+                        <div class="col-md-12">
+                          <div class="investors">
+                            <p>
+                              {{
+                                investment.fullName == null
+                                  ? "Privado"
+                                  : investment.fullName.substring(0, 7)
+                              }}
+                            </p>
+                          </div>
+    
                           <p>
-                            {{
-                              investment.fullName == null
-                                ? "Privado"
-                                : investment.fullName.substring(0, 7)
-                            }}
+                            <span
+                              class="{{
+                                investment.facebook == null ? 'isDisabled' : ''
+                              }}"
+                              ><a
+                                href="{{
+                                  investment.facebook == null
+                                    ? '#'
+                                    : investment.facebook
+                                }}"
+                                target="_blank"
+                              >
+                                <i class="fa fa-fw fa-facebook-square"></i></a
+                            ></span>
+                            <span
+                              class="{{
+                                investment.linkedin == null ? 'isDisabled' : ''
+                              }}"
+                              ><a
+                                href="{{
+                                  investment.linkedin == null
+                                    ? '#'
+                                    : investment.linkedin
+                                }}"
+                                target="_blank"
+                              >
+                                <i class="fa fa-fw fa-linkedin-square"></i></a
+                            ></span>
                           </p>
                         </div>
-
-                        <p>
-                          <span
-                            class="{{
-                              investment.facebook == null ? 'isDisabled' : ''
-                            }}"
-                            ><a
-                              href="{{
-                                investment.facebook == null
-                                  ? '#'
-                                  : investment.facebook
-                              }}"
-                              target="_blank"
-                            >
-                              <i class="fa fa-fw fa-facebook-square"></i></a
-                          ></span>
-                          <span
-                            class="{{
-                              investment.linkedin == null ? 'isDisabled' : ''
-                            }}"
-                            ><a
-                              href="{{
-                                investment.linkedin == null
-                                  ? '#'
-                                  : investment.linkedin
-                              }}"
-                              target="_blank"
-                            >
-                              <i class="fa fa-fw fa-linkedin-square"></i></a
-                          ></span>
-                        </p>
                       </div>
                     </div>
                   </div>
+                  <ng-template #noInvestors>
+                    <p>Essa rodada ainda não conta com investidores.</p>
+                  </ng-template>
                 </div>
               </div>
             </div>
@@ -771,6 +770,7 @@
         </div>
       </div>
     </div>
+    
 
   </div>
 </section>
