@@ -67,7 +67,7 @@
                       <img class="profile-user-img img-responsive img-circle" src={{base64textString}}
                         title="Selecione uma imagem com altura e largura iguais." id="img">
                       <div class="upload-btn-wrapper">
-                        <button class="btn-photo">Inserir foto</button>
+                        <button class="btn-photo" style="cursor: pointer;">Inserir foto</button>
                         <input title="Selecione uma imagem com altura e largura iguais." type="file"
                           (change)="onUploadChange($event)" accept=".png, .jpg, .jpeg" />
                         <p *ngIf="msg !== ''" class="error">{{msg}}</p>
