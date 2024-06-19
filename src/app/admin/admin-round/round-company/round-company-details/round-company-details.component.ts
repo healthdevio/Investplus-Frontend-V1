@@ -2,10 +2,9 @@ import { LoaderService } from './../../../../core/service/loader.service';
 import { NumberMaskPipe } from './../../../../core/pipes/number-mask.pipe';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '../../../../core/service/company.service';
 import { Company } from '../../../../core/interface/company';
-import { Router } from '@angular/router';
 import { Round } from '../../../../core/interface/round';
 import { RoundService } from '../../../../core/service/round.service';
 import { TitleService } from '../../../../core/service/title.service';
@@ -31,6 +30,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
   id: number;
   idRound: number;
   nameCompany: string;
+  buttonText: string;  // Adicione esta linha
 
   loading: boolean = false;
 
@@ -41,7 +41,8 @@ export class RoundCompanyDetailsComponent implements OnInit {
     private companyService: CompanyService,
     private roundService: RoundService,
     private data: TitleService,
-    private modalityService: ModalityService
+    private modalityService: ModalityService,
+    private router: Router  // Adicione esta linha
   ) { }
 
   ngOnInit() {
@@ -53,23 +54,15 @@ export class RoundCompanyDetailsComponent implements OnInit {
     this.id = this.activedRouter.snapshot.params['id'];
     this.idRound = this.activedRouter.snapshot.params['idRound'];
 
+    // Defina o texto do botão com base na rota
+    this.setButtonText();
+
     if(this.idRound){
       this.roundService
         .getRound(this.id, this.idRound)
         .subscribe({
           next: (response)=>{
             const dataForm = response.round as any;
-            // dataForm.minimumValuation = dataForm?.minimumValuation;
-            // dataForm.maximumValuation = dataForm.maximumValuation;
-            // dataForm.quotaValue = dataForm.quotaValue?.toString();
-            // dataForm.partnerParticipation = dataForm.partnerParticipation?.toString();
-            // dataForm.quotas = dataForm.quotas.toString();
-            // dataForm.duration = dataForm.duration.toString();
-            // dataForm.cdiPercentage = dataForm.cdiPercentage?.toString();
-            // dataForm.cdiValue = dataForm.cdiValue?.toString();
-            // dataForm.percentageOfIncome = dataForm.percentageOfIncome?.toString();
-            // dataForm.upangelCost = dataForm.upangelCost?.toString();
-            // dataForm.valuation = dataForm.valuation?.toString();
             this.form.patchValue(dataForm);
           }
         })
@@ -84,6 +77,15 @@ export class RoundCompanyDetailsComponent implements OnInit {
     setTimeout(function () {
       $this.initMask();
     }, 1000);
+  }
+
+  setButtonText() {
+    const currentUrl = this.router.url;
+    if (currentUrl.includes('update')) {
+      this.buttonText = 'Atualizar Rodada';
+    } else if (currentUrl.includes('create')) {
+      this.buttonText = 'Publicar Rodada';
+    }
   }
 
   getModalities() {
@@ -149,7 +151,6 @@ export class RoundCompanyDetailsComponent implements OnInit {
     });
   }
 
-
   public onDocumentoFileChange(file: File | null) {
     this.form.get('documentsFile').setValue(file);
   }
@@ -162,7 +163,6 @@ export class RoundCompanyDetailsComponent implements OnInit {
   }
 
   public initMask(): void {
-
     const SPMaskBehavior = function (val) {
       return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
     },
@@ -172,9 +172,6 @@ export class RoundCompanyDetailsComponent implements OnInit {
         }
       };
 
-    // $('.money').mask('#.##0,00', {
-    //   reverse: true
-    // });
     $('.number').keyup(function () {
       $(this).val(this.value.replace(/\D/g, ''));
     });
@@ -183,23 +180,9 @@ export class RoundCompanyDetailsComponent implements OnInit {
   public onSubmit(): void {
     if (this.form.valid) {
       const $this = this;
-
       const dataForm = this.form.value;
 
-      // dataForm.minimumValuation = this.numberMask.transform(dataForm.minimumValuation);
-      // dataForm.maximumValuation = this.numberMask.transform(dataForm.maximumValuation);
-      // dataForm.quotaValue = this.numberMask.transform(dataForm.quotaValue);
-      // dataForm.partnerParticipation = this.numberMask.transform(dataForm.partnerParticipation);
-      // dataForm.quotas = this.unmaskInput(dataForm.quotas);
-      // dataForm.duration = this.unmaskInput(dataForm.duration);
-      // dataForm.cdiPercentage = this.numberMask.transform(dataForm.cdiPercentage);
-      // dataForm.cdiValue = this.numberMask.transform(dataForm.cdiValue);
-      // dataForm.percentageOfIncome = this.numberMask.transform(dataForm.percentageOfIncome);
-      // dataForm.upangelCost = this.numberMask.transform(dataForm.upangelCost);
-      // dataForm.valuation = this.numberMask.transform(dataForm.valuation);
-
       this.loading = true;
-      //this.loaderService.load(this.loading);
       this.roundService.createRound(this.id, dataForm).subscribe((response) => {
         bootbox.dialog({
           title: '',
@@ -208,9 +191,6 @@ export class RoundCompanyDetailsComponent implements OnInit {
             'success': {
               label: 'Entendi',
               className: 'bg-upangel',
-              /* callback: function () {
-                $this.router.navigate(['/admin/rounds/approval/company/publish']);
-              } */
             }
           }
         });
@@ -252,10 +232,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
         toastr.error("O tamanho máximo permitido é 2MB.");
       } else {
         const reader = new FileReader();
-
         reader.onload = (e: any) => {
-          /* this.form.get(fieldName).setValue(fileName);
-          this.form.get(fieldDoc).setValue(btoa(e.target.result)); */
           const dataSend = {
             file: btoa(e.target.result),
             name: fileName
@@ -273,11 +250,8 @@ export class RoundCompanyDetailsComponent implements OnInit {
               }
             })
         }
-
         reader.readAsBinaryString(file);
       }
     }
-
   }
-
 }
