@@ -380,10 +380,18 @@
                       >termo de ciência de risco</a
                     >
                     <a de contrato
+                    *ngIf="roundInvestment.id === 9; else defaultLink"
+                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
+                    target="_blank"
+                    >minuta de contrato</a
+                  >
+                  <ng-template #defaultLink>
+                    <a de contrato
                       href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
                       target="_blank"
-                      > minuta de contrato</a
+                      >minuta de contrato</a
                     >
+                  </ng-template>                  
                   </p>
                 </div>
               </div>
