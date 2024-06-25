@@ -514,8 +514,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     const file = evt.target.files[0];
 
     if (file) {
-      if (file.size > 2097152) {
-        this.msg = "O tamanho máximo permitido é 2MB.";
+      if (file.size > 52428800) {
+        this.msg = "O tamanho máximo permitido é 50MB.";
       } else {
         this.msg = "";
         const reader = new FileReader();
@@ -530,8 +530,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     const file = evt.target.files[0];
 
     if (file) {
-      if (file.size > 2097152) {
-        toastr.error("O tamanho máximo permitido é 2MB.");
+      if (file.size > 52428800) {
+        toastr.error("O tamanho máximo permitido é 50MB.");
       } else {
         this.msg = "";
         const reader = new FileReader();
