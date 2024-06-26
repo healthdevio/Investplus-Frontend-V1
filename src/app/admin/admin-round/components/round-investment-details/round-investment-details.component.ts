@@ -42,7 +42,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   form: FormGroup;
   companyData: any;
   titleHeader: TitleHeader;
-  roundInvestment: any = {}; // Inicializar com objeto vazio
+  roundInvestment: any = {}; 
   companyInvestment: any;
   quotaValue = 0;
   startedAt: any;
@@ -92,6 +92,8 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       cutoutPercentage: 95,
     },
   };
+  objective: any;
+  invested: any;
 
   constructor(
     private activedRouter: ActivatedRoute,
@@ -119,20 +121,19 @@ export class RoundInvestmentDetailsComponent implements OnInit {
 
     this.loader = true;
 
+    const localStorageData = localStorage.getItem('companyData');
+
+    if(localStorageData) { 
+      const companies = JSON.parse(localStorageData);
+      const targetCompany = companies.find(company => company.id == this.company);
+      this.companyDataComplete = targetCompany;
+    }
+
     this.getCompanyIndicators(this.company);
     this.getRound();
     this.initForm();
     this.getValuation();
     this.getCaptable();
-
-    const localStorageData = localStorage.getItem('companyData');
-
-    if(localStorageData){ 
-      const localStorageObject = JSON.parse(localStorageData);
-      if(localStorageObject.round?.id === this.rounds){
-        this.companyDataComplete = localStorageObject;
-      }
-    }
 
     const $this = this;
     setTimeout(function () {
@@ -144,7 +145,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.roundService
       .getRound(this.company, this.rounds)
       .subscribe((response) => {
-        this.roundInvestment = response || {}; // Garantir que roundInvestment é sempre um objeto
+        this.roundInvestment = response || {};
         this.quotaValue = response.round?.quotaValue ?? 0;
         this.startedAt = this.dateMask.transform(response.round?.startedAt);
         this.finishAt = moment(this.startedAt, "DD-MM-YYYY")
