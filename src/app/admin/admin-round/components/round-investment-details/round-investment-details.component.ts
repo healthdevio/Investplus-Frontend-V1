@@ -518,7 +518,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             this.router.navigate(["/admin/rounds/assets/list"]);
           },
           error: (error) => {
-            let erro = "Ocorreu um erro, entre em contato com o administrador.";
+            let erro = error;
             if ((error.code = 400)) {
               switch (error.error.code) {
                 case "ILLEGAL_ARGUMENT":
