@@ -196,8 +196,8 @@ export class RoundRealStateDetailsComponent implements OnInit {
     const file = evt.target.files[0];
     const fileName = file.name;
     if (file) {
-      if (file.size > 2097152) {
-        toastr.error("O tamanho máximo permitido é 2MB.");
+      if (file.size > 52428800) {
+        toastr.error("O tamanho máximo permitido é 50MB.");
       } else {
         const reader = new FileReader();
 

@@ -85,10 +85,10 @@ export class RoundInvestimentsRealStateDetailsComponent implements OnInit {
         formatedPerfil = 'Acima de 1 milhão';
         break;
       case 'UP_TO_100_THOUSAND':
-        formatedPerfil = 'Até 100 mil';
+        formatedPerfil = 'Até 200 mil';
         break;
       case 'UP_TO_10_THOUSAND':
-        formatedPerfil = 'Até 10 mil';
+        formatedPerfil = 'Até 20 mil';
         break;
     }
     return formatedPerfil;

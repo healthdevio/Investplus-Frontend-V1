@@ -60,8 +60,8 @@ export class RoundCompanyTeamCreateComponent implements OnInit {
 
     if (file) {
 
-      if (file.size > 2097152) {
-        this.msg = 'O tamanho máximo permitido é 2MB.';
+      if (file.size > 52428800) {
+        this.msg = 'O tamanho máximo permitido é 50MB.';
       } else {
         this.msg = '';
         const reader = new FileReader();

@@ -75,7 +75,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     },
     {
       label:
-        "Possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 100 mil",
+        "Possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 200 mil",
       value: "UP_TO_100_THOUSAND",
       // tslint:disable-next-line:max-line-length
       span:
@@ -83,11 +83,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     },
     {
       label:
-        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 100 mil",
+        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 200 mil",
       value: "UP_TO_10_THOUSAND",
       // tslint:disable-next-line:max-line-length
       span:
-        "Não investirei, no ano-calendário por meio de plataformas eletrônicas de investimento participativo, mais de R$ 10.000,00 (dez mil reais).",
+        "Não investirei, no ano-calendário por meio de plataformas eletrônicas de investimento participativo, mais de R$ 20.000,00 (vinte mil reais).",
     },
   ];
 
@@ -514,8 +514,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     const file = evt.target.files[0];
 
     if (file) {
-      if (file.size > 2097152) {
-        this.msg = "O tamanho máximo permitido é 2MB.";
+      if (file.size > 52428800) {
+        this.msg = "O tamanho máximo permitido é 50MB.";
       } else {
         this.msg = "";
         const reader = new FileReader();
@@ -530,8 +530,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     const file = evt.target.files[0];
 
     if (file) {
-      if (file.size > 2097152) {
-        toastr.error("O tamanho máximo permitido é 2MB.");
+      if (file.size > 52428800) {
+        toastr.error("O tamanho máximo permitido é 50MB.");
       } else {
         this.msg = "";
         const reader = new FileReader();
