@@ -131,7 +131,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       gender: [null, [Validators.required]],
       maritalStatus: [null, [Validators.required]],
       rgEmitter: [null, [Validators.required]],
-      rg: [null, [Validators.required, Validators.maxLength(9)]],
+      rg: [null, [Validators.required, Validators.maxLength(13)]],
       phone: [null, [Validators.required]],
       dateOfBirth: [null, [Validators.required]],
       address: this.formBuilder.group({
