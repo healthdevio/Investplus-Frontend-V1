@@ -405,6 +405,19 @@ export class RoundApprovalDetailsComponent implements OnInit {
     return (Number(number.replace(/[^\d]+/g, '')) / 100).toFixed(2);
   }
 
+  public maskValuation(number: any): any {
+
+  let numeric = number.replace(/[^\d]+/g, '');
+
+  numeric = (Number(numeric) / 100).toFixed(2); 
+
+  let parts = numeric.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return parts.join(',');  
+
+  }
+
   public unmaskInput(input): any {
     return input.replace(/[^\d]+/g, '');
   }
@@ -428,6 +441,7 @@ export class RoundApprovalDetailsComponent implements OnInit {
       data.cmv = this.unmaskCurrency(data.cmv);
       data.ltvCac = this.unmaskCurrency(data.ltvCac);
       data.cashburnIndicator = this.unmaskCurrency(data.cashburnIndicator);
+      data.valuation = this.maskValuation(data.valuation);
       data.sharePriceIndicator = this.unmaskCurrency(data.sharePriceIndicator);
 
       data.address.zipCode = this.unmaskInput(data.address.zipCode);
