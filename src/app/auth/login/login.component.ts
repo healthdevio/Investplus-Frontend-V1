@@ -1,29 +1,11 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserLoginService } from '../../core/service/cognito/user-login.service';
+import { ChallengeParameters, CognitoCallback, LoggedInCallback } from '../../core/service/cognito/cognito.service';
+import { UserRegistrationService } from '../../core/service/cognito/user-registration.service';
+import { InvestorService } from '../../core/service/investor.service';
 import { LoaderService } from './../../core/service/loader.service';
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  Router
-} from '@angular/router';
-// import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
-// import { HttpErrorResponse } from '@angular/common/http';
-import {
-  UserLoginService
-} from '../../core/service/cognito/user-login.service';
-import {
-  ChallengeParameters,
-  CognitoCallback,
-  LoggedInCallback
-} from '../../core/service/cognito/cognito.service';
-import {
-  UserRegistrationService
-} from '../../core/service/cognito/user-registration.service';
-import {
-  InvestorService
-} from '../../core/service/investor.service';
 
-declare var $: any;
 declare var toastr: any;
 
 export class NewPasswordUser {
@@ -38,7 +20,6 @@ export class NewPasswordUser {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit {
-
   registrationUser: NewPasswordUser;
   router: Router;
   errorMessage: any;
@@ -53,12 +34,13 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     destination: '',
     callback: null
   };
-  textLogin: 'Entre para iniciar sua sessão';
+  textLogin = 'Entre para iniciar sua sessão';
   statusError: boolean;
   loading: boolean;
   login: boolean;
   newPassword: boolean;
   alert: boolean;
+  passwordFieldType: string = 'password';
 
   constructor(
     router: Router,
@@ -67,7 +49,6 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     private investorService: InvestorService,
     private loadService: LoaderService
   ) {
-    // this.userService.isAuthenticated(this);
     this.router = router;
   }
 
@@ -81,14 +62,6 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
 
   onLogin() {
     if (this.email == null || this.password == null) {
-      // setTimeout(
-      //     function(){
-      //     $('.alert').fadeOut();
-      //     },
-      // 5000);
-      // this.alert = true;
-      // this.statusError = true;
-      // this.errorMessage = 'Todos os campos são obrigatórios';
       toastr.error('Todos os campos são obrigatórios');
       return;
     }
@@ -137,7 +110,6 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
         return;
       } else if (message === '1 validation error detected: Value at \'password\' failed to satisfy constraint: Member must have length greater than or equal to 6') {
         toastr.error('A senha deve conter no mínimo 6 caracteres');
-        // tslint:disable-next-line:curly
       } else if (message === '2 validation errors detected: Value at \'password\' failed to satisfy constraint: Member must have length greater than or equal to 6; Value at \'password\' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\\S]+.*[\\S]+$') {
         toastr.error('A senha deve conter ao menos uma letra maiscula e um caracter numérico.');
       } else {
@@ -155,11 +127,6 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     this.mfaData.destination = challengeParameters.CODE_DELIVERY_DESTINATION;
     this.mfaData.callback = (code: string) => {
       if (code == null || code.length === 0) {
-        setTimeout(
-          function () {
-            $('.alert').fadeOut();
-          },
-          5000);
         this.errorMessage = 'Code is required';
         return;
       }
@@ -204,5 +171,9 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     } else {
       this.emailValidator = false;
     }
+  }
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 }

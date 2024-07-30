@@ -1,145 +1,125 @@
-<div class="login-box">
+<div class="login-box" style="border: 1px solid #E5E5E5">
 	<!-- Box do login -->
 	<div *ngIf="!mfaStep">
-		<div class="login-box-body">
-			<div *ngIf="login">
-				<div class="login-logo text-center">
-					<a href="https://investplus.vc">
-						<img src="/assets/img/fcjinvestplus.png" alt="" />
-					</a>
-				</div>
-				<p class="text-center">Entre para iniciar sua sessão!</p>
-
-				<form class="form-signin" method="POST" action="#" role="form">
-					<!-- <app-form [label]="'Nome de Usuário'" [errorMessage]="'Usuário Obrigatória'"> -->
-					<div class="form-group">
-						<label class="control-label" for="signupEmail"
-							>E-mail</label
-						>
-						<input
-							(blur)="validateEmail()"
-							id="signupEmail"
-							required
-							type="email"
-							maxlength="100"
-							class="form-control"
-							[(ngModel)]="email"
-							[ngModelOptions]="{ standalone: true }"
-						/>
-						<span
-							class="glyphicon glyphicon-envelope form-control-feedback"
-						></span>
-						<span *ngIf="emailValidator" class="help-block"
-							><i class="fa fa-remove"></i> {{ emailError }}
-						</span>
-					</div>
-					<!-- </app-form> -->
-
-					<!-- <app-form [label]="'Senha'" [errorMessage]="'Senha Obrigatória'"> -->
-					<div class="form-group">
-						<label class="control-label" for="signupEmail"
-							>Senha</label
-						>
-						<input
-							id="signupPassword"
-							required
-							type="password"
-							maxlength="25"
-							class="form-control"
-							length="40"
-							[(ngModel)]="password"
-							[ngModelOptions]="{ standalone: true }"
-						/>
-						<span
-							class="glyphicon glyphicon-lock form-control-feedback"
-						></span>
-						<div class="forgot-password">
-							<a [routerLink]="['/auth/forgot']"
-								>Esqueceu sua senha?</a
-							><br />
-						</div>
-					</div>
-					<!-- </app-form> -->
-
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<div class="col-xs-6 text-center">
-								<button
-									(click)="onLogin()"
-									id="signupSubmit"
-									type="submit"
-									class="col-md-12 btn btn-primary btn-flat mr-3"
-									[disabled]="loading"
-								>
-									Entrar
-								</button>
-							</div>
-							<div class="col-xs-6 text-center">
-								<button
-									id="registerSubmit"
-									(click)="registerUser()"
-									class="col-md-12 btn btn-warning btn-flat"
-								>
-									Cadastrar-se
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
+	  <div class="login-box-body">
+		<div *ngIf="login">
+		  <div class="login-logo text-center" style="text-align: center;">
+			<a href="https://investplus.vc">
+			  <img src="/assets/img/fcjinvestplus.png" alt="" style="width: 45%; margin-top: -20%;"/>
+			</a>
+		  </div>
+		  <p style="font-weight: 400; font-size: 16px; line-height: 16px; font-family: Poppins, sans-serif; color: #5F5F5F; margin-top: -9%; margin-left: 22%; margin-bottom: 9%;">Entre para iniciar sua sessão!</p>
+  
+		  <form class="form-signin" method="POST" action="#" role="form" style="margin-left: 5%; gap: 1;">
+			<div class="form-group">
+			  <label class="control-label" for="signupEmail" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">
+				E-mail
+			  </label>
+			  <div class="input-group">
+				<input
+				  (blur)="validateEmail()"
+				  id="signupEmail"
+				  required
+				  type="email"
+				  maxlength="100"
+				  class="form-control"
+				  [(ngModel)]="email"
+				  [ngModelOptions]="{ standalone: true }"
+				  placeholder="Digite seu e-mail"
+				  style="background-color: #F5F5FA;"
+				/>
+			  </div>
+			  <span *ngIf="emailValidator" class="help-block">
+				<i class="fa fa-remove"></i> {{ emailError }}
+			  </span>
 			</div>
-			<div *ngIf="!login">
-				<form class="form-signin" method="POST" action="#" role="form">
-					<p class="login-box-msg text-center">
-						Digite por favor sua senha definitiva para entrar na
-						plataforma.
-					</p>
-					<!-- <div class="callout callout-info">
-                        <h4>Regras de segurança</h4>
-                        <p>A senha deve conter no mínimo 6 caracteres, incluindo uma letra maiúscula e um numeral.</p>
-                    </div> -->
-					<div class="form-group">
-						<label class="control-label" for="signupPassword"
-							>Digite sua nova senha *</label
-						>
-						<input
-							id="signupPassword"
-							type="password"
-							maxlength="25"
-							class="form-control"
-							placeholder="Digite pelo menos 8 caracteres"
-							length="40"
-							[(ngModel)]="registrationUser.password"
-							[ngModelOptions]="{ standalone: true }"
-						/>
-					</div>
-					<div class="form-group text-center">
-						<button
-							(click)="onRegister()"
-							id="signupSubmit"
-							type="submit"
-							class="btn btn-primary"
-						>
-							Confirmar
-						</button>
-					</div>
-					<p class="login-box-password">
-						* A senha deve conter no mínimo 6 caracteres, incluindo
-						uma letra maiúscula e um numeral.
-					</p>
-					<!-- <hr>
-                    <p>Já possui conta? <a [routerLink]="['/home/login']"> <i class="fa fa-fw fa-lock"></i>Login</a></p> -->
-				</form>
+  
+			<div class="form-group">
+			  <label class="control-label" for="signupPassword" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">
+				Senha
+			  </label>
+			  <div class="input-group">
+				<input
+				  id="signupPassword"
+				  [type]="passwordFieldType"
+				  required
+				  maxlength="25"
+				  class="form-control"
+				  [(ngModel)]="password"
+				  [ngModelOptions]="{ standalone: true }"
+				  placeholder="Digite sua senha"
+				  style="background-color: #F5F5FA; padding-right: 40px;"
+				/>
+				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
+			  </div>
+			  <div class="forgot-password" style="text-align: left; margin-top: 0.5em;">
+				<span style="font-family: Poppins, sans-serif; font-size: 13px; font-weight: 400; line-height: 16.8px; color: #38383D;">
+				  Esqueceu sua senha? 
+				  <a [routerLink]="['/auth/forgot']" style="color: #003A7D;">Clique aqui</a>
+				</span>
+			  </div>
 			</div>
+  
+			<div class="row text-center">
+			  <div style="margin-top: -0.8em;" class="col-xs-11 text-center">
+				<button
+				  (click)="onLogin()"
+				  id="signupSubmit"
+				  type="submit"
+				  class="col-md-12 btn btn-primary btn-flat mb-3"
+				  [disabled]="loading"
+				>
+				  Entrar
+				</button>
+			  </div>
+			</div>
+			<div style="margin-top: 1em; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 400; line-height: 16.8px; color: #38383D; margin-left: 3.4em;">
+				Ainda não tem uma conta? 
+				<a [routerLink]="['/auth/register']" style="color: #003A7D;">Cadastre-se agora!</a>
+			  </div>
+		  </form>
 		</div>
+		<div *ngIf="!login">
+		  <form class="form-signin" method="POST" action="#" role="form">
+			<p class="login-box-msg text-center">
+			  Digite por favor sua senha definitiva para entrar na
+			  plataforma.
+			</p>
+			<div class="form-group">
+			  <label class="control-label" for="signupPassword">
+				Digite sua nova senha *
+			  </label>
+			  <div class="input-group">
+				<input
+				  id="signupPassword"
+				  [type]="passwordFieldType"
+				  maxlength="25"
+				  class="form-control"
+				  placeholder="Digite pelo menos 8 caracteres"
+				  length="40"
+				  [(ngModel)]="registrationUser.password"
+				  [ngModelOptions]="{ standalone: true }"
+				  style="background-color: #F5F5FA; padding-right: 40px;"
+				/>
+				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
+			  </div>
+			</div>
+			<div class="form-group text-center">
+			  <button
+				(click)="onRegister()"
+				id="signupSubmit"
+				type="submit"
+				class="btn btn-primary"
+			  >
+				Confirmar
+			  </button>
+			</div>
+			<p class="login-box-password">
+			  * A senha deve conter no mínimo 6 caracteres, incluindo
+			  uma letra maiúscula e um numeral.
+			</p>
+		  </form>
+		</div>
+	  </div>
 	</div>
-
-	<!-- <div class="form-group" *ngIf="mfaStep">
-        <app-mfa [destination]="mfaData.destination" [onSubmit]="mfaData.callback"></app-mfa>
-        <hr>
-        <a (click)="cancelMFA()" href="">Cancel</a>
-    </div>
-
-    <div class="alert alert-danger alert-dismissible text-center" *ngIf="statusError">
-        <b>{{ errorMessage }}</b>
-    </div> -->
-</div>
+  </div>

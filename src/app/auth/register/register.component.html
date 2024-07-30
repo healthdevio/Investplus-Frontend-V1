@@ -1,5 +1,5 @@
 <div class="banner">
-  <div class="login-box">
+  <div class="login-box" style="border: 1px solid #E5E5E5"> 
     <div class="login-box-body">
       <div class="login-logo text-center">
         <a routerLink="/">
@@ -7,36 +7,33 @@
             src="/assets/img/fcjinvestplus.png"
             alt=""
             class="img-responsive"
+            style="width:45%; margin-top: -6%; margin-bottom: 8%; "
           />
         </a>
       </div>
       <app-loader [loader]="loader"></app-loader>
       <div *ngIf="!loader">
-        <div class="row text-box">
-          <div class="col-xs-12 text-center">
-            <a routerLink="/auth/login">
-              Já possui conta? Clique aqui para fazer login.
-            </a>
-          </div>
-        </div>
-
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <app-form
+            class="required"
             [label]="'Nome Completo'"
             [errorMessage]="'O campo nome é obrigatório'"
           >
             <input
               type="text"
+              style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
               formControlName="fullName"
               class="form-control"
             />
           </app-form>
 
           <app-form
+            class="required"
             [label]="'Usuário'"
             [errorMessage]="'O campo usuário é obrigatório'"
           >
             <input
+              style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
               type="text"
               formControlName="nickname"
               class="form-control"
@@ -44,6 +41,7 @@
           </app-form>
 
           <app-form
+            class="required"
             [label]="'E-mail'"
             [errorMessage]="'O campo e-mail é obrigatório'"
           >
@@ -51,6 +49,8 @@
           </app-form>
 
           <app-form
+            class="required"
+            style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
             [label]="'Quero investir como'"
             [errorMessage]="'Esta campo é obrigatório'"
           >
@@ -71,6 +71,7 @@
             "
           >
             <app-form
+              class="required"
               [label]="form.value.typeDocument.toUpperCase()"
               [errorMessage]="cpfValidator"
             >
@@ -100,7 +101,7 @@
 
           <div class="row">
             <div class="col-xs-12 text-center">
-              <button type="submit" [disabled]="loader" class="btn btn-warning btn-flat">
+              <button type="submit" [disabled]="loader" class="btn">
                 Cadastrar
               </button>
             </div>
