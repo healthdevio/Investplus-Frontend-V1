@@ -83,7 +83,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     },
     {
       label:
-        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 200 mil",
+        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 20 mil",
       value: "UP_TO_10_THOUSAND",
       // tslint:disable-next-line:max-line-length
       span:
