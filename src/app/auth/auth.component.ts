@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, DoCheck } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 declare var $: any;
 
@@ -9,6 +9,8 @@ declare var $: any;
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit, DoCheck {
+
+  showBackArrow: boolean = false;
 
   constructor(
     private router: Router
@@ -20,6 +22,22 @@ export class AuthComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.normalizeHeigth();
+    
+    this.checkCurrentRoute(this.router.url);
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.checkCurrentRoute(event.urlAfterRedirects);
+      }
+    });
+  }
+
+  checkCurrentRoute(url: string): void {
+    this.showBackArrow = url.includes('/auth/register');
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/auth/login']);
   }
 
   normalizeHeigth() {
