@@ -24,6 +24,8 @@
               style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
               formControlName="fullName"
               class="form-control"
+              style="background-color: #F5F5FA; border: none; padding: 15px;"
+              placeholder="Digite aqui o seu nome"
             />
           </app-form>
 
@@ -37,6 +39,8 @@
               type="text"
               formControlName="nickname"
               class="form-control"
+              style="background-color: #F5F5FA; border: none; padding: 15px;"
+              placeholder="Digite aqui o seu nome de usuário"
             />
           </app-form>
 
@@ -45,57 +49,39 @@
             [label]="'E-mail'"
             [errorMessage]="'O campo e-mail é obrigatório'"
           >
-            <input type="email" formControlName="email" class="form-control" />
+            <input type="email" formControlName="email" class="form-control" style="background-color: #F5F5FA; border: none; padding: 15px;" placeholder="Digite aqui o seu e-mail" />
           </app-form>
 
           <app-form
-            class="required"
-            style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
-            [label]="'Quero investir como'"
-            [errorMessage]="'Esta campo é obrigatório'"
-          >
-            <select
-              formControlName="typeDocument"
-              (change)="changeDocument(form.value.typeDocument)"
-              class="form-control"
-            >
-              <option [ngValue]="null">Selecione uma opção...</option>
-              <option value="cpf">Pessoa física</option>
-              <option value="cnpj">Pessoa jurídica</option>
-            </select>
-          </app-form>
-
-          <div
-            *ngIf="
-              form.value.typeDocument != null && form.value.typeDocument != ''
-            "
-          >
-            <app-form
-              class="required"
-              [label]="form.value.typeDocument.toUpperCase()"
-              [errorMessage]="cpfValidator"
-            >
-              <input
-                type="text"
-                (blur)="validate()"
-                formControlName="document"
-                class="form-control {{ documentClass }}"
-              />
-            </app-form>
+          class="required"
+          style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
+          [label]="'Quero investir como'"
+          [errorMessage]="'Esta campo é obrigatório'"
+        >
+          <div class="invest-buttons">
+            <button style="font-weight: bold;" type="button" (click)="selectType('cpf')" [class.selected]="form.value.typeDocument === 'cpf'">Pessoa Física</button>
+            <button style="font-weight: bold;" type="button" (click)="selectType('cnpj')" [class.selected]="form.value.typeDocument === 'cnpj'">Pessoa Jurídica</button>
           </div>
+        </app-form>
+
+        <div *ngIf="form.value.typeDocument">
+          <app-form
+            class="required"
+            [label]="form.value.typeDocument.toUpperCase()"
+            [errorMessage]="cpfValidator"
+          >
+            <input
+              type="text"
+              (blur)="validate()"
+              formControlName="document"
+              class="form-control {{ documentClass }}"
+              style="background-color: #F5F5FA; border: none; padding: 15px;"
+            />
+          </app-form>
+        </div>
 
           <div class="row text-box-footer">
             <div class="col-xs-12 text-center">
-              <div class="form-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    formControlName="termosGerais"
-                    class="flat-red"
-                  />
-                  Li e concordo com os <general-terms></general-terms>
-                </label>
-              </div>
             </div>
           </div>
 
@@ -105,6 +91,17 @@
                 Cadastrar
               </button>
             </div>
+          </div>
+          <div class="form-group" style="text-align: center; margin-top: 3%;">
+              <label>
+                  <input
+                      type="checkbox"
+                      formControlName="termosGerais"
+                      class="styled-checkbox"
+                      id="termosGerais"
+                  />
+                  <label for="termosGerais" class="checkbox-label">Li e concordo com os <general-terms></general-terms></label>
+              </label>
           </div>
         </form>
       </div>

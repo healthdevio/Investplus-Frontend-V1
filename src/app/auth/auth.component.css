@@ -21,6 +21,7 @@
     background-color: #F6F6F6; 
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
 }
 #toast-container>div {
     position: relative;
@@ -46,4 +47,12 @@
 }
 #toast-container>.toast-error {
     background-image: none !important;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    text-decoration: none;
 }

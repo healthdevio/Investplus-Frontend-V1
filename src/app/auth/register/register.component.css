@@ -51,7 +51,7 @@
   cursor: pointer !important;
   display: inline-block !important;
   margin-top: 5px !important;
-  padding: 10px !important; /* Use espaço ao invés de vírgulas */
+  padding: 15px !important;
   width: 100% !important;
   height: 20% !important;
   background: #1087A0 !important;
@@ -105,4 +105,103 @@ legend {
   font-size: 14px;
   color: #333;
   border: 0;
+}
+
+input::placeholder {
+	font-family: Poppins, sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 16px;
+	color: #808089;
+  }
+  
+  .input-group {
+	display: flex;
+	align-items: center;
+	width: 94%;
+	position: relative;
+  }
+  
+  .input-group .form-control {
+	flex: 1;
+	border: none;
+	height: 3em;
+	border-radius: 14px;
+	background-color: #F5F5FA;
+	padding-right: 40px; 
+  }
+
+  .checkbox-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.8px;
+    color: #38383D;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+
+  .styled-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .styled-checkbox + .checkbox-label:before {
+    content: '';
+    display: inline-block;
+    margin-bottom: 1%;
+    width: 14px;
+    height: 14px;
+    background: #e1f6fc;
+    border: 1px solid #1088a047;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+    text-align: center; /* Centraliza o "X" */
+    line-height: 14px; /* Ajusta a posição vertical do "X" */
+  }
+
+  .styled-checkbox:checked + .checkbox-label:before {
+    background: #e1f6fc;
+    border: 1px solid #1088a047;
+    position: relative;
+    content: 'X';
+    font-size: 10px;
+    color: #1087A0;
+    margin-bottom: 1%;
+  }
+
+  .styled-checkbox:checked + .checkbox-label:after {
+    content: '';
+    display: none;
+  }
+
+  .invest-buttons button {
+    width: 40%;
+    margin-right: 3%;
+    height: 40px;
+    font-weight: 500;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 10px;
+    border: 0px solid #e5e5e5;
+    background: #085DC11A;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #085DC1;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.invest-buttons button.selected {
+    background: #085DC1;
+    color: #ffffff;
+}
+
+.invest-buttons button:hover {
+    background: #085DC1;
+    color: #ffffff;
 }

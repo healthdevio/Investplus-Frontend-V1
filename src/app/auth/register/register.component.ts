@@ -121,15 +121,15 @@ export class RegisterComponent implements OnInit {
       if (digito1 > 9) {
         digito1 = 0;
       }
-      j = 11;
       somatorio = 0;
-      cpfAux = cpfAux + digito1;
+      j = 10; 
+      
       for (let i = 0; i < 10; i++) {
-        caracter = cpfAux.charAt(i);
-        numero = Number(caracter);
-        somatorio = somatorio + (numero * j);
+        let caracter = cpfAux.charAt(i);
+        let numero = Number(caracter);
+        somatorio += numero * j;
         j--;
-      }
+      }      
       resto = somatorio % 11;
       digito2 = 11 - resto;
       if (digito2 > 9) {
@@ -233,8 +233,6 @@ export class RegisterComponent implements OnInit {
     this.loader = true;
     this.loaderService.load(this.loader);
     if (this.form.valid && this.form.value.termosGerais === true && this.form.value.typeDocument !== null) {
-      // const aux = this.form.value.typeDocument;
-      // dataSend.cpf = this.unmaskInput(this.form.controls['document'].value);
       const dataSend = this.form.value;
       dataSend.termosGerais = undefined;
       dataSend.typeDocument = undefined;
@@ -297,13 +295,20 @@ export class RegisterComponent implements OnInit {
         );
 
       }
-
-      
     } else {
       this.loader = false;
       this.loaderService.load(this.loader);
       toastr.error('Todos os campos devem ser preenchidos.');
     }
+  }
+
+  selectType(type: string): void {
+    if (this.form.value.typeDocument === type) {
+      this.form.patchValue({ typeDocument: null });
+    } else {
+      this.form.patchValue({ typeDocument: type });
+    }
+    this.changeDocument(type);
   }
 
   changeDocument(input) {
@@ -316,5 +321,4 @@ export class RegisterComponent implements OnInit {
       }, 500);
     }
   }
-
 }
