@@ -83,7 +83,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     },
     {
       label:
-        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 200 mil",
+        "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 20 mil",
       value: "UP_TO_10_THOUSAND",
       // tslint:disable-next-line:max-line-length
       span:
@@ -159,9 +159,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
-      accountBank: [null, [Validators.required]],
-      accountAgency: [null, [Validators.required]],
-      accountNumber: [null, [Validators.required]],
+      // accountBank: [null, [Validators.required]],
+      // accountAgency: [null, [Validators.required]],
+      // accountNumber: [null, [Validators.required]],
     });
   }
 
