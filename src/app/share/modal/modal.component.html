@@ -3,7 +3,7 @@
     <ng-content></ng-content>
   </div>
   <div class="mmodal-footer">
-    <button type="button" class="mmodal-close btn btn-warning">Fechar</button>
+    <button type="button" class="mmodal-close btn btn-warning" (click)="close()">Fechar</button>
   </div>
 </div>
-<div class="mmodal-background"></div>
+<div class="mmodal-background" (click)="close()"></div>

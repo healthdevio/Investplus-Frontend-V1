@@ -57,7 +57,7 @@
             [label]="'Quero investir como'"
             [errorMessage]="'Esta campo é obrigatório'"
           >
-            <label style="font-family: Poppins, sans-serif; font-weight: 400; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">Quero investir como</label>
+            <label style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 13px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">Quero investir como</label>
             <div class="invest-buttons">
               <button style="font-weight: 600;" type="button" (click)="selectType('cpf')" [class.selected]="form.value.typeDocument === 'cpf'">Pessoa Física</button>
               <button style="font-weight: 600;" type="button" (click)="selectType('cnpj')" [class.selected]="form.value.typeDocument === 'cnpj'">Pessoa Jurídica</button>
@@ -73,6 +73,7 @@
               <input
                 type="text"
                 (blur)="validate()"
+                [placeholder]="'Insira aqui o seu ' + form.value.typeDocument.toUpperCase()"
                 formControlName="document"
                 class="form-control {{ documentClass }}"
                 style="background-color: #F5F5FA; border: none; padding: 15px;"
