@@ -9,7 +9,6 @@ export class ModalComponent implements OnInit {
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
-    // Seleciona os elementos separadamente e adiciona os eventos de clique
     const background = this.el.nativeElement.querySelector(".mmodal-background");
     const closeButton = this.el.nativeElement.querySelector(".mmodal-close");
 
