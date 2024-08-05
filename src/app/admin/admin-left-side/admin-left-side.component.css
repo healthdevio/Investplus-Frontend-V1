@@ -101,7 +101,8 @@
 }
 
 .circle-arrow {
-  width: 9%;
+  width: 24px;
+  height: 24px;
   border: 1px solid #606060;
   background-color: #202022;
   border-radius: 50%;
@@ -180,11 +181,7 @@
 }
 
 .sidebar-divider {
-  width: 85% !important;
+  width: 85%;
   background: #353535 !important;
-  color: #353535 !important;
-  border: none !important; 
-  height: 1px !important;
-  margin: 1rem auto !important; 
+  margin: 1rem auto;
 }
-
