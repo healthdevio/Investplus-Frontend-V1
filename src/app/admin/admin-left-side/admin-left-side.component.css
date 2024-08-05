@@ -1,47 +1,57 @@
-.main-sidebar {
-  background: #202022 !important;
-  border-right: 1px solid #E5E5E5;
-}
-
-.sidebar {
-  padding-bottom: 50px;
-}
-
-.sidebar-menu > li:hover > a,
-.sidebar-menu > li.active > a {
-  color: #fff !important;
-  font-weight: 400 !important;
-  font-size: 14px !important;
-  position: relative !important;
-  padding-left: 10%;
-  background: none !important; 
-  border-left: none !important;
-}
-
-.sidebar-menu > li:hover > a::before,
-.sidebar-menu > li.active > a::before {
-  content: '';
-  position: absolute;
-  width: 85%;
-  left: 6%;
-  top: 0;
-  height: 100%;
-  background: #FFFFFF14 !important;
-  border-radius: 8px;
-  z-index: 1; 
-}
-
-.sidebar a {
-  color: #BFBFBF;
-  font-size: 14px;
-}
-
-.sidebar-menu > li.header {
+.header-menu {
+  color: #0e6a77;
   text-align: left;
   background: #fff;
   font-weight: 600;
   text-transform: uppercase;
-  margin: 10px;
+  margin: 0px;
+  padding-top: 10px;
+  font-size: 12px;
+}
+
+.sidebar {
+  padding-bottom: 50px;
+  margin-top: 15px;
+}
+
+.main-sidebar {
+  background-color: #fff !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-menu > li:hover > a,
+.sidebar-menu > li.active > a {
+  color: #fff;
+  background: #3d7b86;
+  border-left-color: #3d7b86;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+/* .sidebar-menu>li.active>a::before {
+  color: #0e6a77;
+  content: "›";
+  margin-right: 3px;
+  position: absolute;
+  left: 11px;
+  top: 10px;
+  font-weight: 900;
+} */
+
+.sidebar a {
+  color: #333;
+  font-size: 14px;
+}
+
+.sidebar-menu > li.header {
+  color: #0e6a77;
+  text-align: left;
+  background: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-top: 1px solid #ddd;
+  margin: 10px 10px 0px 10px;
   padding-top: 20px;
 }
 
@@ -58,9 +68,24 @@
   padding: 6px 13px;
 }
 
-.sidebar-menu > li:hover > a span,
-.sidebar-menu > li.active > a span {
-  color: white !important; 
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side {
+  background-color: #286268 !important;
+}
+
+.sidebar-menu > li:hover > a,
+.sidebar-menu > li.active > a {
+  color: #2e7e89;
+  background: #fff;
+  border-left-color: #fff;
+  font-weight: 560;
+  font-size: 14px;
+}
+
+.skin-blue .treeview-menu > li.active > a,
+.skin-blue .treeview-menu > li > a:hover {
+  color: #444 !important;
 }
 
 .skin-blue .treeview-menu > li.active > a,
@@ -96,92 +121,4 @@
 .sidebar-menu > li > a {
   padding: 11px 5px 11px 20px;
   display: block;
-  position: relative;
-  background: none !important; 
-}
-
-.circle-arrow {
-  width: 24px;
-  height: 24px;
-  border: 1px solid #606060;
-  background-color: #202022;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.circle-arrow i {
-  color: #fff;
-  font-size: 18px;
-}
-
-.menu-text {
-  font-family: Poppins, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 14px;
-  text-align: left;
-  color: #BFBFBF;
-}
-
-.header-menu {
-  font-family: Poppins, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 14px;
-  text-align: left;
-  color: #BFBFBF;
-}
-
-.invest-buttons {
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: #171719;
-  padding: 4px;
-  border-radius: 7px;
-}
-
-.invest-button {
-  flex: 1;
-  font-weight: 600;
-  background-color: #171719;
-  color: #fff;
-  border: none;
-  padding: 8px;
-  margin-right: 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: Poppins, sans-serif;
-  font-size: 13.5px;
-  line-height: 16px;
-  text-align: center;
-}
-
-.invest-button.active {
-  background-color: #00A8E7;
-  color: #fff;
-}
-
-.invest-button:not(.active):hover {
-  background-color: #171719;
-  border-radius: 5px;
-  padding: 6px;
-  color: #fff !important;
-}
-
-.invest-button.active:hover {
-  border-radius: 5px;
-  padding: 6px;
-  color: #fff !important;
-}
-
-.sidebar-divider {
-  width: 85%;
-  background: #353535 !important;
-  margin: 1rem auto;
 }
