@@ -24,7 +24,7 @@
               style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;"
               formControlName="fullName"
               class="form-control"
-              style="background-color: #F5F5FA; border: none; padding: 40px;"
+              style="background-color: #F5F5FA; border: none; padding: 20px;"
               placeholder="Digite aqui o seu nome"
             />
           </app-form>
@@ -39,7 +39,7 @@
               type="text"
               formControlName="nickname"
               class="form-control"
-              style="background-color: #F5F5FA; border: none; padding: 40px;"
+              style="background-color: #F5F5FA; border: none; padding: 20px;"
               placeholder="Digite aqui o seu nome de usuário"
             />
           </app-form>
@@ -49,7 +49,7 @@
             [label]="'E-mail'"
             [errorMessage]="'O campo e-mail é obrigatório'"
           >
-            <input type="email" formControlName="email" class="form-control" style="background-color: #F5F5FA; border: none; padding: 40px;" placeholder="Digite aqui o seu e-mail" />
+            <input type="email" formControlName="email" class="form-control" style="background-color: #F5F5FA; border: none; padding: 20px;" placeholder="Digite aqui o seu e-mail" />
           </app-form>
 
           <app-form
@@ -76,7 +76,7 @@
                 [placeholder]="'Insira aqui o seu ' + form.value.typeDocument.toUpperCase()"
                 formControlName="document"
                 class="form-control {{ documentClass }}"
-                style="background-color: #F5F5FA; border: none; padding: 40px;"
+                style="background-color: #F5F5FA; border: none; padding: 20px;"
               />
             </app-form>
           </div>

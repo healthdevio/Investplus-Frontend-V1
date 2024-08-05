@@ -159,11 +159,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
-      // accountBank: [null, [Validators.required]],
-      // accountAgency: [null, [Validators.required]],
-      // accountNumber: [null, [Validators.required]],
+      accountBank: [null, [Validators.required]],
+      accountAgency: [null, [Validators.required]],
+      accountNumber: [null, [Validators.required]],
     });
-  }
+  }  
 
   getUser() {
     this.loader = true;
@@ -223,9 +223,17 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.form.controls["cpfResponsible"].setValue(
           this.cpfMask.transform(response.cpfResponsible)
         );
-        this.form.controls["accountAgency"].setValue(response.accountAgency);
-        this.form.controls["accountBank"].setValue(response.accountBank);
-        this.form.controls["accountNumber"].setValue(response.accountNumber);
+        if (this.form.controls["accountAgency"]) {
+          this.form.controls["accountAgency"].setValue(response?.accountAgency);
+        }
+        
+        if (this.form.controls["accountBank"]) {
+            this.form.controls["accountBank"].setValue(response?.accountBank);
+        }
+        
+        if (this.form.controls["accountNumber"]) {
+            this.form.controls["accountNumber"].setValue(response?.accountNumber);
+        }
         this.descriptionCity = response.address.city;
         this.descriptionSite = response.personalWebsite;
         this.facebook = response.facebook;
