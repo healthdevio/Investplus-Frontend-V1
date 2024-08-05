@@ -16,6 +16,8 @@ export class AdminLeftSideComponent implements OnInit {
   scopesUser = [];
   investor: Investor;
   base64textString = '';
+  activeButton: string = 'start';
+  isCollapsed = false;
 
   constructor(
     private cognitoUtil: CognitoUtil,
@@ -53,10 +55,12 @@ export class AdminLeftSideComponent implements OnInit {
     // });
   }
 
-  activeButton: string = 'start';
 
   setActiveButton(buttonType: string) {
     this.activeButton = buttonType;
   }
 
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

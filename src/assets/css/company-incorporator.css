@@ -340,3 +340,22 @@
     font-family: "Montserrat", sans-serif !important;
   }
   
+  .btn-upangel {
+    background-color: #035A7A; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+    text-align: left;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0ms;
+  }
+  
+  .btn-upangel:hover {
+    background-color: darken(#035A7A, 2%);
+  }
+  
