@@ -26,7 +26,7 @@
 				  [(ngModel)]="email"
 				  [ngModelOptions]="{ standalone: true }"
 				  placeholder="Digite seu e-mail"
-				  style="background-color: #F5F5FA; padding: 40px;"
+				  style="background-color: #F5F5FA;"
 				/>
 			  </div>
 			  <span *ngIf="emailValidator" class="help-block">
@@ -48,7 +48,7 @@
 				  [(ngModel)]="password"
 				  [ngModelOptions]="{ standalone: true }"
 				  placeholder="Digite sua senha"
-				  style="background-color: #F5F5FA; padding: 40px;"
+				  style="background-color: #F5F5FA; padding-right: 40px;"
 				/>
 				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
 			  </div>
@@ -99,7 +99,7 @@
 				  length="40"
 				  [(ngModel)]="registrationUser.password"
 				  [ngModelOptions]="{ standalone: true }"
-				  style="background-color: #F5F5FA; padding: 40px;"
+				  style="background-color: #F5F5FA; padding-right: 40px;"
 				/>
 				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
 			  </div>

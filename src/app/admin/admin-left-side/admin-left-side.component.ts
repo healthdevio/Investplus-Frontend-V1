@@ -53,4 +53,10 @@ export class AdminLeftSideComponent implements OnInit {
     // });
   }
 
+  activeButton: string = 'start';
+
+  setActiveButton(buttonType: string) {
+    this.activeButton = buttonType;
+  }
+
 }

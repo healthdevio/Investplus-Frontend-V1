@@ -159,9 +159,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
-      // accountBank: [null, [Validators.required]],
-      // accountAgency: [null, [Validators.required]],
-      // accountNumber: [null, [Validators.required]],
+      accountBank: [null, [Validators.required]],
+      accountAgency: [null, [Validators.required]],
+      accountNumber: [null, [Validators.required]],
     });
   }  
 
