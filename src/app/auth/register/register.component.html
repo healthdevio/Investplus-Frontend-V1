@@ -11,7 +11,9 @@
           />
         </a>
       </div>
-      <app-loader [loader]="loader"></app-loader>
+      <div *ngIf="loader" class="loader-overlay">
+        <div class="spinner"></div>
+      </div>
       <div *ngIf="!loader">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <app-form
@@ -54,7 +56,6 @@
 
           <app-form
             class="required"
-            [label]="'Quero investir como'"
             [errorMessage]="'Esta campo é obrigatório'"
           >
             <label style="font-family: Poppins, sans-serif; font-weight: 600; font-size: 13px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">Quero investir como</label>
