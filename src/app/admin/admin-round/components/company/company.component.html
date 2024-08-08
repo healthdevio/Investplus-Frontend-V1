@@ -1,17 +1,38 @@
-<div class="box box-widget widget-user" *ngIf="company">
+<div class="box box-widget widget-user" style="width: 492px;
+height: 400px; border-radius: 8px;
+border: 1px solid #E5E5E5;
+background: #FFF;
+flex-shrink: 0; gap: 100px;" *ngIf="company">
   <div class="box-header">
     <div class="row">
       <div class="col-xs-3 col-md-3">
-        <img width="80px" height="80px" class="img-logo" [src]="company.round?.docLogo" alt="Logo">
+        <img style="width: 56px;
+        height: 56px;
+        flex-shrink: 0; border-radius: 56px;
+        border: 1px solid #E5E5E5;
+        background: url(<path-to-image>) lightgray 4.379px 11.728px / 82.062% 58.929% no-repeat;" [src]="company.round?.docLogo" alt="Logo">
       </div>
       <div class="col-xs-6 col-md-6">
-        <h4>{{company.name}}</h4>
-        <h4>{{maskStatus(company.round?.status)}}</h4>
+        <h4 class="companyname">{{company.name}}</h4>
+        <h4 class="roundstatus">{{maskStatus(company.round?.status)}}</h4>
         <h4 class="display-filter">{{ company.round?.status }}</h4>
       </div>
-      <div class="col-xs-3 col-md-3">
-        <p class="description-title-3">VLR.MÍNIMO</p>
-        <p class="description-title-4">{{company.round?.quotaValue | moneyMask}}</p>
+      <div class="col-xs-3 col-md-3 text-right">
+        <p class="description-title-3" style="font-family: Poppins, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 12px;
+        text-align: left;
+        color: #505050;
+        ">Valor min.</p>
+        <p class="description-title-4" style="font-family: Poppins, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        text-align: left;
+        color: #035A7A;
+        width: 130%;
+        ">{{company.round?.quotaValue | moneyMask: true}}</p>
       </div>
     </div>
   </div>
@@ -19,34 +40,33 @@
     <div class="row">
       <div class="col-sm-12">
         <ul class="list-group list-group-unbordered">
-          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
-            <span class="description-text">MODALIDADE</span> <a class="details pull-right">{{company.round?.modality ==
-              undefined ? '--' : maskModality(company.round?.modality)}}</a>
+          <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <span class="description-text">Modalidade</span> 
+            <a class="newdetails pull-right">{{company.round?.modality == undefined ? '--' : maskModality(company.round?.modality)}}</a>
           </li>
-          <li *ngIf="company.round?.status == 'IN_PROGRESS'" style="border-bottom: 1px solid #eee;"
-            class="list-group-item">
-            <span class="description-text">PRAZO MÁXIMO</span> <a class="details pull-right">{{company.round?.deadline +
-              ' ANO(S)'}}</a>
+          <li *ngIf="company.round?.status == 'IN_PROGRESS'" style="border-bottom: 1px solid #eee;" class="list-group-item">
+            <span class="description-text">Prazo máximo</span> 
+            <a class="newdetails pull-right">{{company.round?.deadline + ' ANO(S)'}}</a>
           </li>
-          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
-            <span class="description-text">PARTICIPAÇÃO POR COTA</span> 
-            <a class="details pull-right">
+          <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <span class="description-text">Participação por cota</span> 
+            <a class="newdetails pull-right">
               <span *ngIf="company.round?.modality != 'SAFE'">
                 {{ formatParticipation(company.round?.partnerParticipation / company?.round?.quotas) }}
               </span>
               <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
             </a>
           </li>
-          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
-            <span class="description-text">VALUATION</span>
-            <a class="details pull-right">
+          <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <span class="description-text">Valuation</span>
+            <a class="newdetails pull-right">
               <span *ngIf="company.round?.modality != 'SAFE'">R$ {{company?.valuation?.current | moneyMask}}</span>
               <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">20% Desconto, Máx. 7,8 Milhões</span>
             </a>
           </li>
-          <li style="border-bottom: 1px solid #eee;" class="list-group-item">
-            <span class="description-text">PARTICIPAÇÃO TOTAL</span>
-            <a class="details pull-right">
+          <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <span class="description-text">Participação total</span>
+            <a class="newdetails pull-right">
               <span *ngIf="company.round?.modality != 'SAFE'">{{company?.round?.partnerParticipation * 100}}%</span>
               <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
             </a>
@@ -74,7 +94,7 @@
       <div class="col-sm-12 text-center">
         <a *ngIf="company.round?.status == 'IN_PROGRESS'"
         [routerLink]="['../../company', company?.id, 'round', company.round?.id]"
-        (click)="handleClick()" class="btn-upangel">Investir+</a>      
+        (click)="handleClick()" class="btn-upangel">Investir +</a>      
         <a *ngIf="company.round?.status == 'FINISHED'"
           [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" class="btn-upangel">Gestão de
           indicadores</a>

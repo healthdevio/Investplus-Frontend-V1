@@ -1,6 +1,9 @@
 .main-sidebar {
+  width: 18.75rem !important;
+  height: 67.5rem !important;
+  flex-shrink: 0 !important;
+  border-right: 1px solid #E5E5E5 !important;
   background: #202022 !important;
-  border-right: 1px solid #E5E5E5;
 }
 
 .sidebar {
@@ -135,49 +138,6 @@
   color: #BFBFBF;
 }
 
-.invest-buttons {
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: #171719;
-  padding: 4px;
-  border-radius: 7px;
-}
-
-.invest-button {
-  flex: 1;
-  font-weight: 600;
-  background-color: #171719;
-  color: #fff;
-  border: none;
-  padding: 8px;
-  margin-right: 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: Poppins, sans-serif;
-  font-size: 13.5px;
-  line-height: 16px;
-  text-align: center;
-}
-
-.invest-button.active {
-  background-color: #00A8E7;
-  color: #fff;
-}
-
-.invest-button:not(.active):hover {
-  background-color: #171719;
-  border-radius: 5px;
-  padding: 6px;
-  color: #fff !important;
-}
-
-.invest-button.active:hover {
-  border-radius: 5px;
-  padding: 6px;
-  color: #fff !important;
-}
 
 .sidebar-divider {
   width: 85% !important;
@@ -188,3 +148,41 @@
   margin: 1rem auto !important; 
 }
 
+.invest-buttons {
+  text-align: center;
+  width: 17.1rem; /* 40% de aumento de 12.1875rem */
+  height: 3rem; /* 40% de aumento de 1.875rem */
+  margin-left: 3.6%;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: #171719;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.invest-buttons button {
+  width: 8.09rem; /* 40% de aumento de 5.71875rem */
+  height: 2.4rem; /* 40% de aumento de 1.5rem */
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  font-family: Poppins, sans-serif;
+  font-size: 1.4rem; /* 40% de aumento de 0.75rem */
+  font-style: normal;
+  line-height: 100%;
+  cursor: pointer;
+  border: none;
+}
+
+.invest-buttons button.active {
+  background: #00A8E7;
+  color: #171719;
+  font-weight: 500;
+}
+
+.invest-buttons button:not(.active) {
+  background: transparent;
+  color: #E1E1E1;
+  font-weight: 400;
+}

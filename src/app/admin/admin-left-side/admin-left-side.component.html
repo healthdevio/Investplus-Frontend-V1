@@ -2,14 +2,14 @@
   <img src="../../../assets/img/logofigmadash.png" style="width: 43%; margin-left: 9%; margin-bottom: 2%; margin-top: -22%;">
   <section class="sidebar">
     <app-form class="required" [errorMessage]="'Esta campo é obrigatório'" >
-      <div class="invest-buttons" style="text-align: center;">
-        <button class="invest-button" [class.active]="activeButton === 'start'" (click)="setActiveButton('start')" type="button">
-         Startup
+      <div class="invest-buttons">
+        <button [class.active]="activeButton === 'start'" (click)="setActiveButton('start')" type="button">
+          Startup
         </button>
-        <button class="invest-button" [class.active]="activeButton === 'imob'" (click)="setActiveButton('imob')" type="button">
-         Imobiliário
+        <button [class.active]="activeButton === 'imob'" (click)="setActiveButton('imob')" type="button">
+          Imobiliário
         </button>
-      </div>
+      </div>      
     </app-form>    
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
       <div class="circle-arrow" style="font-family: Poppins, sans-serif; color: #909090; margin-left: 95%;">

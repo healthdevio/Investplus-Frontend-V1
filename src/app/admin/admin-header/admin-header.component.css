@@ -1,27 +1,10 @@
 .main-header {
 	/* box-shadow: 1px 0 12px #888; */
-	border-width: 0px, 1px, 1px, 1px;
-	border-style: solid;
-	border-color: #E5E5E5;
-}
-
-.main-header .logo {
-	/*background-color: #2e7e89;*/
-	background-color: #04a7c7;
-	color: #fff;
-	border-bottom: 0 solid transparent;
-	text-align: left !important;
-}
-
-.main-header .navbar {
-	/*background-color: #2e7e89;*/
-	background-color: #FFFFFF;
-}
-
-.logo-lg img {
-	margin-top: -5px;
-	width: 1999px;
-}
+	border-right: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+	border-left: 1px solid #E5E5E5;
+	background: #FFF;
+}	
 
 .logo-mini img {
 	width: 40px;
@@ -182,4 +165,8 @@ p {
 
 .main-header .logo {
 	height: 51px !important;
+}
+
+.settingandbellsbox{
+
 }
