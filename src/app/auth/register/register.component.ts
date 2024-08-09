@@ -136,13 +136,6 @@ export class RegisterComponent implements OnInit {
         digito2 = 0;
       }
       cpfAux = cpfAux + digito2;
-      if (cpf !== cpfAux) {
-        this.form.controls['document'].setValue('');
-        toastr.error('CPF inválido.');
-        return false;
-      } else {
-        return true;
-      }
   }
 
   is_cnpj(cnpj) {
@@ -264,7 +257,7 @@ export class RegisterComponent implements OnInit {
                 ok: {
                   label: 'Fechar',
                   className: 'bg-upangel',
-                  callback: function () {}
+                  callback: function () { }
                 }
               }
             });
