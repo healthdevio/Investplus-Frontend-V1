@@ -68,159 +68,74 @@ export class RegisterComponent implements OnInit {
       this.validateCnpj(document);
     } else {
       const tipoDocumento = this.form.controls['typeDocument'].value;
-      this.form.controls['document'].setValue('');
       toastr.error('Por favor insira o ' + tipoDocumento + '.');
       return false;
     }
   }
 
   validateCpf(cpf) {
-      if (cpf === '') {
-        this.form.controls['document'].setValue('');
-        toastr.error('Por favor insira seu CPF.');
-        return false;
-      }
-      if (cpf == null) {
-        this.form.controls['document'].setValue('');
-        toastr.error('CPF inválido.');
-        return false;
-      }
-      if (cpf.length !== 11) {
-        this.form.controls['document'].setValue('');
-        toastr.error('CPF inválido.');
-        return false;
-      }
-      if ((cpf === '00000000000') || (cpf === '11111111111') || (cpf === '22222222222') || (cpf === '33333333333') || (cpf === '44444444444') || (cpf === '55555555555') || (cpf === '66666666666') || (cpf === '77777777777') || (cpf === '88888888888') || (cpf === '99999999999')) {
-        this.form.controls['document'].setValue('');
-        toastr.error('CPF inválido.');
-        return false;
-      }
-      let numero = 0;
-      let caracter = '';
-      const numeros = '0123456789';
-      let j = 10;
-      let somatorio = 0;
-      let resto = 0;
-      let digito1 = 0;
-      let digito2 = 0;
-      let cpfAux = '';
-      cpfAux = cpf.substring(0, 9);
-      for (let i = 0; i < 9; i++) {
-        caracter = cpfAux.charAt(i);
-        if (numeros.search(caracter) === -1) {
-          this.form.controls['document'].setValue('');
-          toastr.error('CPF inválido.');
-          return false;
-        }
-        numero = Number(caracter);
-        somatorio = somatorio + (numero * j);
-        j--;
-      }
-      resto = somatorio % 11;
-      digito1 = 11 - resto;
-      if (digito1 > 9) {
-        digito1 = 0;
-      }
-      somatorio = 0;
-      j = 10; 
-      
-      for (let i = 0; i < 10; i++) {
-        let caracter = cpfAux.charAt(i);
-        let numero = Number(caracter);
-        somatorio += numero * j;
-        j--;
-      }      
-      resto = somatorio % 11;
-      digito2 = 11 - resto;
-      if (digito2 > 9) {
-        digito2 = 0;
-      }
-      cpfAux = cpfAux + digito2;
-  }
-
-  is_cnpj(cnpj) {
-    if (cnpj === '') {
-      this.form.controls['document'].setValue('');
-      toastr.error('Por favor insira seu CNPJ.');
+    if (cpf === '' || cpf == null || cpf.length !== 11 || /(\d)\1{10}/.test(cpf)) {
+      toastr.error('CPF inválido.');
       return false;
     }
-    if (cnpj === null) {
-      this.form.controls['document'].setValue('');
-      toastr.error('CNPJ inválido.');
+    let sum = 0;
+    let remainder;
+    for (let i = 1; i <= 9; i++) {
+      sum += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if ((remainder === 10) || (remainder === 11)) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(9, 10), 10)) {
+      toastr.error('CPF inválido.');
       return false;
     }
-    if (cnpj.length !== 14) {
-      this.form.controls['document'].setValue('');
-      toastr.error('CNPJ inválido.');
-      return false;
+    sum = 0;
+    for (let i = 1; i <= 10; i++) {
+      sum += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
     }
-    if (cnpj === '00000000000000' || cnpj === '11111111111111' || cnpj === '22222222222222' || cnpj === '33333333333333' || cnpj === '44444444444444' || cnpj === '55555555555555' || cnpj === '66666666666666' || cnpj === '77777777777777' || cnpj === '88888888888888' || cnpj === '99999999999999') {
-      this.form.controls['document'].setValue('');
-      toastr.error('CNPJ inválido.');
-      return false;
-    }
-    let tamanho = cnpj.length - 2;
-    let numeros = cnpj.substring(0, tamanho);
-    let digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2) {
-        pos = 9;
-      }
-    }
-    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado !== digitos.charAt(0)) {
-      this.form.controls['document'].setValue('');
-      toastr.error('CNPJ inválido.');
-      return false;
-    }
-    tamanho = tamanho + 1;
-    numeros = cnpj.substring(0, tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2) {
-        pos = 9;
-      }
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado !== digitos.charAt(1)) {
-      this.form.controls['document'].setValue('');
-      toastr.error('CNPJ inválido.');
+    remainder = (sum * 10) % 11;
+    if ((remainder === 10) || (remainder === 11)) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(10, 11), 10)) {
+      toastr.error('CPF inválido.');
       return false;
     }
     return true;
   }
 
-  validateCnpj(c) {
-      var b = [6,5,4,3,2,9,8,7,6,5,4,3,2];
-      if((c = c.replace(/[^\d]/g,"")).length != 14) {
-        toastr.error('CNPJ inválido.');
-        this.form.controls['document'].setValue('');
-        return false;
-      }
-      if(/0{14}/.test(c)) {
-        toastr.error('CNPJ inválido.');
-        this.form.controls['document'].setValue('');
-        return false;
-      }
-      for (var i = 0, n = 0; i < 12; n += c[i] * b[++i]);
-        if(c[12] != (((n %= 11) < 2) ? 0 : 11 - n)) {
-          toastr.error('CNPJ inválido.');
-          this.form.controls['document'].setValue('');
-          return false;
-        }
-      for (var i = 0, n = 0; i <= 12; n += c[i] * b[i++]);
-      if(c[13] != (((n %= 11) < 2) ? 0 : 11 - n)) {
-        toastr.error('CNPJ inválido.');
-        this.form.controls['document'].setValue('');
-        return false;
-      }
-      return true;
-  };
+  validateCnpj(cnpj) {
+    if (cnpj === '' || cnpj == null || cnpj.length !== 14 || /(\d)\1{13}/.test(cnpj)) {
+      toastr.error('CNPJ inválido.');
+      return false;
+    }
+    let length = cnpj.length - 2;
+    let numbers = cnpj.substring(0, length);
+    let digits = cnpj.substring(length);
+    let sum = 0;
+    let pos = length - 7;
+    for (let i = length; i >= 1; i--) {
+      sum += parseInt(numbers.charAt(length - i), 10) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+    if (result !== parseInt(digits.charAt(0), 10)) {
+      toastr.error('CNPJ inválido.');
+      return false;
+    }
+    length += 1;
+    numbers = cnpj.substring(0, length);
+    sum = 0;
+    pos = length - 7;
+    for (let i = length; i >= 1; i--) {
+      sum += parseInt(numbers.charAt(length - i), 10) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+    if (result !== parseInt(digits.charAt(1), 10)) {
+      toastr.error('CNPJ inválido.');
+      return false;
+    }
+    return true;
+  }
 
   onSubmit() {
     this.loader = true;
