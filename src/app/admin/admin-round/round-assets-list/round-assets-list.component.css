@@ -29,6 +29,7 @@
 .box-body:before {
   content: " ";
   display: table;
+  background-color: #ffffff;
 }
 .display-filter {
   display: none;

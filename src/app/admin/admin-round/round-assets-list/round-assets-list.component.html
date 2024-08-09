@@ -1,8 +1,8 @@
 <div *ngIf="loader">
   <app-loader [loader]="loader"></app-loader>
 </div>
-<div *ngIf="!loader && !responseError">
-  <section class="content-header">
+<div *ngIf="!loader && !responseError" style="background-color: #F6F6F8; height: 980px; margin-top: -50px;">
+  <section class="content-header" style="margin: 45px">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <h1 style="font-family: Poppins , sans-serif;
@@ -11,41 +11,22 @@
         line-height: 24px;
         text-align: left;
         color: #1F1F1F;
+        padding-top: 15px;
         ">Explore as oportunidades</h1>
         <p style="font-family: Poppins , sans-serif;
         font-size: 14px;
         font-weight: 400;
         line-height: 14px;
         text-align: left;
+        padding-top: 6px;
         color: #505050;
         ">Selecione um ativo, visualize os detalhes e realize seu investimento.</p>
       </div>
-      <div class="col-xs-12 col-md-6 filter">
-        <form [formGroup]="form" style="width: 100%;">
-          <div class="col-xs-12 col-md-8 pull-right">
-            <div class="input-group">
-              <!-- <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span> -->
-              <app-form [label]="''" [errorMessage]="'Erro'">
-                <!-- <div class="filtros">
-                  <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
-                    <option value="">Todas oportunidades</option>
-                    <option value="IN_PROGRESS">Andamento</option>
-                    <option value="FINISHED">Concluídas</option>
-                  </select>
-                  <select formControlName="typeAsset" class="form-control" [(ngModel)]="filterAtivoType" style="margin-left: 16px;">
-                    <option *ngFor="let tipo of tiposAtivos" [value]="tipo.value">{{tipo.name}}</option>
-                  </select>
-                </div> -->
-              </app-form>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
   </section>
-  <section class="content">
+  <section class="content" style="background-color: #ffff; padding: 80px; margin: 50px; border-radius: 20px;">
     <div class="row" *ngIf="responseError">
-      <div class="col-xs-12">
+      <div class="col-xs-14">
         <div class="box">
           <div class="box-body">
             <div class="contador">
@@ -58,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-bottom: 100px;">
       <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
         <div
           *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
@@ -76,7 +57,8 @@
         </div>
       </div>
     </div>
-    <div class="pagination-footer">
+    <hr style="width: 100%;">
+    <div class="">
       <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
         [responsive]="responsive" (pageChange)="p = $event" id="upangel"></pagination-controls>
     </div>

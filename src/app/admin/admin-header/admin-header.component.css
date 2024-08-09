@@ -14,7 +14,7 @@
 .navbar-nav > .user-menu > .dropdown-menu > .user-footer {
 	background-color: #fff;
 	border-top: 1px solid #ddd;
-	margin: 0px 10px;
+	margin: 0px 6px;
 	padding: 0px;
 	z-index: 999;
 }
@@ -90,10 +90,15 @@ p {
 
 .profile-user-img {
 	margin: 0 auto;
-	width: 66px;
-	height: 66px;
-	padding: 3px;
-	border: 1px solid #ccc;
+	width: 50px;
+	height: 50px;
+	padding: 1px;
+}
+
+.widget-user-image{
+	width: 80px;
+	height: 40px;
+	display: flex;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu,

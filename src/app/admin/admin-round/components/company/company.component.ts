@@ -12,6 +12,7 @@ import { ICompany } from './ICompany';
 export class RoundCompanyComponent implements OnInit {
   @Input() company: ICompany = null;
 
+
   constructor(
     public sanitizer: DomSanitizer,
     private modalityService: ModalityService

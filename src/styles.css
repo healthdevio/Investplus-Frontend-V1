@@ -163,9 +163,9 @@ hr {
   font-weight: 500 !important;
   color: #fff;
   text-transform: uppercase;
-  min-width: 200px;
+  min-width: 150px;
   text-align: center;
-  padding: 7px 30px !important;
+  padding: 7px 20px !important;
   border: 2px solid #2e7e89 !important;
   background-image: none;
   background-color: #2e7e89;
@@ -215,7 +215,6 @@ hr {
   top: 12px;
   left: 12px;
   border-radius: 4px;
-  background: #fff;
 }
 
 .ng5-slider .ng5-slider-bubble {

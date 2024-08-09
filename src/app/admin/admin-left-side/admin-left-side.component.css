@@ -1,5 +1,4 @@
 .main-sidebar {
-  width: 18.75rem !important;
   height: 67.5rem !important;
   flex-shrink: 0 !important;
   border-right: 1px solid #E5E5E5 !important;
@@ -55,16 +54,16 @@
   left: 55px;
 }
 
-.sidebar-menu > li > .treeview-menu {
+/* .sidebar-menu > li > .treeview-menu {
   margin: 0 0px;
   background: #fff;
   padding: 6px 13px;
-}
+} */
 
-.sidebar-menu > li:hover > a span,
+/* .sidebar-menu > li:hover > a span,
 .sidebar-menu > li.active > a span {
   color: white !important; 
-}
+} */
 
 .skin-blue .treeview-menu > li.active > a,
 .skin-blue .treeview-menu > li > a:hover {
@@ -115,10 +114,10 @@
   margin-right: 10px;
 }
 
-.circle-arrow i {
+/* .circle-arrow i {
   color: #fff;
   font-size: 18px;
-}
+} */
 
 .menu-text {
   font-family: Poppins, sans-serif;
@@ -150,16 +149,17 @@
 
 .invest-buttons {
   text-align: center;
-  width: 17.1rem; /* 40% de aumento de 12.1875rem */
+  width: 18rem; /* 40% de aumento de 12.1875rem */
   height: 3rem; /* 40% de aumento de 1.875rem */
-  margin-left: 3.6%;
+  margin-left: 4%;
   flex-shrink: 0;
   border-radius: 0.5rem;
   background: #171719;
+  padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .invest-buttons button {
