@@ -296,9 +296,9 @@
 
   .progress-bar-aqua::after {
     content: '';
-    width: 14px; /* Tamanho da bolinha */
-    height: 14px; /* Tamanho da bolinha */
-    background-color: #035A7A; /* Cor da bolinha */
+    width: 14px;
+    height: 14px; 
+    background-color: #035A7A;
     border-radius: 100%;
     position: absolute;
     right: 0;

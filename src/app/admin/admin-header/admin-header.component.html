@@ -24,7 +24,8 @@
 		  font-size: 12px;
 		  font-style: normal;
 		  font-weight: 500;
-		  line-height: 100%; ">{{ titleHeader.title }}</span>
+		  line-height: 100%; ">{{ titleHeader.title }}
+		  </span>
 	  </a>
 	  <div class="navbar-custom-menu" style="display: inline-flex;
 		align-items: center;
@@ -87,9 +88,14 @@
 				  style="width: 45px; height: 45px; margin-top: -10px;"
 				/>
 			  </div>
-			  <span class="name-user" style="color: #000000; font-family: Poppins, sans-serif; font-size: 12px; font-weight: 500; line-height: 12px; text-align: left; margin-top: -15px; margin-right: 5px;">
-				{{ investor?.fullName.split(" ")[0].toUpperCase() }}
-			  </span>
+			  <div style="display: flex; flex-direction: column;">
+				<span class="name-user" style="color: #000000; font-family: Poppins, sans-serif; font-size: 12px; font-weight: 500; line-height: 12px; text-align: left; margin-top: -5px; margin-right: 5px; margin-bottom: 5px;">
+				  {{ investor?.fullName.split(" ")[0].toUpperCase() }}
+				</span>
+				<span style="color:#505050; font-family: Poppins, sans-serif; font-size: 12px; font-weight: 500; line-height: 12px; text-align: left;">
+				  Investidor
+				</span>
+			  </div>
 			  <i
 				style="color: #1F1F1F; margin-left: 5px; font-weight: 500; font-size: 18px; margin-top: -15px; margin-right: 30px;"
 				class="fa fa-fw fa-angle-down"
