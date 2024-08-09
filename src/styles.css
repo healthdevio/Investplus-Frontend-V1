@@ -14,6 +14,10 @@
   background: #fff !important;
 }
 
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 .skin-blue .main-header .navbar .nav > li > a {
   color: #fff;
   font-weight: 400;

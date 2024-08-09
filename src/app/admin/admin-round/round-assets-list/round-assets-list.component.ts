@@ -58,7 +58,7 @@ export class RoundAssetsListComponent implements OnInit {
   ngOnInit() {
 
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
-    this.titleHeader.title = 'Investimentos / Rodadas de Investimento';
+    this.titleHeader.title = 'Investimentos / Ofertas Públicas';
     this.data.changeTitle(this.titleHeader);
 
     this.initForm();
