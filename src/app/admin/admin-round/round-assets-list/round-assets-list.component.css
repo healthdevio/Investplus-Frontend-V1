@@ -254,3 +254,88 @@ h4,
   margin-top: 25px;
   font-family: "Poppins", sans-serif !important;
 }
+
+content-new{
+  width: 97.25rem !important;
+  height: 53.1875rem !important; 
+  flex-shrink: 0 !important;
+  border-radius: 1rem !important;
+  background: #FFF !important;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-controls button,
+.pagination-controls span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-family: Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 120%; /* 1.05rem */
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.pagination-controls button[disabled] {
+  color: #909090;
+  font-weight: 400;
+  cursor: default;
+}
+
+.pagination-controls button[disabled] svg {
+  fill: #909090;
+}
+
+.pagination-controls button:not([disabled]) {
+  color: #035A7A;
+  font-weight: 500;
+}
+
+.pagination-controls button:not([disabled]) svg {
+  fill: #035A7A;
+}
+
+.pagination-controls .page-number {
+  color: #707070;
+  cursor: pointer;
+}
+
+.pagination-controls .page-number:hover {
+  background: rgba(3, 90, 122, 0.1);
+  border-radius: 0.25rem;
+}
+
+.pagination-controls .page-number.active {
+  background: #035A7A;
+  color: #fff;
+  border-radius: 0.25rem;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  line-height: 100%; /* 0.875rem */
+}
+
+.pagination-controls .ellipsis {
+  width: 0.625rem;
+  height: 0.125rem;
+  flex-shrink: 0;
+}
+
+.pagination-controls .ellipsis svg {
+  width: 10px;
+  height: 2px;
+}
+
+.ellipsis circle {
+  fill: #707070;
+}

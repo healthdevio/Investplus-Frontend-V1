@@ -148,6 +148,7 @@
                           type="text"
                           formControlName="nameResponsible"
                           class="form-control"
+                          placeholder="Nome do sócio administrador"
                         />
                       </app-form>
                     </div>
@@ -160,6 +161,7 @@
                           type="text"
                           formControlName="cpfResponsible"
                           class="form-control cpf"
+                          placeholder="CPF do sócio administrador"
                         />
                       </app-form>
                     </div>
@@ -178,6 +180,7 @@
                           type="text"
                           formControlName="profession"
                           class="form-control"
+                          placeholder="Profissão"
                         />
                       </app-form>
                     </div>
@@ -190,6 +193,7 @@
                           type="text"
                           formControlName="phone"
                           class="form-control phone"
+                          placeholder="Telefone"
                         />
                       </app-form>
                     </div>
@@ -207,6 +211,7 @@
                           (blur)="validateDate()"
                           formControlName="dateOfBirth"
                           class="form-control dateOfBirth"
+                          placeholder="Data de nascimento"
                         />
                       </app-form>
                     </div>
@@ -219,9 +224,7 @@
                           formControlName="nationality"
                           class="form-control"
                         >
-                          <option [ngValue]="null"
-                            >Selecione uma opção...</option
-                          >
+                          <option [ngValue]="null">Selecione uma opção...</option>
                           <option value="BRASILEIRO">Brasileiro</option>
                           <option value="AMERICANO">Americano</option>
                           <option value="ANTIGUANO">Antiguano</option>
@@ -251,9 +254,7 @@
                           <option value="PERUANO">Peruano</option>
                           <option value="PORTORRIQUENHO">Portorriquenho</option>
                           <option value="DOMINICANA">Dominicana</option>
-                          <option value="SÃO-CRISTOVENSE"
-                            >São-cristovense</option
-                          >
+                          <option value="SÃO-CRISTOVENSE">São-cristovense</option>
                           <option value="SÃO-VICENTINO">São-vicentino</option>
                           <option value="SANTA-LUCENSE">Santa-lucense</option>
                           <option value="SURINAMÊS">Surinamês</option>
@@ -346,9 +347,7 @@
                         [errorMessage]="'Sexo é um campo obrigatório.'"
                       >
                         <select formControlName="gender" class="form-control">
-                          <option [ngValue]="null"
-                            >Selecione uma opção...</option
-                          >
+                          <option [ngValue]="null">Selecione uma opção...</option>
                           <option value="MALE">Masculino</option>
                           <option value="FEMALE">Feminino</option>
                         </select>
@@ -363,9 +362,7 @@
                           formControlName="maritalStatus"
                           class="form-control"
                         >
-                          <option [ngValue]="null"
-                            >Selecione uma opção...</option
-                          >
+                          <option [ngValue]="null">Selecione uma opção...</option>
                           <option value="SINGLE">Solteiro</option>
                           <option value="MARRIED">Casado</option>
                           <option value="SEPARATED">Separado</option>
@@ -392,6 +389,7 @@
                               formControlName="rg"
                               class="form-control"
                               maxlength="13"
+                              placeholder="Número do RG"
                             />
                           </app-form>
                         </div>
@@ -404,9 +402,7 @@
                               formControlName="rgEmitter"
                               class="form-control"
                             >
-                              <option [ngValue]="null"
-                                >Selecione uma opção...</option
-                              >
+                              <option [ngValue]="null">Selecione uma opção...</option>
                               <option value="SSP">SSP</option>
                               <option value="SSP-AC">SSP-AC</option>
                               <option value="SSP-AL">SSP-AL</option>
@@ -482,6 +478,7 @@
                           (blur)="getCep()"
                           formControlName="zipCode"
                           class="form-control zipCode"
+                          placeholder="CEP"
                         />
                       </app-form>
                     </div>
@@ -496,6 +493,7 @@
                           type="text"
                           formControlName="street"
                           class="form-control"
+                          placeholder="Logradouro"
                         />
                       </app-form>
                     </div>
@@ -508,6 +506,7 @@
                           type="text"
                           formControlName="number"
                           class="number form-control"
+                          placeholder="Número"
                         />
                       </app-form>
                     </div>
@@ -522,6 +521,7 @@
                           type="text"
                           formControlName="neighborhood"
                           class="form-control"
+                          placeholder="Bairro"
                         />
                       </app-form>
                     </div>
@@ -534,6 +534,7 @@
                           type="text"
                           formControlName="complement"
                           class="form-control"
+                          placeholder="Complemento"
                         />
                       </app-form>
                     </div>
@@ -548,6 +549,7 @@
                           type="text"
                           formControlName="city"
                           class="form-control"
+                          placeholder="Cidade"
                         />
                       </app-form>
                     </div>
@@ -562,6 +564,7 @@
                           type="text"
                           formControlName="uf"
                           class="form-control"
+                          placeholder="Estado"
                         />
                       </app-form>
                     </div>
@@ -604,6 +607,7 @@
                             formControlName="investedUpangel"
                             class="money form-control"
                             disabled
+                            placeholder="Na plataforma da InvestPlus"
                           />
                         </div>
                       </app-form>
@@ -611,22 +615,17 @@
                     <div class="col-md-4">
                       <app-form
                         [label]="'Outras plataformas'"
-                        [errorMessage]="
-                          'Outras plataformas é um campo obrigatório.'
-                        "
+                        [errorMessage]="'Outras plataformas é um campo obrigatório.'"
                       >
                         <div class="input-group">
                           <span class="input-group-addon">R$</span>
                           <input
-                            (keyup)="
-                              calculateInvestment(
-                                form.value.totalInvestedOthers
-                              )
-                            "
+                            (keyup)="calculateInvestment(form.value.totalInvestedOthers)"
                             type="text"
                             formControlName="totalInvestedOthers"
                             class="money form-control"
                             maxlength="13"
+                            placeholder="Outras plataformas"
                           />
                         </div>
                       </app-form>
@@ -644,6 +643,7 @@
                             formControlName="totalInvested"
                             class="money form-control"
                             disabled
+                            placeholder="Total"
                           />
                         </div>
                       </app-form>
@@ -681,6 +681,7 @@
                           type="text"
                           formControlName="personalWebsite"
                           class="form-control"
+                          placeholder="Website"
                         />
                       </app-form>
                     </div>
@@ -693,6 +694,7 @@
                           type="text"
                           formControlName="facebook"
                           class="form-control"
+                          placeholder="Facebook"
                         />
                       </app-form>
                     </div>
@@ -705,6 +707,7 @@
                           type="text"
                           formControlName="twitter"
                           class="form-control"
+                          placeholder="Twitter"
                         />
                       </app-form>
                     </div>
@@ -717,6 +720,7 @@
                           type="text"
                           formControlName="linkedin"
                           class="form-control"
+                          placeholder="Linkedin"
                         />
                       </app-form>
                     </div>
@@ -725,25 +729,19 @@
                     <div class="col-xs-12 col-md-6">
                       <app-form
                         [label]="'Como você soube da InvestPlus'"
-                        [errorMessage]="
-                          'Como soube da InvestPlus é um campo obrigatório.'
-                        "
+                        [errorMessage]="'Como soube da InvestPlus é um campo obrigatório.'"
                       >
                         <select
                           formControlName="aboutUpangel"
                           class="form-control"
                         >
-                          <option [ngValue]="null"
-                            >Selecione uma opção...</option
-                          >
+                          <option [ngValue]="null">Selecione uma opção...</option>
                           <option value="INDICACAO">Uma indicação</option>
                           <option value="EVENTO">Um evento</option>
                           <option value="PESSOAL">Um encontro pessoal</option>
                           <option value="IMPRENSA">Na imprensa</option>
                           <option value="GOOGLE">Pela pesquisa Google</option>
-                          <option value="ONLINE"
-                            >Por outra pesquisa online</option
-                          >
+                          <option value="ONLINE">Por outra pesquisa online</option>
                           <option value="FACEBOOK">Facebook</option>
                           <option value="INSTAGRAM">Instagram</option>
                           <option value="LINKEDIN">Linkedin</option>
@@ -756,15 +754,14 @@
                     <div class="col-xs-12 col-md-6">
                       <app-form
                         [label]="'Código do agente indicador'"
-                        [errorMessage]="
-                          'Agente indicador é um campo obrigatório.'
-                        "
+                        [errorMessage]="'Agente indicador é um campo obrigatório.'"
                       >
                         <input
                           type="text"
                           formControlName="agent"
                           class="form-control number"
                           maxlength="4"
+                          placeholder="Código do agente indicador"
                         />
                       </app-form>
                     </div>
@@ -773,261 +770,41 @@
                 <div class="tab-pane" id="tab_5">
                   <div class="row margin-t-20">
                     <div class="col-xs-12 col-md-8">
-                      <app-form
-                        [label]="'Instituição'"
-                      >
-                      <!-- [errorMessage]="'Instituição é um campo obrigatório.'" -->
+                      <app-form [label]="'Instituição'">
+                        <!-- [errorMessage]="'Instituição é um campo obrigatório.'" -->
                         <select
                           formControlName="accountBank"
                           class="form-control"
+                          placeholder="Instituição"
                         >
-                          <option [ngValue]="null"
-                            >Selecione uma opção...</option
-                          >
+                          <option [ngValue]="null">Selecione uma opção...</option>
                           <ng-container *ngFor="let bank of banks">
                             <option [value]="bank?.code">{{ bank?.name }}</option>
                           </ng-container>
-
-                          <!-- <option value="001">Banco do Brasil SA </option>
-                          <option value="341"> Banco Itaú S.A. </option>
-                          <option value="033">
-                            Banco Santander (Brasil) S.A.
-                          </option>
-                          <option value="356">
-                            Banco Real S.A. (antigo)
-                          </option>
-                          <option value="652">
-                            Itaú Unibanco Holding S.A.
-                          </option>
-                          <option value="237"> Banco Bradesco S.A. </option>
-                          <option value="745"> Banco Citibank S.A. </option>
-                          <option value="399">
-                            HSBC Bank Brasil S.A. Banco Múltiplo
-                          </option>
-                          <option value="104"> Caixa Econômica Federal </option>
-                          <option value="389">
-                            Banco Mercantil do Brasil S.A.
-                          </option>
-                          <option value="453"> Banco Rural S.A. </option>
-                          <option value="422"> Banco Safra S.A. </option>
-                          <option value="633"> Banco Rendimento S.A. </option>
-                          <option value="046"> Banco ABC Brasil S.A. </option>
-                          <option value="025"> Banco Alfa S.A. </option>
-                          <option value="641"> Banco Alvorada S.A. </option>
-                          <option value="029"> Banco Banerj S.A. </option>
-                          <option value="038"> Banco Banestado S.A. </option>
-                          <option value="000"> Banco Bankpar S.A. </option>
-                          <option value="740"> Banco Barclays S.A. </option>
-                          <option value="107"> Banco BBM S.A. </option>
-                          <option value="031"> Banco Beg S.A. </option>
-                          <option value="096">
-                            Banco BM&F de Serviços de Liquidação e Custódia S.A
-                          </option>
-                          <option value="318"> Banco BMG S.A. </option>
-                          <option value="752">
-                            Banco BNP Paribas Brasil S.A.
-                          </option>
-                          <option value="248">
-                            Banco Boavista Interatlântico S.A.
-                          </option>
-                          <option value="036"> Banco Bradesco BBI S.A. </option>
-                          <option value="204">
-                            Banco Bradesco Cartões S.A.
-                          </option>
-                          <option value="225"> Banco Brascan S.A. </option>
-                          <option value="044"> Banco BVA S.A. </option>
-                          <option value="263"> Banco Cacique S.A. </option>
-                          <option value="473">
-                            Banco Caixa Geral Brasil S.A.
-                          </option>
-                          <option value="222">
-                            Banco Calyon Brasil S.A.
-                          </option>
-                          <option value="040"> Banco Cargill S.A. </option>
-                          <option value="M08"> Banco Citicard S.A. </option>
-                          <option value="M19"> Banco CNH Capital S.A. </option>
-                          <option value="215">
-                            Banco Comercial e de Investimento Sudameris S.A.
-                          </option>
-                          <option value="756">
-                            Banco Cooperativo do Brasil S.A. BANCOOB
-                          </option>
-                          <option value="748">
-                            Banco Cooperativo Sicredi S.A.
-                          </option>
-                          <option value="505">
-                            Banco Credit Suisse (Brasil) S.A.
-                          </option>
-                          <option value="229">
-                            Banco Cruzeiro do Sul S.A.
-                          </option>
-                          <option value="003"> Banco da Amazônia S.A. </option>
-                          <option value="083">
-                            Banco da China Brasil S.A.
-                          </option>
-                          <option value="707"> Banco Daycoval S.A. </option>
-                          <option value="M06">
-                            Banco de Lage Landen Brasil S.A.
-                          </option>
-                          <option value="024">
-                            Banco de Pernambuco S.A. BANDEPE
-                          </option>
-                          <option value="456">
-                            Banco de Tokyo-Mitsubishi UFJ Brasil S.A.
-                          </option>
-                          <option value="214"> Banco Dibens S.A. </option>
-                          <option value="047">
-                            Banco do Estado de Sergipe S.A.
-                          </option>
-                          <option value="037">
-                            Banco do Estado do Pará S.A.
-                          </option>
-                          <option value="041">
-                            Banco do Estado do Rio Grande do Sul S.A.
-                          </option>
-                          <option value="004">
-                            Banco do Nordeste do Brasil S.A.
-                          </option>
-                          <option value="265"> Banco Fator S.A. </option>
-                          <option value="M03"> Banco Fiat S.A. </option>
-                          <option value="224"> Banco Fibra S.A. </option>
-                          <option value="626"> Banco Ficsa S.A. </option>
-                          <option value="394"> Banco Finasa BMC S.A. </option>
-                          <option value="M18"> Banco Ford S.A. </option>
-                          <option value="233"> Banco GE Capital S.A. </option>
-                          <option value="734"> Banco Gerdau S.A. </option>
-                          <option value="M07"> Banco GMAC S.A. </option>
-                          <option value="612"> Banco Guanabara S.A. </option>
-                          <option value="M22"> Banco Honda S.A. </option>
-                          <option value="063">
-                            Banco Ibi S.A. Banco Múltiplo
-                          </option>
-                          <option value="M11"> Banco IBM S.A. </option>
-                          <option value="604">
-                            Banco Industrial do Brasil S.A.
-                          </option>
-                          <option value="320">
-                            Banco Industrial e Comercial S.A.
-                          </option>
-                          <option value="653"> Banco Indusval S.A. </option>
-                          <option value="077"> Banco Inter </option>
-                          <option value="630"> Banco Intercap S.A. </option>
-                          <option value="249">
-                            Banco Investcred Unibanco S.A.
-                          </option>
-                          <option value="184"> Banco Itaú BBA S.A. </option>
-                          <option value="479"> Banco ItaúBank S.A </option>
-                          <option value="M09">
-                            Banco Itaucred Financiamentos S.A.
-                          </option>
-                          <option value="376"> Banco J. P. Morgan S.A. </option>
-                          <option value="074"> Banco J. Safra S.A. </option>
-                          <option value="217"> Banco John Deere S.A. </option>
-                          <option value="065"> Banco Lemon S.A. </option>
-                          <option value="600">
-                            Banco Luso Brasileiro S.A.
-                          </option>
-                          <option value="755">
-                            Banco Merrill Lynch de Investimentos S.A.
-                          </option>
-                          <option value="746"> Banco Modal S.A. </option>
-                          <option value="151"> Banco Nossa Caixa S.A. </option>
-                          <option value="045"> Banco Opportunity S.A. </option>
-                          <option value="623"> Banco Panamericano S.A. </option>
-                          <option value="611"> Banco Paulista S.A. </option>
-                          <option value="643"> Banco Pine S.A. </option>
-                          <option value="638"> Banco Prosper S.A. </option>
-                          <option value="747">
-                            Banco Rabobank International Brasil S.A.
-                          </option>
-                          <option value="M16"> Banco Rodobens S.A. </option>
-                          <option value="072"> Banco Rural Mais S.A. </option>
-                          <option value="250"> Banco Schahin S.A. </option>
-                          <option value="749"> Banco Simples S.A. </option>
-                          <option value="366">
-                            Banco Société Générale Brasil S.A.
-                          </option>
-                          <option value="637"> Banco Sofisa S.A. </option>
-                          <option value="464">
-                            Banco Sumitomo Mitsui Brasileiro S.A.
-                          </option>
-                          <option value="082"> Banco Topázio S.A. </option>
-                          <option value="M20">
-                            Banco Toyota do Brasil S.A.
-                          </option>
-                          <option value="634"> Banco Triângulo S.A. </option>
-                          <option value="208"> Banco UBS Pactual S.A. </option>
-                          <option value="M14"> Banco Volkswagen S.A. </option>
-                          <option value="655"> Banco Votorantim S.A. </option>
-                          <option value="610"> Banco VR S.A. </option>
-                          <option value="370">
-                            Banco WestLB do Brasil S.A.
-                          </option>
-                          <option value="021">
-                            BANESTES S.A. Banco do Estado do Espírito Santo
-                          </option>
-                          <option value="719">
-                            Banif-Banco Internacional do Funchal (Brasil)S.A.
-                          </option>
-                          <option value="073">
-                            BB Banco Popular do Brasil S.A.
-                          </option>
-                          <option value="078">
-                            BES Investimento do Brasil S.A.-Banco de
-                            Investimento
-                          </option>
-                          <option value="069">
-                            BPN Brasil Banco Múltiplo S.A.
-                          </option>
-                          <option value="070">
-                            BRB Banco de Brasília S.A.
-                          </option>
-                          <option value="477"> Citibank N.A. </option>
-                          <option value="081"> Concórdia Banco S.A. </option>
-                          <option value="487">
-                            Deutsche Bank S.A. Banco Alemão
-                          </option>
-                          <option value="751">
-                            Dresdner Bank Brasil S.A. Banco Múltiplo
-                          </option>
-                          <option value="062">
-                            Hipercard Banco Múltiplo S.A.
-                          </option>
-                          <option value="492"> ING Bank N.V. </option>
-                          <option value="488"> JPMorgan Chase Bank </option>
-                          <option value="260"> NU PAGAMENTOS S.A. </option>
-                          <option value="409">
-                            UNIBANCO União de Bancos Brasileiros S.A.
-                          </option>
-                          <option value="230">
-                            Unicard Banco Múltiplo S.A.
-                          </option> -->
                         </select>
                       </app-form>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-xs-12 col-md-3">
-                      <app-form
-                        [label]="'Agência'"
-                      >
-                      <!-- [errorMessage]="'Agência é um campo obrigatório.'" -->
+                      <app-form [label]="'Agência'">
+                        <!-- [errorMessage]="'Agência é um campo obrigatório.'" -->
                         <input
                           type="text"
                           formControlName="accountAgency"
                           class="form-control"
+                          placeholder="Agência"
                         />
                       </app-form>
                     </div>
                     <div class="col-xs-8 col-md-5">
-                      <app-form
-                        [label]="'Conta Corrente (com dígito)'"
-                      >
-                      <!-- [errorMessage]="'Conta é um campo obrigatório.'" -->
+                      <app-form [label]="'Conta Corrente (com dígito)'">
+                        <!-- [errorMessage]="'Conta é um campo obrigatório.'" -->
                         <input
                           type="text"
                           formControlName="accountNumber"
                           class="form-control"
+                          placeholder="Conta Corrente (com dígito)"
                         />
                       </app-form>
                     </div>

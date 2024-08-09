@@ -13,6 +13,8 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  FormArray,
+  FormGroupDirective,
 } from "@angular/forms";
 import { RadioOption } from "../../share/radio/radio-option.model";
 import { Router } from "@angular/router";
@@ -77,7 +79,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       label:
         "Possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 200 mil",
       value: "UP_TO_100_THOUSAND",
-      // tslint:disable-next-line:max-line-length
       span:
         "Não investirei, no ano-calendário por meio de plataformas eletrônicas de investimento participativo, mais do que 10% (dez por cento) do maior entre: (i) minha renda bruta anual; ou (ii) o montante total de meus investimentos financeiros.",
     },
@@ -85,13 +86,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       label:
         "Não possuo investimentos financeiros ou renda bruta anual em valor superior a R$ 20 mil",
       value: "UP_TO_10_THOUSAND",
-      // tslint:disable-next-line:max-line-length
       span:
         "Não investirei, no ano-calendário por meio de plataformas eletrônicas de investimento participativo, mais de R$ 20.000,00 (vinte mil reais).",
     },
   ];
 
-  banks: Bank[] = []
+  banks: Bank[] = [];
   $banks!: Subscription;
 
   constructor(
@@ -159,111 +159,79 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
-      // accountBank: [null, [Validators.required]],
-      // accountAgency: [null, [Validators.required]],
-      // accountNumber: [null, [Validators.required]],
     });
   }  
 
   getUser() {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
-      this.investor = response;
-      if (response.address !== undefined) {
-        this.form.controls["profession"].setValue(response.profession);
-        this.form.controls["nationality"].setValue(response.nationality);
-        this.form.controls["gender"].setValue(response.gender);
-        this.form.controls["maritalStatus"].setValue(response.maritalStatus);
-        this.form.controls["rgEmitter"].setValue(response.rgEmitter);
-        this.form.controls["rg"].setValue(response.rg);
-        this.form.controls["phone"].setValue(this.phoneMask.transform(response.phone));
-        this.form.controls["dateOfBirth"].setValue(
-          this.dateMask.transform(response.dateOfBirth)
-        );
-        this.form.get('address').patchValue(response.address);
-        this.form.get('address').patchValue({
-          "zipCode": this.cepMask.transform(response.address.zipCode)
-        });
-        // this.form.controls["street"].setValue(response.address.street);
-        // this.form.controls["number"].setValue(response.address.number);
-        // this.form.controls["complement"].setValue(response.address.complement);
-        // this.form.controls["neighborhood"].setValue(
-        //   response.address.neighborhood
-        // );
-        // this.form.controls["city"].setValue(response.address.city);
-        // this.form.controls["uf"].setValue(response.address.uf);
+        this.investor = response;
+        if (response.address !== undefined) {
+            this.setFormValue("profession", response.profession);
+            this.setFormValue("nationality", response.nationality);
+            this.setFormValue("gender", response.gender);
+            this.setFormValue("maritalStatus", response.maritalStatus);
+            this.setFormValue("rgEmitter", response.rgEmitter);
+            this.setFormValue("rg", response.rg);
+            this.setFormValue("phone", this.phoneMask.transform(response.phone));
+            this.setFormValue("dateOfBirth", this.dateMask.transform(response.dateOfBirth));
+            this.form.get('address')?.patchValue(response.address);
+            this.form.get('address')?.patchValue({
+                "zipCode": this.cepMask.transform(response.address.zipCode)
+            });
 
-        this.form.controls["investorProfileStatement"].setValue(
-          response.investorProfileStatement
-        );
-        this.form.controls["totalInvestedOthers"].setValue(
-          this.maskMoney.transform(response.totalInvestedOthers)
-        );
-        this.form.controls["investedUpangel"].setValue(
-          this.maskMoney.transform(response.investedUpangel)
-        );
-        this.form.controls["totalInvested"].setValue(
-          this.maskMoney.transform(
-            response.totalInvestedOthers + response.investedUpangel
-          )
-        );
-        this.form.controls["publicFigure"].setValue(response.publicFigure);
-        this.form.controls["publicProfile"].setValue(response.publicProfile);
-        this.form.controls["personalWebsite"].setValue(
-          response.personalWebsite
-        );
-        this.form.controls["facebook"].setValue(response.facebook);
-        this.form.controls["twitter"].setValue(response.twitter);
-        this.form.controls["linkedin"].setValue(response.linkedin);
-        this.form.controls["agent"].setValue(response.agent);
-        this.form.controls["aboutUpangel"].setValue(response.aboutUpangel);
-        this.form.controls["nameResponsible"].setValue(
-          response.nameResponsible
-        );
-        this.form.controls["cpfResponsible"].setValue(
-          this.cpfMask.transform(response.cpfResponsible)
-        );
-        if (this.form.controls["accountAgency"]) {
-          this.form.controls["accountAgency"].setValue(response?.accountAgency);
+            this.setFormValue("investorProfileStatement", response.investorProfileStatement);
+            this.setFormValue("totalInvestedOthers", this.maskMoney.transform(response.totalInvestedOthers));
+            this.setFormValue("investedUpangel", this.maskMoney.transform(response.investedUpangel));
+            this.setFormValue("totalInvested", this.maskMoney.transform(response.totalInvestedOthers + response.investedUpangel));
+            this.setFormValue("publicFigure", response.publicFigure);
+            this.setFormValue("publicProfile", response.publicProfile);
+            this.setFormValue("personalWebsite", response.personalWebsite);
+            this.setFormValue("facebook", response.facebook);
+            this.setFormValue("twitter", response.twitter);
+            this.setFormValue("linkedin", response.linkedin);
+            this.setFormValue("agent", response.agent);
+            this.setFormValue("aboutUpangel", response.aboutUpangel);
+            this.setFormValue("nameResponsible", response.nameResponsible);
+            this.setFormValue("cpfResponsible", this.cpfMask.transform(response.cpfResponsible));
+            this.setFormValue("accountAgency", response.accountAgency);
+            this.setFormValue("accountBank", response.accountBank);
+            this.setFormValue("accountNumber", response.accountNumber);
+
+            this.descriptionCity = response.address.city;
+            this.descriptionSite = response.personalWebsite;
+            this.facebook = response.facebook;
+            this.linkedin = response.linkedin;
+            this.twitter = response.twitter;
+            if (response.dateOfBirth != null || response.dateOfBirth !== undefined) {
+                this.descriptionDate =
+                    moment(response.dateOfBirth).format("DD") +
+                    " de " +
+                    moment(response.dateOfBirth).locale("pt-br").format("MMMM");
+            }
         }
-        
-        if (this.form.controls["accountBank"]) {
-            this.form.controls["accountBank"].setValue(response?.accountBank);
-        }
-        
-        if (this.form.controls["accountNumber"]) {
-            this.form.controls["accountNumber"].setValue(response?.accountNumber);
-        }
-        this.descriptionCity = response.address.city;
-        this.descriptionSite = response.personalWebsite;
-        this.facebook = response.facebook;
-        this.linkedin = response.linkedin;
-        this.twitter = response.twitter;
-        if (
-          response.dateOfBirth != null ||
-          response.dateOfBirth !== undefined
-        ) {
-          this.descriptionDate =
-            moment(response.dateOfBirth).format("DD") +
-            " de " +
-            moment(response.dateOfBirth).locale("pt-br").format("MMMM");
-        }
-      }
-      this.base64textString =
-        response.avatar === undefined
-          ? "./../../../assets/img/default-profile_01.png"
-          : "data:image/png;base64," + response.avatar;
-      this.base64RG =
-        response.rgDocument === undefined
-          ? null
-          : "data:image/png;base64," + response.rgDocument;
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
-      this.loader = false;
+        this.base64textString =
+            response.avatar === undefined
+                ? "./../../../assets/img/default-profile_01.png"
+                : "data:image/png;base64," + response.avatar;
+        this.base64RG =
+            response.rgDocument === undefined
+                ? null
+                : "data:image/png;base64," + response.rgDocument;
+        const $this = this;
+        setTimeout(function () {
+            $this.initMask();
+        }, 1000);
+        this.loader = false;
     });
-  }
+}
+
+private setFormValue(controlName: string, value: any) {
+    if (this.form.controls[controlName]) {
+        this.form.controls[controlName].setValue(value);
+    }
+}
+
 
   unmaskInput(input) {
     if (input === undefined) {
@@ -304,9 +272,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (this.form.valid) {
-
       const dataSend = this.form.value;
-      dataSend.address.zipCode = this.unmaskInput(dataSend.address.zipCode );
+      dataSend.address.zipCode = this.unmaskInput(dataSend.address.zipCode);
       dataSend.zipCode = undefined;
       dataSend.street = undefined;
       dataSend.number = undefined;
@@ -322,7 +289,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       dataSend.totalInvestedOthers = this.unmaskMoney(
         dataSend.totalInvestedOthers
       );
-      //dataSend.address = address;
       dataSend.cpf = this.investor.cpf;
       dataSend.email = this.investor.email;
       dataSend.fullName = this.investor.fullName;
@@ -336,7 +302,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
       if(!this.base64RG){
         toastr.error("Foto do RG é obrigatório");
-        return
+        return;
       }
 
       this.loading = true;
@@ -351,7 +317,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           })
         )
         .subscribe({
-          next:(response) => {
+          next: (response) => {
             toastr.success("Dados atualizados.");
             this.router.navigate(["/admin/rounds/incorporator/list"]);
           },
@@ -363,8 +329,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
               toastr.error("Ocorreu um erro, contate o administrador.");
             }
           }
-        }
-      );
+        });
     } else {
       this.validateAllFields(this.form);
       this.loading = false;
@@ -450,10 +415,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     if (cep !== "") {
       const validacep = /^[0-9]{8}$/;
       if (validacep.test(cep)) {
-        /* this.form.controls["street"].setValue("");
-        this.form.controls["city"].setValue("");
-        this.form.controls["uf"].setValue("");
-        this.form.controls["neighborhood"].setValue(""); */
         this.form.get("address").patchValue({
           street: null,
           city: null,
@@ -469,10 +430,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
               uf: dados.uf,
               neighborhood: dados.bairro
             });
-            /* this.form.controls["street"].setValue(dados.logradouro);
-            this.form.controls["city"].setValue(dados.localidade);
-            this.form.controls["uf"].setValue(dados.uf);
-            this.form.controls["neighborhood"].setValue(dados.bairro); */
           } else {
             this.clearAddress();
             bootbox.dialog({
@@ -555,9 +512,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.base64RG = "data:image/png;base64," + btoa(e.target.result);
     const rg = {
       rg: btoa(e.target.result),
-
     };
-
 
     this.investorService
       .uploadRG(rg)
@@ -612,27 +567,26 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getBanks(){
+  getBanks() {
     this.$banks?.unsubscribe();
 
     this.$banks = this.bankService
       .getAll()
       .subscribe({
         next: (response: HttpResponse<Bank[]>) => {
-
-          if(response.status != 200){
+          if (response.status !== 200) {
             return;
           }
 
-          this.banks = response?.body
+          this.banks = response.body
             .map(bank => {
-              if(bank.code){
+              if (bank.code) {
                 bank.name = `${String(bank.code).padStart(3, "0")} - ${bank.name}`;
               }
               return bank;
             })
             .sort((a: Bank, b: Bank) => a.name > b.name ? 1 : -1);
         }
-      })
+      });
   }
 }
