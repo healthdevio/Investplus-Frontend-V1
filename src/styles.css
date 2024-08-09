@@ -155,7 +155,7 @@ hr {
 
 .btn-upangel {
   font-size: 11px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500 !important;
   color: #fff;
   text-transform: uppercase;
@@ -219,7 +219,7 @@ hr {
   bottom: 16px;
   padding: 1px 3px;
   font-size: 12px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .help-block {
@@ -288,7 +288,7 @@ h1,
   /* color: #2e7e89; */
   color: #444;
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .btn {

@@ -1,14 +1,14 @@
 h1 {
   font-weight: 600;
   font-size: 20px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
 }
 
 h2 {
   padding: 0px;
   font-size: 13px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   margin: 0px;
   color: #888;
@@ -17,7 +17,7 @@ h2 {
 h3 {
   padding: 3px 5px 0px 5px;
   font-size: 10px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
   margin: 0px;
 }
@@ -26,7 +26,7 @@ h4,
 .h4 {
   font-size: 13px !important;
   text-align: center;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .gray {
@@ -71,7 +71,7 @@ p {
 }
 
 .container-description {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
   font-size: 13px;
   padding-left: 5px;
@@ -85,7 +85,7 @@ p {
   font-size: 13px;
   margin: 0;
   line-height: 1;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
 }
 
@@ -180,7 +180,7 @@ p {
 .progress-text {
   font-weight: 500;
   font-size: 15px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   color: #2e7e89;
 }
@@ -189,7 +189,7 @@ p {
   text-align: right;
   font-weight: 500;
   font-size: 15px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   color: #444;
 }
@@ -348,7 +348,7 @@ img {
 
 .timeline > li > .timeline-item > .timeline-header > a {
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-size: 14px;
 }
 
@@ -422,7 +422,7 @@ img {
 .support-number {
   margin: 0px;
   font-size: 15px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
   text-align: center;
 }
@@ -480,7 +480,7 @@ legend {
   margin: 0px;
   font-size: 21px;
   color: #2e7e89;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
 }
 
@@ -501,7 +501,7 @@ legend {
   color: #333 !important;
   font-size: 11px;
   width: 100%;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -644,7 +644,7 @@ legend {
 
 .btn-contract {
   font-size: 11px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500 !important;
   color: #fff;
   text-transform: uppercase;
@@ -663,7 +663,7 @@ legend {
 
 .btn-dossie {
   font-size: 11px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500 !important;
   color: #2e7e89;
   text-transform: uppercase;
@@ -682,7 +682,7 @@ legend {
 
 .btn-sold {
   font-size: 11px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500 !important;
   color: #fff;
   text-transform: uppercase;
@@ -704,7 +704,7 @@ legend {
   color: #2e7e89;
   font-size: 30px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-2 {
@@ -712,7 +712,7 @@ legend {
   color: #444;
   font-size: 14px;
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-3 {
@@ -720,7 +720,7 @@ legend {
   color: #444;
   font-size: 11px;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
 }
 
@@ -729,7 +729,7 @@ legend {
   color: #999;
   font-size: 17px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-5 {
@@ -737,7 +737,7 @@ legend {
   color: #444;
   font-size: 17px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .border-t {
@@ -755,7 +755,7 @@ legend {
   font-weight: 500;
   color: #2e7e89;
   margin: 0;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .input-group .input-group-addon {
@@ -785,7 +785,7 @@ legend {
   font-size: 11px;
   font-weight: 600;
   color: #2e7e89;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-text {
@@ -793,13 +793,13 @@ legend {
   font-size: 10px;
   font-weight: 500;
   color: #555;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .details {
   color: #333;
   font-weight: 700;
   font-size: 10px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   line-height: 21px;
 }

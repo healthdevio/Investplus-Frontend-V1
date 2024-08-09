@@ -4,7 +4,7 @@ h1,
   text-align: left;
   color: #444;
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .timeline > li > .timeline-item > .timeline-header {
@@ -16,7 +16,7 @@ h1,
   font-size: 11px;
   /* line-height: 1.1; */
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .content-header {
@@ -55,7 +55,7 @@ tr {
   margin: 0;
   line-height: 1;
   margin-bottom: 10px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
 }
 
@@ -142,7 +142,7 @@ tr {
   font-weight: 600;
   margin: 0px;
   margin-bottom: 25px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin-top: 4px;
 }
 
@@ -151,12 +151,12 @@ tr {
   font-weight: 600;
   margin: 0px;
   margin-bottom: 20px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .btn-filter {
   font-size: 11px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
   color: #444;
   text-transform: uppercase;
@@ -185,14 +185,14 @@ hr {
   font-weight: 600;
   margin-bottom: 0px;
   margin-top: 17px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .incomming-label {
   font-size: 13px;
   color: #2e7e89;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .fa-company {
@@ -221,7 +221,7 @@ hr {
   color: #999;
   font-weight: 600;
   margin-bottom: 0px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .display-filter {
@@ -234,14 +234,14 @@ hr {
   font-weight: 400;
   margin-left: 20px;
   margin-bottom: 0px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .total-label {
   font-size: 19px;
   color: #2e7e89;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-card {
@@ -250,7 +250,7 @@ hr {
   color: #999;
   font-weight: 500;
   margin-bottom: 0px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .total-card {
@@ -258,7 +258,7 @@ hr {
   font-size: 30px;
   color: #444;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
 }
 
@@ -267,14 +267,14 @@ hr {
   color: #999;
   font-weight: 600;
   margin-bottom: 0px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .total-incomming {
   font-size: 13px;
   color: #444;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
 }
 
@@ -287,7 +287,7 @@ hr {
   font-size: 13px;
   color: #444;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
 }
 
@@ -328,7 +328,7 @@ hr {
   float: right;
   padding: 13px;
   font-size: 9px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .green {
@@ -346,7 +346,7 @@ hr {
   font-weight: 600 !important;
   color: #444;
   font-size: 9px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin-left: 50px !important;
 }
 

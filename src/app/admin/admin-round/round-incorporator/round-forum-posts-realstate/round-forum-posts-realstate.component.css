@@ -72,7 +72,7 @@
   color: #2e7e89;
   font-size: 30px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-2 {
@@ -80,7 +80,7 @@
   color: #444;
   font-size: 14px;
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-3 {
@@ -88,7 +88,7 @@
   color: #444;
   font-size: 11px;
   font-weight: 500;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   margin: 0px;
 }
 
@@ -97,7 +97,7 @@
   color: #999;
   font-size: 17px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .description-title-5 {
@@ -105,7 +105,7 @@
   color: #444;
   font-size: 17px;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .progress-bar-aqua,
@@ -116,7 +116,7 @@
 .progress-text {
   font-weight: 500;
   font-size: 15px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   color: #2e7e89;
 }
@@ -125,7 +125,7 @@
   text-align: right;
   font-weight: 500;
   font-size: 15px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   color: #444;
 }
@@ -199,14 +199,14 @@
 h1 {
   font-weight: 600;
   font-size: 20px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 600;
 }
 
 h2 {
   padding: 0px;
   font-size: 13px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   margin: 0px;
   color: #888;
@@ -215,7 +215,7 @@ h2 {
 h3 {
   padding: 0 5px;
   font-size: 13px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500;
   margin: 0px;
 }
@@ -234,7 +234,7 @@ h3 {
 
 .timeline > li > .timeline-item > .timeline-header > a {
   font-weight: 600;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-size: 14px;
 }
 
@@ -294,7 +294,7 @@ h3 {
 
 .btn-upangel {
   font-size: 11px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   font-weight: 500 !important;
   color: #fff;
   text-transform: uppercase;

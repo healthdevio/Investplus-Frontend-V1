@@ -132,7 +132,7 @@
     color: #333;
     font-weight: 700;
     font-size: 11px;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
     line-height: 21px;
   }
   
@@ -168,7 +168,7 @@
     font-size: 15px;
     font-weight: 400;
     text-align: center;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
   }
   
   .description-title-5 {
@@ -177,7 +177,7 @@
     font-size: 17px;
     font-weight: 600;
     text-align: center;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
     margin-top: 5px;
   }
   
@@ -188,7 +188,7 @@
     text-align: center;
     margin-top: 16px;
     color: #444;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
   }
   
   .contador {
@@ -340,7 +340,7 @@
     border-radius: 5px !important;
     display: inline-block !important;
     margin-top: 25px;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
   }
   
   .btn-upangel {
@@ -382,7 +382,7 @@
     text-align: center;
     margin-top: 16px;
     color: #444;
-    font-family: "Montserrat", sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
 }
   
 .companyname {
