@@ -8,7 +8,6 @@
 .sidebar {
   padding-bottom: 50px;
 }
-
 .sidebar-menu > li:hover > a,
 .sidebar-menu > li.active > a {
   color: #fff !important;
@@ -68,6 +67,12 @@
 .skin-blue .treeview-menu > li.active > a,
 .skin-blue .treeview-menu > li > a:hover {
   color: #444 !important;
+}
+
+/* Add the following CSS */
+.sidebar-menu > li.active > a i,
+.sidebar-menu > li:hover > a i {
+  color: white !important;
 }
 
 @media (min-width: 768px) {
@@ -137,7 +142,6 @@
   color: #BFBFBF;
 }
 
-
 .sidebar-divider {
   width: 85% !important;
   background: #353535 !important;
@@ -185,4 +189,8 @@
   background: transparent;
   color: #E1E1E1;
   font-weight: 400;
+}
+
+i {
+  margin-right: 3%;
 }

@@ -1,7 +1,7 @@
 // export const environment = {
 //   production: true,
 
-//   // ---------- Ambiente de teste(HML) no bucket da amazon ----------
+//   // ---------- Ambiente de Anterior(HML) no bucket da amazon ----------
 //   url_api: "http://upangel-api-hml.us-east-1.elasticbeanstalk.com/api",
 //   userPoolId: "us-east-1_4g2ESLcRq",
 //   clientId: "1ciul5ah6up694s2dtikkuff10",
