@@ -225,7 +225,15 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     this.loader = true;
     this.loaderService.load(this.loader);
-    if (this.form.valid && this.form.value.termosGerais === true && this.form.value.typeDocument !== null) {
+
+    if (!this.form.value.termosGerais) {
+      toastr.error('Você deve concordar com os termos de uso.');
+      this.loader = false;
+      this.loaderService.load(this.loader);
+      return;
+    }
+
+    if (this.form.valid && this.form.value.typeDocument !== null) {
       const dataSend = this.form.value;
       dataSend.termosGerais = undefined;
       dataSend.typeDocument = undefined;

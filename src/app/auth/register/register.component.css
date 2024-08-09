@@ -108,27 +108,27 @@ legend {
 }
 
 input::placeholder {
-	font-family: Poppins, sans-serif;
-	font-weight: 300;
-	font-size: 14px;
-	line-height: 16px;
-	color: #808089;
+  font-family: Poppins, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #808089;
   }
   
   .input-group {
-	display: flex;
-	align-items: center;
-	width: 94%;
-	position: relative;
+  display: flex;
+  align-items: center;
+  width: 94%;
+  position: relative;
   }
   
   .input-group .form-control {
-	flex: 1;
-	border: none;
-	height: 3em;
-	border-radius: 14px;
-	background-color: #F5F5FA;
-	padding-right: 40px; 
+  flex: 1;
+  border: none;
+  height: 3em;
+  border-radius: 14px;
+  background-color: #F5F5FA;
+  padding-right: 40px; 
   }
 
   .checkbox-label {
@@ -204,4 +204,40 @@ input::placeholder {
 .invest-buttons button:hover {
     background: #085DC1;
     color: #ffffff;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
