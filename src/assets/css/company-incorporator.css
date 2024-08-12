@@ -385,9 +385,27 @@
     border-radius: 8px !important;
   }
 
+  .btn-transparent {
+    /* display: flex !important;
+    width: 460px !important;
+    height: 40px !important; */
+    /* justify-content: center;
+    align-items: center !important;
+    text-align: center;
+    flex-shrink: 0 !important;
+    background: #035A7A !important; */
+    padding: 18px, 200px, 18px, 200px !important;
+    margin-left: 50px;
+    width: 360px;
+    border: 1px;
+    height: 42px;
+    background-color: #035A7A;
+    border-radius: 8px !important;
+  }
+
    
-  .btn-upangel:hover {
-    background-color: #035a7af4 !important ;
+  .btn-transparent:hover {
+    background-color: #ffffff !important ;
   }
 
   p {
