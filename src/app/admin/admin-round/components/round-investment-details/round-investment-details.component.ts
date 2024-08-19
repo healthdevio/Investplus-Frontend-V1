@@ -490,28 +490,19 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       showMethod: "fadeIn",
       hideMethod: "fadeOut",
     };
-
-    const $this = this;
+  
     const dataSend = this.form.value;
-
     dataSend.investment = undefined;
-
+  
     if (this.form.controls["quotas"].value <= 0) {
-      toastr.error("O número de cotas solicitado é inválido.", "Erro");
-    } else if (
-      this.form.controls["quotas"].value >
-      this.quotas - this.quotasSold
-    ) {
-      toastr.error(
-        "O número de cotas solicitado é maior do que o disponível.",
-        "Erro"
-      );
+      toastr.error("O número de cotas solicitado é inválido. Por favor, insira um valor maior que zero.", "Erro");
+    } else if (this.form.controls["quotas"].value > this.quotas - this.quotasSold) {
+      toastr.error("O número de cotas solicitado excede o disponível. Por favor, revise e tente novamente.", "Erro");
     } else {
       this.loader = true;
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.investmentService
-        .createInvestment(dataSend, this.company, this.rounds)
+      this.investmentService.createInvestment(dataSend, this.company, this.rounds)
         .pipe(
           finalize(() => {
             this.loading = false;
@@ -521,32 +512,39 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            $this.form.reset();
-            $this.sendAutomaticService.sendInvestor(dataSend);
-            toastr.success("Investimento realizado!");
+            this.form.reset();
+            this.sendAutomaticService.sendInvestor(dataSend);
+            toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
             this.router.navigate(["/admin/rounds/assets/list"]);
           },
           error: (error) => {
-            let erro = error;
-            if ((error.code = 400)) {
+            let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
+            if (error.status === 400) {
               switch (error.error.code) {
                 case "ILLEGAL_ARGUMENT":
-                  erro = "Ocorreu um erro na solicitação.";
+                  erroMsg = "Erro na solicitação: um ou mais argumentos fornecidos são inválidos.";
                   break;
                 case "INVESTOR_PROFILE_VIOLATED":
-                  erro =
-                    "O valor do investimento ultrapassa o valor declarado no cadastro.";
+                  erroMsg = "O valor do investimento excede o valor permitido no seu perfil. Por favor, revise os limites de investimento.";
                   break;
                 case "INCOMPLETE_INVESTOR_PROFILE":
-                  erro = "O seu cadastro de investidor está incompleto.";
+                  erroMsg = "Seu cadastro de investidor está incompleto. Complete todas as informações necessárias antes de prosseguir.";
                   break;
+                case "INSUFFICIENT_FUNDS":
+                  erroMsg = "Você não possui fundos suficientes para realizar este investimento. Verifique seu saldo e tente novamente.";
+                  break;
+                case "QUOTA_EXCEEDED":
+                  erroMsg = "O número de cotas solicitado é maior do que o disponível. Reduza a quantidade e tente novamente.";
+                  break;
+                default:
+                  erroMsg = `Erro inesperado: ${error.error.message || "Verifique os dados e tente novamente."}`;
               }
             }
-            toastr.error(erro, "Erro");
+            toastr.error(erroMsg);
           }
         });
     }
-  }
+  }  
 
   public maskModality(sigla: string): string {
     return this.modalityService.getModality(sigla)?.description;
