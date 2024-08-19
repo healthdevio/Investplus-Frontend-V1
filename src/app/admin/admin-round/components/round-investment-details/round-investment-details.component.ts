@@ -1,30 +1,22 @@
+import { Component, OnInit, SecurityContext } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, FormControl } from "@angular/forms";
+import { Options } from "ng5-slider";
+import { finalize } from 'rxjs/operators';
+
 import { LoaderService } from './../../../../core/service/loader.service';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
-import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
-import { Component, OnInit, SecurityContext } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { RoundService } from "../../../../core/service/round.service";
-import { Router } from "@angular/router";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  ValidatorFn,
-  AbstractControl,
-  FormControl,
-} from "@angular/forms";
-import { Options } from "ng5-slider";
 import { CompanyService } from "../../../../core/service/company.service";
 import { InvestmentService } from "../../../../core/service/investment.service";
 import { SendAutomaticService } from "../../../../core/service/send-automatic.service";
 import { TitleService } from "../../../../core/service/title.service";
 import { TitleHeader } from "../../../../core/interface/title-header";
-import { finalize } from 'rxjs/operators';
 import { CompanyCaptableService } from '../../../../core/service/company-captable.service';
-import { CompanyCaptable } from '../../../../core/interface/company-captable';
 import { ModalityService } from '../../../../core/service/modality.service';
+import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
 
 declare var $: any;
 declare var bootbox: any;
@@ -37,8 +29,8 @@ declare var moment: any;
   styleUrls: ["./round-investment-details.component.css"],
 })
 export class RoundInvestmentDetailsComponent implements OnInit {
-  
   companyDataComplete: any;
+  selectedTab: string = 'presentation';
   form: FormGroup;
   companyData: any;
   titleHeader: TitleHeader;
@@ -94,6 +86,22 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   };
   objective: any;
   invested: any;
+
+  socialLinks = ['facebook', 'linkedin', 'twitter', 'website'];
+  socialIcons = {
+    facebook: 'fa fa-fw fa-facebook-square',
+    linkedin: 'fa fa-fw fa-linkedin-square',
+    twitter: 'fa fa-fw fa-twitter-square',
+    website: 'fa fa-fw fa-globe',
+  };
+
+  documents = [
+    { key: 'presentationOffer', label: 'Oferta pública', docUrl: 'docPresentationOffer' },
+    { key: 'presentationInvestors', label: 'Apres. aos investidores', docUrl: 'docPresentationInvestors' },
+    { key: 'legalDocuments', label: 'Doc. jurídicos', docUrl: 'docLegalDocuments' },
+    { key: 'valuationDoc', label: 'Valuation', docUrl: 'docValuation' },
+    { key: 'fiscalDossier', label: 'Dossiê Fiscal', docUrl: 'docFiscalDossier' },
+  ];
 
   constructor(
     private activedRouter: ActivatedRoute,
