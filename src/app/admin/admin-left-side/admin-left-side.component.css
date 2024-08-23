@@ -42,8 +42,17 @@
   background-color: #FFFFFF14;
 }
 
+.left-side-menu>li.active svg path {
+  stroke: #FFFFFF;
+}
+
+.left-side-menu>li svg path {
+  stroke: #BFBFBF;
+}
+
 .left-side-menu>li.active span.menu-text {
   color: #FFFFFF;
+  font-weight: 500;
 }
 
 .sidebar a {
