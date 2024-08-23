@@ -1,49 +1,54 @@
 .main-sidebar {
-  height: 67.5rem !important;
+  height: 100% !important;
   flex-shrink: 0 !important;
+  padding-left: 24px;
+  padding-right: 24px;
+  min-width: 25rem;
   border-right: 1px solid #E5E5E5 !important;
   background: #202022 !important;
+  padding-top: 20px !important;
 }
+
+/* .minimize-button {
+  position: absolute !important;
+  width: 20px;
+  height: 20px;
+  right: 0;
+  background-color: #202022;
+  border: 1px solid #606060 !important;
+  border-radius: 100%;
+  z-index: 1000;
+} */
 
 .sidebar {
   padding-bottom: 50px;
 }
-.sidebar-menu > li:hover > a,
-.sidebar-menu > li.active > a {
-  color: #fff !important;
-  font-weight: 400 !important;
-  font-size: 14px !important;
-  position: relative !important;
-  padding-left: 10%;
-  background: none !important; 
-  border-left: none !important;
+
+.left-side-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.sidebar-menu > li:hover > a::before,
-.sidebar-menu > li.active > a::before {
-  content: '';
-  position: absolute;
-  width: 85%;
-  left: 6%;
-  top: 0;
-  height: 100%;
-  background: #FFFFFF14 !important;
+.left-side-menu>li {
   border-radius: 8px;
-  z-index: 1; 
+  padding: 9px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.left-side-menu>li:hover,
+.left-side-menu>li.active {
+  background-color: #FFFFFF14;
+}
+
+.left-side-menu>li.active span.menu-text {
+  color: #FFFFFF;
 }
 
 .sidebar a {
   color: #BFBFBF;
   font-size: 14px;
-}
-
-.sidebar-menu > li.header {
-  text-align: left;
-  background: #fff;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin: 10px;
-  padding-top: 20px;
 }
 
 .user-panel > .info {
@@ -53,26 +58,9 @@
   left: 55px;
 }
 
-/* .sidebar-menu > li > .treeview-menu {
-  margin: 0 0px;
-  background: #fff;
-  padding: 6px 13px;
-} */
-
-/* .sidebar-menu > li:hover > a span,
-.sidebar-menu > li.active > a span {
-  color: white !important; 
-} */
-
 .skin-blue .treeview-menu > li.active > a,
 .skin-blue .treeview-menu > li > a:hover {
   color: #444 !important;
-}
-
-/* Add the following CSS */
-.sidebar-menu > li.active > a i,
-.sidebar-menu > li:hover > a i {
-  color: white !important;
 }
 
 @media (min-width: 768px) {
@@ -81,12 +69,6 @@
     transform: translate(0, 0);
     width: 0px !important;
     z-index: 850;
-  }
-}
-
-@media (max-width: 767px) {
-  .main-sidebar {
-    padding-top: 70px;
   }
 }
 
@@ -100,12 +82,6 @@
   padding: 11px 5px 11px 20px !important;
 }
 
-.sidebar-menu > li > a {
-  padding: 11px 5px 11px 20px;
-  display: block;
-  position: relative;
-  background: none !important; 
-}
 
 .circle-arrow {
   width: 9%;
@@ -143,36 +119,29 @@
 }
 
 .sidebar-divider {
-  width: 85% !important;
+  width: 100% !important;
   background: #353535 !important;
   color: #353535 !important;
   border: none !important; 
   height: 1px !important;
-  margin: 1rem auto !important; 
 }
 
 .invest-buttons {
-  text-align: center;
-  width: 18rem; /* 40% de aumento de 12.1875rem */
-  height: 3rem; /* 40% de aumento de 1.875rem */
-  margin-left: 4%;
+  width: 100%;
+  height: 40px;
   flex-shrink: 0;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   background: #171719;
-  padding: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  padding: 4px;
 }
 
 .invest-buttons button {
-  width: 8.09rem; /* 40% de aumento de 5.71875rem */
-  height: 2.4rem; /* 40% de aumento de 1.5rem */
+  width: 50%;
   flex-shrink: 0;
   border-radius: 0.25rem;
   font-family: Poppins, sans-serif;
-  font-size: 1.4rem; /* 40% de aumento de 0.75rem */
+  font-size: 12px;
   font-style: normal;
   line-height: 100%;
   cursor: pointer;
@@ -181,6 +150,7 @@
 
 .invest-buttons button.active {
   background: #00A8E7;
+  border-radius: 4px;
   color: #171719;
   font-weight: 500;
 }
