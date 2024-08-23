@@ -9,16 +9,53 @@
   padding-top: 20px !important;
 }
 
-/* .minimize-button {
+.minimize-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   position: absolute !important;
+  top: 120px;
+  right: -75px;
+}
+
+.tooltipContainer {
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+}
+
+.minimize-button:hover+.tooltipContainer {
+  visibility: visible;
+}
+
+.minimize-button {
   width: 20px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
   height: 20px;
-  right: 0;
   background-color: #202022;
   border: 1px solid #606060 !important;
   border-radius: 100%;
   z-index: 1000;
-} */
+}
+
+.minimize-tooltip {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 4px;
+  padding: 8px;
+  color: #FFFFFF;
+  z-index: 1000;
+}
+
+.minimize-tooltip span {
+  font-size: 12px;
+  font-weight: 500;
+}
 
 .sidebar {
   padding-bottom: 50px;
