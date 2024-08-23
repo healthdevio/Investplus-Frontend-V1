@@ -1,3 +1,57 @@
+.content{
+  background: #F6F6F8;
+  height: 1090px;
+}
+
+.text-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 3%;
+  margin-left: 3%;
+  margin-bottom: 3%;
+}
+
+.offer-text {
+  color: #909090;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 16px */
+  margin: 0;
+}
+
+.invest-text {
+  color: #1F1F1F;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.icon-link svg {
+  transition: stroke 0.3s ease;
+}
+
+.icon-link:hover .hover-icon {
+  cursor: pointer;
+  stroke: #1F1F1F; 
+  color: #1F1F1F;
+}
+
+.icon-link:hover .hover-icon path {
+  stroke: #1F1F1F; /* Nova cor ao passar o mouse */
+}
+
+
 h1 {
   font-weight: 600;
   font-size: 20px;
@@ -643,22 +697,28 @@ legend {
 }
 
 .btn-contract {
-  font-size: 11px !important;
-  font-family: "Poppins", sans-serif !important;
-  font-weight: 500 !important;
-  color: #fff;
+  display: flex !important;
+  width: 100% !important;
+  height: 51px !important;
+  justify-content: center !important; 
+  align-items: center !important;
+  gap: 10px;
+  flex-shrink: 0;
   text-transform: uppercase;
   text-align: center;
   width: 100%;
   padding: 7px 25px !important;
-  border: 2px solid #2e7e89 !important;
   background-image: none;
-  background-color: #2e7e89;
-  outline: none !important;
-  box-shadow: none !important;
-  border-radius: 5px !important;
+  background: #035A7A !important;
+  border-radius: 8px !important;
   display: inline-block !important;
   margin-top: 5px;
+  color: #FFF !important;
+  font-family: Poppins, sans-serif !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  line-height: 100% !important; /* 14px */
 }
 
 .btn-dossie {
@@ -803,3 +863,46 @@ legend {
   font-family: "Poppins", sans-serif !important;
   line-height: 21px;
 }
+
+.secao-detalhes-do-ativo{
+  width: 750px !important;
+  height: 284px !important;
+  flex-shrink: 0 !important;
+  border-radius: 8px !important;
+  background: #FFF !important;
+}
+
+.numero-investido-grafico{
+  color: #035A7A !important;
+  font-family: poppins sans-serif !important;
+  font-size: 24px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 150% !important; 
+}
+
+.checkbox-container {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 17px;
+}
+
+.styled-checkbox {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid #707070;
+  margin: 0; 
+}
+
+.checkbox-label {
+  color: #707070;
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; 
+}
+

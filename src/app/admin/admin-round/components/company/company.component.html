@@ -53,13 +53,21 @@
           </ul>
         </div>
       </div>
-      <div *ngIf="company.round?.status == 'FINISHED'" class="row">
+      <!-- <div *ngIf="company.round?.status == 'FINISHED'" class="row">
         <div class="col-sm-12 text-center">
           <a [routerLink]="['../../company', company?.id, 'round', company.round?.id]" class="btn-about">Oferta Pública Inicial</a>
         </div>
-      </div>
+      </div> -->
       <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="col-sm-10 col-sm-offset-1" *ngIf="company.round?.status == 'IN_PROGRESS'">
+          <p class="progress-text">{{company.round?.resume?.total * 100 / company.round?.maximumValuation | number : '1.2-2' }}% de
+            {{company.round?.maximumValuation | moneyMask}}</p>
+            <div class="progress sm">
+              <div [ngStyle]="{'width': maskProgress(company.round?.resume?.total, company.round?.maximumValuation)}" class="progress-bar progress-bar-aqua">
+              </div>
+            </div>            
+        </div>
+        <div class="col-sm-10 col-sm-offset-1" style="margin-top: 5.8%;" *ngIf="company.round?.status == 'FINISHED'">
           <p class="progress-text">{{company.round?.resume?.total * 100 / company.round?.maximumValuation | number : '1.2-2' }}% de
             {{company.round?.maximumValuation | moneyMask}}</p>
             <div class="progress sm">
@@ -73,10 +81,13 @@
           <a *ngIf="company.round?.status == 'IN_PROGRESS'"
           [routerLink]="['../../company', company?.id, 'round', company.round?.id]"
           (click)="handleClick()" class="btn-upangel"><span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: white;">Investir +</span></a>
-          <a *ngIf="company.round?.status == 'FINISHED'"
+          <!-- <a *ngIf="company.round?.status == 'FINISHED'"
             [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" class="btn-upangel" style="background-color: white;">
             <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Gestão de
-            indicadores</span></a>
+            indicadores</span></a> -->
+          <a *ngIf="company.round?.status == 'FINISHED'"
+          [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" class="btn-upangel" style="background-color: white;">
+          <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Rodada Finalizada +</span></a>
         </div>
       </div>
     </div>
