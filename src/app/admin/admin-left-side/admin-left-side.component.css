@@ -1,10 +1,11 @@
 .main-sidebar{
+  margin: 0 !important; 
   height: 100% !important;
   flex-shrink: 0 !important;
   padding-left: 24px;
   padding-right: 24px;
-  min-width: 25rem;
-  max-width: 25rem;
+  min-width: 17.4%;
+  max-width: 17.4%;
   border-right: 1px solid #E5E5E5 !important;
   background: #202022 !important;
   padding-top: 20px !important;
