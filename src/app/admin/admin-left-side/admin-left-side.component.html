@@ -1,4 +1,4 @@
-<aside class="main-sidebar">
+<div class="main-sidebar">
   <div class="minimize-container">
     <div class="minimize-button">
       <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6,9 +6,11 @@
           stroke-linejoin="round" />
       </svg>
     </div>
-
+  
     <div class="tooltipContainer">
-      <div style="width: 16px; height: 16px; background-color: #333333; transform: rotate(45deg); position: absolute; margin-left: -5px;"></div>
+      <div
+        style="width: 16px; height: 16px; background-color: #333333; transform: rotate(45deg); position: absolute; margin-left: -5px;">
+      </div>
       <div class="minimize-tooltip">
         <span>Reduzir</span>
       </div>
@@ -38,7 +40,7 @@
     </defs>
   </svg>
   <section class="sidebar">
-    <app-form class="required" [errorMessage]="'Esta campo é obrigatório'" >
+    <app-form class="required" [errorMessage]="'Esta campo é obrigatório'">
       <div class="invest-buttons">
         <button [class.active]="activeButton === 'start'" (click)="setActiveButton('start')" type="button">
           Startup
@@ -46,28 +48,32 @@
         <button [class.active]="activeButton === 'imob'" (click)="setActiveButton('imob')" type="button">
           Imobiliário
         </button>
-      </div>      
+      </div>
     </app-form>
-    <p 
-    style="font-family: Poppins, sans-serif; color: #909090;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 14px;
-    text-align: left;
-    ">Menu</p>
+    <p style="font-family: Poppins, sans-serif; color: #909090;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 14px;
+      text-align: left;
+      ">Menu</p>
     <ul class="left-side-menu">
       <li routerLinkActive="active">
         <a routerLink="./user">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1358)">
-                <path d="M2.81451 13.0821C1.48744 11.8287 0.666626 10.0972 0.666626 8.18471C0.666626 4.35962 3.94986 1.25879 7.99996 1.25879C12.0501 1.25879 15.3333 4.35962 15.3333 8.18471C15.3333 10.0972 14.5125 11.8287 13.1854 13.0821" stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M4.70021 11.3013C3.85571 10.5037 3.33337 9.40182 3.33337 8.18475C3.33337 5.7506 5.42271 3.77734 8.00004 3.77734" stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round"/>
-                <path d="M8 8.18551V5.66699" stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                  d="M2.81451 13.0821C1.48744 11.8287 0.666626 10.0972 0.666626 8.18471C0.666626 4.35962 3.94986 1.25879 7.99996 1.25879C12.0501 1.25879 15.3333 4.35962 15.3333 8.18471C15.3333 10.0972 14.5125 11.8287 13.1854 13.0821"
+                  stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M4.70021 11.3013C3.85571 10.5037 3.33337 9.40182 3.33337 8.18475C3.33337 5.7506 5.42271 3.77734 8.00004 3.77734"
+                  stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round" />
+                <path d="M8 8.18551V5.66699" stroke="#FFFFFF" stroke-width="1.66667" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </g>
               <defs>
                 <clipPath id="clip0_460_1358">
-                  <rect width="16" height="16" fill="white"/>
+                  <rect width="16" height="16" fill="white" />
                 </clipPath>
               </defs>
             </svg>
@@ -79,13 +85,17 @@
         <a routerLink="./rounds/assets/list">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M5.33333 2H2.66667C2.29848 2 2 2.29848 2 2.66667V5.33333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.33333 14.0003H2.66667C2.29848 14.0003 2 13.7019 2 13.3337V10.667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.6666 14.0003H13.3333C13.7015 14.0003 14 13.7019 14 13.3337V10.667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.6666 2H13.3333C13.7015 2 14 2.29848 14 2.66667V5.33333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9.66671 6H6.33337V10H9.66671V6Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M8 6V4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 12V10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.33333 2H2.66667C2.29848 2 2 2.29848 2 2.66667V5.33333" stroke="white" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5.33333 14.0003H2.66667C2.29848 14.0003 2 13.7019 2 13.3337V10.667" stroke="white"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.6666 14.0003H13.3333C13.7015 14.0003 14 13.7019 14 13.3337V10.667" stroke="white"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10.6666 2H13.3333C13.7015 2 14 2.29848 14 2.66667V5.33333" stroke="white" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9.66671 6H6.33337V10H9.66671V6Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M8 6V4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 12V10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </i>
           <span class="menu-text">Ofertas públicas</span>
@@ -96,14 +106,20 @@
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1376)">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.99402 3.98931L10.5949 1.33301L12.1324 3.99597L5.99402 3.98931Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.33337 4.66667C1.33337 4.29847 1.63185 4 2.00004 4H14C14.3682 4 14.6667 4.29847 14.6667 4.66667V14C14.6667 14.3682 14.3682 14.6667 14 14.6667H2.00004C1.63185 14.6667 1.33337 14.3682 1.33337 14V4.66667Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M11.75 11.0003H14.6667V7.66699H11.75C10.7835 7.66699 10 8.41319 10 9.33366C10 10.2541 10.7835 11.0003 11.75 11.0003Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M14.6666 5.5V13.5" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"/>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M5.99402 3.98931L10.5949 1.33301L12.1324 3.99597L5.99402 3.98931Z" stroke="#BFBFBF"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 4.66667C1.33337 4.29847 1.63185 4 2.00004 4H14C14.3682 4 14.6667 4.29847 14.6667 4.66667V14C14.6667 14.3682 14.3682 14.6667 14 14.6667H2.00004C1.63185 14.6667 1.33337 14.3682 1.33337 14V4.66667Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+                <path
+                  d="M11.75 11.0003H14.6667V7.66699H11.75C10.7835 7.66699 10 8.41319 10 9.33366C10 10.2541 10.7835 11.0003 11.75 11.0003Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M14.6666 5.5V13.5" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" />
               </g>
               <defs>
                 <clipPath id="clip0_460_1376">
-                  <rect width="16" height="16" fill="white"/>
+                  <rect width="16" height="16" fill="white" />
                 </clipPath>
               </defs>
             </svg>
@@ -115,12 +131,19 @@
         <a routerLink="./statement">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M12.3333 2.66699H3.66667C3.29848 2.66699 3 2.96547 3 3.33366V14.0003C3 14.3685 3.29848 14.667 3.66667 14.667H12.3333C12.7015 14.667 13 14.3685 13 14.0003V3.33366C13 2.96547 12.7015 2.66699 12.3333 2.66699Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M6 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.33337 6.33301H10.6667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.33337 9H9.33337" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.33337 11.667H8.00004" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M12.3333 2.66699H3.66667C3.29848 2.66699 3 2.96547 3 3.33366V14.0003C3 14.3685 3.29848 14.667 3.66667 14.667H12.3333C12.7015 14.667 13 14.3685 13 14.0003V3.33366C13 2.96547 12.7015 2.66699 12.3333 2.66699Z"
+                stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M6 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.33337 6.33301H10.6667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.33337 9H9.33337" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.33337 11.667H8.00004" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
           </i>
           <span class="menu-text">Extrato financeiro</span>
@@ -130,10 +153,14 @@
         <a>
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.66663 4.66699L14.6666 8.00033V14.667H5.66663V4.66699Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.66671 4.66699L1.33337 8.00033V14.667H5.66671" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M11.6666 14.667V10.667L8.66663 9.66699V14.667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M14.6666 14.667H5.66663" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.66663 4.66699L14.6666 8.00033V14.667H5.66663V4.66699Z"
+                stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5.66671 4.66699L1.33337 8.00033V14.667H5.66671" stroke="#BFBFBF" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M11.6666 14.667V10.667L8.66663 9.66699V14.667" stroke="#BFBFBF" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.6666 14.667H5.66663" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
           </i>
           <span class="header-menu">Empresas</span>
@@ -145,18 +172,34 @@
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1402)">
-                <path d="M4.66671 5.00033C6.50766 5.00033 8.00004 4.25413 8.00004 3.33366C8.00004 2.41318 6.50766 1.66699 4.66671 1.66699C2.82576 1.66699 1.33337 2.41318 1.33337 3.33366C1.33337 4.25413 2.82576 5.00033 4.66671 5.00033Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.33337 3.33301C1.33337 3.33301 1.33337 4.74587 1.33337 5.66634C1.33337 6.58681 2.82576 7.33301 4.66671 7.33301C6.50764 7.33301 8.00004 6.58681 8.00004 5.66634C8.00004 5.12114 8.00004 3.33301 8.00004 3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.33337 5.66699C1.33337 5.66699 1.33337 7.07986 1.33337 8.00033C1.33337 8.92079 2.82576 9.66699 4.66671 9.66699C6.50764 9.66699 8.00004 8.92079 8.00004 8.00033C8.00004 7.45513 8.00004 5.66699 8.00004 5.66699" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.33337 8C1.33337 8 1.33337 9.41287 1.33337 10.3333C1.33337 11.2538 2.82576 12 4.66671 12C6.50764 12 8.00004 11.2538 8.00004 10.3333C8.00004 9.78813 8.00004 8 8.00004 8" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1.33337 10.333C1.33337 10.333 1.33337 11.7459 1.33337 12.6663C1.33337 13.5868 2.82576 14.333 4.66671 14.333C6.50764 14.333 8.00004 13.5868 8.00004 12.6663C8.00004 12.1211 8.00004 10.333 8.00004 10.333" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3333 9.66634C13.1743 9.66634 14.6667 8.92015 14.6667 7.99967C14.6667 7.0792 13.1743 6.33301 11.3333 6.33301C9.49238 6.33301 8 7.0792 8 7.99967C8 8.92015 9.49238 9.66634 11.3333 9.66634Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8 8C8 8 8 9.41287 8 10.3333C8 11.2538 9.4924 12 11.3333 12C13.1743 12 14.6667 11.2538 14.6667 10.3333C14.6667 9.78813 14.6667 8 14.6667 8" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8 10.333C8 10.333 8 11.7459 8 12.6663C8 13.5868 9.4924 14.333 11.3333 14.333C13.1743 14.333 14.6667 13.5868 14.6667 12.6663C14.6667 12.1211 14.6667 10.333 14.6667 10.333" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                  d="M4.66671 5.00033C6.50766 5.00033 8.00004 4.25413 8.00004 3.33366C8.00004 2.41318 6.50766 1.66699 4.66671 1.66699C2.82576 1.66699 1.33337 2.41318 1.33337 3.33366C1.33337 4.25413 2.82576 5.00033 4.66671 5.00033Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 3.33301C1.33337 3.33301 1.33337 4.74587 1.33337 5.66634C1.33337 6.58681 2.82576 7.33301 4.66671 7.33301C6.50764 7.33301 8.00004 6.58681 8.00004 5.66634C8.00004 5.12114 8.00004 3.33301 8.00004 3.33301"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 5.66699C1.33337 5.66699 1.33337 7.07986 1.33337 8.00033C1.33337 8.92079 2.82576 9.66699 4.66671 9.66699C6.50764 9.66699 8.00004 8.92079 8.00004 8.00033C8.00004 7.45513 8.00004 5.66699 8.00004 5.66699"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 8C1.33337 8 1.33337 9.41287 1.33337 10.3333C1.33337 11.2538 2.82576 12 4.66671 12C6.50764 12 8.00004 11.2538 8.00004 10.3333C8.00004 9.78813 8.00004 8 8.00004 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 10.333C1.33337 10.333 1.33337 11.7459 1.33337 12.6663C1.33337 13.5868 2.82576 14.333 4.66671 14.333C6.50764 14.333 8.00004 13.5868 8.00004 12.6663C8.00004 12.1211 8.00004 10.333 8.00004 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M11.3333 9.66634C13.1743 9.66634 14.6667 8.92015 14.6667 7.99967C14.6667 7.0792 13.1743 6.33301 11.3333 6.33301C9.49238 6.33301 8 7.0792 8 7.99967C8 8.92015 9.49238 9.66634 11.3333 9.66634Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 8C8 8 8 9.41287 8 10.3333C8 11.2538 9.4924 12 11.3333 12C13.1743 12 14.6667 11.2538 14.6667 10.3333C14.6667 9.78813 14.6667 8 14.6667 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 10.333C8 10.333 8 11.7459 8 12.6663C8 13.5868 9.4924 14.333 11.3333 14.333C13.1743 14.333 14.6667 13.5868 14.6667 12.6663C14.6667 12.1211 14.6667 10.333 14.6667 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </g>
               <defs>
                 <clipPath id="clip0_460_1402">
-                  <rect width="16" height="16" fill="white"/>
+                  <rect width="16" height="16" fill="white" />
                 </clipPath>
               </defs>
             </svg>
@@ -167,21 +210,24 @@
       </li>
     </ul>
     <hr class="sidebar-divider" style="color: #353535; background-color: #353535;">
-    <p 
-      style="font-family: Poppins, sans-serif; color: #909090;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 14px;
-      text-align: left;
-      margin-top: 10%;
-      ">Outros</p>
+    <p style="font-family: Poppins, sans-serif; color: #909090;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        text-align: left;
+        margin-top: 10%;
+        ">Outros</p>
     <ul class="left-side-menu">
       <li routerLinkActive="active">
         <a routerLink="./notifications">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M4 5.33301C4 4.27214 4.42143 3.25473 5.17157 2.50458C5.92172 1.75444 6.93913 1.33301 8 1.33301C9.06087 1.33301 10.0783 1.75444 10.8284 2.50458C11.5786 3.25473 12 4.27214 12 5.33301C12 9.99967 14 11.333 14 11.333H2C2 11.333 4 9.99967 4 5.33301Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6.8667 14C6.97829 14.203 7.14233 14.3722 7.34169 14.4901C7.54106 14.608 7.76842 14.6702 8.00003 14.6702C8.23165 14.6702 8.45901 14.608 8.65837 14.4901C8.85773 14.3722 9.02178 14.203 9.13337 14" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M4 5.33301C4 4.27214 4.42143 3.25473 5.17157 2.50458C5.92172 1.75444 6.93913 1.33301 8 1.33301C9.06087 1.33301 10.0783 1.75444 10.8284 2.50458C11.5786 3.25473 12 4.27214 12 5.33301C12 9.99967 14 11.333 14 11.333H2C2 11.333 4 9.99967 4 5.33301Z"
+                stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M6.8667 14C6.97829 14.203 7.14233 14.3722 7.34169 14.4901C7.54106 14.608 7.76842 14.6702 8.00003 14.6702C8.23165 14.6702 8.45901 14.608 8.65837 14.4901C8.85773 14.3722 9.02178 14.203 9.13337 14"
+                stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </i>
           <span class="menu-text">Notificações</span>
@@ -190,17 +236,21 @@
       <li routerLinkActive="active">
         <a routerLink="./settings">
           <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <g clip-path="url(#clip0_460_1342)">
-              <path d="M8.00004 1.33301L6.00004 3.33301H3.33337V5.99967L1.33337 7.99967L3.33337 9.99967V12.6663H6.00004L8.00004 14.6663L10 12.6663H12.6667V9.99967L14.6667 7.99967L12.6667 5.99967V3.33301H10L8.00004 1.33301Z" stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round"/>
-              <path d="M8 10C9.10457 10 10 9.10457 10 8C10 6.89543 9.10457 6 8 6C6.89543 6 6 6.89543 6 8C6 9.10457 6.89543 10 8 10Z" stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_460_1342">
-                <rect width="16" height="16" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </i>
+              <g clip-path="url(#clip0_460_1342)">
+                <path
+                  d="M8.00004 1.33301L6.00004 3.33301H3.33337V5.99967L1.33337 7.99967L3.33337 9.99967V12.6663H6.00004L8.00004 14.6663L10 12.6663H12.6667V9.99967L14.6667 7.99967L12.6667 5.99967V3.33301H10L8.00004 1.33301Z"
+                  stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round" />
+                <path
+                  d="M8 10C9.10457 10 10 9.10457 10 8C10 6.89543 9.10457 6 8 6C6.89543 6 6 6.89543 6 8C6 9.10457 6.89543 10 8 10Z"
+                  stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_460_1342">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </i>
           <span class="menu-text">Configurações</span>
         </a>
       </li>
@@ -208,8 +258,10 @@
         <a routerLink="./logout">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
           </i>
           <span class="menu-text">Sair da conta</span>
@@ -217,4 +269,4 @@
       </li>
     </ul>
   </section>
-</aside>
+</div>

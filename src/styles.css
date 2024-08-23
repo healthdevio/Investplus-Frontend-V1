@@ -4,7 +4,7 @@
 @import "../node_modules/@swimlane/ngx-datatable/assets/icons.css";
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 .skin-blue .wrapper,
-.skin-blue .main-sidebar,
+.skin-blue .main-sidebar-dois,
 .skin-blue .left-side {
   background-color: #fff !important;
 }
