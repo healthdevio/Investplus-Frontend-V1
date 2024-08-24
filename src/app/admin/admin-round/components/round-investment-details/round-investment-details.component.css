@@ -258,7 +258,7 @@ p {
 
 .progress.sm,
 .progress-sm {
-  height: 2px;
+  height: 24px;
 }
 
 .progress-si.sd,
@@ -668,6 +668,11 @@ legend {
   float: none;
 }
 
+.custom-background {
+  border-radius: 8px;
+  margin-left: 20px;
+}
+
 .box-comments .box-comment img {
   float: none;
 }
@@ -806,7 +811,7 @@ legend {
 }
 
 .img-logo {
-  border-radius: 15%;
+  border-radius: 100%;
   border: 1px solid #ddd;
 }
 
