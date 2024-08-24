@@ -429,22 +429,27 @@
             font-family: Poppins;
             font-size: 14px;
             font-style: normal;
+            margin-bottom: 10px;
+            margin-top: 10px;
             font-weight: 500;
             line-height: 100%;">Simular seu investimento</h3>
           </div>
           <div class="box-body no-padding">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <div class="bg-simulator">
-                <div class="row">
-                  <div class="col-xs-10 col-xs-offset-1" 
+              <div 
+              style="padding-left: 20px; padding-right: 20px;"
+              class="bg-simulator">
+                <div 
+               style="padding-left: 10px; padding-right: 10px;"
+                class="row">
+                <p>Qtd de cotas</p>
+                  <div
                   style="color: #000;
                   font-family: Poppins;
                   font-size: 12px;
                   font-style: normal;
-                  font-weight: 500;
                   line-height: 100%;">
                     <app-form
-                      [label]="'Qtd de cotas'"
                       [errorMessage]="
                         'O campo de quantidade de cotas é obrigatório.'
                       "
@@ -460,29 +465,33 @@
                       />
                     </app-form>
                   </div>
+
+                  <div>
+                    <p style="color: #505050; font-size: 12px; ">Quantidade máxima de cotas <span
+                        style="color: #035A7A; font-size: 12px; font-weight: 600;">{{ quotas - quotasSold }}</span></p>
+                  </div>
                 </div>
               </div>
-              <div class="row quota margin-t-10">
-                <div class="col-xs-10 col-xs-offset-1">
-                  <ng5-slider [(value)]="amountQuota" [options]="options"></ng5-slider>
-                </div>
-              </div>
-              <div class="row margin-t-20">
+              <div 
+              style="margin-top: 45px;"
+              class="row">
                 <div class="col-xs-5 col-xs-offset-1 border-t">
-                  <p class="description-title-3">Quantidade cota(s)</p>
-                  <p class="description-title-2">{{ amountQuota }}</p>
+                  <p style="color: #505050; font-size: 12px;">Quantidade cota(s)</p>
+                  <p style="color: #035A7A; font-size: 14px; font-weight: 600;">{{ amountQuota }}</p>
                 </div>
                 <div class="col-xs-5 border-t">
-                  <p class="description-title-3">Valor investimento</p>
-                  <p data-toggle="tooltip" data-original-title="Valor total do investimento a ser realizado." class="description-title-2">
+                  <p style="color: #505050; font-size: 12px;">Valor investimento</p>
+                  <p data-toggle="tooltip" 
+                  data-original-title="Valor total do investimento a ser realizado." 
+                  style="color: #035A7A; font-size: 14px; font-weight: 600;">
                     {{ amountQuota * quotaValue | moneyMask : true }}
                   </p>
                 </div>
               </div>
               <div *ngIf="roundInvestment?.model == 'TRADITIONAL'" class="row">
                 <div class="col-xs-5 col-xs-offset-1 border-t">
-                  <p class="description-title-3">Potencial<br />de lucro a.a.</p>
-                  <p class="description-title-2">
+                  <p style="color: #505050; font-size: 12px;">Potencial<br />de lucro a.a.</p>
+                  <p style="color: #035A7A; font-size: 14px; font-weight: 600;">
                     {{
                         amountQuota *
                           quotaValue *
@@ -495,8 +504,8 @@
                   </p>
                 </div>
                 <div class="col-xs-5 border-t">
-                  <p class="description-title-3">Valorização<br />da cota</p>
-                  <p class="description-title-2">
+                  <p style="color: #505050; font-size: 12px;">Valorização<br />da cota</p>
+                  <p style="color: #035A7A; font-size: 14px; font-weight: 600;">
                     {{
                         amountQuota * quotaValue +
                           amountQuota *
@@ -518,53 +527,61 @@
               </div>
               <br>
               <div class="row">
-                <div class="col-md-12" style="margin:10px;">
+                <div class="col-md-12" style="margin:10px; margin-left: 80px; margin-bottom: 30px;">
                   <p class="documents-info" style="
                       color: #000;
                       font-family: Poppins;
                       font-size: 12px;
                       font-style: normal;
                       font-weight: 400;
-                      line-height: 150%; /* 18px */
+                      line-height: 150%;
                     ">
                     Ao solicitar o contrato, declaro ter lido o
-                    <a href="https://investplus-public.s3.us-east-2.amazonaws.com/Termodecienciaderisco_fcj_invest.pdf" target="_blank" style="
-                        color: #035A7A;
-                        font-family: Poppins;
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: 150%;
-                        text-decoration-line: underline;
-                      "> termo de ciência de risco</a>
-                    <a *ngIf="roundInvestment.id === 9; else defaultLink" href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf" target="_blank" style="
-                        color: #035A7A;
-                        font-family: Poppins;
-                        font-size: 12px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: 150%;
-                        text-decoration-line: underline;
-                      "> minuta de contrato</a>
-                    <ng-template #defaultLink>
-                      <a href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf" target="_blank" style="
-                          color: #035A7A;
-                          font-family: Poppins;
-                          font-size: 12px;
-                          font-style: normal;
-                          font-weight: 400;
-                          line-height: 150%;
-                          text-decoration-line: underline;
-                        ">minuta de contrato</a>
-                    </ng-template>
                   </p>
+                  <a href="https://investplus-public.s3.us-east-2.amazonaws.com/Termodecienciaderisco_fcj_invest.pdf" target="_blank"
+                    style="
+                                          color: #035A7A;
+                                          font-family: Poppins;
+                                          font-size: 12px;
+                                          font-style: normal;
+                                          font-weight: 400;
+                                          line-height: 150%;
+                                          text-decoration-line: underline;
+                  "> termo de ciência de risco</a>
+                  <a *ngIf="roundInvestment.id === 9; else defaultLink"
+                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
+                    target="_blank" style="
+                                          color: #035A7A;
+                                          font-family: Poppins;
+                                          font-size: 12px;
+                                          font-style: normal;
+                                          font-weight: 400;
+                                          line-height: 150%;
+                                          text-decoration-line: underline;
+                  "> minuta de contrato</a>
+                  <ng-template #defaultLink>
+                    <a href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                      target="_blank" style="
+                      color: #035A7A;
+                      font-family: Poppins;
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: 150%;
+                      text-decoration-line: underline;
+                    ">minuta de contrato</a>
+                  </ng-template>
                 </div>
                 
               </div>
               <div class="row margin-t-20">
                 <div class="col-xs-10 col-xs-offset-1">
                   <div class="form-group">
-                    <div class="checkbox-container" data-toggle="tooltip" data-original-title="Valor do investimento não será exibido.">
+                    <div 
+                    style="display: flex; flex-direction: row;"
+                    class="checkbox-container" 
+                    data-toggle="tooltip" 
+                    data-original-title="Valor do investimento não será exibido.">
                       <input type="checkbox" formControlName="publicAccess" class="styled-checkbox" />
                       <label for="publicAccess" class="checkbox-label">Publicar meu nome como investidor na rodada</label>
                     </div>
