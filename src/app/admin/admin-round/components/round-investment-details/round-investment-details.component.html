@@ -594,12 +594,16 @@
       </div>
     </div>
 
-    <div 
-    style="background-color: white;"
+    <div
+    style="margin-left: 2px; max-width: 98%;"
     class="row">
-      <div class="col-xs-12 col-md-12">
-        <ul class="nav nav-tabs">
-          <li class="nav-item" [ngClass]="{'active': selectedTab === 'presentation'}" (click)="selectedTab = 'presentation'">
+      <div 
+      style="margin-top: 20px; margin-left: 20px; background-color: white; border-radius: 8px;"
+      class="col-xs-12 col-md-12">
+        <ul
+        class="nav nav-tabs">
+          <li 
+          class="nav-item" [ngClass]="{'active': selectedTab === 'presentation'}" (click)="selectedTab = 'presentation'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'presentation' ? '#035A7A' : '#505050'}">
               <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Apresentação</div>
               <div *ngIf="selectedTab === 'presentation'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
