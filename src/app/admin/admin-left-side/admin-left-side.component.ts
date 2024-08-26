@@ -5,6 +5,8 @@ import { EventEmitterService } from '../../core/service/event-emitter-service.se
 import { Investor } from '../../core/interface/investor';
 import { InvestorService } from '../../core/service/investor.service';
 
+declare var toastr: any;
+
 @Component({
   selector: 'app-admin-left-side',
   templateUrl: './admin-left-side.component.html',
@@ -54,6 +56,28 @@ export class AdminLeftSideComponent implements OnInit {
     // this.investorService.getUser().subscribe((response) => {
     //   this.base64textString = response.avatar === undefined ? './../../../assets/img/default-profile_01.png' : 'data:image/png;base64,' + response.avatar;
     // });
+  }
+
+  onDevelopmentToast() {
+    toastr.options = {
+      closeButton: true,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "10000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+    };
+
+    toastr.error('Em desenvolvimento');
   }
 
 

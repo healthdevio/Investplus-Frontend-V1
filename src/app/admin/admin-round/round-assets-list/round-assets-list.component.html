@@ -45,9 +45,9 @@
     <div 
     style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
       <div style="display: flex; align-items: center; gap: 50px;">
-        <p>Todas as oportunidades</p>
-        <p>Andamento</p>
-        <p>Concluidas</p>
+        <p style="color: #035A7A; cursor: pointer;">Todas as oportunidades</p>
+        <p style="cursor: pointer;">Andamento</p>
+        <p style="cursor: pointer;">Concluidas</p>
       </div>
 
       <div style="height: 36px; min-width: 300px; margin-left: 50px; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 16px; padding-right: 16px; margin-bottom: 10px;">
@@ -58,28 +58,31 @@
           <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        <input 
-        style="background-color: transparent; border: 0; width: 100%;"
-        placeholder="Pesquisar ativo"/>
+        <input style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none;"
+          placeholder="Pesquisar ativo" />
       </div>
 
-      <div 
-      style="height: 36px; border-radius: 100px; border: 1px solid #E5E5E5; display: flex; align-items: center; gap: 16px; padding: 3px; background-color: #FAFAFA; margin-left: auto; margin-bottom: 10px;">
-        <div style="display: flex; align-items: center; justify-content: center; background-color: #035A7A; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;">
+      <div
+        style="height: 36px; border-radius: 100px; border: 1px solid #E5E5E5; display: flex; align-items: center; gap: 16px; padding: 3px; background-color: #FAFAFA; margin-left: auto; margin-bottom: 10px;">
+        <div
+          style="display: flex; align-items: center; justify-content: center; background-color: #035A7A; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
               stroke="white" stroke-width="0.8" stroke-linejoin="round" />
             <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="white" stroke-width="0.8"
               stroke-linejoin="round" />
-            <path d="M10.2083 3.79199H7.875V6.12533H10.2083V3.79199Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
+            <path d="M10.2083 3.79199H7.875V6.12533H10.2083V3.79199Z" stroke="white" stroke-width="0.8"
+              stroke-linejoin="round" />
             <path d="M6.125 7.875H3.79167V10.2083H6.125V7.875Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
             <path d="M10.2083 7.875H7.875V10.2083H10.2083V7.875Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
           </svg>
           <p style="color: white; margin-bottom: 0;">Card</p>
         </div>
-
-        <div style="display: flex; align-items: center; justify-content: center; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;">
+      
+        <div
+          style="display: flex; cursor: pointer; align-items: center; justify-content: center; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;"
+          (click)="onDevelopmentToast()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
@@ -87,10 +90,14 @@
             <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="#333333" stroke-width="0.8"
               stroke-linejoin="round" />
             <path d="M6.125 7.875H3.79167V10.2083H6.125V7.875Z" stroke="#333333" stroke-width="0.8" stroke-linejoin="round" />
-            <path d="M7.875 8.16699H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M7.875 10.208H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M7.875 3.79199H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M7.875 5.83301H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.875 8.16699H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M7.875 10.208H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M7.875 3.79199H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M7.875 5.83301H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
           <p style="color: #333333; margin-bottom: 0;">Lista</p>
         </div>
