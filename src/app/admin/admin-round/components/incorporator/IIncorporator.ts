@@ -1,4 +1,6 @@
 export interface IIncorporator {
+    id: number;
+    name: string;
     achievements: string,
     annualMaxProfitability: number,
     annualMinProfitability: number,
@@ -9,7 +11,6 @@ export interface IIncorporator {
     business: string,
     description: string,
     duration: number,
-    id: number,
     investments: investments[],
     location: string,
     locationLink: string,
@@ -34,6 +35,26 @@ export interface IIncorporator {
     status: string,
     totalApartments: number,
     logoDocUrl: string,
+    round: {
+        id: 1,
+        status: string,
+        type: string,
+        logo: string,
+        banner: string,
+        quotas: number,
+        quotaValue: number,
+        resume: { quotasSold: number, total: number },
+        maximumValuation: number,
+        percentageOfIncome: number,
+        cdiPercentage: number,
+        cdiValue: number,
+        partnerParticipation: number,
+        deadline: number,
+        upangelCost: number,
+        modality: String,
+        guarantee: String,
+        valuation: number,
+    }
 }
 
 interface investments {

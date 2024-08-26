@@ -18,13 +18,16 @@ declare var toastr: any;
 })
 export class RoundAssetsListComponent implements OnInit {
 
+  private allEmpresas: ICompany[] = [];
+  private allImobiliarias: IIncorporator[] = [];
+  
+  empresas: ICompany[] = [];
+  imobiliarias: IIncorporator[] = [];
+
   form: FormGroup;
   titleHeader: TitleHeader;
   filterInvestment = '';
   filterAtivoType = AtivosTipo.STARTUP;
-
-  imobiliarias: IIncorporator[] = [];
-  empresas: ICompany[] = [];
 
   realStates: any;
   description = '';
@@ -57,20 +60,46 @@ export class RoundAssetsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Investimentos / Ofertas Públicas';
     this.data.changeTitle(this.titleHeader);
 
     this.initForm();
+    this.loadAllRounds();
+  }
+  
+  selectedText: string = 'Todas as oportunidades';
 
+
+  setSelectedText(text: string) {
+    this.selectedText = text;
+
+    if (text === 'Andamento') {
+      this.filterByStatus('IN_PROGRESS');
+    } else if (text === 'Concluidas') {
+      this.filterByStatus('FINISHED');
+    } else {
+      this.empresas = [...this.allEmpresas]; // Resetar o filtro
+      this.imobiliarias = [...this.allImobiliarias]; // Resetar o filtro
+    }
+  }
+
+  filterByStatus(status: string) {
+    this.empresas = this.allEmpresas.filter(company => company.round.status === status);
+    this.imobiliarias = this.allImobiliarias.filter(realState => realState.status === status);
+  }  
+  
+
+  loadAllRounds() {
     this.loader = true;
     this.responseError = false;
+
     this.roundService.getAllShortUser().subscribe(
       (response) => {
-        this.response = response;
-        this.empresas = response.companiesRounds;
-        this.imobiliarias = response.realStateRounds;
+        this.allEmpresas = response.companiesRounds;
+        this.allImobiliarias = response.realStateRounds;
+        this.empresas = [...this.allEmpresas]; 
+        this.imobiliarias = [...this.allImobiliarias]; 
         this.loader = false;
       }, (error) => {
         this.loader = false;
@@ -78,12 +107,6 @@ export class RoundAssetsListComponent implements OnInit {
         this.errorMessage = 'Problema ao carregar as rodadas de investimento.';
         this.suggestionMessage = 'Recarregue a página ou tente novamente mais tarde.';
       });
-  }
-
-  selectedText: string = 'Todas as oportunidades';
-
-  setSelectedText(text: string) {
-    this.selectedText = text;
   }
 
   getColor(text: string): string {
