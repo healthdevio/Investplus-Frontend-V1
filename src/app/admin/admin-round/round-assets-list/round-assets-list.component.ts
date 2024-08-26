@@ -73,16 +73,8 @@ export class RoundAssetsListComponent implements OnInit {
 
   setSelectedText(text: string) {
     this.selectedText = text;
-
-    if (text === 'Andamento') {
-      this.filterByStatus('IN_PROGRESS');
-    } else if (text === 'Concluidas') {
-      this.filterByStatus('FINISHED');
-    } else {
-      this.empresas = [...this.allEmpresas]; // Resetar o filtro
-      this.imobiliarias = [...this.allImobiliarias]; // Resetar o filtro
-    }
-  }
+    this.applyFilters();
+  }  
 
   filterByStatus(status: string) {
     this.empresas = this.allEmpresas.filter(company => company.round.status === status);
@@ -136,10 +128,32 @@ export class RoundAssetsListComponent implements OnInit {
     toastr.error('Em desenvolvimento');
   }
 
+  applyFilters() {
+    const status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
+                   this.selectedText === 'Concluidas' ? 'FINISHED' : null;
+  
+    const searchTerm = this.form.get('search').value.toLowerCase();
+  
+    this.empresas = this.allEmpresas.filter(company => {
+      const matchesStatus = status ? company.round.status === status : true;
+      const matchesSearch = company.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+  
+    this.imobiliarias = this.allImobiliarias.filter(realState => {
+      const matchesStatus = status ? realState.status === status : true;
+      const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+  }
+  
+
   initForm() {
     this.form = this.formBuilder.group({
       typeFilter: [''],
-      typeAsset: [AtivosTipo.REALSTATE]
+      typeAsset: [AtivosTipo.REALSTATE],
+      search: [''] 
     });
+    this.form.get('search').valueChanges.subscribe(value => this.applyFilters());
   }
 }
