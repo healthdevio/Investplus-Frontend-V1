@@ -764,10 +764,16 @@
               <div class="col-md-12">
                 <div class="box-comment">
                   <div *ngIf="investments && investments.length > 0; else noInvestors">
-                    <div class="col-md-1 col-xs-6 margin-t-20" *ngFor="let investment of investments">
-                      <div class="row text-center">
-                        <div class="col-md-12">
+                    <div 
+                    style="border: 1px solid #E5E5E5; border-radius: 8px; max-height: 80px; min-width: 200px; margin-right: 16px; display: flex;"
+                    class="col-md-1 col-xs-6 margin-t-20" 
+                    *ngFor="let investment of investments">
+                      <div>
+                        <div>
                           <img
+                          style="margin-top: 10px;"
+                          width="50px"
+                          height="50px"
                             class="img-circle"
                             src="{{
                               investment.avatar == null
@@ -778,10 +784,11 @@
                           />
                         </div>
                       </div>
+
                       <div class="row margin-t-10 text-center">
                         <div class="col-md-12">
                           <div class="investors">
-                            <p>
+                            <p style="font-size: 12px;">
                               {{
                                 investment.fullName == null
                                   ? "Privado"
