@@ -32,3 +32,10 @@ body {
   background-color: #fbfbfb !important;
   z-index: 800;
 }
+
+.main-header nav,
+.content-wrapper {
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2, ElementRef, ViewChild } from "@angular/core";
 import { UserLoginService } from "../../core/service/cognito/user-login.service";
 import { Router } from "@angular/router";
 import { EventEmitterService } from "../../core/service/event-emitter-service.service";
@@ -12,15 +12,19 @@ import { TitleHeader } from "../../core/interface/title-header";
   styleUrls: ["./admin-header.component.css"],
 })
 export class AdminHeaderComponent implements OnInit {
+
   investor: Investor;
   getFirtLetter: any;
+  sidebarExpanded = true;
   titleHeader: TitleHeader;
 
   constructor(
     private userService: UserLoginService,
     private router: Router,
     private eventEmitter: EventEmitterService,
-    private data: TitleService
+    private data: TitleService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
 
   base64textString = "";
@@ -47,4 +51,23 @@ export class AdminHeaderComponent implements OnInit {
       }
     });
   }
+
+  adjustHeaderWidth(sidebarExpanded: boolean) {
+    console.log("header componente", sidebarExpanded)
+    this.sidebarExpanded = sidebarExpanded;
+    this.updateHeaderStyle();
+  }
+
+  updateHeaderStyle() {
+    const headerElement = this.el.nativeElement.querySelector('.main-header nav');
+    if (headerElement) {
+      const marginLeft = this.sidebarExpanded ? '17.35%' : '6%';
+      const width = this.sidebarExpanded ? 'calc(100% - 17.4%)' : 'calc(100% - 6%)';
+      
+      this.renderer.setStyle(headerElement, 'margin-left', marginLeft);
+      this.renderer.setStyle(headerElement, 'width', width);
+    }
+  }
+
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Scopes } from '../../core/interface/scopes';
 import { CognitoUtil } from '../../core/service/cognito/cognito.service';
 import { EventEmitterService } from '../../core/service/event-emitter-service.service';
@@ -11,7 +11,7 @@ import { InvestorService } from '../../core/service/investor.service';
   styleUrls: ['./admin-left-side.component.css']
 })
 export class AdminLeftSideComponent implements OnInit {
-
+  @Output() sidebarToggle = new EventEmitter<boolean>();
   showDiv1: boolean = true;
   scopes = new Scopes;
   scopesUser = [];
@@ -66,7 +66,7 @@ export class AdminLeftSideComponent implements OnInit {
   }
 
   toggleDivs() {
-    console.log(this.showDiv1)
     this.showDiv1 = !this.showDiv1;
+    this.sidebarToggle.emit(this.showDiv1);
   }
 }

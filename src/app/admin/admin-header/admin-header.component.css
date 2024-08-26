@@ -173,6 +173,30 @@ p {
 	height: 51px !important;
 }
 
-.settingandbellsbox{
+.wrapper {
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .content-wrapper {
+	flex-grow: 1;
+  }
+  
+  .main-header {
+	width: calc(100% - var(--sidebar-width));
+	transition: width 0.3s ease-in-out;
+  }
+  
+  .minimized .main-header {
+	--sidebar-width: 6%;
+  }
+  
+  .expanded .main-header {
+	--sidebar-width: 17.4%;
+  }
+  
 
-}
+  .main-header nav {
+	transition: width 0.3s ease-in-out;
+  }
+  

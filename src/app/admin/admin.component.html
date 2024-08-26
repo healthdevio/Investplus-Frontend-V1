@@ -1,7 +1,7 @@
-<app-admin-left-side></app-admin-left-side>
+<app-admin-left-side (sidebarToggle)="handleSidebarToggle($event)"></app-admin-left-side>
 <div class="wrapper">
-  <app-admin-header></app-admin-header>
-  <div class="content-wrapper">
+  <app-admin-header #header></app-admin-header>
+  <div class="content-wrapper" #contentWrapper>
     <router-outlet></router-outlet>
   </div>
   <app-admin-footer></app-admin-footer>
