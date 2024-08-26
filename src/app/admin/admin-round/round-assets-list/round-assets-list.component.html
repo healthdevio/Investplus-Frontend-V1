@@ -45,9 +45,11 @@
     <div 
     style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
       <div style="display: flex; align-items: center; gap: 50px;">
-        <p style="color: #035A7A; cursor: pointer;">Todas as oportunidades</p>
-        <p style="cursor: pointer;">Andamento</p>
-        <p style="cursor: pointer;">Concluidas</p>
+        <p [style.color]="getColor('Todas as oportunidades')" (click)="setSelectedText('Todas as oportunidades')"
+          style="cursor: pointer;">Todas as oportunidades</p>
+        <p [style.color]="getColor('Andamento')" (click)="setSelectedText('Andamento')" style="cursor: pointer;">Andamento</p>
+        <p [style.color]="getColor('Concluidas')" (click)="setSelectedText('Concluidas')" style="cursor: pointer;">Concluidas
+        </p>
       </div>
 
       <div style="height: 36px; min-width: 300px; margin-left: 50px; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 16px; padding-right: 16px; margin-bottom: 10px;">
@@ -119,10 +121,10 @@
       style="display: flex; flex-direction: row; gap: 10px;"
       *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
         <div
-        
           *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
           <div>
-            <admin-round-company [company]="empresa"></admin-round-company>
+            <admin-round-company [company]="empresa">
+            </admin-round-company>
           </div>
         </div>
       </div>

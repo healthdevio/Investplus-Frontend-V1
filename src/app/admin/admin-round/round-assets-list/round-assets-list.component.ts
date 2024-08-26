@@ -80,6 +80,17 @@ export class RoundAssetsListComponent implements OnInit {
       });
   }
 
+  selectedText: string = 'Todas as oportunidades';
+
+  setSelectedText(text: string) {
+    this.selectedText = text;
+  }
+
+  getColor(text: string): string {
+    return this.selectedText === text ? '#035A7A' : 'inherit';
+  }
+
+
   onDevelopmentToast() {
     toastr.options = {
       closeButton: true,
