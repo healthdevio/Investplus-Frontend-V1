@@ -39,6 +39,7 @@
         </div>
       </div>
     </div>
+    
     <div class="row" style="margin-bottom: 100px;">
       <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
         <div
@@ -48,10 +49,13 @@
           </div>
         </div>
       </div>
-      <div *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
+      <div
+      style="display: flex; flex-direction: row; gap: 10px;"
+      *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
         <div
+        
           *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
-          <div class="col-md-4">
+          <div>
             <admin-round-company [company]="empresa"></admin-round-company>
           </div>
         </div>

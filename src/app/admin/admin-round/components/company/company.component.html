@@ -1,4 +1,6 @@
-  <div class="box box-widget widget-user" style=" height: 300px; border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between; gap: 540px;" *ngIf="company">
+  <div 
+  class="box box-widget widget-user" 
+  style=" height: 300px; min-width: 420px; border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between;" *ngIf="company">
     <div class="box-header">
       <div class="row" style="gap: 40; display: flex;">
         <div class="col-xs-3 col-md-3">
@@ -78,15 +80,25 @@
       </div>
       <div class="row">
         <div>
-          <a *ngIf="company.round?.status == 'IN_PROGRESS'"
+          <a 
+          *ngIf="company.round?.status == 'IN_PROGRESS'"
           [routerLink]="['../../company', company?.id, 'round', company.round?.id]"
-          (click)="handleClick()" class="btn-upangel"><span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: white;">Investir +</span></a>
+          (click)="handleClick()" 
+          class="btn-upangel"
+          style="max-width: 200px; min-width: 330px;"
+          >
+          <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: white;">Investir +</span>
+        </a>
           <!-- <a *ngIf="company.round?.status == 'FINISHED'"
             [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" class="btn-upangel" style="background-color: white;">
             <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Gestão de
             indicadores</span></a> -->
-          <a *ngIf="company.round?.status == 'FINISHED'"
-          [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" class="btn-upangel" style="background-color: white;">
+          <a 
+          
+          *ngIf="company.round?.status == 'FINISHED'"
+          [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" 
+          class="btn-upangel" 
+          style="background-color: white; max-width: 200px; min-width: 330px;">
           <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Rodada Finalizada +</span></a>
         </div>
       </div>
