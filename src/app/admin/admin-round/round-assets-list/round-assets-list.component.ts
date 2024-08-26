@@ -7,8 +7,6 @@ import { TitleService } from '../../../core/service/title.service';
 import { IIncorporator } from '../components/incorporator/IIncorporator';
 import { ICompany } from '../components/company/ICompany';
 
-declare var $: any;
-declare var moment: any;
 declare var toastr: any;
 
 @Component({
@@ -29,13 +27,9 @@ export class RoundAssetsListComponent implements OnInit {
   filterInvestment = '';
   filterAtivoType = AtivosTipo.STARTUP;
 
-  realStates: any;
-  description = '';
-  response: any;
   loader: boolean;
   errorMessage = '';
   suggestionMessage = '';
-  score = '';
   responseError: boolean;
 
   public AtivosTipo = AtivosTipo;
@@ -46,7 +40,6 @@ export class RoundAssetsListComponent implements OnInit {
   ];
 
   p = 1;
-  q = 1;
   responsive = true;
   labels: any = {
     previousLabel: 'Anterior',
@@ -70,41 +63,63 @@ export class RoundAssetsListComponent implements OnInit {
   
   selectedText: string = 'Todas as oportunidades';
 
-
   setSelectedText(text: string) {
     this.selectedText = text;
     this.applyFilters();
   }  
 
-  filterByStatus(status: string) {
-    this.empresas = this.allEmpresas.filter(company => company.round.status === status);
-    this.imobiliarias = this.allImobiliarias.filter(realState => realState.status === status);
-  }  
+  applyFilters() {
+    const status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
+                   this.selectedText === 'Concluidas' ? 'FINISHED' : null;
   
+    const searchTerm = this.form.get('search').value.toLowerCase();
+  
+    // Filtragem das empresas
+    this.empresas = this.allEmpresas.filter(company => {
+      const matchesStatus = status ? company.round.status === status : true;
+      const matchesSearch = company.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+    
+    // Console log das empresas filtradas
+    console.log('Empresas filtradas:', this.empresas);
+  
+    // Filtragem das imobiliárias
+    this.imobiliarias = this.allImobiliarias.filter(realState => {
+      const matchesStatus = status ? realState.status === status : true;
+      const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+
+    // Console log das imobiliárias filtradas
+    console.log('Imobiliárias filtradas:', this.imobiliarias);
+  }
 
   loadAllRounds() {
     this.loader = true;
     this.responseError = false;
-
+  
     this.roundService.getAllShortUser().subscribe(
       (response) => {
-        this.allEmpresas = response.companiesRounds;
-        this.allImobiliarias = response.realStateRounds;
+        this.allEmpresas = response.companiesRounds || [];
+        this.allImobiliarias = response.realStateRounds || [];
         this.empresas = [...this.allEmpresas]; 
         this.imobiliarias = [...this.allImobiliarias]; 
         this.loader = false;
+
+        // Aplicar filtros inicialmente para garantir a exibição correta
+        this.applyFilters();
       }, (error) => {
         this.loader = false;
         this.responseError = true;
         this.errorMessage = 'Problema ao carregar as rodadas de investimento.';
         this.suggestionMessage = 'Recarregue a página ou tente novamente mais tarde.';
       });
-  }
+  }  
 
   getColor(text: string): string {
     return this.selectedText === text ? '#035A7A' : 'inherit';
   }
-
 
   onDevelopmentToast() {
     toastr.options = {
@@ -128,32 +143,10 @@ export class RoundAssetsListComponent implements OnInit {
     toastr.error('Em desenvolvimento');
   }
 
-  applyFilters() {
-    const status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
-                   this.selectedText === 'Concluidas' ? 'FINISHED' : null;
-  
-    const searchTerm = this.form.get('search').value.toLowerCase();
-  
-    this.empresas = this.allEmpresas.filter(company => {
-      const matchesStatus = status ? company.round.status === status : true;
-      const matchesSearch = company.name.toLowerCase().includes(searchTerm);
-      return matchesStatus && matchesSearch;
-    });
-  
-    this.imobiliarias = this.allImobiliarias.filter(realState => {
-      const matchesStatus = status ? realState.status === status : true;
-      const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
-      return matchesStatus && matchesSearch;
-    });
-  }
-  
-
   initForm() {
     this.form = this.formBuilder.group({
-      typeFilter: [''],
-      typeAsset: [AtivosTipo.REALSTATE],
       search: [''] 
     });
-    this.form.get('search').valueChanges.subscribe(value => this.applyFilters());
+    this.form.get('search').valueChanges.subscribe(() => this.applyFilters());
   }
 }

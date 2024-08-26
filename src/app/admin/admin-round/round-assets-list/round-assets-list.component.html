@@ -1,6 +1,7 @@
 <div *ngIf="loader">
   <app-loader [loader]="loader"></app-loader>
 </div>
+
 <div *ngIf="!loader && !responseError" style="background-color: #F6F6F8; height: 980px; margin-top: -50px;">
   <section class="content-header" style="margin: 45px">
     <div class="row">
@@ -24,9 +25,8 @@
       </div>
     </div>
   </section>
-  <section 
-  class="content" 
-  style="background-color: #ffff; margin: 50px; border-radius: 20px;">
+
+  <section class="content" style="background-color: #ffff; margin: 50px; border-radius: 20px;">
     <div class="row" *ngIf="responseError">
       <div class="col-xs-14">
         <div class="box">
@@ -42,97 +42,81 @@
       </div>
     </div>
 
-    <div 
-    style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
+    <div style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
       <div style="display: flex; align-items: center; gap: 50px;">
         <p [style.color]="getColor('Todas as oportunidades')" (click)="setSelectedText('Todas as oportunidades')"
           style="cursor: pointer;">Todas as oportunidades</p>
         <p [style.color]="getColor('Andamento')" (click)="setSelectedText('Andamento')" style="cursor: pointer;">Andamento</p>
-        <p [style.color]="getColor('Concluidas')" (click)="setSelectedText('Concluidas')" style="cursor: pointer;">Concluidas
-        </p>
+        <p [style.color]="getColor('Concluidas')" (click)="setSelectedText('Concluidas')" style="cursor: pointer;">Concluídas</p>
       </div>
 
       <div style="height: 36px; min-width: 300px; margin-left: 50px; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 16px; padding-right: 16px; margin-bottom: 10px;">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
+          <path d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
             stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
           <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
             stroke-linejoin="round" />
         </svg>
-        <input 
+        <input
         style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none;"
-        placeholder="Pesquisar ativo" 
-        formControlName="search"
-        (keyup.enter)="applyFilters()"
-        />
+        placeholder="Pesquisar ativo"
+        (keyup)="applyFilters($event.target.value)"
+        />      
       </div>
 
-      <div
-        style="height: 36px; border-radius: 100px; border: 1px solid #E5E5E5; display: flex; align-items: center; gap: 16px; padding: 3px; background-color: #FAFAFA; margin-left: auto; margin-bottom: 10px;">
-        <div
-          style="display: flex; align-items: center; justify-content: center; background-color: #035A7A; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;">
+      <div style="height: 36px; border-radius: 100px; border: 1px solid #E5E5E5; display: flex; align-items: center; gap: 16px; padding: 3px; background-color: #FAFAFA; margin-left: auto; margin-bottom: 10px;">
+        <div style="display: flex; align-items: center; justify-content: center; background-color: #035A7A; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
+            <path d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
               stroke="white" stroke-width="0.8" stroke-linejoin="round" />
-            <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="white" stroke-width="0.8"
-              stroke-linejoin="round" />
-            <path d="M10.2083 3.79199H7.875V6.12533H10.2083V3.79199Z" stroke="white" stroke-width="0.8"
-              stroke-linejoin="round" />
+            <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
+            <path d="M10.2083 3.79199H7.875V6.12533H10.2083V3.79199Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
             <path d="M6.125 7.875H3.79167V10.2083H6.125V7.875Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
             <path d="M10.2083 7.875H7.875V10.2083H10.2083V7.875Z" stroke="white" stroke-width="0.8" stroke-linejoin="round" />
           </svg>
           <p style="color: white; margin-bottom: 0;">Card</p>
         </div>
-      
-        <div
-          style="display: flex; cursor: pointer; align-items: center; justify-content: center; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;"
+
+        <div style="display: flex; cursor: pointer; align-items: center; justify-content: center; border-radius: 100px; padding: 0 12px; gap: 4px; height: 100%;"
           (click)="onDevelopmentToast()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
+            <path d="M11.375 1.75H2.625C2.14175 1.75 1.75 2.14175 1.75 2.625V11.375C1.75 11.8582 2.14175 12.25 2.625 12.25H11.375C11.8582 12.25 12.25 11.8582 12.25 11.375V2.625C12.25 2.14175 11.8582 1.75 11.375 1.75Z"
               stroke="#333333" stroke-width="0.8" stroke-linejoin="round" />
-            <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="#333333" stroke-width="0.8"
-              stroke-linejoin="round" />
+            <path d="M6.12508 3.79199H3.79175V6.12533H6.12508V3.79199Z" stroke="#333333" stroke-width="0.8" stroke-linejoin="round" />
             <path d="M6.125 7.875H3.79167V10.2083H6.125V7.875Z" stroke="#333333" stroke-width="0.8" stroke-linejoin="round" />
-            <path d="M7.875 8.16699H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M7.875 10.208H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M7.875 3.79199H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M7.875 5.83301H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round"
-              stroke-linejoin="round" />
+            <path d="M7.875 8.16699H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.875 10.208H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.875 3.79199H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.875 5.83301H10.2083" stroke="#333333" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <p style="color: #333333; margin-bottom: 0;">Lista</p>
         </div>
       </div>
     </div>
-  
-    <div 
-    class="row" 
-    style="margin-bottom: 100px; margin-left: 5px">
+
+    <!-- Exibe a mensagem de "Empresas não encontradas" se as listas estiverem vazias -->
+    <div *ngIf="empresas.length === 0 && imobiliarias.length === 0" class="empty-message">
+      Não existem investimentos desse tipo disponíveis.
+    </div>
+
+    <div class="row" style="margin-bottom: 100px; margin-left: 5px">
       <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
-        <div
-          *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+        <div *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
           <div class="col-md-4">
             <admin-round-incorporator [incorporator]="imobiliaria"></admin-round-incorporator>
           </div>
         </div>
       </div>
-      <div
-      style="display: flex; flex-direction: row; gap: 10px;"
-      *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
-        <div
-          *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+      
+      <div style="display: flex; flex-direction: row; gap: 10px;" *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
+        <div *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
           <div>
-            <admin-round-company [company]="empresa">
-            </admin-round-company>
+            <admin-round-company [company]="empresa"></admin-round-company>
           </div>
         </div>
       </div>
     </div>
+
     <hr style="width: 100%;">
     <div class="">
       <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
