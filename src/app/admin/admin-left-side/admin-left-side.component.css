@@ -4,8 +4,6 @@
   flex-shrink: 0 !important;
   padding-left: 24px;
   padding-right: 24px;
-  min-width: 17.4%;
-  max-width: 17.4%;
   border-right: 1px solid #E5E5E5 !important;
   background: #202022 !important;
   padding-top: 20px !important;
@@ -63,6 +61,37 @@
   padding-bottom: 50px;
 }
 
+.center-side-menu {
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+}
+
+.center-side-menu>li {
+  border-radius: 8px;
+  padding: 9px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.center-side-menu>li:hover,
+.center-side-menu>li.active {
+  background-color: #FFFFFF14;
+}
+
+.center-side-menu>li.active svg path {
+  stroke: #FFFFFF;
+}
+
+.center-side-menu>li svg path {
+  stroke: #BFBFBF;
+}
+
+.center-side-menu>li.active span.menu-text {
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
 .left-side-menu {
   padding: 0;
   margin: 0;
@@ -109,15 +138,6 @@
 .skin-blue .treeview-menu > li.active > a,
 .skin-blue .treeview-menu > li > a:hover {
   color: #444 !important;
-}
-
-@media (min-width: 768px) {
-  .sidebar-mini.sidebar-collapse .main-sidebar-dois{
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-    width: 0px !important;
-    z-index: 850;
-  }
 }
 
 .slimScrollBar {

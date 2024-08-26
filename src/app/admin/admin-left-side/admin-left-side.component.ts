@@ -12,6 +12,7 @@ import { InvestorService } from '../../core/service/investor.service';
 })
 export class AdminLeftSideComponent implements OnInit {
 
+  showDiv1: boolean = true;
   scopes = new Scopes;
   scopesUser = [];
   investor: Investor;
@@ -62,5 +63,10 @@ export class AdminLeftSideComponent implements OnInit {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  toggleDivs() {
+    console.log(this.showDiv1)
+    this.showDiv1 = !this.showDiv1;
   }
 }
