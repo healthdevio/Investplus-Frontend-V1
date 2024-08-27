@@ -45,3 +45,39 @@ tr {
   line-height: 1;
   margin-bottom: 10px;
 }
+
+.custom-pagination {
+  display: flex;
+  justify-content: center; /* Centraliza a paginação */
+  gap: 10px; /* Espaçamento entre botões */
+}
+
+.custom-pagination .ngx-pagination {
+  list-style-type: none; /* Remove os estilos de lista */
+  padding: 0;
+}
+
+.custom-pagination .ngx-pagination li {
+  margin: 0; /* Remove margens externas */
+}
+
+.custom-pagination .ngx-pagination a {
+  color: #333; /* Cor do texto */
+  background-color: #f9f9f9; /* Cor de fundo */
+  border: 1px solid #ddd; /* Borda */
+  padding: 5px 15px;
+  border-radius: 4px; /* Bordas arredondadas */
+  text-decoration: none; /* Remove o sublinhado */
+}
+
+.custom-pagination .ngx-pagination .current {
+  background-color: #007bff; /* Cor de fundo para a página atual */
+  color: white; /* Cor do texto para a página atual */
+  border-color: #007bff; /* Cor da borda para a página atual */
+}
+
+.custom-pagination .ngx-pagination .disabled a {
+  color: #aaa; /* Cor do texto para itens desabilitados */
+  background-color: #eee; /* Cor de fundo para itens desabilitados */
+  border-color: #ccc; /* Cor da borda para itens desabilitados */
+}

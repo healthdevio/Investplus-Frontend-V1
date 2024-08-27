@@ -24,9 +24,9 @@
             </table>
             <app-count [count]="!(companies?.length > 0)" [textContador]="textRegister"></app-count>
             <div class="pagination-footer">
-              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+              <pagination-controls class="custom-pagination" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
                 [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
-            </div>
+            </div>            
           </div>
         </div>
       </div>
