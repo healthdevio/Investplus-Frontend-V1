@@ -91,7 +91,7 @@ export class RoundRealStateCdiCreateComponent implements OnInit {
     //   toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     // }
 
-    toastr.error('Em desenvolvimento.');
+    toastr.success('Em desenvolvimento.');
   }
 
   validateAllFields(formGroup: FormGroup) {

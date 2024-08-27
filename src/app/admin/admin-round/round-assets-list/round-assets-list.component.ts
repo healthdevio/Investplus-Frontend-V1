@@ -134,7 +134,7 @@ export class RoundAssetsListComponent implements OnInit {
       hideMethod: "fadeOut",
     };
     
-    toastr.error('Em desenvolvimento');
+    toastr.success('Em desenvolvimento');
   }
 
   initForm() {

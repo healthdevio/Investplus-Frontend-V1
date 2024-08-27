@@ -77,7 +77,7 @@ export class AdminLeftSideComponent implements OnInit {
       hideMethod: "fadeOut",
     };
 
-    toastr.error('Em desenvolvimento');
+    toastr.success('Em desenvolvimento');
   }
 
 
