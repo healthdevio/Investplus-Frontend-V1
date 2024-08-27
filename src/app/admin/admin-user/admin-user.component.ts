@@ -363,6 +363,14 @@ private setFormValue(controlName: string, value: any) {
   }
 
   tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários', 'Segurança'];
+  tabContents: string[] = [
+    'Dados gerais da conta',
+    'Meu endereço',
+    'Detalhes do perfil',
+    'Links sociais',
+    'Informações bancárias',
+    'Configurações de segurança'
+  ];
   activeTab: number = 0;
 
   setActiveTab(index: number): void {
