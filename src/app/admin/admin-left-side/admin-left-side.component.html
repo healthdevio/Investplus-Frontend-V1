@@ -313,7 +313,7 @@ max-width: 6% !important;">
       ">Menu</p>
     <ul class="left-side-menu">
       <li routerLinkActive="active">
-        <a routerLink="./user">
+        <a routerLink="./user" title="dashboard" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1358)">
@@ -334,9 +334,10 @@ max-width: 6% !important;">
             </svg>
           </i>
         </a>
+        
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a routerLink="./rounds/assets/list">
+        <a routerLink="./rounds/assets/list" title="Ofertas públicas" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M5.33333 2H2.66667C2.29848 2 2 2.29848 2 2.66667V5.33333" stroke="white" stroke-width="1.5"
@@ -355,7 +356,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="./portfolio">
+        <a routerLink="./portfolio" title="Análise de carteira" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1376)">
@@ -380,7 +381,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="./statement">
+        <a routerLink="./statement" title="Extrato Financeiro" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -401,7 +402,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
-        <a>
+        <a title="Empresas"> 
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M5.66663 4.66699L14.6666 8.00033V14.667H5.66663V4.66699Z"
@@ -418,7 +419,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
-        <a>
+        <a title="Incorporadoras" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1402)">
@@ -468,7 +469,7 @@ max-width: 6% !important;">
         ">Outros</p>
     <ul class="left-side-menu">
       <li routerLinkActive="active">
-        <a routerLink="./notifications">
+        <a routerLink="./notifications" title="Notificações" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -482,7 +483,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="./settings">
+        <a routerLink="./settings" title="Configurações" class="tooltip-container">
           <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1342)">
                 <path
@@ -502,7 +503,7 @@ max-width: 6% !important;">
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="./logout">
+        <a routerLink="./logout" title="Sair" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
