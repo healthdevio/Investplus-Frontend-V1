@@ -166,9 +166,9 @@ export class RoundInvestmentDetailsComponent implements OnInit {
               (
                 (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
                 100
-              ).toFixed(0)
+              ).toFixed(2) 
             ) + "%";
-        }
+        }        
         this.offerVideo = this.getEmbeddedVideoUrl(this.sanitizer.bypassSecurityTrustResourceUrl(response.round?.offerVideo ?? ''));
         this.quotas = response.round?.quotas ?? 0;
         this.quotasSold = response.round?.resume?.quotasSold ?? 0;
@@ -208,7 +208,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             (
               (this.companyDataComplete.round.resume.total / this.companyDataComplete.round.maximumValuation) *
               100
-            ).toFixed(1),
+            ).toFixed(2),
           ];
         }
 

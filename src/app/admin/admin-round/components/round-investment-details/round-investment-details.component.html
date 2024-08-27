@@ -242,9 +242,9 @@
           <div style="background-color: white; border-radius: 8px; width: 100%;">
             <div>
               <div class="col-xs-12 col-md-3">
-                <p style="font-weight: 500; font-size: 16px; color: #1F1F1F; margin-top: 5px;">Detalhes do ativo</p>
-                <div class="chart-responsive" style="position: relative; width: 90px; height: 90px;">
-                  <app-doughnut [nChart]="'1'" width="90" height="90" type="doughnut"
+                <p style="font-weight: 500; font-size: 16px; color: #1F1F1F; margin-top: 5px; width: 500px;">Detalhes do ativo</p>
+                <div class="chart-responsive" style="position: relative; width: 120px; height: 120px; margin-top: 19%;">
+                  <app-doughnut [nChart]="'1'" width="120" height="120" type="doughnut"
                     [backgroundColor]="['#035A7A66', '#035A7A']" [borderColor]="['#035A7A66', '#035A7A']"
                     [labels]="['Restante em (%)', 'Investido em (%)']" [data]="dataResume" [options]="optionsResume">
                   </app-doughnut>
@@ -262,7 +262,7 @@
                                         margin: 0;
                                         text-align: center;
                                       ">
-                    {{ dataResume[1] | number:'1.0-0' }}%
+                    {{ dataResume[1]}}%
                   </p>
                 </div>
               </div>
@@ -271,7 +271,7 @@
               style="margin-bottom: 60px;"
               class="col-xs-12 col-md-9">
                 <div class="row margin-t-30">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12 col-md-6" style="margin-top: 5%;">
                     <p class="description-title-3">Objetivo</p>
                     <p class="description-title-4">{{ companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
                     <p class="description-title-3 margin-t-20">Investidos</p>
@@ -282,7 +282,7 @@
                   style="width: 50%; padding: 0;"
                   class="col-xs-5 col-md-6">
                     <div class="row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-12" style="margin-top: 5%;">
                         <ul class="list-group list-group-unbordered">
                           <li style="border-bottom: 1px solid #ddd;" class="list-group-item">
                             <span class="description-text">MODALIDADE</span>
