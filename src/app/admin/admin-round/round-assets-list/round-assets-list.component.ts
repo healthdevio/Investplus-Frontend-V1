@@ -79,16 +79,13 @@ export class RoundAssetsListComponent implements OnInit {
       const matchesSearch = company.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
     });
-  
-    console.log('Empresas filtradas:', this.empresas);
-  
+    
     this.imobiliarias = this.allImobiliarias.filter(realState => {
       const matchesStatus = status ? realState.status === status : true;
       const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
     });
   
-    console.log('Imobiliárias filtradas:', this.imobiliarias);
   }
   
 
