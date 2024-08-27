@@ -12,6 +12,21 @@ h3 {
   margin-bottom: 0px;
 }
 
+.active-tab {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #035A7A;
+  background: #035A7A14;
+  border-radius: 8px;
+}
+
+.inactive-tab {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 .editable-profile {
   width: fit-content;
   height: 30px;

@@ -362,6 +362,13 @@ private setFormValue(controlName: string, value: any) {
     toastr.error('Em desenvolvimento');
   }
 
+  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários', 'Segurança'];
+  activeTab: number = 0;
+
+  setActiveTab(index: number): void {
+    this.activeTab = index;
+  }
+
   redirectTo(uri: string) {
     this.router
       .navigateByUrl("/", {
