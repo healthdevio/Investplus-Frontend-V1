@@ -68,32 +68,29 @@ export class RoundAssetsListComponent implements OnInit {
     this.applyFilters();
   }  
 
-  applyFilters() {
+  applyFilters(searchTerm: string = '') {
     const status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
                    this.selectedText === 'Concluidas' ? 'FINISHED' : null;
   
-    const searchTerm = this.form.get('search').value.toLowerCase();
+    searchTerm = searchTerm.toLowerCase();
   
-    // Filtragem das empresas
     this.empresas = this.allEmpresas.filter(company => {
       const matchesStatus = status ? company.round.status === status : true;
       const matchesSearch = company.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
     });
-    
-    // Console log das empresas filtradas
+  
     console.log('Empresas filtradas:', this.empresas);
   
-    // Filtragem das imobiliárias
     this.imobiliarias = this.allImobiliarias.filter(realState => {
       const matchesStatus = status ? realState.status === status : true;
       const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
     });
-
-    // Console log das imobiliárias filtradas
+  
     console.log('Imobiliárias filtradas:', this.imobiliarias);
   }
+  
 
   loadAllRounds() {
     this.loader = true;
