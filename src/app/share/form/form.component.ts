@@ -1,4 +1,4 @@
-import { Component, OnInit, ContentChild, Input } from '@angular/core';
+import { Component, OnInit, ContentChild, Input, AfterContentInit } from '@angular/core';
 import { FormControlName, NgModel } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormControlName, NgModel } from '@angular/forms';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, AfterContentInit {
 
   @Input() label: string;
   @Input() errorMessage: string;
@@ -19,23 +19,20 @@ export class FormComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterContentInit() {
     this.input = this.model || this.control;
-    if (this.input === undefined) {
-      throw new Error('Esse componente precisa ser usado com uma diretiva ngModel ou formControlName');
+    if (!this.input) {
+      console.warn(`O componente 'app-form' com o label '${this.label}' não encontrou ngModel ou formControlName`);
     }
   }
 
   hasSuccess(): boolean {
-    return this.input.valid && (this.input.dirty || this.input.touched);
+    return this.input && this.input.valid && (this.input.dirty || this.input.touched);
   }
 
   hasError(): boolean {
-    return this.input.invalid && (this.input.dirty || this.input.touched);
+    return this.input && this.input.invalid && (this.input.dirty || this.input.touched);
   }
-
 }
