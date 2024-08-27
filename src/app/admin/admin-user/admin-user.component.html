@@ -220,7 +220,7 @@ style="flex: 1;"
     </div>
 
     <div
-      style="width: 100%; height: 705px; background: white; border-radius: 8px; margin-top: 30px; padding: 24px 16px; margin-bottom: 50px;">
+      style="width: 100%; height: 705px; background: white; border-radius: 8px; margin-top: 30px; padding: 24px 16px; margin-bottom: 50px; overflow-y: auto;">
       <div style="width: 100%; display: flex; gap: 32px;">
         <p *ngFor="let tab of tabs; let i = index"
           [ngClass]="{'active-tab': activeTab === i, 'inactive-tab': activeTab !== i}" (click)="setActiveTab(i)">
@@ -232,108 +232,273 @@ style="flex: 1;"
         <h3 style="font-weight: 600; margin-bottom: 12px;">{{ tabs[activeTab] }}</h3>
         <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ tabContents[activeTab] }}</p>
       </div>
-    </div>
-    <!-- <div class="row">
-      <div class="col-md-4 col-md-push-8">
-        <div class="box box-widget widget-user">
-          <div class="widget-user-header"></div>
-          <div class="widget-user-image">
-            <img
-              class="profile-user-img img-responsive img-circle"
-              src="{{ base64textString }}"
-              title="Selecione uma imagem com altura e largura iguais."
-              id="img"
-            />
-          </div>
-          <div class="box-footer">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="pull-right">
-                  <span
-                    class="social {{ facebook == null ? 'isDisabled' : '' }}"
-                    ><a
-                      href="{{ facebook == null ? '#' : facebook }}"
-                      target="_blank"
-                    >
-                      <i class="fa fa-fw fa-facebook-square"></i></a
-                  ></span>
-                  <span
-                    class="social {{ linkedin == null ? 'isDisabled' : '' }}"
-                    ><a
-                      href="{{ linkedin == null ? '#' : linkedin }}"
-                      target="_blank"
-                    >
-                      <i class="fa fa-fw fa-linkedin-square"></i></a
-                  ></span>
-                  <span class="social {{ twitter == null ? 'isDisabled' : '' }}"
-                    ><a
-                      href="{{ twitter == null ? '#' : twitter }}"
-                      target="_blank"
-                    >
-                      <i class="fa fa-fw fa-twitter-square"></i></a
-                  ></span>
-                </p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="upload-btn-wrapper">
-                  <button class="btn-photo" style="cursor: pointer;">Editar foto</button>
-                  <input
-                    title="Selecione uma imagem com altura e largura iguais."
-                    type="file"
-                    (change)="onUploadChange($event)"
-                    accept=".png, .jpg, .jpeg"
-                  />
-                  <p *ngIf="msg !== ''" class="error">{{ msg }}</p>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="description-profile">
-                  <h3 class="profile-username">{{ investor?.fullName }}</h3>
-                  <p class="text-muted">@{{ investor?.nickname }}</p>
-                  <p
-                    *ngIf="investor?.publicProfile"
-                    class="text-muted-2 margin-t-30"
-                  >
-                    <i class="fa fa-globe"></i> Perfil público
-                  </p>
-                  <p
-                    *ngIf="!investor?.publicProfile"
-                    class="text-muted-2 margin-t-30"
-                  >
-                    <i class="fa fa-lock"></i> Perfil privado
-                  </p>
-                  <p class="text-muted-2">
-                    <i class="fa fa-map-pin"></i>
-                    {{
-                      descriptionCity == null
-                        ? "Sem informação"
-                        : descriptionCity
-                    }}
-                  </p>
-                  <p class="text-muted-2">
-                    <i class="fa fa-calendar-check-o"></i>
-                    {{
-                      descriptionDate == null
-                        ? "Sem informação"
-                        : "Nasceu em " + descriptionDate
-                    }}
-                  </p>
-                  <p class="text-muted-2">
-                    <i class="fa fa-link"></i>
-                    {{
-                      descriptionSite == null
-                        ? "Sem informação"
-                        : descriptionSite
-                    }}
-                  </p>
-                </div>
-              </div>
+
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Profissão</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Minha profissão</p>
+        </div>
+
+        <div style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+          {{ investor?.profession }}
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+        <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Pessoal</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações pessoais</p>
+        </div>
+      
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
+            <input type="text" (blur)="validateDate()" formControlName="dateOfBirth"
+              style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Data de nascimento" />
+          </app-form>
+          
+          <app-form [label]="'Nacionalidade'" [errorMessage]="'Nacionalidade é um campo obrigatório.'">
+            <select formControlName="nationality"
+              style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="BRASILEIRO">Brasileiro</option>
+              <option value="AMERICANO">Americano</option>
+              <option value="ANTIGUANO">Antiguano</option>
+              <option value="ARGENTINO">Argentino</option>
+              <option value="BAHAMENSE">Bahamense</option>
+              <option value="BARBADIANO">Barbadiano</option>
+              <option value="BELIZENHO">Belizenho</option>
+              <option value="BOLIVIANO">Boliviano</option>
+              <option value="CHILENO">Chileno</option>
+              <option value="COLOMBIANO">Colombiano</option>
+              <option value="COSTARRIQUENHO">Costarriquenho</option>
+              <option value="CUBANO">Cubano</option>
+              <option value="DOMINICANO">Dominicano</option>
+              <option value="EQUATORIANO">Equatoriano</option>
+              <option value="SALVADORENHO">Salvadorenho</option>
+              <option value="GRANADINO">Granadino</option>
+              <option value="GUATEMALTECO">Guatemalteco</option>
+              <option value="GUIANÊS">Guianês</option>
+              <option value="GUIANENSE">Guianense</option>
+              <option value="HAITIANO">Haitiano</option>
+              <option value="HONDURENHO">Hondurenho</option>
+              <option value="JAMAICANO">Jamaicano</option>
+              <option value="MEXICANO">Mexicano</option>
+              <option value="NICARAGUENSE">Nicaraguense</option>
+              <option value="PANAMENHO">Panamenho</option>
+              <option value="PARAGUAIO">Paraguaio</option>
+              <option value="PERUANO">Peruano</option>
+              <option value="PORTORRIQUENHO">Portorriquenho</option>
+              <option value="DOMINICANA">Dominicana</option>
+              <option value="SÃO-CRISTOVENSE">São-cristovense</option>
+              <option value="SÃO-VICENTINO">São-vicentino</option>
+              <option value="SANTA-LUCENSE">Santa-lucense</option>
+              <option value="SURINAMÊS">Surinamês</option>
+              <option value="TRINDADENSE">Trindadense</option>
+              <option value="URUGUAIO">Uruguaio</option>
+              <option value="VENEZUELANO">Venezuelano</option>
+              <option value="ALEMÃO">Alemão</option>
+              <option value="AUSTRÍACO">Austríaco</option>
+              <option value="BELGA">Belga</option>
+              <option value="CROATA">Croata</option>
+              <option value="DINAMARQUÊS">Dinamarquês</option>
+              <option value="ESLOVACO">Eslovaco</option>
+              <option value="ESLOVENO">Esloveno</option>
+              <option value="ESPANHOL">Espanhol</option>
+              <option value="FRANCÊS">Francês</option>
+              <option value="GREGO">Grego</option>
+              <option value="HÚNGARO">Húngaro</option>
+              <option value="IRLANDÊS">Irlandês</option>
+              <option value="ITALIANO">Italiano</option>
+              <option value="NORUEGO">Noruego</option>
+              <option value="HOLANDÊS">Holandês</option>
+              <option value="POLONÊS">Polonês</option>
+              <option value="PORTUGUÊS">Português</option>
+              <option value="BRITÂNICO">Britânico</option>
+              <option value="INGLÊS">Inglês</option>
+              <option value="GALÊS">Galês</option>
+              <option value="ESCOCÊS">Escocês</option>
+              <option value="ROMENO">Romeno</option>
+              <option value="RUSSO">Russo</option>
+              <option value="SÉRVIO">Sérvio</option>
+              <option value="SUECO">Sueco</option>
+              <option value="SUÍÇO">Suíço</option>
+              <option value="TURCO">Turco</option>
+              <option value="UCRANIANO">Ucraniano</option>
+              <option value="CANADENSE">Canadense</option>
+              <option value="ANGOLANO">Angolano</option>
+              <option value="MOÇAMBICANO">Moçambicano</option>
+              <option value="SUL-AFRICANO">Sul-africano</option>
+              <option value="ZIMBABUENSE">Zimbabuense</option>
+              <option value="ARGÉLIA">Argélia</option>
+              <option value="COMORENSE">Comorense</option>
+              <option value="EGÍPCIO">Egípcio</option>
+              <option value="LÍBIO">Líbio</option>
+              <option value="MARROQUINO">Marroquino</option>
+              <option value="GANÉS">Ganés</option>
+              <option value="QUENIANO">Queniano</option>
+              <option value="RUANDÊS">Ruandês</option>
+              <option value="UGANDENSE">Ugandense</option>
+              <option value="BECHUANO">Bechuano</option>
+              <option value="MARFINENSE">Marfinense</option>
+              <option value="CAMARONENSE">Camaronense</option>
+              <option value="NIGERIANO">Nigeriano</option>
+              <option value="SOMALI">Somali</option>
+              <option value="AUSTRALIANO">Australiano</option>
+              <option value="NEOZELANDÊS">Neozelandês</option>
+              <option value="AFEGÃO">Afegão</option>
+              <option value="SAUDITA">Saudita</option>
+              <option value="ARMENO">Armeno</option>
+              <option value="BANGLADESH">Bangladesh</option>
+              <option value="CHINÊS">Chinês</option>
+              <option value="NORTE-COREANO">Norte-coreano</option>
+              <option value="SUL-COREANO">Sul-coreano</option>
+              <option value="INDIANO">Indiano</option>
+              <option value="INDONÉSIO">Indonésio</option>
+              <option value="IRAQUIANO">Iraquiano</option>
+              <option value="IRANIANO">Iraniano</option>
+              <option value="ISRAELITA">Israelita</option>
+              <option value="JAPONÊS">Japonês</option>
+              <option value="MALAIO">Malaio</option>
+              <option value="NEPALÊS">Nepalês</option>
+              <option value="OMANENSE">Omanense</option>
+              <option value="PAQUISTANÊS">Paquistanês</option>
+              <option value="PALESTINO">Palestino</option>
+              <option value="QATARENSE">Qatarense</option>
+              <option value="SÍRIO">Sírio</option>
+              <option value="CINGALÊS">Cingalês</option>
+              <option value="TAILANDÊS">Tailandês</option>
+              <option value="TIMORENSE">Timorense</option>
+              <option value="ÁRABE">Árabe</option>
+              <option value="VIETNAMITA">Vietnamita</option>
+              <option value="IEMENITA">Iemenita</option>
+            </select>
+          </app-form>
+
+          <app-form 
+          [label]="'Sexo'" 
+          [errorMessage]="'Sexo é um campo obrigatório.'">
+            <select 
+            formControlName="gender" 
+            style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="MALE">Masculino</option>
+              <option value="FEMALE">Feminino</option>
+            </select>
+          </app-form>
+
+          <app-form [label]="'Estado civil'" 
+          [errorMessage]="'Estado civil é um campo obrigatório.'">
+            <select 
+            formControlName="maritalStatus" 
+            style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="SINGLE">Solteiro</option>
+              <option value="MARRIED">Casado</option>
+              <option value="SEPARATED">Separado</option>
+              <option value="DIVORCED">Divorciado</option>
+              <option value="WIDOWED">Viúvo</option>
+            </select>
+          </app-form>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+        <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">RG</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes do RG</p>
+        </div>
+      
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <app-form 
+          [label]="investor?.cnpj !== undefined
+              ? 'Número do RG do sócio administrador'
+              : 'Número do RG'"
+          [errorMessage]="'Número do RG é um campo obrigatório.'">
+            <input 
+            type="text" 
+            formControlName="rg" 
+            style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+            maxlength="13" 
+            placeholder="Número do RG" />
+          </app-form>
+      
+          <app-form [label]="'Orgão emissor'" [errorMessage]="'Orgão emissor é um campo obrigatório.'">
+            <select formControlName="rgEmitter" style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="SSP">SSP</option>
+              <option value="SSP-AC">SSP-AC</option>
+              <option value="SSP-AL">SSP-AL</option>
+              <option value="SSP-AM">SSP-AM</option>
+              <option value="SSP-AP">SSP-AP</option>
+              <option value="SSP-BA">SSP-BA</option>
+              <option value="SSP-CE">SSP-CE</option>
+              <option value="SSP-DF">SSP-DF</option>
+              <option value="SSP-ES">SSP-ES</option>
+              <option value="SSP-GO">SSP-GO</option>
+              <option value="SSP-MA">SSP-MA</option>
+              <option value="SSP-MG">SSP-MG</option>
+              <option value="SSP-MS">SSP-MS</option>
+              <option value="SSP-MT">SSP-MT</option>
+              <option value="SSP-PA">SSP-PA</option>
+              <option value="SSP-PB">SSP-PB</option>
+              <option value="SSP-PE">SSP-PE</option>
+              <option value="SSP-PI">SSP-PI</option>
+              <option value="SSP-PR">SSP-PR</option>
+              <option value="SSP-RJ">SSP-RJ</option>
+              <option value="SSP-RN">SSP-RN</option>
+              <option value="SSP-RO">SSP-RO</option>
+              <option value="SSP-RR">SSP-RR</option>
+              <option value="SSP-RS">SSP-RS</option>
+              <option value="SSP-SC">SSP-SC</option>
+              <option value="SSP-SE">SSP-SE</option>
+              <option value="SSP-SP">SSP-SP</option>
+              <option value="SSP-TO">SSP-TO</option>
+              <option value="CREA">CREA</option>
+              <option value="MAE">MAE</option>
+              <option value="IML">IML</option>
+              <option value="OAB">OAB</option>
+              <option value="CARTORIO">Cartório Civil</option>
+              <option value="DETRAN">DETRAN</option>
+              <option value="FEDERAL">Polícia Federal</option>
+            </select>
+          </app-form>
+
+          <div style="margin-bottom: 20px;">
+            <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">RG</p>
+          
+            <div
+              style="height: 50px; width: 240px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M4.16665 18.3327H15.8333C16.2936 18.3327 16.6666 17.9596 16.6666 17.4993V5.83268H12.5V1.66602H4.16665C3.70641 1.66602 3.33331 2.03911 3.33331 2.49935V17.4993C3.33331 17.9596 3.70641 18.3327 4.16665 18.3327Z"
+                stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12.5 1.66602L16.6667 5.83268" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path
+                d="M7.49998 8.74935C8.42045 8.74935 9.16665 8.00316 9.16665 7.08268C9.16665 6.16221 8.42045 5.41602 7.49998 5.41602C6.57951 5.41602 5.83331 6.16221 5.83331 7.08268C5.83331 8.00316 6.57951 8.74935 7.49998 8.74935Z"
+                stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6.25 11.6667V15.4167H13.75V8.75L9.78725 13.125L6.25 11.6667Z" stroke="#035A7A" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+            <button 
+            style="margin-left: 20px; margin-bottom: 0;"
+            class="btn-editar-rg btn-photo" 
+            type="button">
+              <label 
+              for="rgInputFile" 
+              style="font-size: 1.5rem">
+                {{base64RG ? 'Editar' : 'Anexar'}} RG &nbsp;
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </label>
+              <input id="rgInputFile" style="display: none" title="Selecione foto do RG" type="file" (change)="onUploadRG($event)"
+                accept=".png, .jpg, .jpeg" />
+            </button>
             </div>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </section>
 </form>
