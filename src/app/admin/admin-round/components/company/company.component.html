@@ -94,12 +94,12 @@
             <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Gestão de
             indicadores</span></a> -->
           <a 
-          
           *ngIf="company.round?.status == 'FINISHED'"
-          [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]" 
           class="btn-upangel" 
           style="background-color: white; max-width: 200px; min-width: 330px;">
-          <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Rodada Finalizada +</span></a>
+          <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Rodada Finalizada +</span>
+          </a>
+        <!-- [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]"  -->
         </div>
       </div>
     </div>
