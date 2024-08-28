@@ -20,7 +20,7 @@ tr {
 .portfolio-item {
   height: 120px;
   border-radius: 4px;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 .portfolio-content {
