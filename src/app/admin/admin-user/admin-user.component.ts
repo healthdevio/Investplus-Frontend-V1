@@ -167,8 +167,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
   getUser() {
     this.loader = true;
+
     this.investorService.getUser().subscribe((response) => {
         this.investor = response;
+
         if (response.address !== undefined) {
             this.setFormValue("profession", response.profession);
             this.setFormValue("nationality", response.nationality);
@@ -178,6 +180,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             this.setFormValue("rg", response.rg);
             this.setFormValue("phone", this.phoneMask.transform(response.phone));
             this.setFormValue("dateOfBirth", this.dateMask.transform(response.dateOfBirth));
+
             this.form.get('address')?.patchValue(response.address);
             this.form.get('address')?.patchValue({
                 "zipCode": this.cepMask.transform(response.address.zipCode)
@@ -206,6 +209,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             this.facebook = response.facebook;
             this.linkedin = response.linkedin;
             this.twitter = response.twitter;
+
             if (response.dateOfBirth != null || response.dateOfBirth !== undefined) {
                 this.descriptionDate =
                     moment(response.dateOfBirth).format("DD") +
@@ -213,18 +217,24 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
                     moment(response.dateOfBirth).locale("pt-br").format("MMMM");
             }
         }
+
         this.base64textString =
             response.avatar === undefined
                 ? "./../../../assets/img/default-profile_01.png"
                 : "data:image/png;base64," + response.avatar;
+
         this.base64RG =
-            response.rgDocument === undefined
+            response.rgDocument === undefined && response.rgDocumentVerse === undefined
                 ? null
-                : "data:image/png;base64," + response.rgDocument;
+                : response.rgDocument !== undefined
+                    ? "data:image/png;base64," + response.rgDocument
+                    : "data:image/png;base64," + response.rgDocumentVerse;
+
         const $this = this;
         setTimeout(function () {
             $this.initMask();
         }, 1000);
+
         this.loader = false;
     });
 }
@@ -547,6 +557,22 @@ private setFormValue(controlName: string, value: any) {
     }
   }
 
+  onUploadRGVerse(evt: any) {
+    const file = evt.target.files[0];
+
+    if (file) {
+      if (file.size > 52428800) {
+        toastr.error("O tamanho máximo permitido é 50MB.");
+      } else {
+        this.msg = "";
+        const reader = new FileReader();
+
+        reader.onload = this.handleRGLoadedVerse.bind(this);
+        reader.readAsBinaryString(file);
+      }
+    }
+  }
+
   handleRGLoaded(e) {
     this.loading = true;
     this.base64RG = "data:image/png;base64," + btoa(e.target.result);
@@ -556,6 +582,27 @@ private setFormValue(controlName: string, value: any) {
 
     this.investorService
       .uploadRG(rg)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(
+        (response) => {},
+        (error) => {
+          const erro = "Não foi possível enviar/atualizar o RG";
+          toastr.error(erro, "Erro");
+        }
+      );
+  }
+
+  handleRGLoadedVerse(e) {
+    this.loading = true;
+    this.base64RG = "data:image/png;base64," + btoa(e.target.result);
+    const rg = {
+      rg: btoa(e.target.result),
+    };
+
+    this.investorService
+      .uploadRGVerse(rg)
       .pipe(
         finalize(() => this.loading = false)
       )

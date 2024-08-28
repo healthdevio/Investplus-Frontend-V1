@@ -480,7 +480,7 @@ style="flex: 1;"
             {{base64RG ? 'Editar' : 'Anexar'}} RG &nbsp;
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </label>
-          <input id="rgInputFile" style="display: none" title="Selecione foto do RG" type="file"
+          <input id="rgInputFile" style="display: none" title="Submeta a frente  do RG" type="file"
             (change)="onUploadRG($event)" accept=".png, .jpg, .jpeg" />
         </button>
       </div>
@@ -488,7 +488,7 @@ style="flex: 1;"
 
     <div style="margin-bottom: 20px;">
       <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">Verso RG</p>
-
+    
       <div
         style="height: 50px; width: 240px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -503,17 +503,18 @@ style="flex: 1;"
           <path d="M6.25 11.6667V15.4167H13.75V8.75L9.78725 13.125L6.25 11.6667Z" stroke="#035A7A" stroke-width="1.5"
             stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-
+    
         <button style="margin-left: 20px; margin-bottom: 0;" class="btn-editar-rg btn-photo" type="button">
-          <label for="rgInputFile" style="font-size: 1.5rem">
-            {{base64RG ? 'Editar' : 'Anexar'}} RG &nbsp;
+          <label for="rgInputFileVerse" style="font-size: 1.5rem">
+            {{base64RG ? 'Editar' : 'Anexar'}} Verso RG &nbsp;
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </label>
-          <input id="rgInputFile" style="display: none" title="Selecione foto do RG" type="file"
-            (change)="onUploadRG($event)" accept=".png, .jpg, .jpeg" />
+          <input id="rgInputFileVerse" style="display: none" title="Submeta o verso do RG" type="file"
+            (change)="onUploadRGVerse($event)" accept=".png, .jpg, .jpeg" />
         </button>
       </div>
     </div>
+    
   </div>
 </div>
 
