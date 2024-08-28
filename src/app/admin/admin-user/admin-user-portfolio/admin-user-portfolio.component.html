@@ -10,33 +10,75 @@
     </div>
 
     <div style="width: 100%; height: 100%;">
-        <div class="portfolio-grid">
-          <div *ngFor="let card of cards" class="portfolio-item" [ngStyle]="{'background-color': card.backgroundColor}">
-            <h1>{{ card.title }}</h1>
-            <div class="portfolio-content">
-              <p>{{ card.value }}</p>
-              <ng-container *ngIf="card.showSvg">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_409_3001)">
-                    <path d="M8 0.666016V15.3327" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path
-                      d="M11.6666 2C11.6666 2 8.32349 2 6.66663 2C5.00976 2 3.66663 3.34313 3.66663 5C3.66663 6.65687 5.00976 8 6.66663 8"
-                      stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path
-                      d="M4.33337 14C4.33337 14 7.67651 14 9.33337 14C10.9902 14 12.3334 12.6569 12.3334 11C12.3334 9.34313 10.9902 8 9.33337 8H6.66671"
-                      stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_409_3001">
-                      <rect width="16" height="16" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </ng-container>
+      <div class="portfolio-grid">
+        <div *ngFor="let card of cards" class="portfolio-item" [ngStyle]="{'background-color': card.backgroundColor}">
+          <h1>{{ card.title }}</h1>
+          <div class="portfolio-content">
+            <p>{{ card.value }}</p>
+            <ng-container *ngIf="card.showSvg">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_409_3001)">
+                  <path d="M8 0.666016V15.3327" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M11.6666 2C11.6666 2 8.32349 2 6.66663 2C5.00976 2 3.66663 3.34313 3.66663 5C3.66663 6.65687 5.00976 8 6.66663 8"
+                    stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M4.33337 14C4.33337 14 7.67651 14 9.33337 14C10.9902 14 12.3334 12.6569 12.3334 11C12.3334 9.34313 10.9902 8 9.33337 8H6.66671"
+                    stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_409_3001">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 100%; display: flex; gap: 16px;">
+        <div
+          style="width: 50%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
+          <p>Meus ativos</p>
+        
+          <div style="width: 200px; height: 200px; display: flex; gap: 16px;">
+            <app-doughnut [nChart]="'1'" width="200" height="200" type="doughnut" [backgroundColor]="['#035A7A66', '#035A7A']"
+              [borderColor]="['#035A7A66', '#035A7A']" [labels]="['Startup', 'Totais investidos']" [data]="[2000100, 274350]"
+              [options]="{ legend: {display: false}, maintainAspectRatio: false }">
+            </app-doughnut>
+        
+            <div style="width: 100%;">
+              <div style="width: 100%;">
+                <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
+                    style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Startup</p>
+                <p
+                  style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                  R$2.000.100,00
+                </p>
+        
+                <div>
+                  <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
+                      style="color: #035A7A; font-size: 18px;">•</span> Totais investidos</p>
+                  <p
+                    style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                    R$274.350,00
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <div
+          style="width: 50%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
+          <p>Meu histórico</p>
+
+          <app-bar nChart="'4'" type="bar" [data]="dataBar" height="180" [options]="optionsBar">
+          </app-bar>
+        </div>
+      </div>
     </div>
   </section>
 </div>

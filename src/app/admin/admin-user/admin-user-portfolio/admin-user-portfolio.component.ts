@@ -33,6 +33,7 @@ export class AdminUserPortfolioComponent implements OnInit {
   percentReal = 0;
   dataPie = [];
   optionsPie: any;
+  optionsResume: any;
   optionsBar: any;
   dataBar: any;
   datas = [];
@@ -114,6 +115,8 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.data.changeTitle(this.titleHeader);
     this.getUserInvestments();
   }
+
+  
 
   private getUserInvestments(): void {
     this.loader = true;
