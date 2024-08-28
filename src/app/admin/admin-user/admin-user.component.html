@@ -557,6 +557,76 @@ style="flex: 1;"
           </app-form>
         </div>
       </div>
+
+      <div *ngIf="activeTab === 2">
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Conforme exigido pela Instrução CVM 588/2017.</p>
+          </div>
+          
+
+          <app-radio [options]="investorProfileStatements" formControlName="investorProfileStatement">
+          </app-radio>
+        </div>
+
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Declaração dos Valores Investidos no Ano-Calendário *</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+              Conforme exigido pela Instrução CVM 588/2017.
+              Somente incluir o montante já investido no ano-
+              calendário em ofertas dispensadas de registro nos
+              termos da Instrução CVM 588/2017 por meio de
+              plataformas eletrônicas de investimento participativo.
+            </p>
+          </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
+                <div class="input-group">
+                  <input type="text" formControlName="investedUpangel" style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" disabled
+                    placeholder="Na plataforma da InvestPlus" />
+                </div>
+              </app-form>
+
+              <app-form [label]="'Outras plataformas'" [errorMessage]="'Outras plataformas é um campo obrigatório.'">
+                <div class="input-group">
+                  <input (keyup)="calculateInvestment(form.value.totalInvestedOthers)" type="text"
+                    formControlName="totalInvestedOthers" style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" maxlength="13"
+                    placeholder="Outras plataformas" />
+                </div>
+              </app-form>
+
+              <app-form [label]="'Total'" [errorMessage]="'Total é um campo obrigatório.'">
+                <div class="input-group">
+                  <input [(ngModel)]="investmentValue" type="text" formControlName="totalInvested" style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" disabled
+                    placeholder="Total" />
+                </div>
+              </app-form>
+            </div>
+        </div>
+        
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Declaração pessoa politicamente exposta</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+              Considera-se aquela que desempenha ou tenha
+              desempenhado, nos últimos 5 (cinco) anos, cargos,
+              empregos ou funções públicas relevantes, no Brasil ou em
+              outros países, territórios e dependências estrangeiras,
+              assim como seus representantes, familiares e outras
+              pessoas de seu relacionamento próximo.
+            </p>
+          </div>
+        
+          <app-radio 
+          style="display: flex; gap: 16px;"
+          [options]="publicFigures" formControlName="publicFigure">
+
+          </app-radio>
+        </div>
+      </div>
     </div>
   </section>
 </form>
