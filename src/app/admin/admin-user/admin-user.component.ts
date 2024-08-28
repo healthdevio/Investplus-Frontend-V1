@@ -362,7 +362,7 @@ private setFormValue(controlName: string, value: any) {
     toastr.error('Em desenvolvimento');
   }
 
-  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários', 'Segurança'];
+  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários',];
   tabContents: string[] = [
     'Dados gerais da conta',
     'Meu endereço',
