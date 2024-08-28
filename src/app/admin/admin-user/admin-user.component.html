@@ -705,6 +705,56 @@ style="flex: 1;"
           </div>
         </div>
       </div>
+
+      <div *ngIf="activeTab === 4">
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Conta</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Minha conta</p>
+          </div>
+
+          <div>
+            <app-form [label]="'Instituição'" [errorMessage]="'Instituição é um campo obrigatório.'">
+              <select formControlName="accountBank"
+                style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Instituição">
+                <option [ngValue]="null">Selecione uma opção...</option>
+                <ng-container *ngFor="let bank of banks">
+                  <option [value]="bank?.code">{{ bank?.name }}</option>
+                </ng-container>
+              </select>
+            </app-form>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <app-form [label]="'Agência'" [errorMessage]="'Agência é um campo obrigatório.'">
+                <input type="text" formControlName="accountAgency"
+                  style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                  placeholder="Agência" />
+              </app-form>
+            
+              <app-form [label]="'Conta Corrente (com dígito)'" [errorMessage]="'Conta é um campo obrigatório.'">
+                <input type="text" formControlName="accountNumber"
+                  style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                  placeholder="Conta Corrente (com dígito)" />
+              </app-form>
+            </div>
+          </div>
+
+      
+        </div>
+      
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Perfil público?</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Tornar o perfil básico público?</p>
+          </div>
+      
+          <legend class="margin-t-20">
+            <input type="checkbox" formControlName="publicProfile" class="flat-red" />
+            Com um perfil público, outros usuários registrados na
+            Plataforma InvestPlus conseguirão ver a sua foto.
+          </legend>
+        </div>
+      </div>
     </div>
   </section>
 </form>
