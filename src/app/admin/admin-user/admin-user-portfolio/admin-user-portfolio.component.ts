@@ -57,6 +57,33 @@ export class AdminUserPortfolioComponent implements OnInit {
   monthNow: any;
   quarterNow: any;
 
+  cards = [
+    {
+      title: 'Patrimônio total',
+      value: 'R$ 10,000.00',
+      backgroundColor: 'white',
+      showSvg: true
+    },
+    {
+      title: 'Total investido',
+      value: 'R$ 5.000',
+      backgroundColor: 'white',
+      showSvg: true
+    },
+    {
+      title: 'Valuation total',
+      value: 'R$ 3.000',
+      backgroundColor: 'white',
+      showSvg: true
+    },
+    {
+      title: '',
+      value: '',
+      backgroundColor: '#00000014',
+      showSvg: false
+    }
+  ];
+
   valuationProjected = {
     company: "FCJ Invest",
     logo: "./../../../assets/img/logo_upangel.png",
