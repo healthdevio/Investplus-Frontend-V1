@@ -39,6 +39,10 @@ export class InvestorService {
     return this.http.patch<any>(`${environment.url_api}/${this.prefixService}/me/rg`, avatar);
   }
 
+  uploadRGVerse(avatar: any): Observable<any> {
+    return this.http.patch<any>(`${environment.url_api}/${this.prefixService}/me/rg-verse`, avatar);
+  }
+
   getAllUsers(page: number, size: number): Observable<any> {
     return this.http.get<any>(`${environment.url_api}/admin/investors?page=${page}&size=${size}`);
   }

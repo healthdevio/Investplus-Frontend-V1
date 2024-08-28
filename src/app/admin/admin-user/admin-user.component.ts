@@ -41,6 +41,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   titleHeader: TitleHeader;
   totalInvestedUpangel: any;
   totalInvested: any;
+  fileName: string | null = null;
+  fileSize: string | null = null;
+  fileDate: string | null = null;
   investor: Investor;
   investmentValue = "";
   loader: boolean;
