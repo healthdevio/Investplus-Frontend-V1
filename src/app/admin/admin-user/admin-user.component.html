@@ -582,7 +582,7 @@ style="flex: 1;"
             </p>
           </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-left: 10px;">
               <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
                 <div class="input-group">
                   <input type="text" formControlName="investedUpangel" style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" disabled
@@ -625,6 +625,84 @@ style="flex: 1;"
           [options]="publicFigures" formControlName="publicFigure">
 
           </app-radio>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 3">
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Website</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu website</p>
+          </div>
+          
+          <app-form [label]="'Website'" [errorMessage]="'Website é um campo obrigatório.'">
+            <input type="text" formControlName="personalWebsite" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" placeholder="Website" />
+          </app-form>
+        </div>
+
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">facebook</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu facebook</p>
+          </div>
+        
+          <app-form [label]="'Facebook'" [errorMessage]="'Facebook é um campo obrigatório.'">
+            <input type="text" formControlName="facebook" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" placeholder="Facebook" />
+          </app-form>
+        </div>
+
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Twitter</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu twitter</p>
+          </div>
+        
+          <app-form [label]="'Twitter'" [errorMessage]="'Twitter é um campo obrigatório.'">
+            <input type="text" formControlName="twitter" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" placeholder="Twitter" />
+          </app-form>
+        </div>
+
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Linkedin</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu linkedin</p>
+          </div>
+        
+          <app-form [label]="'Linkedin'" [errorMessage]="'Linkedin é um campo obrigatório.'">
+            <input type="text" formControlName="linkedin" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" placeholder="Linkedin" />
+          </app-form>
+        </div>
+
+        <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
+          <div style="width: 30%;">
+            <h3 style="font-weight: 600; margin-bottom: 12px;">InvestPlus</h3>
+            <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Por onde conheceu a InvestPlus?</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-left: 10px;">
+            <app-form [label]="'Como você soube da InvestPlus'" [errorMessage]="'Como soube da InvestPlus é um campo obrigatório.'">
+              <select formControlName="aboutUpangel" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                <option [ngValue]="null">Selecione uma opção...</option>
+                <option value="INDICACAO">Uma indicação</option>
+                <option value="EVENTO">Um evento</option>
+                <option value="PESSOAL">Um encontro pessoal</option>
+                <option value="IMPRENSA">Na imprensa</option>
+                <option value="GOOGLE">Pela pesquisa Google</option>
+                <option value="ONLINE">Por outra pesquisa online</option>
+                <option value="FACEBOOK">Facebook</option>
+                <option value="INSTAGRAM">Instagram</option>
+                <option value="LINKEDIN">Linkedin</option>
+                <option value="TWITTER">Twitter</option>
+                <option value="PUBLICIDADE">Publicidade</option>
+                <option value="OUTRO">Outro</option>
+              </select>
+            </app-form>
+
+            <app-form [label]="'Código do agente indicador'" [errorMessage]="'Agente indicador é um campo obrigatório.'">
+              <input type="text" formControlName="agent" style="height: 50px; width: 500px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;" maxlength="4"
+                placeholder="Código do agente indicador" />
+            </app-form>
+          </div>
         </div>
       </div>
     </div>
