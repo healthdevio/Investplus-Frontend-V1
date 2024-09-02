@@ -85,6 +85,55 @@ export class AdminUserPortfolioComponent implements OnInit {
     }
   ];
 
+  investsData = [
+    {
+      title: 'Startup 1',
+      date: '31/10/2000',
+      participation: '40',
+      valuation: 'R$ 10.000,00',
+    },
+    {
+      title: 'Startup 2',
+      date: '31/10/2000',
+      participation: '40',
+      valuation: 'R$ 10.000,00',
+    },
+    {
+      title: 'Startup 3',
+      date: '31/10/2000',
+      participation: '40',
+      valuation: 'R$ 10.000,00',
+    },
+  ]
+
+  transactionsData = [
+    {
+      type: 'Investimento',
+      value: 'R$ 10.000,00',
+      date: '31/10/2000',
+    },
+    {
+      type: 'Investimento',
+      value: 'R$ 10.000,00',
+      date: '31/10/2000',
+    },
+    {
+      type: 'Investimento',
+      value: 'R$ 10.000,00',
+      date: '31/10/2000',
+    },
+    {
+      type: 'Investimento',
+      value: 'R$ 10.000,00',
+      date: '31/10/2000',
+    },
+    {
+      type: 'Investimento',
+      value: 'R$ 10.000,00',
+      date: '31/10/2000',
+    },
+  ]
+
   valuationProjected = {
     company: "FCJ Invest",
     logo: "./../../../assets/img/logo_upangel.png",

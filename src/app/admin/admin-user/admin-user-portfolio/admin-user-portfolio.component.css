@@ -11,6 +11,14 @@ tr {
   cursor: pointer;
 }
 
+.even-row {
+  background-color: #FAFAFA;
+}
+
+.odd-row {
+  background-color: #FFFFFF;
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
