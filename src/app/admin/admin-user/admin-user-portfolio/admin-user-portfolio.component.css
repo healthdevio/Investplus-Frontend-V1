@@ -19,6 +19,44 @@ tr {
   background-color: #FFFFFF;
 }
 
+.hover-svg {
+  fill: #909090;
+  transition: fill 0.3s ease;
+}
+
+.hover-svg:hover {
+  fill: #035A7A;
+}
+
+.tooltipContainer {
+  visibility: hidden;
+  position: absolute;
+  top: 20px;
+  /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hover-svg:hover+.tooltipContainer {
+  visibility: visible;
+}
+
+.minimize-tooltip {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 4px;
+  padding: 8px;
+  color: #FFFFFF;
+  z-index: 1000;
+}
+
+.minimize-tooltip span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
