@@ -25,13 +25,14 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUser();
-    // add the the body classes
+
     this.body.classList.add('skin-blue');
     this.body.classList.add('sidebar-mini');
+
+    this.adjustContentWidth(this.sidebarExpanded);
   }
 
-   ngOnDestroy() {
-    // remove the the body classes
+  ngOnDestroy() {
     this.body.classList.remove('skin-blue');
     this.body.classList.remove('sidebar-mini');
   }
@@ -47,15 +48,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   handleSidebarToggle(sidebarExpanded: boolean) {
-    // Chama o método no AdminHeaderComponent
     this.headerComponent.adjustHeaderWidth(sidebarExpanded);
     
-    // Chama o método no AdminComponent
     this.adjustContentWidth(sidebarExpanded);
   }
 
   adjustContentWidth(sidebarExpanded: boolean) {
-    console.log("Admin componente", sidebarExpanded)
+    console.log("Admin componente", sidebarExpanded);
     this.sidebarExpanded = sidebarExpanded;
     this.updateContentStyle();
   }
