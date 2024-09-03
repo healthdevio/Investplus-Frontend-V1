@@ -76,13 +76,13 @@ export class AdminUserPortfolioComponent implements OnInit {
       value: 'R$ 3.000',
       backgroundColor: 'white',
       showSvg: true
-    },
-    {
-      title: '',
-      value: '',
-      backgroundColor: '#00000014',
-      showSvg: false
     }
+    // {
+    //   title: '',
+    //   value: '',
+    //   backgroundColor: '#00000014',
+    //   showSvg: false
+    // }
   ];
 
   investsData = [
