@@ -63,7 +63,7 @@ h4,
   margin-bottom: 5px;
 }
 
-.widget-user .widget-user-image > img {
+.widget-user .widget-user-image>img {
   width: 120px;
   height: 120px;
   /* height: auto; */
@@ -86,11 +86,11 @@ h4,
   color: #f27575;
 }
 
-.carousel-inner > .item > a > img,
-.carousel-inner > .item > img,
+.carousel-inner>.item>a>img,
+.carousel-inner>.item>img,
 .img-responsive,
-.thumbnail a > img,
-.thumbnail > img {
+.thumbnail a>img,
+.thumbnail>img {
   display: block;
   width: 90px;
   height: 90px;
@@ -110,7 +110,7 @@ img {
   text-align: center;
 }
 
-.list-group-unbordered > .list-group-item {
+.list-group-unbordered>.list-group-item {
   border-left: 0;
   border-right: 0;
   border-radius: 0;
@@ -247,7 +247,7 @@ input-group-addon,
   opacity: 0.5;
 }
 
-.isDisabled > a {
+.isDisabled>a {
   color: currentColor;
   display: inline-block;
   /* For IE11/ MS Edge bug */
@@ -262,7 +262,7 @@ input-group-addon,
   background-size: cover;
 }
 
-.btn-editar-rg{
+.btn-editar-rg {
   background: transparent;
   border: none;
   margin-top: 0.5rem;

@@ -137,16 +137,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       rg: [null, [Validators.required, Validators.maxLength(13)]],
       phone: [null, [Validators.required]],
       dateOfBirth: [null, [Validators.required]],
-      address: this.formBuilder.group({
-        id: [null],
-        zipCode: [null, [Validators.required]],
-        street: [null, [Validators.required]],
-        number: [null, [Validators.required]],
-        complement: [null],
-        neighborhood: [null, [Validators.required]],
-        city: [null, [Validators.required]],
-        uf: [null, [Validators.required]],
-      }),
+      id: [null],
+      zipCode: [null, [Validators.required]],
+      street: [null, [Validators.required]],
+      number: [null, [Validators.required]],
+      complement: [null],
+      neighborhood: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      uf: [null, [Validators.required]],
       investorProfileStatement: ["UP_TO_10_THOUSAND", [Validators.required]],
       totalInvestedOthers: [
         "0,00",
@@ -163,87 +161,91 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
     });
-  }  
+  }
 
   getUser() {
     this.loader = true;
-
     this.investorService.getUser().subscribe((response) => {
-        this.investor = response;
+      this.investor = response;
+      if (response.address !== undefined) {
+        this.setFormValue("profession", response.profession);
+        this.setFormValue("nationality", response.nationality);
+        this.setFormValue("gender", response.gender);
+        this.setFormValue("maritalStatus", response.maritalStatus);
+        this.setFormValue("rgEmitter", response.rgEmitter);
+        this.setFormValue("rg", response.rg);
+        this.setFormValue("phone", this.phoneMask.transform(response.phone));
+        this.setFormValue("street", response.address.street);
+        this.setFormValue("zipCode", response.address.zipCode);
+        this.setFormValue("number", response.address.number);
+        this.setFormValue("neighborhood", response.address.neighborhood);
+        this.setFormValue("complement", response.address.complement);
+        this.setFormValue("city", response.address.city);
+        this.setFormValue("uf", response.address.uf);
+        this.setFormValue("dateOfBirth", this.dateMask.transform(response.dateOfBirth));
+        this.form.get('address')?.patchValue(response.address);
+        this.form.get('address')?.patchValue({
+          "zipCode": this.cepMask.transform(response.address.zipCode)
+        });
 
-        if (response.address !== undefined) {
-            this.setFormValue("profession", response.profession);
-            this.setFormValue("nationality", response.nationality);
-            this.setFormValue("gender", response.gender);
-            this.setFormValue("maritalStatus", response.maritalStatus);
-            this.setFormValue("rgEmitter", response.rgEmitter);
-            this.setFormValue("rg", response.rg);
-            this.setFormValue("phone", this.phoneMask.transform(response.phone));
-            this.setFormValue("dateOfBirth", this.dateMask.transform(response.dateOfBirth));
+        this.setFormValue("investorProfileStatement", response.investorProfileStatement);
+        this.setFormValue("totalInvestedOthers", this.maskMoney.transform(response.totalInvestedOthers));
+        this.setFormValue("investedUpangel", this.maskMoney.transform(response.investedUpangel));
+        this.setFormValue("totalInvested", this.maskMoney.transform(response.totalInvestedOthers + response.investedUpangel));
+        this.setFormValue("publicFigure", response.publicFigure);
+        this.setFormValue("publicProfile", response.publicProfile);
+        this.setFormValue("personalWebsite", response.personalWebsite);
+        this.setFormValue("facebook", response.facebook);
+        this.setFormValue("twitter", response.twitter);
+        this.setFormValue("linkedin", response.linkedin);
+        this.setFormValue("agent", response.agent);
+        this.setFormValue("aboutUpangel", response.aboutUpangel);
+        this.setFormValue("nameResponsible", response.nameResponsible);
+        this.setFormValue("cpfResponsible", this.cpfMask.transform(response.cpfResponsible));
+        this.setFormValue("accountAgency", response.accountAgency);
+        this.setFormValue("accountBank", response.accountBank);
+        this.setFormValue("accountNumber", response.accountNumber);
 
-            this.form.get('address')?.patchValue(response.address);
-            this.form.get('address')?.patchValue({
-                "zipCode": this.cepMask.transform(response.address.zipCode)
-            });
+        this.descriptionCity = response.address.city;
+        this.descriptionSite = response.personalWebsite;
+        this.facebook = response.facebook;
+        this.linkedin = response.linkedin;
+        this.twitter = response.twitter;
 
-            this.setFormValue("investorProfileStatement", response.investorProfileStatement);
-            this.setFormValue("totalInvestedOthers", this.maskMoney.transform(response.totalInvestedOthers));
-            this.setFormValue("investedUpangel", this.maskMoney.transform(response.investedUpangel));
-            this.setFormValue("totalInvested", this.maskMoney.transform(response.totalInvestedOthers + response.investedUpangel));
-            this.setFormValue("publicFigure", response.publicFigure);
-            this.setFormValue("publicProfile", response.publicProfile);
-            this.setFormValue("personalWebsite", response.personalWebsite);
-            this.setFormValue("facebook", response.facebook);
-            this.setFormValue("twitter", response.twitter);
-            this.setFormValue("linkedin", response.linkedin);
-            this.setFormValue("agent", response.agent);
-            this.setFormValue("aboutUpangel", response.aboutUpangel);
-            this.setFormValue("nameResponsible", response.nameResponsible);
-            this.setFormValue("cpfResponsible", this.cpfMask.transform(response.cpfResponsible));
-            this.setFormValue("accountAgency", response.accountAgency);
-            this.setFormValue("accountBank", response.accountBank);
-            this.setFormValue("accountNumber", response.accountNumber);
-
-            this.descriptionCity = response.address.city;
-            this.descriptionSite = response.personalWebsite;
-            this.facebook = response.facebook;
-            this.linkedin = response.linkedin;
-            this.twitter = response.twitter;
-
-            if (response.dateOfBirth != null || response.dateOfBirth !== undefined) {
-                this.descriptionDate =
-                    moment(response.dateOfBirth).format("DD") +
-                    " de " +
-                    moment(response.dateOfBirth).locale("pt-br").format("MMMM");
-            }
+        if (response.dateOfBirth != null || response.dateOfBirth !== undefined) {
+          this.descriptionDate =
+            moment(response.dateOfBirth).format("DD") +
+            " de " +
+            moment(response.dateOfBirth).locale("pt-br").format("MMMM");
         }
+      }
 
-        this.base64textString =
-            response.avatar === undefined
-                ? "./../../../assets/img/default-profile_01.png"
-                : "data:image/png;base64," + response.avatar;
+      this.base64textString =
+        response.avatar === undefined
+          ? "./../../../assets/img/default-profile_01.png"
+          : "data:image/png;base64," + response.avatar;
 
-        this.base64RG =
-            response.rgDocument === undefined && response.rgDocumentVerse === undefined
-                ? null
-                : response.rgDocument !== undefined
-                    ? "data:image/png;base64," + response.rgDocument
-                    : "data:image/png;base64," + response.rgDocumentVerse;
+      this.base64RG =
+        response.rgDocument === undefined && response.rgDocumentVerse === undefined
+          ? null
+          : response.rgDocument !== undefined
+            ? "data:image/png;base64," + response.rgDocument
+            : "data:image/png;base64," + response.rgDocumentVerse;
 
-        const $this = this;
-        setTimeout(function () {
-            $this.initMask();
-        }, 1000);
+      const $this = this;
+      setTimeout(function () {
+        $this.initMask();
+      }, 1000);
 
-        this.loader = false;
+      this.loader = false;
     });
-}
+  }
 
-private setFormValue(controlName: string, value: any) {
+  private setFormValue(controlName: string, value: any) {
     if (this.form.controls[controlName]) {
-        this.form.controls[controlName].setValue(value);
+      this.form.controls[controlName].setValue(value);
     }
-}
+  }
 
 
   unmaskInput(input) {
@@ -313,7 +315,7 @@ private setFormValue(controlName: string, value: any) {
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
       }
 
-      if(!this.base64RG){
+      if (!this.base64RG) {
         toastr.error("Foto do RG é obrigatório");
         return;
       }
@@ -586,7 +588,7 @@ private setFormValue(controlName: string, value: any) {
         finalize(() => this.loading = false)
       )
       .subscribe(
-        (response) => {},
+        (response) => { },
         (error) => {
           const erro = "Não foi possível enviar/atualizar o RG";
           toastr.error(erro, "Erro");
@@ -607,7 +609,7 @@ private setFormValue(controlName: string, value: any) {
         finalize(() => this.loading = false)
       )
       .subscribe(
-        (response) => {},
+        (response) => { },
         (error) => {
           const erro = "Não foi possível enviar/atualizar o RG";
           toastr.error(erro, "Erro");
@@ -629,29 +631,29 @@ private setFormValue(controlName: string, value: any) {
         finalize(() => this.loading = false)
       )
       .subscribe(
-      (response) => {},
-      (error) => {
-        const erro = "Não foi possível atualizar a imagem.";
-        toastr.options = {
-          closeButton: true,
-          debug: false,
-          newestOnTop: false,
-          progressBar: true,
-          positionClass: "toast-top-center",
-          preventDuplicates: true,
-          onclick: null,
-          showDuration: "300",
-          hideDuration: "1000",
-          timeOut: "10000",
-          extendedTimeOut: "1000",
-          showEasing: "swing",
-          hideEasing: "linear",
-          showMethod: "fadeIn",
-          hideMethod: "fadeOut",
-        };
-        toastr.error(erro, "Erro");
-      }
-    );
+        (response) => { },
+        (error) => {
+          const erro = "Não foi possível atualizar a imagem.";
+          toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: false,
+            progressBar: true,
+            positionClass: "toast-top-center",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "10000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+          };
+          toastr.error(erro, "Erro");
+        }
+      );
   }
 
   getBanks() {
