@@ -23,8 +23,7 @@ export class AdminLeftSideComponent implements OnInit {
   isCollapsed = false;
 
   isSvgRotated = false;
-
-
+  isSvgRotatedImportated = false;
 
   enterpriseSubItens = [
     {
@@ -100,8 +99,41 @@ export class AdminLeftSideComponent implements OnInit {
     },
   ];
 
+  importatedSubItens = [
+    {
+      name: 'Aprovação',
+      link: null,
+      subCategory: [
+        {
+          name: 'Criar Rodada',
+          link: '/admin/rounds/incorporator/create',
+        },
+        {
+          name: 'Publicar Rodada',
+          link: '/admin/rounds/approval/incorporator/publish',
+        },
+      ],
+      isExpanded: false
+    },
+    {
+      name: 'Investimentos',
+      link: null,
+      subCategory: [
+        {
+          name: 'Investimentos Realizados',
+          link: '/admin/rounds/incorporator/investments',
+        },
+      ],
+      isExpanded: false
+    },
+  ];
+
   toggleSvgRotation(): void {
     this.isSvgRotated = !this.isSvgRotated;
+  }
+
+  toggleSvgRotationImportated(): void {
+    this.isSvgRotatedImportated = !this.isSvgRotatedImportated;
   }
 
   toggleSubItems(item): void {
