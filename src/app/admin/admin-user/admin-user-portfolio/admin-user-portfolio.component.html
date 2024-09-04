@@ -10,6 +10,30 @@
     </div>
 
     <div style="width: 100%; height: 100%; display: flex; gap: 16px;">
+<div *ngIf="isSheetOpen" class="sideSheet">
+  <div style="min-height: 80px; margin-top: 70px; padding: 10px;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <p style="color: #1F1F1F; font-size: 18px; margin-bottom: 0;">Startup 1</p>
+      <div (click)="closeSheet()" style="cursor: pointer;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M11.7268 3.33398L8.00016 7.06065L4.2735 3.33398L3.3335 4.27398L7.06016 8.00065L3.3335 11.7273L4.2735 12.6673L8.00016 8.94065L11.7268 12.6673L12.6668 11.7273L8.94016 8.00065L12.6668 4.27398L11.7268 3.33398Z"
+            fill="#C4C4C4" />
+        </svg>
+      </div>
+    </div>
+    <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">Detalhes do investimento</p>
+    <div style="width: 100%; height: 1px; background-color: #E5E5E5;"></div>
+
+    <div *ngFor="let item of sheetData" style="margin-top: 30px; border-bottom: 1px solid #E5E5E5;">
+      <p style="font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 14px;">{{ item.title }}</p>
+      <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">({{ item.subTittle }})</p>
+      <p
+        style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #035A7A; font-size: 18px; margin-bottom: 16px;">
+        {{ item.value }}</p>
+    </div>
+  </div>
+</div>
       <div style="width: 100%; height: 100%;">
         <div class="portfolio-grid">
           <div *ngFor="let card of cards" class="portfolio-item" [ngStyle]="{'background-color': card.backgroundColor}">
@@ -177,8 +201,11 @@
               style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
               {{ invest.valuation }}
             </td>
-            <td style="text-align: center; vertical-align: middle; position: relative;">
-              <svg class="hover-svg" width="4" height="14" viewBox="0 0 4 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <td 
+            (click)="openSheet()"
+            style="text-align: center; vertical-align: middle; position: relative;">
+              <svg class="hover-svg" width="4" height="14" viewBox="0 0 4 14" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M1.99998 13.6673C1.07951 13.6673 0.333313 12.9211 0.333313 12.0007C0.333313 11.0802 1.07951 10.334 1.99998 10.334C2.92045 10.334 3.66665 11.0802 3.66665 12.0007C3.66665 12.9211 2.92045 13.6673 1.99998 13.6673ZM1.99998 8.66732C1.07951 8.66732 0.333313 7.92113 0.333313 7.00065C0.333313 6.08018 1.07951 5.33398 1.99998 5.33398C2.92045 5.33398 3.66665 6.08018 3.66665 7.00065C3.66665 7.44268 3.49105 7.8666 3.17849 8.17916C2.86593 8.49172 2.44201 8.66732 1.99998 8.66732ZM1.99998 3.66732C1.07951 3.66732 0.333313 2.92113 0.333313 2.00065C0.333313 1.08018 1.07951 0.333984 1.99998 0.333984C2.92045 0.333984 3.66665 1.08018 3.66665 2.00065C3.66665 2.44268 3.49105 2.8666 3.17849 3.17916C2.86593 3.49172 2.44201 3.66732 1.99998 3.66732Z"
                   fill="#909090" />

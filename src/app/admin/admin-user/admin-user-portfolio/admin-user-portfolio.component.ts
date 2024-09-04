@@ -58,6 +58,8 @@ export class AdminUserPortfolioComponent implements OnInit {
   monthNow: any;
   quarterNow: any;
 
+  isSheetOpen = false;
+
   cards = [
     {
       title: 'Patrimônio total',
@@ -134,6 +136,49 @@ export class AdminUserPortfolioComponent implements OnInit {
     },
   ]
 
+  sheetData = [
+    {
+      title: 'Custo de aquisição de cliente',
+      subTittle: 'CAC',
+      value: 'R$ 10.000,00',
+    },
+    {
+      title: 'Valor do ciclo de vida do cliente',
+      subTittle: 'LTV',
+      value: 'R$ 5,000.00',
+    },
+    {
+      title: 'Receita recorrente mensal',
+      subTittle: 'MRR',
+      value: 'R$ 2,000.00',
+    },
+    {
+      title: 'Taxa de Churn',
+      subTittle: '-',
+      value: 'R$ 1,000.00',
+    },
+    {
+      title: 'Taxa de retenção de cliente',
+      subTittle: '-',
+      value: 'R$ 1,000.00',
+    },
+    {
+      title: 'Taxa de crescimento de receita',
+      subTittle: '-',
+      value: 'R$2,000.00',
+    },
+    {
+      title: 'Margem bruta',
+      subTittle: '-',
+      value: 'R$ 1,000.00',
+    },
+    {
+      title: 'Pista de caixa',
+      subTittle: 'Cash runway',
+      value: 'R$ 10,000.00',
+    },
+  ]
+
   valuationProjected = {
     company: "FCJ Invest",
     logo: "./../../../assets/img/logo_upangel.png",
@@ -163,6 +208,21 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.titleHeader.title = "Meu Perfil / Análise da Carteira";
     this.data.changeTitle(this.titleHeader);
     this.getUserInvestments();
+  }
+
+  openSheet(): void {
+    this.isSheetOpen = true;
+  }
+
+  closeSheet(): void {
+    const sheet = document.querySelector('.sideSheet');
+    if (sheet) {
+      sheet.classList.add('hidden');
+      setTimeout(() => {
+        this.isSheetOpen = false;
+        sheet.classList.remove('hidden');
+      }, 300);
+    }
   }
 
   
