@@ -22,6 +22,12 @@ export class AdminLeftSideComponent implements OnInit {
   activeButton: string = 'start';
   isCollapsed = false;
 
+  isSvgRotated = false;
+
+  toggleSvgRotation(): void {
+    this.isSvgRotated = !this.isSvgRotated;
+  }
+
   constructor(
     private cognitoUtil: CognitoUtil,
     private eventEmitter: EventEmitterService,

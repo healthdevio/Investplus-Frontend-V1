@@ -12,6 +12,10 @@
   border-top: none !important;
 }
 
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
 .minimize-container {
   display: flex;
   align-items: center;
