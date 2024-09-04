@@ -208,7 +208,7 @@ max-width: 17.4% !important;">
           </div>
 
           <ul *ngIf="item.subCategory && item.isExpanded">
-            <li *ngFor="let subItem of item.subCategory">
+            <li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-left: -13%; margin-top: -3%;">
               <a 
               
               [routerLink]="subItem.link">{{ subItem.name }}</a>
@@ -296,7 +296,7 @@ max-width: 17.4% !important;">
           </div>
 
           <ul *ngIf="item.subCategory && item.isExpanded">
-            <li *ngFor="let subItem of item.subCategory">
+            <li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-left: -13%; margin-top: -3%;">
               <a 
               
               [routerLink]="subItem.link">{{ subItem.name }}</a>
