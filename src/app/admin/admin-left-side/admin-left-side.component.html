@@ -188,6 +188,34 @@ max-width: 17.4% !important;">
           </span>
         </a>
       </li>
+
+      <div *ngIf="isSvgRotated">
+        <div *ngFor="let item of enterpriseSubItens">
+          <div style="display: flex; align-items: center;">
+          <p
+          style="margin-left: 30px; cursor: pointer;"
+          class="menu-text"
+          (click)="toggleSubItems(item)"
+          [routerLink]="item.link">{{ item.name }}</p>
+          <svg
+            *ngIf="item.subCategory"
+            (click)="toggleSubItems(item)"
+            style="transform: scaleX(-1); cursor: pointer; margin-left: 30px; margin-bottom: 8px" width="6"
+            height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+              stroke-linejoin="round" />
+            </svg>
+          </div>
+
+          <ul *ngIf="item.subCategory && item.isExpanded">
+            <li *ngFor="let subItem of item.subCategory">
+              <a 
+              
+              [routerLink]="subItem.link">{{ subItem.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
         <a>
           <i>
