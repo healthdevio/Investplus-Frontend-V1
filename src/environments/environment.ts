@@ -22,7 +22,8 @@ export const environment = {
   dynamodb_endpoint: "",
   s3_endpoint: "", */
   production: true,
-  url_api: "https://api.fcjinvest.com.br/api",
+  // url_api: "https://api.fcjinvest.com.br/api",
+  url_api: "https://54.82.48.219:8080/api",
   // url_api: "http://localhost:8080/api",
   userPoolId: "us-east-2_GAF4pxPcD",
   clientId: "3ph8jpuh1f6maiuilank50gbfe",
