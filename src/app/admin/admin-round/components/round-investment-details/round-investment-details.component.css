@@ -256,6 +256,24 @@ p {
   border: 0px solid #dde;
 }
 
+.progress-bar-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #035A7A3D;
+  z-index: 1;
+}
+
+.progress-bar-foreground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #035A7A;
+  z-index: 2;
+}
+
 .progress.sm,
 .progress-sm {
   height: 24px;
@@ -267,9 +285,8 @@ p {
 }
 
 .progress {
+  position: relative;
   height: 20px;
-  /* margin-bottom: 30px;
-  margin-top: 30px; */
   overflow: hidden;
   background-color: #f5f5f5;
   border-radius: 4px;
