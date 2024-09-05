@@ -25,16 +25,22 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUser();
-
+  
     this.body.classList.add('skin-blue');
     this.body.classList.add('sidebar-mini');
-
+  
     this.adjustContentWidth(this.sidebarExpanded);
+  
+    window.addEventListener('resize', this.updateContentStyle.bind(this));
+  
+    this.updateContentStyle();
   }
 
   ngOnDestroy() {
     this.body.classList.remove('skin-blue');
     this.body.classList.remove('sidebar-mini');
+    
+    window.removeEventListener('resize', this.updateContentStyle.bind(this));
   }
 
   getUser() {
@@ -62,11 +68,20 @@ export class AdminComponent implements OnInit, OnDestroy {
   updateContentStyle() {
     const contentWrapperElement = this.el.nativeElement.querySelector('.content-wrapper');
     if (contentWrapperElement) {
-      const marginLeft = this.sidebarExpanded ? '17.35%' : '6%';
-      const width = this.sidebarExpanded ? 'calc(100% - 17.4%)' : 'calc(100% - 6%)';
+      const windowWidth = window.innerWidth;
       
-      this.renderer.setStyle(contentWrapperElement, 'margin-left', marginLeft);
-      this.renderer.setStyle(contentWrapperElement, 'width', width);
+      if (windowWidth <= 768) {
+        this.renderer.setStyle(contentWrapperElement, 'margin-left', '0');
+        this.renderer.setStyle(contentWrapperElement, 'width', '100%');
+      } else {
+        const marginLeft = this.sidebarExpanded ? '17.35%' : '6%';
+        const width = this.sidebarExpanded ? 'calc(100% - 17.4%)' : 'calc(100% - 6%)';
+  
+        this.renderer.setStyle(contentWrapperElement, 'margin-left', marginLeft);
+        this.renderer.setStyle(contentWrapperElement, 'width', width);
+      }
     }
   }
+  
+  
 }
