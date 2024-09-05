@@ -229,9 +229,36 @@
         </div>
 
         <div class="box custom-background">
-          <div class="box-body">
-            <p style="font-weight: 500; font-size: 14px; color: #1F1F1F;">Total investido</p>
-            <p style="font-weight: 600; font-size: 20px; color: #1F1F1F;">{{ porcent }}</p>
+          <div style="padding: 20px 16px;">
+            <div style="display: flex; align-items: end; justify-content: space-between;">
+              <div style="display: flex; align-items: end;">
+                <div>
+                  <p style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">Total
+                    investido</p>
+                  <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">R$ 415.000
+                  </p>
+                </div>
+                
+                <div style="display: flex; gap: 15px; align-items: center; margin-left: 20px; margin-bottom: 15px;">
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A3D;">
+                    </div>
+                    <p style="margin-bottom: 0;">26% Reservado</p>
+                  </div>
+                
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A;">
+                    </div>
+                    <p style="margin-bottom: 0;">26% investidos</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 15px;">
+                <p style="color: #777777; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 400; margin-bottom: 0;">Objetivo final</p>
+                <p style="color: #035A7A; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 600; margin-bottom: 0;">R$ 90.000,000</p>
+              </div>
+            </div>
             <div class="progress sm">
               <div [ngStyle]="{ width: porcent }" class="progress-bar progress-bar-aqua"></div>
             </div>
@@ -374,7 +401,6 @@
                 </div>
               </div>
               <div 
-              style="margin-top: 45px;"
               class="row">
                 <div class="col-xs-5 col-xs-offset-1 border-t">
                   <p style="color: #505050; font-size: 12px;">Quantidade cota(s)</p>
@@ -468,7 +494,7 @@
                 </div>
                 
               </div>
-              <div class="row margin-t-20">
+              <div class="row">
                 <div class="col-xs-10 col-xs-offset-1">
                   <div class="form-group">
                     <div 
