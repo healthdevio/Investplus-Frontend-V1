@@ -39,6 +39,18 @@ export class RoundAssetsListComponent implements OnInit {
     { name: 'Startups', value: AtivosTipo.STARTUP },
   ];
 
+  sessionsTable = [
+    {
+      name: "Total"
+    },
+    {
+      name: "Andamento"
+    },
+    {
+      name: "Concluidas"
+    },
+  ]
+
   p = 1;
   responsive = true;
   labels: any = {

@@ -12,6 +12,12 @@
   border-top: none !important;
 }
 
+@media (max-width: 450px) {
+  .main-sidebar {
+    display: none;
+  }
+}
+
 .rotate-90 {
   transform: rotate(90deg);
 }

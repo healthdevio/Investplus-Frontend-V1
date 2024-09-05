@@ -11,6 +11,20 @@
 	margin-left: -5px;
 }
 
+.navbar-mobile {
+	display: none;
+}
+
+@media (max-width: 450px) {
+	.navbar {
+		display: none;
+	}
+
+	.navbar-mobile {
+		display: flex;
+	}
+}
+
 .navbar-nav > .user-menu > .dropdown-menu > .user-footer {
 	background-color: #fff;
 	border-top: 1px solid #ddd;

@@ -123,4 +123,72 @@
         [responsive]="responsive" (pageChange)="p = $event" id="upangel"></pagination-controls>
     </div>
   </section>
+
+  <section 
+  class="session-mobile"
+  style="margin-top: 20px; padding: 18px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.375 6V14H14.625V6L9 2L3.375 6Z" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M7.12508 9.66641V13.9997H10.8751V9.66641H7.12508Z" stroke="#909090" stroke-width="1.5"
+          stroke-linejoin="round" />
+        <path d="M3.375 14H14.625" stroke="#909090" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.95833 3.5L8.45833 7L4.95833 10.5" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <p style="color: #909090; margin-bottom: 0;">{{ titleHeader.title }}</p>
+    </div>
+
+    <h1 style="font-size: 18px; color: #1F1F1F; font-family: Poppins , sans-serif; margin-bottom: 0; font-weight: 500;">Explore as oportunidades</h1>
+    <p style="font-size: 12px; color: #909090; font-family: Poppins , sans-serif; margin-bottom: 0; margin-top: 10px;">
+      Selecione um ativo, visualize os detalhes e
+      realize seu investimento.
+    </p>
+
+    <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto;">
+      <div *ngFor="let session of sessionsTable"
+        style="padding: 8px 16px; background: white; border-radius: 100px; border: 1px solid #E8E5E5; width: fit-content; margin-top: 15px;">
+        <p style="margin-bottom: 0px;">{{ session.name }}</p>
+      </div>
+    </div>
+
+    <div
+      style="height: 36px; min-width: 300px; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 16px; padding-right: 16px; margin-bottom: 10px; margin-top: 20px;">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
+          stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
+        <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <input style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none;"
+        placeholder="Pesquisar ativo" (input)="applyFilters($event.target.value)" />
+    </div>
+
+    <div 
+    style="margin-bottom: 100px;">
+      <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
+        <div
+          *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+          <div>
+            <admin-round-incorporator [incorporator]="imobiliaria"></admin-round-incorporator>
+          </div>
+        </div>
+      </div>
+    
+      <div
+        *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
+        <div
+          *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
+          <div>
+            <admin-round-company [company]="empresa"></admin-round-company>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
 </div>
