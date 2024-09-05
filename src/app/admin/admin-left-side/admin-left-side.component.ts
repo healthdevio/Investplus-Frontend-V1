@@ -4,6 +4,7 @@ import { CognitoUtil } from '../../core/service/cognito/cognito.service';
 import { EventEmitterService } from '../../core/service/event-emitter-service.service';
 import { Investor } from '../../core/interface/investor';
 import { InvestorService } from '../../core/service/investor.service';
+import { UserLoginService } from "../../core/service/cognito/user-login.service";
 
 declare var toastr: any;
 
@@ -144,6 +145,7 @@ export class AdminLeftSideComponent implements OnInit {
     private cognitoUtil: CognitoUtil,
     private eventEmitter: EventEmitterService,
     private investorService: InvestorService,
+    private userService: UserLoginService,
   ) { }
 
   ngOnInit() {
@@ -210,5 +212,11 @@ export class AdminLeftSideComponent implements OnInit {
   toggleDivs() {
     this.showDiv1 = !this.showDiv1;
     this.sidebarToggle.emit(this.showDiv1);
+  }
+
+
+  logout() {
+    this.userService.logout();
+    window.location.href = "/auth/login";
   }
 }

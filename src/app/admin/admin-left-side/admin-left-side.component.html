@@ -314,7 +314,7 @@ max-width: 17.4% !important;">
         margin-top: 10%;
         ">Outros</p>
     <ul class="left-side-menu">
-      <li routerLinkActive="active">
+      <!-- <li routerLinkActive="active">
         <a routerLink="./notifications">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -328,8 +328,8 @@ max-width: 17.4% !important;">
           </i>
           <span class="menu-text">Notificações</span>
         </a>
-      </li>
-      <li routerLinkActive="active">
+      </li> -->
+      <!-- <li routerLinkActive="active">
         <a routerLink="./settings">
           <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1342)">
@@ -349,9 +349,9 @@ max-width: 17.4% !important;">
           </i>
           <span class="menu-text">Configurações</span>
         </a>
-      </li>
+      </li> -->
       <li routerLinkActive="active">
-        <a routerLink="./logout">
+        <a (click)="logout()">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
@@ -561,7 +561,7 @@ max-width: 6% !important;">
         margin-top: 10%;
         ">Outros</p>
     <ul class="left-side-menu">
-      <li routerLinkActive="active">
+      <!-- <li routerLinkActive="active">
         <a routerLink="./notifications" title="Notificações" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -574,8 +574,8 @@ max-width: 6% !important;">
             </svg>
           </i>
         </a>
-      </li>
-      <li routerLinkActive="active">
+      </li> -->
+      <!-- <li routerLinkActive="active">
         <a routerLink="./settings" title="Configurações" class="tooltip-container">
           <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clip-path="url(#clip0_460_1342)">
@@ -594,9 +594,9 @@ max-width: 6% !important;">
             </svg>
           </i>
         </a>
-      </li>
+      </li> -->
       <li routerLinkActive="active">
-        <a routerLink="./logout" title="Sair" class="tooltip-container">
+        <a (click)="logout()" title="Sair" class="tooltip-container">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"

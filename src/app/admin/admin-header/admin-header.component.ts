@@ -34,10 +34,10 @@ export class AdminHeaderComponent implements OnInit {
     this.getUser();
   }
 
-  logout() {
-    this.userService.logout();
-    window.location.href = "https://investplus.vc/";
-  }
+  // logout() {
+  //   this.userService.logout();
+  //   window.location.href = "https://investplus.vc/";
+  // }
 
   getUser() {
     this.eventEmitter.emitter.subscribe((response) => {
