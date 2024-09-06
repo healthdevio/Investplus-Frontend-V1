@@ -137,7 +137,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       rg: [null, [Validators.required, Validators.maxLength(13)]],
       phone: [null, [Validators.required]],
       dateOfBirth: [null, [Validators.required]],
-      id: [null],
       zipCode: [null, [Validators.required]],
       street: [null, [Validators.required]],
       number: [null, [Validators.required]],
@@ -288,41 +287,30 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   onSubmit() {
     if (this.form.valid) {
       const dataSend = this.form.value;
-      dataSend.address.zipCode = this.unmaskInput(dataSend.address.zipCode);
-      dataSend.zipCode = undefined;
-      dataSend.street = undefined;
-      dataSend.number = undefined;
-      dataSend.complement = undefined;
-      dataSend.neighborhood = undefined;
-      dataSend.city = undefined;
-      dataSend.uf = undefined;
-      dataSend.investedUpangel = undefined;
-      dataSend.totalInvested = undefined;
-
+  
+      dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
       dataSend.phone = this.unmaskInput(dataSend.phone);
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
-      dataSend.totalInvestedOthers = this.unmaskMoney(
-        dataSend.totalInvestedOthers
-      );
-      dataSend.cpf = this.investor.cpf;
-      dataSend.email = this.investor.email;
-      dataSend.fullName = this.investor.fullName;
-      dataSend.nickname = this.investor.nickname;
-      dataSend.rg = dataSend.rg.replace(/\s/g, "");
-
-      if (this.investor.cnpj !== undefined) {
-        dataSend.nameResponsible = dataSend.nameResponsible;
-        dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
-      }
-
-      if (!this.base64RG) {
-        toastr.error("Foto do RG é obrigatório");
-        return;
-      }
-
+      
+      dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
+      dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
+      dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
+  
+      const address = {
+        zipCode: dataSend.zipCode,
+        street: dataSend.street,
+        number: dataSend.number,
+        complement: dataSend.complement,
+        neighborhood: dataSend.neighborhood,
+        city: dataSend.city,
+        uf: dataSend.uf
+      };
+      
+      dataSend.address = address;
+  
       this.loading = true;
       this.loaderService.load(this.loading);
-
+  
       this.investorService
         .updateInvestor(dataSend)
         .pipe(
@@ -354,6 +342,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       );
     }
   }
+  
+  
 
   onDevelopmentToast() {
     toastr.options = {
