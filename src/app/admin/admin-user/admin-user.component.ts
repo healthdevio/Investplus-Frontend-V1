@@ -288,8 +288,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   onSubmit() {
     if (this.form.valid) {
       const dataSend = this.form.value;
-      dataSend.address.zipCode = this.unmaskInput(dataSend.address.zipCode);
-      dataSend.zipCode = undefined;
+
+      dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
       dataSend.street = undefined;
       dataSend.number = undefined;
       dataSend.complement = undefined;
