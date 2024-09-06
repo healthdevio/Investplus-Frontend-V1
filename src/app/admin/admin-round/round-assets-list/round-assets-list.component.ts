@@ -51,6 +51,13 @@ export class RoundAssetsListComponent implements OnInit {
     },
   ]
 
+  selectedSession = "Total";
+
+  selectSession(sessionName: string) {
+    this.selectedSession = sessionName;
+    this.applyFiltersMobile();
+  }
+
   p = 1;
   responsive = true;
   labels: any = {
@@ -81,8 +88,8 @@ export class RoundAssetsListComponent implements OnInit {
   }  
 
   applyFilters(searchTerm: string = '') {
-    const status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
-                   this.selectedText === 'Concluidas' ? 'FINISHED' : null;
+    let status = this.selectedText === 'Andamento' ? 'IN_PROGRESS' :
+      this.selectedText === 'Concluidas' ? 'FINISHED' : null;
   
     searchTerm = searchTerm.toLowerCase();
   
@@ -98,6 +105,26 @@ export class RoundAssetsListComponent implements OnInit {
       return matchesStatus && matchesSearch;
     });
   
+  }
+
+  applyFiltersMobile(searchTerm: string = '') {
+    let status = this.selectedSession === 'Andamento' ? 'IN_PROGRESS' :
+      this.selectedSession === 'Concluidas' ? 'FINISHED' : null;
+
+    searchTerm = searchTerm.toLowerCase();
+
+    this.empresas = this.allEmpresas.filter(company => {
+      const matchesStatus = status ? company.round.status === status : true;
+      const matchesSearch = company.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+
+    this.imobiliarias = this.allImobiliarias.filter(realState => {
+      const matchesStatus = status ? realState.status === status : true;
+      const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
+      return matchesStatus && matchesSearch;
+    });
+
   }
   
 

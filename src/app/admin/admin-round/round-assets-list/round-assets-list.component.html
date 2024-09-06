@@ -44,7 +44,9 @@
 
     <div style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
       <div style="display: flex; align-items: center; gap: 50px;">
-        <p [style.color]="getColor('Todas as oportunidades')" (click)="setSelectedText('Todas as oportunidades')"
+        <p 
+        [style.color]="getColor('Todas as oportunidades')" 
+        (click)="setSelectedText('Todas as oportunidades')"
           style="cursor: pointer;">Todas as oportunidades</p>
         <p [style.color]="getColor('Andamento')" (click)="setSelectedText('Andamento')" style="cursor: pointer;">Andamento</p>
         <p [style.color]="getColor('Concluidas')" (click)="setSelectedText('Concluidas')" style="cursor: pointer;">Concluídas</p>
@@ -149,8 +151,10 @@
     </p>
 
     <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto;">
-      <div *ngFor="let session of sessionsTable"
-        style="padding: 8px 16px; background: white; border-radius: 100px; border: 1px solid #E8E5E5; width: fit-content; margin-top: 15px;">
+      <div *ngFor="let session of sessionsTable" (click)="selectSession(session.name)"
+        [style.color]="session.name === selectedSession ? '#035A7A' : 'black'"
+        [style.border-color]="session.name === selectedSession ? '#035A7A' : '#E8E5E5'"
+        style="padding: 8px 16px; background: white; border-radius: 100px; border: 1px solid; width: fit-content; margin-top: 15px; cursor: pointer;">
         <p style="margin-bottom: 0px;">{{ session.name }}</p>
       </div>
     </div>
@@ -170,7 +174,7 @@
       (input)="applyFilters($event.target.value)" />
     </div>
 
-    <p style="color: #505050; font-size: 12px; ">Listagem de ativos</p>
+    <p style="color: #505050; font-size: 14px; ">Listagem de ativos</p>
 
     <div 
     style="margin-bottom: 100px;">
