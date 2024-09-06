@@ -1,6 +1,6 @@
   <div 
   class="box box-widget widget-user" 
-  style=" height: 300px; min-width: 420px; border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between;" *ngIf="company">
+  style=" height: 300px; min-width: 390px; border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between;" *ngIf="company">
     <div class="box-header">
       <div class="row" style="gap: 40; display: flex;">
         <div class="col-xs-3 col-md-3">
@@ -85,7 +85,7 @@
           [routerLink]="['../../company', company?.id, 'round', company.round?.id]"
           (click)="handleClick()" 
           class="btn-upangel"
-          style="max-width: 200px; min-width: 330px;"
+          style="width: 75%;"
           >
           <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: white;">Investir +</span>
         </a>
@@ -96,7 +96,7 @@
           <a 
           *ngIf="company.round?.status == 'FINISHED'"
           class="btn-upangel" 
-          style="background-color: white; max-width: 200px; min-width: 330px;">
+          style="background-color: white; width: 75%;">
           <span style="font-size: 14px; font-weight: 600; text-align: center; padding: 5px; color: #035A7A; margin-top: 20px;">Rodada Finalizada +</span>
           </a>
         <!-- [routerLink]="['../../indicators/company', company?.id, 'round', company.round?.id]"  -->
