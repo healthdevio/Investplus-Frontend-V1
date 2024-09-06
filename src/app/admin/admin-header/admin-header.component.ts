@@ -1,6 +1,8 @@
 import { Component, OnInit, Renderer2, ElementRef, ViewChild } from "@angular/core";
 import { UserLoginService } from "../../core/service/cognito/user-login.service";
 import { Router } from "@angular/router";
+import { Scopes } from '../../core/interface/scopes';
+import { CognitoUtil } from '../../core/service/cognito/cognito.service';
 import { EventEmitterService } from "../../core/service/event-emitter-service.service";
 import { Investor } from "../../core/interface/investor";
 import { TitleService } from "../../core/service/title.service";
@@ -17,10 +19,13 @@ export class AdminHeaderComponent implements OnInit {
   getFirtLetter: any;
   sidebarExpanded = true;
   titleHeader: TitleHeader;
+  scopes = new Scopes;
+  scopesUser = [];
 
   constructor(
     private userService: UserLoginService,
     private router: Router,
+    private cognitoUtil: CognitoUtil,
     private eventEmitter: EventEmitterService,
     private data: TitleService,
     private renderer: Renderer2,
@@ -31,6 +36,21 @@ export class AdminHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
+    this.getUser();
+    const $this = this;
+    const cognitoUser = this.cognitoUtil.getCurrentUser();
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function (err, session) {
+        if (session.isValid()) {
+          const tokenId = session.getIdToken();
+          const cognitoGroups = tokenId['payload']['cognito:groups'];
+          cognitoGroups.forEach(element => {
+            $this.scopesUser[element] = true;
+          });
+        }
+      });
+    }
+    Object.assign(this.scopes, this.scopesUser);
     this.getUser();
   }
 
