@@ -23,7 +23,7 @@ export const environment = {
   s3_endpoint: "", */
   production: true,
   // url_api: " ://api.fcjinvest.com.br/api",
-  url_api: "http://54.82.48.219:8080/api",
+  url_api: "https://homologinvestplus.investplus.vc/",
   // url_api: "http://localhost:8080/api",
   userPoolId: "us-east-2_GAF4pxPcD",
   clientId: "3ph8jpuh1f6maiuilank50gbfe",
