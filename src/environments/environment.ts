@@ -5,11 +5,9 @@
 
 export const environment = {
   /* production: false,
-
   url_api: "http://localhost:8080/api",
   userPoolId: "us-east-1_ec2OBxkjT",
   clientId: "69137gvu1cfd7r2gkg6fva0n77",
-
   region: "us-east-1",
   bucketRegion: "us-east-1",
   identityPoolId: "",
@@ -22,12 +20,11 @@ export const environment = {
   dynamodb_endpoint: "",
   s3_endpoint: "", */
   production: true,
-  // url_api: " ://api.fcjinvest.com.br/api",
-  url_api: "https://homologinvestplus.investplus.vc/",
+  url_api: "https://api.fcjinvest.com.br/api",
+  // url_api: "https://homologinvestplus.investplus.vc/",
   // url_api: "http://localhost:8080/api",
   userPoolId: "us-east-2_GAF4pxPcD",
   clientId: "3ph8jpuh1f6maiuilank50gbfe",
-
   region: "us-east-2",
   bucketRegion: "us-east-2",
   identityPoolId: "",

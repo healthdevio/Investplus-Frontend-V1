@@ -1,15 +1,33 @@
 .content{
   background: #F6F6F8;
   height: 1090px;
+  margin-top: -20px;
 }
 
 .text-with-icon {
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  margin-top: 3%;
   margin-left: 3%;
   margin-bottom: 3%;
+}
+
+.desktop-session {
+  display: block;
+}
+
+.mobile-session {
+  display: none;
+}
+
+@media (max-width: 450px) {
+  .desktop-session {
+    display: none;
+  }
+
+  .mobile-session {
+    display: block;
+  }
 }
 
 .offer-text {

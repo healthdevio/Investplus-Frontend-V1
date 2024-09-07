@@ -1,5 +1,4 @@
 <section class="content">
-
   <div class="text-with-icon">
     <a href="http://localhost:4200/admin/rounds/assets/list" class="icon-link">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -14,7 +13,9 @@
   </div>
 
   <app-loader [loader]="loader"></app-loader>
-  <div *ngIf="!loader">
+  <div 
+  class="desktop-session"
+  *ngIf="!loader">
     <div class="row">
       <div class="col-xs-12 col-md-8">
         <div class="box custom-background">
@@ -277,20 +278,18 @@
                     [backgroundColor]="['#035A7A66', '#035A7A']" [borderColor]="['#035A7A66', '#035A7A']"
                     [labels]="['Restante em (%)', 'Investido em (%)']" [data]="dataResume" [options]="optionsResume">
                   </app-doughnut>
-                  <p style="
-                                        color: #035A7A !important;
-                                        font-family: Poppins, sans-serif !important;
-                                        font-size: 24px !important;
-                                        font-style: normal !important;
-                                        font-weight: 500 !important;
-                                        line-height: 150% !important;
-                                        position: absolute;
-                                        top: 50%;
-                                        left: 50%;
-                                        transform: translate(-50%, -50%);
-                                        margin: 0;
-                                        text-align: center;
-                                      ">
+                  <p style="color: #035A7A !important;
+                                  font-family: Poppins, sans-serif !important;
+                                  font-size: 24px !important;
+                                  font-style: normal !important;
+                                  font-weight: 500 !important;
+                                  line-height: 150% !important;
+                                  position: absolute;
+                                  top: 50%;
+                                  left: 50%;
+                                  transform: translate(-50%, -50%);
+                                  margin: 0;
+                                  text-align: center;">
                     {{ dataResume[1]}}%
                   </p>
                 </div>
@@ -871,6 +870,302 @@
             <div class="box box-default collapsed-box">
               <div class="box-header">
                 <h3 class="box-title">SELECIONE UMA ABA</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div 
+  class="mobile-session"
+  *ngIf="!loader"
+  >
+    <div class="box-body">
+      <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div>
+            <div class="widget-user-image">
+              <img width="56px" height="56px" class="img-logo" [src]="roundInvestment?.round?.docLogo" alt="Logo" />
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <div>
+              <div>
+                <p style="font-size: 16px; margin-bottom: 0;">{{ roundInvestment?.name }}</p>
+              </div>
+            </div>
+    
+            <div>
+              <div>
+                <h3 style="margin-left: 0;">MODALIDADE: {{ maskModel(roundInvestment?.model) }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div>
+          <p style="display: flex; justify-content: end; gap: 12px; margin-top: 15px;">
+            <span class="{{ roundInvestment?.facebook == null ? 'isDisabled' : '' }}">
+              <a href="{{ roundInvestment?.facebook == null ? '#' : roundInvestment?.facebook }}" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_240_1875)">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.37036 15.3337C0.981717 15.3337 0.666656 15.0169 0.666656 14.6261V1.37457C0.666656 0.983785 0.981717 0.666992 1.37036 0.666992H14.6296C15.0183 0.666992 15.3333 0.983785 15.3333 1.37457V14.6261C15.3333 15.0169 15.0183 15.3337 14.6296 15.3337C14.1605 15.3337 9.74072 15.3337 1.37036 15.3337Z"
+                      stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M12.8872 5.96222H11.4359H11.2644C10.8144 5.96222 10.4496 6.32705 10.4496 6.77705V8.40715H12.8872L12.5302 10.8508H10.4496V15.3333H7.7689V10.8508H5.55566V8.40715H7.7403L7.7689 6.08769L7.76093 5.25638C7.74966 4.08248 8.69213 3.12172 9.86603 3.11045C9.87283 3.11038 9.87963 3.11035 9.88643 3.11035H12.8872V5.96222Z"
+                      fill="#035A7A" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_240_1875">
+                      <rect width="16" height="16" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </span>
+            <span class="{{ roundInvestment?.website == null ? 'isDisabled' : '' }}">
+              <a href="{{ roundInvestment?.website == null ? '#' : roundInvestment?.website }}" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_240_1878)">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M8.00001 14.6663C11.6819 14.6663 14.6667 11.6816 14.6667 7.99967C14.6667 4.31777 11.6819 1.33301 8.00001 1.33301C4.31811 1.33301 1.33334 4.31777 1.33334 7.99967C1.33334 11.6816 4.31811 14.6663 8.00001 14.6663Z"
+                      stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M1.33334 8H14.6667" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M8.00001 14.6663C9.47278 14.6663 10.6667 11.6816 10.6667 7.99967C10.6667 4.31777 9.47278 1.33301 8.00001 1.33301C6.52724 1.33301 5.33334 4.31777 5.33334 7.99967C5.33334 11.6816 6.52724 14.6663 8.00001 14.6663Z"
+                      stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M3.28598 3.38086C4.49241 4.58729 6.15908 5.33349 8.00001 5.33349C9.84098 5.33349 11.5076 4.58729 12.7141 3.38086"
+                      stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M12.7141 12.6196C11.5076 11.4132 9.84098 10.667 8.00001 10.667C6.15908 10.667 4.49241 11.4132 3.28598 12.6196"
+                      stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_240_1878">
+                      <rect width="16" height="16" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </span>
+            <span class="{{ roundInvestment?.twitter == null ? 'isDisabled' : '' }}">
+              <a href="{{ roundInvestment?.twitter == null ? '#' : roundInvestment?.twitter }}" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.66666 11.9204C2.30961 12.2759 6.96379 14.9588 10.2733 12.891C13.5828 10.8232 13.4002 7.26077 13.4002 5.62834C13.7 5.00027 14.3333 4.68097 14.3333 2.98094C13.7112 3.55561 13.0929 3.75114 12.4783 3.56754C11.8762 2.64953 11.0478 2.2435 9.99312 2.34945C8.41109 2.50839 7.83229 4.06051 8.00262 6.06857C5.56329 7.30214 3.65049 5.17434 2.66472 3.56754C2.33535 4.83297 2.01776 6.35221 2.66472 8.03284C3.09602 9.15324 4.13282 10.1005 5.77512 10.8745C4.11076 11.7766 2.74126 12.1252 1.66666 11.9204Z"
+                    stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+                </svg>
+              </a>
+            </span>
+          </p>
+        </div>
+      </div>
+    
+      <div style="display: flex; margin-top: 24px; width: 100%; gap: 16px; overflow-x: auto;">
+        <div style="width: 100%;border-radius: 8px; padding: 10px; min-width: 250px; background-color: white; ">
+          <p style="font-size: 12px; font-weight: 500; color: #909090;">Data inicial</p>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="font-size: 16px; font-weight:500; color: #1F1F1F; margin-top: 5px;">{{ startedAt }}</p>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.08337 7.91699H17.9167V16.667C17.9167 17.1272 17.5436 17.5003 17.0834 17.5003H2.91671C2.45647 17.5003 2.08337 17.1272 2.08337 16.667V7.91699Z"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+              <path
+                d="M2.08337 3.75033C2.08337 3.29009 2.45647 2.91699 2.91671 2.91699H17.0834C17.5436 2.91699 17.9167 3.29009 17.9167 3.75033V7.91699H2.08337V3.75033Z"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+              <path d="M6.66663 1.66699V5.00033" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M13.3334 1.66699V5.00033" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11.6666 14.167H14.1666" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.83337 14.167H8.33337" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11.6666 10.833H14.1666" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.83337 10.833H8.33337" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+    
+        <div style="width: 100%; border-radius: 8px; padding: 10px; min-width: 250px; background-color: white; ">
+          <p style="font-size: 12px; font-weight: 500; color: #909090;">Data final</p>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="font-size: 16px; font-weight:500; color: #1F1F1F; margin-top: 5px;">{{ finishAt }}</p>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.08337 7.91699H17.9167V16.667C17.9167 17.1272 17.5436 17.5003 17.0834 17.5003H2.91671C2.45647 17.5003 2.08337 17.1272 2.08337 16.667V7.91699Z"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+              <path
+                d="M2.08337 3.75033C2.08337 3.29009 2.45647 2.91699 2.91671 2.91699H17.0834C17.5436 2.91699 17.9167 3.29009 17.9167 3.75033V7.91699H2.08337V3.75033Z"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+              <path d="M6.66663 1.66699V5.00033" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M13.3334 1.66699V5.00033" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11.6666 14.167H14.1666" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.83337 14.167H8.33337" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11.6666 10.833H14.1666" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.83337 10.833H8.33337" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+    
+        <div style="width: 100%; border-radius: 8px; padding: 10px; min-width: 250px; background-color: white; ">
+          <p style="font-size: 12px; font-weight: 500; color: #909090;">Participação Por Cota</p>
+    
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="font-size: 16px; font-weight:500; color: #1F1F1F; margin-top: 5px;">
+              <span *ngIf="roundInvestment?.round?.modality != 'SAFE'">
+                {{ formatParticipation(roundInvestment?.round?.partnerParticipation / roundInvestment?.round?.quotas) }}
+              </span>
+              <span *ngIf="roundInvestment?.round?.modality == 'SAFE'" class="description-title-3">
+                Depende do valuation da próxima rodada
+              </span>
+            </p>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_239_1668)">
+                <path d="M8 0.666992V15.3337" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M11.6667 2C11.6667 2 8.32355 2 6.66669 2C5.00982 2 3.66669 3.34313 3.66669 5C3.66669 6.65687 5.00982 8 6.66669 8"
+                  stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M4.33331 14C4.33331 14 7.67645 14 9.33331 14C10.9902 14 12.3333 12.6569 12.3333 11C12.3333 9.34313 10.9902 8 9.33331 8H6.66665"
+                  stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_239_1668">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+    
+        </div>
+    
+        <div style="width: 100%; border-radius: 8px; padding: 10px; min-width: 250px; background-color: white; ">
+          <p style="font-size: 12px; font-weight: 500; color: #909090;">Status</p>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="font-size: 16px; font-weight:500; color: #1F1F1F; margin-top: 5px;">{{
+              maskStatus(roundInvestment?.round?.status) }}</p>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_240_1686)">
+                <path
+                  d="M7.99992 14.7779C11.375 14.7779 14.1111 12.0418 14.1111 8.66678C14.1111 5.29171 11.375 2.55566 7.99992 2.55566C4.62486 2.55566 1.88882 5.29171 1.88882 8.66678C1.88882 12.0418 4.62486 14.7779 7.99992 14.7779Z"
+                  stroke="#035A7A" stroke-width="1.66667" stroke-linejoin="round" />
+                <path d="M7.9198 5.11816L7.9194 8.78776L10.5102 11.3785" stroke="#035A7A" stroke-width="1.66667"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M1.33334 2.99967L3.66668 1.33301" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M14.6667 2.99967L12.3333 1.33301" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_240_1686">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-weight: 500; font-size: 16px; color: #1F1F1F; margin-top: 5px; width: 500px;">Detalhes do ativo
+      </p>
+
+      <div style="display: flex; align-items: center; width: 100%; gap: 16px;">
+        <div style="background-color: white; border-radius: 8px; width: 100%;">
+          <div>
+            <div class="col-xs-12 col-md-3">
+              <div class="chart-responsive" style="position: relative; width: 120px; height: 120px; margin-top: 19%;">
+                <app-doughnut [nChart]="'1'" width="120" height="120" type="doughnut"
+                  [backgroundColor]="['#035A7A66', '#035A7A']" [borderColor]="['#035A7A66', '#035A7A']"
+                  [labels]="['Restante em (%)', 'Investido em (%)']" [data]="dataResume" [options]="optionsResume">
+                </app-doughnut>
+                <p style="color: #035A7A !important;
+                                        font-family: Poppins, sans-serif !important;
+                                        font-size: 24px !important;
+                                        font-style: normal !important;
+                                        font-weight: 500 !important;
+                                        line-height: 150% !important;
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%);
+                                        margin: 0;
+                                        text-align: center;">
+                  {{ dataResume[1]}}%
+                </p>
+              </div>
+            </div>
+      
+            <div 
+            style="margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center;" 
+            class="col-xs-12 col-md-9">
+              <div class="row margin-t-30">
+                <div class="col-xs-12 col-md-6" 
+                style="margin-top: 5%; display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                      <p style="color: #035A7A; font-size: 32px; margin-bottom: 0;">º</p>
+                      <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Objetivo</p>
+                    </div>
+                    
+                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px;">{{ companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
+                  </div>
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                      <p style="color: #035A7A; font-size: 32px;">•</p>
+                      <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Investidos</p>
+                    </div>
+
+                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px;">{{ companyDataComplete?.round?.resume?.total | moneyMask:true }}</p>
+                  </div>
+                </div>
+      
+                <!-- <div style="width: 50%; padding: 0;" class="col-xs-5 col-md-6">
+                  <div class="row">
+                    <div class="col-sm-12" style="margin-top: 5%;">
+                      <ul class="list-group list-group-unbordered">
+                        <li style="border-bottom: 1px solid #ddd;" class="list-group-item">
+                          <span class="description-text">MODALIDADE</span>
+                          <a class="details pull-right">{{
+                            roundInvestment?.round?.modality == undefined
+                            ? "--"
+                            : maskModality(roundInvestment?.round?.modality)
+                            }}</a>
+                        </li>
+                        <li style="border-bottom: 1px solid #ddd;" class="list-group-item">
+                          <span class="description-text">GARANTIA</span>
+                          <a class="details pull-right">{{
+                            roundInvestment?.round?.guarantee == undefined
+                            ? "--"
+                            : maskGuarantee(roundInvestment?.round?.guarantee)
+                            }}</a>
+                        </li>
+                        <li class="list-group-item">
+                          <span class="description-text">PRAZO MÁXIMO</span>
+                          <a class="details pull-right">{{
+                            roundInvestment?.round?.deadline == undefined
+                            ? "--"
+                            : roundInvestment?.round?.deadline + " ANO(S)"
+                            }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
               </div>
             </div>
           </div>
