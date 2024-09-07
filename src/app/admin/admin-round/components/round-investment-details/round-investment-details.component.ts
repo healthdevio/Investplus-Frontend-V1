@@ -103,6 +103,33 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     { key: 'fiscalDossier', label: 'Dossiê Fiscal', docUrl: 'docFiscalDossier' },
   ];
 
+  sessionsTable = [
+    {
+      name: "Apresentação"
+    },
+    {
+      name: "Informações"
+    },
+    {
+      name: "Equipe"
+    },
+    {
+      name: "Indicadores"
+    },
+    {
+      name: "Captable"
+    },
+    {
+      name: "Investidores"
+    },
+  ]
+
+  selectedSession = "Apresentação";
+
+  selectSession(sessionName: string) {
+    this.selectedSession = sessionName;
+  }
+
   constructor(
     private activedRouter: ActivatedRoute,
     private roundService: RoundService,
