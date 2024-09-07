@@ -30,6 +30,18 @@
   }
 }
 
+.investments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.investment-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .offer-text {
   color: #909090;
   font-family: Poppins, sans-serif;

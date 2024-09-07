@@ -1356,5 +1356,160 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
       </div>
     </div>
+
+    <div *ngIf="selectedSession === 'Informações'">
+      <div class="col-xs-12 col-md-6">
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>O NEGÓCIO
+        </p>
+        <p class="description">{{ roundInvestment?.round?.business }}</p>
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>REALIZAÇÕES
+        </p>
+        <p class="description">{{ roundInvestment?.round?.achievements }}</p>
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>MERCADO POTENCIAL
+        </p>
+        <p class="description">{{ roundInvestment?.round?.potentialMarket }}</p>
+      </div>
+      <div class="col-xs-12 col-md-5 col-md-offset-1">
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>METAS DE 12 MESES
+        </p>
+        <p class="description">{{ roundInvestment?.round?.targets }}</p>
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>ROADMAP DE PRODUTOS/MERCADO
+        </p>
+        <p class="description">{{ roundInvestment?.round?.roadmap }}</p>
+        <br />
+        <p class="container-description">
+          <span style="color: #2e7e89; font-size: 6px; margin-right: 10px; vertical-align: 3px;"><i
+              class="fa fa-fw fa-stop"></i></span>FATORES DE RISCO
+        </p>
+        <p class="description">{{ roundInvestment?.round?.riskiness }}</p>
+        <p class="description">
+          Deseja sanar alguma dúvida?
+          <a routerLink="./forum">Clique aqui</a> e participe do fórum desta rodada.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedSession === 'Equipe'">
+      <div class="col-md-12">
+        <div class="box-comment" style="display: flex; flex-direction: column;">
+          <ng-container *ngFor="let member of roundInvestment?.executives">
+            <app-card-member [name]="member.fullName" [photo]="member.photo" [department]="member.role"
+              [activities]="member.activities" [linkedin]="member.linkedin" class="col-md-4">
+            </app-card-member>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="selectedSession === 'Indicadores'">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box-comment">
+            <ng-container *ngFor="let indicator of indicators">
+              <div class="col-md-3"
+                style="padding: 1.5rem; border-radius: 8px; margin-right: 1rem; margin-top: 1em; margin-bottom: 30px; border: 1px solid #E5E5E5">
+                <div style="display: flex; justify-content: space-between;">
+                  <p
+                    style="text-transform: uppercase; color: #444; font-size: 10px; font-weight: 700; font-family: 'Poppins', sans-serif !important; line-height: 21px;">
+                    {{ indicator.label }}
+                  </p>
+                  <div>
+                    <i class="fa fa-question-circle-o" data-toggle="tooltip" [attr.data-original-title]="indicator.tooltip"
+                      style="margin-right: .5em"></i>
+                    <i class="fa fa-bar-chart"></i>
+                  </div>
+                </div>
+                <p
+                  style="text-transform: uppercase; color: #444; font-family: 'Poppins', sans-serif !important; line-height: 21px; font-size: 16px;">
+                  {{ indicator.value }}
+                </p>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedSession === 'Captable'">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box-comment" style="display: flex; flex-wrap: wrap;">
+            <div class="col-xs-12 col-md-4" style="margin-bottom: 2rem; margin-top: 2rem;">
+              <div class="chart-responsive">
+                <app-doughnut [nChart]="2" height="270" width="270" type="pie" [labels]="captable.labels"
+                  [backgroundColor]="captable.colors" [data]="captable.data">
+                </app-doughnut>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedSession === 'Investidores'">
+      <div>
+        <div class="box-comment">
+          <div *ngIf="investments && investments.length > 0; else noInvestors">
+            <div class="investments-grid">
+              <div
+                style="border: 1px solid #E5E5E5; border-radius: 8px; max-height: 80px; min-width: 200px; margin-right: 16px; display: flex;"
+                class="investment-item" *ngFor="let investment of investments">
+                <div>
+                  <div>
+                    <img style="margin-top: 10px;" width="50px" height="50px" class="img-circle" src="{{
+                                      investment.avatar == null
+                                        ? './../../../assets/img/default-profile_01.png'
+                                        : 'data:image/png;base64,' + investment.avatar
+                                    }}" alt="User Image" />
+                  </div>
+                </div>
+    
+                <div class="row margin-t-10 text-center">
+                  <div class="col-md-12">
+                    <div class="investors">
+                      <p style="font-size: 12px;">
+                        {{
+                        investment.fullName == null
+                        ? "Privado"
+                        : investment.fullName.substring(0, 7)
+                        }}
+                      </p>
+                    </div>
+                    <p>
+                      <span class="{{ investment.facebook == null ? 'isDisabled' : '' }}">
+                        <a href="{{ investment.facebook == null ? '#' : investment.facebook }}" target="_blank">
+                          <i class="fa fa-fw fa-facebook-square"></i></a>
+                      </span>
+                      <span class="{{ investment.linkedin == null ? 'isDisabled' : '' }}">
+                        <a href="{{ investment.linkedin == null ? '#' : investment.linkedin }}" target="_blank">
+                          <i class="fa fa-fw fa-linkedin-square"></i></a>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noInvestors>
+            <p>Essa rodada ainda não conta com investidores.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

@@ -7,6 +7,14 @@
   margin-bottom: 50px;
 }
 
+@media (max-width: 450px) {
+  :host {
+    border: none;
+    background-color: white;
+    margin-bottom: 10px;
+  }
+}
+
 .fcji-card-user-icon {
   display: flex;
   align-items: center;
