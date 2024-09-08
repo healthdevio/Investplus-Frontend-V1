@@ -86,6 +86,11 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   };
   objective: any;
   invested: any;
+  investmentModalOppened = false;
+
+  toggleInvestmentModal() {
+    this.investmentModalOppened = !this.investmentModalOppened;
+  }
 
   socialLinks = ['facebook', 'linkedin', 'twitter', 'website'];
   socialIcons = {

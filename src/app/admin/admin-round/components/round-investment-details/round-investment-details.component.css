@@ -20,12 +20,20 @@
   display: none;
 }
 
+.simule-investment {
+  display: none;
+}
+
 @media (max-width: 450px) {
   .desktop-session {
     display: none;
   }
 
   .mobile-session {
+    display: block;
+  }
+
+  .simule-investment {
     display: block;
   }
 }
