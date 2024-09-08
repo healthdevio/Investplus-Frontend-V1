@@ -815,7 +815,9 @@
     </section>
   </div>
 
-  <div class="content-mobile">
+  <div 
+  *ngIf="!loader"
+  class="content-mobile">
     <div style="display: flex; align-items: center; gap: 10px;">
       <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3.375 6V14H14.625V6L9 2L3.375 6Z" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
@@ -1348,6 +1350,272 @@
       </div>
     </div>
 
+    <div *ngIf="activeTab === 1">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 50%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Detalhes</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes do endereço</p>
+        </div>
+    
+        <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">
+          <input type="text" (blur)="getCep()" formControlName="zipCode"
+            style="height: 50px; width: 300px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+            placeholder="CEP" />
+    
+          <app-form [label]="'Logradouro'" [errorMessage]="'Logradouro é um campo obrigatório.'">
+            <input type="text" formControlName="street"
+              style="height: 50px; width: 400px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Logradouro" />
+          </app-form>
+    
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <app-form [label]="'Número'" [errorMessage]="'Número é um campo obrigatório.'">
+              <input type="text" formControlName="number"
+                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Número" />
+            </app-form>
+    
+            <app-form [label]="'Bairro'" [errorMessage]="'Bairro é um campo obrigatório.'">
+              <input type="text" formControlName="neighborhood"
+                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Bairro" />
+            </app-form>
+          </div>
+    
+          <app-form [label]="'Complemento'" [errorMessage]="'Complemento é um campo obrigatório.'">
+            <input type="text" formControlName="complement"
+              style="height: 50px; width: 400px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Complemento" />
+          </app-form>
+    
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <app-form [label]="'Cidade'" [errorMessage]="'Cidade é um campo obrigatório.'">
+              <input type="text" formControlName="city"
+                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Cidade" />
+            </app-form>
+    
+            <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
+              <input type="text" formControlName="uf"
+                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Estado" />
+            </app-form>
+          </div>
+        </app-form>
+      </div>
+    </div>
 
+    <div *ngIf="activeTab === 2">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Conforme exigido pela Instrução
+            CVM 588/2017.</p>
+        </div>
+    
+        <app-radio [options]="investorProfileStatements" formControlName="investorProfileStatement">
+        </app-radio>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 100%; justify-content: space-between; align-items: center; gap: 10px;">
+          <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração dos Valores Investidos no Ano-Calendário *
+          </h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
+            Conforme exigido pela Instrução CVM 588/2017.
+            Somente incluir o montante já investido no ano-
+            calendário em ofertas dispensadas de registro nos
+            termos da Instrução CVM 588/2017 por meio de
+            plataformas eletrônicas de investimento participativo.
+          </p>
+        </div>
+    
+        <div>
+          <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
+            <div class="input-group">
+              <input type="text" formControlName="investedUpangel"
+                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                disabled placeholder="Na plataforma da InvestPlus" />
+            </div>
+          </app-form>
+    
+          <app-form [label]="'Outras plataformas'" [errorMessage]="'Outras plataformas é um campo obrigatório.'">
+            <div class="input-group">
+              <input (keyup)="calculateInvestment(form.value.totalInvestedOthers)" type="text"
+                formControlName="totalInvestedOthers"
+                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                maxlength="13" placeholder="Outras plataformas" />
+            </div>
+          </app-form>
+    
+          <app-form [label]="'Total'" [errorMessage]="'Total é um campo obrigatório.'">
+            <div class="input-group">
+              <input [(ngModel)]="investmentValue" type="text" formControlName="totalInvested"
+                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                disabled placeholder="Total" />
+            </div>
+          </app-form>
+        </div>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 100%;">
+          <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração pessoa politicamente exposta</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
+            Considera-se aquela que desempenha ou tenha
+            desempenhado, nos últimos 5 (cinco) anos, cargos,
+            empregos ou funções públicas relevantes, no Brasil ou em
+            outros países, territórios e dependências estrangeiras,
+            assim como seus representantes, familiares e outras
+            pessoas de seu relacionamento próximo.
+          </p>
+        </div>
+    
+        <app-radio style="display: flex; gap: 16px;" [options]="publicFigures" formControlName="publicFigure">
+    
+        </app-radio>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 3">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Website</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu website</p>
+        </div>
+    
+        <app-form [label]="'Website'" [errorMessage]="'Website é um campo obrigatório.'">
+          <input type="text" formControlName="personalWebsite"
+            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            placeholder="Website" />
+        </app-form>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">facebook</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu facebook</p>
+        </div>
+    
+        <app-form [label]="'Facebook'" [errorMessage]="'Facebook é um campo obrigatório.'">
+          <input type="text" formControlName="facebook"
+            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            placeholder="Facebook" />
+        </app-form>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Twitter</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu twitter</p>
+        </div>
+    
+        <app-form [label]="'Twitter'" [errorMessage]="'Twitter é um campo obrigatório.'">
+          <input type="text" formControlName="twitter"
+            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            placeholder="Twitter" />
+        </app-form>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Linkedin</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Meu linkedin</p>
+        </div>
+    
+        <app-form [label]="'Linkedin'" [errorMessage]="'Linkedin é um campo obrigatório.'">
+          <input type="text" formControlName="linkedin"
+            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            placeholder="Linkedin" />
+        </app-form>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 50%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">InvestPlus</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Por onde conheceu a InvestPlus?
+          </p>
+        </div>
+    
+        <div>
+          <app-form [label]="'Como você soube da InvestPlus'"
+            [errorMessage]="'Como soube da InvestPlus é um campo obrigatório.'">
+            <select formControlName="aboutUpangel"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="INDICACAO">Uma indicação</option>
+              <option value="EVENTO">Um evento</option>
+              <option value="PESSOAL">Um encontro pessoal</option>
+              <option value="IMPRENSA">Na imprensa</option>
+              <option value="GOOGLE">Pela pesquisa Google</option>
+              <option value="ONLINE">Por outra pesquisa online</option>
+              <option value="FACEBOOK">Facebook</option>
+              <option value="INSTAGRAM">Instagram</option>
+              <option value="LINKEDIN">Linkedin</option>
+              <option value="TWITTER">Twitter</option>
+              <option value="PUBLICIDADE">Publicidade</option>
+              <option value="OUTRO">Outro</option>
+            </select>
+          </app-form>
+    
+          <app-form [label]="'Código do agente indicador'" [errorMessage]="'Agente indicador é um campo obrigatório.'">
+            <input type="text" formControlName="agent"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              maxlength="4" placeholder="Código do agente indicador" />
+          </app-form>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="activeTab === 4">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5;align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Conta</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Minha conta</p>
+        </div>
+    
+        <div>
+          <app-form [label]="'Instituição'" [errorMessage]="'Instituição é um campo obrigatório.'">
+            <select formControlName="accountBank"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Instituição">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <ng-container *ngFor="let bank of banks">
+                <option [value]="bank?.code">{{ bank?.name }}</option>
+              </ng-container>
+            </select>
+          </app-form>
+          <div>
+            <app-form [label]="'Agência'" [errorMessage]="'Agência é um campo obrigatório.'">
+              <input type="text" formControlName="accountAgency"
+                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Agência" />
+            </app-form>
+    
+            <app-form [label]="'Conta Corrente (com dígito)'" [errorMessage]="'Conta é um campo obrigatório.'">
+              <input type="text" formControlName="accountNumber"
+                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="Conta Corrente (com dígito)" />
+            </app-form>
+          </div>
+        </div>
+    
+    
+      </div>
+
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; align-items: center; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Perfil público?</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Tornar o perfil básico público?
+          </p>
+        </div>
+    
+        <legend class="margin-t-20">
+          <input type="checkbox" formControlName="publicProfile" class="flat-red" />
+          Com um perfil público, outros usuários registrados na
+          Plataforma InvestPlus conseguirão ver a sua foto.
+        </legend>
+      </div>
+    </div>
   </div>
 </form>
