@@ -26,7 +26,9 @@
 		      ">Menu</p>
 		<ul class="left-side-menu">
 			<li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-				<a routerLink="./rounds/assets/list">
+				<a 
+				(click)="toggleMenu()"
+				routerLink="./rounds/assets/list">
 					<i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 							<path d="M5.33333 2H2.66667C2.29848 2 2 2.29848 2 2.66667V5.33333" stroke="white" stroke-width="1.5"
@@ -46,7 +48,9 @@
 				</a>
 			</li>
 			<li routerLinkActive="active">
-				<a routerLink="./portfolio">
+				<a 
+				(click)="toggleMenu()"
+				routerLink="./portfolio">
 					<i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 							<g clip-path="url(#clip0_460_1376)">
@@ -72,7 +76,9 @@
 				</a>
 			</li>
 			<li routerLinkActive="active">
-				<a routerLink="./statement">
+				<a 
+				(click)="toggleMenu()"
+				routerLink="./statement">
 					<i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 							<path
@@ -93,7 +99,8 @@
 					<span class="menu-text">Extrato financeiro</span>
 				</a>
 			</li>
-			<li (click)="toggleSvgRotation()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
+			<li
+			(click)="toggleSvgRotation()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
 				<a>
 					<i>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -127,7 +134,9 @@
 			<div *ngIf="isSvgRotated">
 				<div *ngFor="let item of enterpriseSubItens">
 					<div style="display: flex; align-items: center;">
-						<p style="margin-left: 5%; cursor: pointer; margin-bottom: 6%;" class="menu-text" (click)="toggleSubItems(item)"
+						<p
+						 (click)="!item.subCategory ? toggleMenu() : null"
+						style="margin-left: 5%; cursor: pointer; margin-bottom: 6%;" class="menu-text" (click)="toggleSubItems(item)"
 							[routerLink]="item.link">{{ item.name }}</p>
 						<svg *ngIf="item.subCategory" (click)="toggleSubItems(item)"
 							style="transform: scaleX(-1); cursor: pointer; margin-left: 30px; margin-bottom: 20px" width="6" height="10"
@@ -139,7 +148,9 @@
 		
 					<ul *ngIf="item.subCategory && item.isExpanded">
 						<li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-top: -3%;">
-							<a [routerLink]="subItem.link">{{ subItem.name }}</a>
+							<a 
+							(click)="toggleMenu()"
+							[routerLink]="subItem.link">{{ subItem.name }}</a>
 						</li>
 					</ul>
 				</div>
@@ -229,6 +240,29 @@
 						margin-top: 10%;
 						">Outros</p>
 		<ul class="left-side-menu">
+			<li routerLinkActive="active">
+				<a 
+				(click)="toggleMenu()"
+				routerLink="./user/perfil">
+					<i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<g clip-path="url(#clip0_460_1342)">
+								<path
+									d="M8.00004 1.33301L6.00004 3.33301H3.33337V5.99967L1.33337 7.99967L3.33337 9.99967V12.6663H6.00004L8.00004 14.6663L10 12.6663H12.6667V9.99967L14.6667 7.99967L12.6667 5.99967V3.33301H10L8.00004 1.33301Z"
+									stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round" />
+								<path
+									d="M8 10C9.10457 10 10 9.10457 10 8C10 6.89543 9.10457 6 8 6C6.89543 6 6 6.89543 6 8C6 9.10457 6.89543 10 8 10Z"
+									stroke="#BFBFBF" stroke-width="1.4" stroke-linejoin="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_460_1342">
+									<rect width="16" height="16" fill="white" />
+								</clipPath>
+							</defs>
+						</svg>
+					</i>
+					<span class="menu-text">Configurações</span>
+				</a>
+			</li>
 			<li routerLinkActive="active">
 				<a (click)="logout()">
 					<i>
