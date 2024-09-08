@@ -1,4 +1,251 @@
 <header class="main-header" style="z-index: 9999;">
+	<div 
+	*ngIf="isMenuOppened"
+	style="position: absolute; width: 100%; height: 1000px; background-color: #202022; padding: 24px;">
+		<div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+			<img src="../../../assets/img/LogoInvestWhite.png" />
+
+			<div
+			(click)="toggleMenu()"
+			>
+				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M3.33334 3.33334L16.6667 16.6667" stroke="white" stroke-width="1.66667" stroke-linecap="round"
+						stroke-linejoin="round" />
+					<path d="M3.33334 16.6667L16.6667 3.33334" stroke="white" stroke-width="1.66667" stroke-linecap="round"
+						stroke-linejoin="round" />
+				</svg>
+			</div>
+		</div>
+
+		<p style="font-family: Poppins, sans-serif; color: #909090;
+		      font-size: 14px;
+		      font-weight: 500;
+		      line-height: 14px;
+		      text-align: left;
+					margin-top: 40px;
+		      ">Menu</p>
+		<ul class="left-side-menu">
+			<li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<a routerLink="./rounds/assets/list">
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<path d="M5.33333 2H2.66667C2.29848 2 2 2.29848 2 2.66667V5.33333" stroke="white" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M5.33333 14.0003H2.66667C2.29848 14.0003 2 13.7019 2 13.3337V10.667" stroke="white"
+								stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M10.6666 14.0003H13.3333C13.7015 14.0003 14 13.7019 14 13.3337V10.667" stroke="white"
+								stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M10.6666 2H13.3333C13.7015 2 14 2.29848 14 2.66667V5.33333" stroke="white" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M9.66671 6H6.33337V10H9.66671V6Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+							<path d="M8 6V4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M8 12V10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</i>
+					<span class="menu-text">Ofertas públicas</span>
+				</a>
+			</li>
+			<li routerLinkActive="active">
+				<a routerLink="./portfolio">
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<g clip-path="url(#clip0_460_1376)">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M5.99402 3.98931L10.5949 1.33301L12.1324 3.99597L5.99402 3.98931Z" stroke="#BFBFBF" stroke-width="1.5"
+									stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M1.33337 4.66667C1.33337 4.29847 1.63185 4 2.00004 4H14C14.3682 4 14.6667 4.29847 14.6667 4.66667V14C14.6667 14.3682 14.3682 14.6667 14 14.6667H2.00004C1.63185 14.6667 1.33337 14.3682 1.33337 14V4.66667Z"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+								<path
+									d="M11.75 11.0003H14.6667V7.66699H11.75C10.7835 7.66699 10 8.41319 10 9.33366C10 10.2541 10.7835 11.0003 11.75 11.0003Z"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+								<path d="M14.6666 5.5V13.5" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_460_1376">
+									<rect width="16" height="16" fill="white" />
+								</clipPath>
+							</defs>
+						</svg>
+					</i>
+					<span class="menu-text">Análise de carteira</span>
+				</a>
+			</li>
+			<li routerLinkActive="active">
+				<a routerLink="./statement">
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<path
+								d="M12.3333 2.66699H3.66667C3.29848 2.66699 3 2.96547 3 3.33366V14.0003C3 14.3685 3.29848 14.667 3.66667 14.667H12.3333C12.7015 14.667 13 14.3685 13 14.0003V3.33366C13 2.96547 12.7015 2.66699 12.3333 2.66699Z"
+								stroke="#BFBFBF" stroke-width="1.5" stroke-linejoin="round" />
+							<path d="M6 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+							<path d="M10 1.33301V3.33301" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+							<path d="M5.33337 6.33301H10.6667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+							<path d="M5.33337 9H9.33337" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+							<path d="M5.33337 11.667H8.00004" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</i>
+					<span class="menu-text">Extrato financeiro</span>
+				</a>
+			</li>
+			<li (click)="toggleSvgRotation()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
+				<a>
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M5.66663 4.66699L14.6666 8.00033V14.667H5.66663V4.66699Z"
+								stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M5.66671 4.66699L1.33337 8.00033V14.667H5.66671" stroke="#BFBFBF" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M11.6666 14.667V10.667L8.66663 9.66699V14.667" stroke="#BFBFBF" stroke-width="1.5"
+								stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M14.6666 14.667H5.66663" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</i>
+					<span class="header-menu">Empresas</span>
+					<span>
+						<svg *ngIf="!isSvgRotated" style="transform: scaleX(-1); margin-left: 70%" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+		
+						<svg *ngIf="isSvgRotated" style="transform: rotate(90deg); margin-left: 70%" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</span>
+				</a>
+			</li>
+		
+			<div *ngIf="isSvgRotated">
+				<div *ngFor="let item of enterpriseSubItens">
+					<div style="display: flex; align-items: center;">
+						<p style="margin-left: 5%; cursor: pointer; margin-bottom: 6%;" class="menu-text" (click)="toggleSubItems(item)"
+							[routerLink]="item.link">{{ item.name }}</p>
+						<svg *ngIf="item.subCategory" (click)="toggleSubItems(item)"
+							style="transform: scaleX(-1); cursor: pointer; margin-left: 30px; margin-bottom: 20px" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</div>
+		
+					<ul *ngIf="item.subCategory && item.isExpanded">
+						<li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-top: -3%;">
+							<a [routerLink]="subItem.link">{{ subItem.name }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<li (click)="toggleSvgRotationImportated()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
+				<a>
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<g clip-path="url(#clip0_460_1402)">
+								<path
+									d="M4.66671 5.00033C6.50766 5.00033 8.00004 4.25413 8.00004 3.33366C8.00004 2.41318 6.50766 1.66699 4.66671 1.66699C2.82576 1.66699 1.33337 2.41318 1.33337 3.33366C1.33337 4.25413 2.82576 5.00033 4.66671 5.00033Z"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M1.33337 3.33301C1.33337 3.33301 1.33337 4.74587 1.33337 5.66634C1.33337 6.58681 2.82576 7.33301 4.66671 7.33301C6.50764 7.33301 8.00004 6.58681 8.00004 5.66634C8.00004 5.12114 8.00004 3.33301 8.00004 3.33301"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M1.33337 5.66699C1.33337 5.66699 1.33337 7.07986 1.33337 8.00033C1.33337 8.92079 2.82576 9.66699 4.66671 9.66699C6.50764 9.66699 8.00004 8.92079 8.00004 8.00033C8.00004 7.45513 8.00004 5.66699 8.00004 5.66699"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M1.33337 8C1.33337 8 1.33337 9.41287 1.33337 10.3333C1.33337 11.2538 2.82576 12 4.66671 12C6.50764 12 8.00004 11.2538 8.00004 10.3333C8.00004 9.78813 8.00004 8 8.00004 8"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M1.33337 10.333C1.33337 10.333 1.33337 11.7459 1.33337 12.6663C1.33337 13.5868 2.82576 14.333 4.66671 14.333C6.50764 14.333 8.00004 13.5868 8.00004 12.6663C8.00004 12.1211 8.00004 10.333 8.00004 10.333"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M11.3333 9.66634C13.1743 9.66634 14.6667 8.92015 14.6667 7.99967C14.6667 7.0792 13.1743 6.33301 11.3333 6.33301C9.49238 6.33301 8 7.0792 8 7.99967C8 8.92015 9.49238 9.66634 11.3333 9.66634Z"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M8 8C8 8 8 9.41287 8 10.3333C8 11.2538 9.4924 12 11.3333 12C13.1743 12 14.6667 11.2538 14.6667 10.3333C14.6667 9.78813 14.6667 8 14.6667 8"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M8 10.333C8 10.333 8 11.7459 8 12.6663C8 13.5868 9.4924 14.333 11.3333 14.333C13.1743 14.333 14.6667 13.5868 14.6667 12.6663C14.6667 12.1211 14.6667 10.333 14.6667 10.333"
+									stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_460_1402">
+									<rect width="16" height="16" fill="white" />
+								</clipPath>
+							</defs>
+						</svg>
+					</i>
+					<span class="header-menu">Incorporadoras</span>
+					<span>
+						<svg *ngIf="!isSvgRotatedImportated" style="transform: scaleX(-1); margin-left: 60%" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+		
+						<svg *ngIf="isSvgRotatedImportated" style="transform: rotate(90deg); margin-left: 60%" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</span>
+				</a>
+			</li>
+		
+			<div *ngIf="isSvgRotatedImportated">
+				<div *ngFor="let item of importatedSubItens">
+					<div style="display: flex; align-items: center;">
+						<p style="margin-left: 5%; cursor: pointer; margin-bottom: 6%;" class="menu-text" (click)="toggleSubItems(item)"
+							[routerLink]="item.link">{{ item.name }}</p>
+						<svg *ngIf="item.subCategory" (click)="toggleSubItems(item)"
+							style="transform: scaleX(-1); cursor: pointer; margin-left: 6%; margin-bottom: 20px" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</div>
+		
+					<ul *ngIf="item.subCategory && item.isExpanded">
+						<li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-top: -3%;">
+							<a [routerLink]="subItem.link">{{ subItem.name }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</ul>
+
+		<hr class="sidebar-divider" style="color: #353535; background-color: #353535;">
+		<p style="font-family: Poppins, sans-serif; color: #909090;
+						font-size: 14px;
+						font-weight: 500;
+						line-height: 14px;
+						text-align: left;
+						margin-top: 10%;
+						">Outros</p>
+		<ul class="left-side-menu">
+			<li routerLinkActive="active">
+				<a (click)="logout()">
+					<i>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+							<path d="M1.93298 8H13.933" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+							<path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</i>
+					<span class="menu-text">Sair da conta</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+
 	<nav class="navbar navbar-fixed-top" 
 	style="border-right: 1px solid #E5E5E5;
 	  border-bottom: 1px solid #E5E5E5;
@@ -169,14 +416,15 @@
 						stroke="#0C0C0C" stroke-linecap="round" stroke-linejoin="round" />
 				</svg>
 
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M3.97485 5.97485H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round"
-						stroke-linejoin="round" />
-					<path d="M3.97485 11.9749H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round"
-						stroke-linejoin="round" />
-					<path d="M3.97485 17.9749H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round"
-						stroke-linejoin="round" />
-				</svg>
+				<div
+				(click)="toggleMenu()"
+				>
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M3.97485 5.97485H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path d="M3.97485 11.9749H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path d="M3.97485 17.9749H19.9748" stroke="#0C0C0C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</div>
 			</div>
 		</nav>
   </header>

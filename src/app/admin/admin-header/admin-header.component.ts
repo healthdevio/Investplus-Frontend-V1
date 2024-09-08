@@ -22,6 +22,132 @@ export class AdminHeaderComponent implements OnInit {
   scopes = new Scopes;
   scopesUser = [];
 
+  isMenuOppened = false;
+
+  isCollapsed = false;
+
+  isSvgRotated = false;
+  isSvgRotatedImportated = false;
+
+  enterpriseSubItens = [
+    {
+      name: 'Investidores',
+      link: '/admin/investors',
+      subCategory: null,
+      isExpanded: false
+    },
+    {
+      name: 'Publicação',
+      link: null,
+      subCategory: [
+        {
+          name: 'Cadastrar Empresa',
+          link: '/admin/rounds/approval/create',
+        },
+        {
+          name: 'Atualizar Dados',
+          link: '/admin/rounds/approval',
+        },
+        {
+          name: 'Criar Rodada',
+          link: '/admin/rounds/approval/company/final',
+        },
+        {
+          name: 'Atualizar Rodada',
+          link: '/admin/rounds/approval/company/publish',
+        },
+      ],
+      isExpanded: false
+    },
+    {
+      name: 'Atualizações',
+      link: null,
+      subCategory: [
+        {
+          name: 'Dados gerais',
+          link: '/admin/rounds/approval',
+        },
+        {
+          name: 'Valutation',
+          link: '/admin/rounds/company/valuation',
+        },
+        {
+          name: 'Captable',
+          link: '/admin/rounds/company/captable',
+        },
+        {
+          name: 'Receita e despesa',
+          link: '/admin/rounds/company/financial',
+        },
+        {
+          name: 'Administradores',
+          link: '/admin/rounds/company/admin',
+        },
+        {
+          name: 'Quadro societario',
+          link: '/admin/rounds/company/partners',
+        },
+      ],
+      isExpanded: false
+    },
+    {
+      name: 'Investimentos',
+      link: null,
+      subCategory: [
+        {
+          name: 'Investimentos Realizados',
+          link: '/admin/rounds/company/investments',
+        },
+      ],
+      isExpanded: false
+    },
+  ];
+
+  importatedSubItens = [
+    {
+      name: 'Aprovação',
+      link: null,
+      subCategory: [
+        {
+          name: 'Criar Rodada',
+          link: '/admin/rounds/incorporator/create',
+        },
+        {
+          name: 'Publicar Rodada',
+          link: '/admin/rounds/approval/incorporator/publish',
+        },
+      ],
+      isExpanded: false
+    },
+    {
+      name: 'Investimentos',
+      link: null,
+      subCategory: [
+        {
+          name: 'Investimentos Realizados',
+          link: '/admin/rounds/incorporator/investments',
+        },
+      ],
+      isExpanded: false
+    },
+  ];
+
+  toggleMenu(): void {
+    this.isMenuOppened = !this.isMenuOppened;
+  }
+
+  toggleSvgRotation(): void {
+    this.isSvgRotated = !this.isSvgRotated;
+  }
+
+  toggleSvgRotationImportated(): void {
+    this.isSvgRotatedImportated = !this.isSvgRotatedImportated;
+  }
+
+  toggleSubItems(item): void {
+    item.isExpanded = !item.isExpanded;
+  }
+
   constructor(
     private userService: UserLoginService,
     private router: Router,
@@ -87,6 +213,11 @@ export class AdminHeaderComponent implements OnInit {
       this.renderer.setStyle(headerElement, 'margin-left', marginLeft);
       this.renderer.setStyle(headerElement, 'width', width);
     }
+  }
+
+  logout() {
+    this.userService.logout();
+    window.location.href = "/auth/login";
   }
 
 
