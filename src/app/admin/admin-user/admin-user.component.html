@@ -904,5 +904,450 @@
         </p>
       </div>
     </div>
+
+    <div class="grid-container">
+      <p class="grid-item" *ngIf="investor?.publicProfile">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_358_2699)">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M8.00004 14.6673C11.6819 14.6673 14.6667 11.6826 14.6667 8.00065C14.6667 4.31875 11.6819 1.33398 8.00004 1.33398C4.31814 1.33398 1.33337 4.31875 1.33337 8.00065C1.33337 11.6826 4.31814 14.6673 8.00004 14.6673Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M1.33337 8H14.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M8.00004 14.6673C9.47281 14.6673 10.6667 11.6826 10.6667 8.00065C10.6667 4.31875 9.47281 1.33398 8.00004 1.33398C6.52727 1.33398 5.33337 4.31875 5.33337 8.00065C5.33337 11.6826 6.52727 14.6673 8.00004 14.6673Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M3.28601 3.38086C4.49244 4.58729 6.15911 5.33349 8.00004 5.33349C9.84101 5.33349 11.5077 4.58729 12.7141 3.38086"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M12.7141 12.6186C11.5077 11.4122 9.84101 10.666 8.00004 10.666C6.15911 10.666 4.49244 11.4122 3.28601 12.6186"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_358_2699">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+        Perfil público
+      </p>
+      <p class="grid-item" *ngIf="!investor?.publicProfile">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_358_2699)">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M8.00004 14.6673C11.6819 14.6673 14.6667 11.6826 14.6667 8.00065C14.6667 4.31875 11.6819 1.33398 8.00004 1.33398C4.31814 1.33398 1.33337 4.31875 1.33337 8.00065C1.33337 11.6826 4.31814 14.6673 8.00004 14.6673Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M1.33337 8H14.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M8.00004 14.6673C9.47281 14.6673 10.6667 11.6826 10.6667 8.00065C10.6667 4.31875 9.47281 1.33398 8.00004 1.33398C6.52727 1.33398 5.33337 4.31875 5.33337 8.00065C5.33337 11.6826 6.52727 14.6673 8.00004 14.6673Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M3.28601 3.38086C4.49244 4.58729 6.15911 5.33349 8.00004 5.33349C9.84101 5.33349 11.5077 4.58729 12.7141 3.38086"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M12.7141 12.6186C11.5077 11.4122 9.84101 10.666 8.00004 10.666C6.15911 10.666 4.49244 11.4122 3.28601 12.6186"
+              stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_358_2699">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+        Perfil privado
+      </p>
+      <p class="grid-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_358_2731)">
+            <path
+              d="M8.00004 6.66732C9.47281 6.66732 10.6667 5.47342 10.6667 4.00065C10.6667 2.52789 9.47281 1.33398 8.00004 1.33398C6.52727 1.33398 5.33337 2.52789 5.33337 4.00065C5.33337 5.47342 6.52727 6.66732 8.00004 6.66732Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linejoin="round" />
+            <path d="M8 6.66602V12.666" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.33337 10.666H4.00004L1.33337 14.666H14.6667L12 10.666H10.6667" stroke="#035A7A" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_358_2731">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+        {{
+        descriptionCity == null
+        ? "Sem informação"
+        : descriptionCity
+        }}
+      </p>
+      <p class="grid-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1.66663 6.33398H14.3333V13.334C14.3333 13.7022 14.0348 14.0007 13.6666 14.0007H2.33329C1.9651 14.0007 1.66663 13.7022 1.66663 13.334V6.33398Z"
+            stroke="#035A7A" stroke-width="1.5" stroke-linejoin="round" />
+          <path
+            d="M1.66663 3.00065C1.66663 2.63246 1.9651 2.33398 2.33329 2.33398H13.6666C14.0348 2.33398 14.3333 2.63246 14.3333 3.00065V6.33398H1.66663V3.00065Z"
+            stroke="#035A7A" stroke-width="1.5" stroke-linejoin="round" />
+          <path d="M5.33337 1.33398V4.00065" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M10.6666 1.33398V4.00065" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M9.33337 11.334H11.3334" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M4.66663 11.334H6.66663" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M9.33337 8.66602H11.3334" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M4.66663 8.66602H6.66663" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        {{
+        descriptionDate == null
+        ? "Sem informação"
+        : "Nasceu em " + descriptionDate
+        }}
+      </p>
+      <p class="grid-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_358_2744)">
+            <path
+              d="M14.3643 3.99249L12.0072 1.63547C11.7469 1.37512 11.3248 1.37512 11.0644 1.63547L7.76459 4.9353C7.50424 5.19565 7.50424 5.61776 7.76459 5.87811L10.1216 8.23513C10.382 8.49548 10.8041 8.49548 11.0644 8.23513L14.3643 4.9353C14.6246 4.67495 14.6246 4.25284 14.3643 3.99249Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linejoin="round" />
+            <path
+              d="M8.23602 10.1214L5.879 7.76437C5.61865 7.50402 5.19654 7.50402 4.93619 7.76437L1.63636 11.0642C1.37601 11.3246 1.37601 11.7467 1.63636 12.007L3.99338 14.364C4.25373 14.6244 4.67584 14.6244 4.93619 14.364L8.23602 11.0642C8.49637 10.8039 8.49637 10.3817 8.23602 10.1214Z"
+              stroke="#035A7A" stroke-width="1.5" stroke-linejoin="round" />
+            <path d="M10.3574 5.64258L5.64337 10.3566" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_358_2744">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+        {{
+        descriptionSite == null
+        ? "Sem informação"
+        : descriptionSite
+        }}
+      </p>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto; width: 100%;">
+      <div *ngFor="let tab of tabs; let i = index" (click)="setActiveTab(i)"
+        [style.color]="i === activeTab ? '#035A7A' : '#909090'"
+        [style.border-color]="i === activeTab ? '#035A7A' : '#E8E5E5'"
+        style="padding: 0px 16px; background: white; border-radius: 100px; border: 1px solid; margin-top: 15px; cursor: pointer;">
+        <p style="margin-bottom: 0px; white-space: nowrap;">{{ tab }}</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; border-bottom: 1px solid #E5E5E5;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">{{ tabs[activeTab] }}</h3>
+      <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ tabContents[activeTab] }}</p>
+    </div>
+
+    <div *ngIf="activeTab === 0">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 30%;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Profissão</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Minha profissão</p>
+        </div>
+    
+        <div
+          style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px; margin-bottom: 10px;">
+          {{ investor?.profession }}
+        </div>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Pessoal</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações pessoais</p>
+        </div>
+    
+        <div>
+          <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
+            <input type="text" (blur)="validateDate()" formControlName="dateOfBirth"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Data de nascimento" />
+          </app-form>
+    
+          <app-form [label]="'Nacionalidade'" [errorMessage]="'Nacionalidade é um campo obrigatório.'">
+            <select formControlName="nationality"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="BRASILEIRO">Brasileiro</option>
+              <option value="AMERICANO">Americano</option>
+              <option value="ANTIGUANO">Antiguano</option>
+              <option value="ARGENTINO">Argentino</option>
+              <option value="BAHAMENSE">Bahamense</option>
+              <option value="BARBADIANO">Barbadiano</option>
+              <option value="BELIZENHO">Belizenho</option>
+              <option value="BOLIVIANO">Boliviano</option>
+              <option value="CHILENO">Chileno</option>
+              <option value="COLOMBIANO">Colombiano</option>
+              <option value="COSTARRIQUENHO">Costarriquenho</option>
+              <option value="CUBANO">Cubano</option>
+              <option value="DOMINICANO">Dominicano</option>
+              <option value="EQUATORIANO">Equatoriano</option>
+              <option value="SALVADORENHO">Salvadorenho</option>
+              <option value="GRANADINO">Granadino</option>
+              <option value="GUATEMALTECO">Guatemalteco</option>
+              <option value="GUIANÊS">Guianês</option>
+              <option value="GUIANENSE">Guianense</option>
+              <option value="HAITIANO">Haitiano</option>
+              <option value="HONDURENHO">Hondurenho</option>
+              <option value="JAMAICANO">Jamaicano</option>
+              <option value="MEXICANO">Mexicano</option>
+              <option value="NICARAGUENSE">Nicaraguense</option>
+              <option value="PANAMENHO">Panamenho</option>
+              <option value="PARAGUAIO">Paraguaio</option>
+              <option value="PERUANO">Peruano</option>
+              <option value="PORTORRIQUENHO">Portorriquenho</option>
+              <option value="DOMINICANA">Dominicana</option>
+              <option value="SÃO-CRISTOVENSE">São-cristovense</option>
+              <option value="SÃO-VICENTINO">São-vicentino</option>
+              <option value="SANTA-LUCENSE">Santa-lucense</option>
+              <option value="SURINAMÊS">Surinamês</option>
+              <option value="TRINDADENSE">Trindadense</option>
+              <option value="URUGUAIO">Uruguaio</option>
+              <option value="VENEZUELANO">Venezuelano</option>
+              <option value="ALEMÃO">Alemão</option>
+              <option value="AUSTRÍACO">Austríaco</option>
+              <option value="BELGA">Belga</option>
+              <option value="CROATA">Croata</option>
+              <option value="DINAMARQUÊS">Dinamarquês</option>
+              <option value="ESLOVACO">Eslovaco</option>
+              <option value="ESLOVENO">Esloveno</option>
+              <option value="ESPANHOL">Espanhol</option>
+              <option value="FRANCÊS">Francês</option>
+              <option value="GREGO">Grego</option>
+              <option value="HÚNGARO">Húngaro</option>
+              <option value="IRLANDÊS">Irlandês</option>
+              <option value="ITALIANO">Italiano</option>
+              <option value="NORUEGO">Noruego</option>
+              <option value="HOLANDÊS">Holandês</option>
+              <option value="POLONÊS">Polonês</option>
+              <option value="PORTUGUÊS">Português</option>
+              <option value="BRITÂNICO">Britânico</option>
+              <option value="INGLÊS">Inglês</option>
+              <option value="GALÊS">Galês</option>
+              <option value="ESCOCÊS">Escocês</option>
+              <option value="ROMENO">Romeno</option>
+              <option value="RUSSO">Russo</option>
+              <option value="SÉRVIO">Sérvio</option>
+              <option value="SUECO">Sueco</option>
+              <option value="SUÍÇO">Suíço</option>
+              <option value="TURCO">Turco</option>
+              <option value="UCRANIANO">Ucraniano</option>
+              <option value="CANADENSE">Canadense</option>
+              <option value="ANGOLANO">Angolano</option>
+              <option value="MOÇAMBICANO">Moçambicano</option>
+              <option value="SUL-AFRICANO">Sul-africano</option>
+              <option value="ZIMBABUENSE">Zimbabuense</option>
+              <option value="ARGÉLIA">Argélia</option>
+              <option value="COMORENSE">Comorense</option>
+              <option value="EGÍPCIO">Egípcio</option>
+              <option value="LÍBIO">Líbio</option>
+              <option value="MARROQUINO">Marroquino</option>
+              <option value="GANÉS">Ganés</option>
+              <option value="QUENIANO">Queniano</option>
+              <option value="RUANDÊS">Ruandês</option>
+              <option value="UGANDENSE">Ugandense</option>
+              <option value="BECHUANO">Bechuano</option>
+              <option value="MARFINENSE">Marfinense</option>
+              <option value="CAMARONENSE">Camaronense</option>
+              <option value="NIGERIANO">Nigeriano</option>
+              <option value="SOMALI">Somali</option>
+              <option value="AUSTRALIANO">Australiano</option>
+              <option value="NEOZELANDÊS">Neozelandês</option>
+              <option value="AFEGÃO">Afegão</option>
+              <option value="SAUDITA">Saudita</option>
+              <option value="ARMENO">Armeno</option>
+              <option value="BANGLADESH">Bangladesh</option>
+              <option value="CHINÊS">Chinês</option>
+              <option value="NORTE-COREANO">Norte-coreano</option>
+              <option value="SUL-COREANO">Sul-coreano</option>
+              <option value="INDIANO">Indiano</option>
+              <option value="INDONÉSIO">Indonésio</option>
+              <option value="IRAQUIANO">Iraquiano</option>
+              <option value="IRANIANO">Iraniano</option>
+              <option value="ISRAELITA">Israelita</option>
+              <option value="JAPONÊS">Japonês</option>
+              <option value="MALAIO">Malaio</option>
+              <option value="NEPALÊS">Nepalês</option>
+              <option value="OMANENSE">Omanense</option>
+              <option value="PAQUISTANÊS">Paquistanês</option>
+              <option value="PALESTINO">Palestino</option>
+              <option value="QATARENSE">Qatarense</option>
+              <option value="SÍRIO">Sírio</option>
+              <option value="CINGALÊS">Cingalês</option>
+              <option value="TAILANDÊS">Tailandês</option>
+              <option value="TIMORENSE">Timorense</option>
+              <option value="ÁRABE">Árabe</option>
+              <option value="VIETNAMITA">Vietnamita</option>
+              <option value="IEMENITA">Iemenita</option>
+            </select>
+          </app-form>
+    
+          <app-form [label]="'Sexo'" [errorMessage]="'Sexo é um campo obrigatório.'">
+            <select formControlName="gender"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="MALE">Masculino</option>
+              <option value="FEMALE">Feminino</option>
+            </select>
+          </app-form>
+    
+          <app-form [label]="'Estado civil'" [errorMessage]="'Estado civil é um campo obrigatório.'">
+            <select formControlName="maritalStatus"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="SINGLE">Solteiro</option>
+              <option value="MARRIED">Casado</option>
+              <option value="SEPARATED">Separado</option>
+              <option value="DIVORCED">Divorciado</option>
+              <option value="WIDOWED">Viúvo</option>
+            </select>
+          </app-form>
+        </div>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">RG</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes do RG</p>
+        </div>
+    
+        <div>
+          <app-form [label]="investor?.cnpj !== undefined
+                      ? 'Número do RG do sócio administrador'
+                      : 'Número do RG'" [errorMessage]="'Número do RG é um campo obrigatório.'">
+            <input type="text" formControlName="rg"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              maxlength="13" placeholder="Número do RG" />
+          </app-form>
+    
+          <app-form [label]="'Orgão emissor'" [errorMessage]="'Orgão emissor é um campo obrigatório.'">
+            <select formControlName="rgEmitter"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <option [ngValue]="null">Selecione uma opção...</option>
+              <option value="SSP">SSP</option>
+              <option value="SSP-AC">SSP-AC</option>
+              <option value="SSP-AL">SSP-AL</option>
+              <option value="SSP-AM">SSP-AM</option>
+              <option value="SSP-AP">SSP-AP</option>
+              <option value="SSP-BA">SSP-BA</option>
+              <option value="SSP-CE">SSP-CE</option>
+              <option value="SSP-DF">SSP-DF</option>
+              <option value="SSP-ES">SSP-ES</option>
+              <option value="SSP-GO">SSP-GO</option>
+              <option value="SSP-MA">SSP-MA</option>
+              <option value="SSP-MG">SSP-MG</option>
+              <option value="SSP-MS">SSP-MS</option>
+              <option value="SSP-MT">SSP-MT</option>
+              <option value="SSP-PA">SSP-PA</option>
+              <option value="SSP-PB">SSP-PB</option>
+              <option value="SSP-PE">SSP-PE</option>
+              <option value="SSP-PI">SSP-PI</option>
+              <option value="SSP-PR">SSP-PR</option>
+              <option value="SSP-RJ">SSP-RJ</option>
+              <option value="SSP-RN">SSP-RN</option>
+              <option value="SSP-RO">SSP-RO</option>
+              <option value="SSP-RR">SSP-RR</option>
+              <option value="SSP-RS">SSP-RS</option>
+              <option value="SSP-SC">SSP-SC</option>
+              <option value="SSP-SE">SSP-SE</option>
+              <option value="SSP-SP">SSP-SP</option>
+              <option value="SSP-TO">SSP-TO</option>
+              <option value="CREA">CREA</option>
+              <option value="MAE">MAE</option>
+              <option value="IML">IML</option>
+              <option value="OAB">OAB</option>
+              <option value="CARTORIO">Cartório Civil</option>
+              <option value="DETRAN">DETRAN</option>
+              <option value="FEDERAL">Polícia Federal</option>
+            </select>
+          </app-form>
+    
+          <div style="margin-bottom: 20px;">
+            <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">Frente RG</p>
+            <div
+              style="height: 50px; width: 390px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M4.16665 18.3327H15.8333C16.2936 18.3327 16.6666 17.9596 16.6666 17.4993V5.83268H12.5V1.66602H4.16665C3.70641 1.66602 3.33331 2.03911 3.33331 2.49935V17.4993C3.33331 17.9596 3.70641 18.3327 4.16665 18.3327Z"
+                  stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12.5 1.66602L16.6667 5.83268" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M7.49998 8.74935C8.42045 8.74935 9.16665 8.00316 9.16665 7.08268C9.16665 6.16221 8.42045 5.41602 7.49998 5.41602C6.57951 5.41602 5.83331 6.16221 5.83331 7.08268C5.83331 8.00316 6.57951 8.74935 7.49998 8.74935Z"
+                  stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M6.25 11.6667V15.4167H13.75V8.75L9.78725 13.125L6.25 11.6667Z" stroke="#035A7A" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+    
+              <button style="margin-left: 20px; margin-bottom: 0;" class="btn-editar-rg btn-photo" type="button">
+                <label for="rgInputFile" style="font-size: 1.5rem">
+                  {{base64RG ? 'Editar' : 'Anexar'}} RG &nbsp;
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </label>
+                <input id="rgInputFile" style="display: none" title="Submeta a frente  do RG" type="file"
+                  (change)="onUploadRG($event)" accept=".png, .jpg, .jpeg" />
+              </button>
+            </div>
+          </div>
+    
+          <div style="margin-bottom: 20px;">
+            <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">Verso RG</p>
+    
+            <div
+              style="height: 50px; width: 390px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M4.16665 18.3327H15.8333C16.2936 18.3327 16.6666 17.9596 16.6666 17.4993V5.83268H12.5V1.66602H4.16665C3.70641 1.66602 3.33331 2.03911 3.33331 2.49935V17.4993C3.33331 17.9596 3.70641 18.3327 4.16665 18.3327Z"
+                  stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12.5 1.66602L16.6667 5.83268" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M7.49998 8.74935C8.42045 8.74935 9.16665 8.00316 9.16665 7.08268C9.16665 6.16221 8.42045 5.41602 7.49998 5.41602C6.57951 5.41602 5.83331 6.16221 5.83331 7.08268C5.83331 8.00316 6.57951 8.74935 7.49998 8.74935Z"
+                  stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M6.25 11.6667V15.4167H13.75V8.75L9.78725 13.125L6.25 11.6667Z" stroke="#035A7A" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+    
+              <button style="margin-left: 20px; margin-bottom: 0;" class="btn-editar-rg btn-photo" type="button">
+                <label for="rgInputFileVerse" style="font-size: 1.5rem">
+                  {{base64RG ? 'Editar' : 'Anexar'}} Verso RG &nbsp;
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </label>
+                <input id="rgInputFileVerse" style="display: none" title="Submeta o verso do RG" type="file"
+                  (change)="onUploadRGVerse($event)" accept=".png, .jpg, .jpeg" />
+              </button>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+        <div style="width: 50%; display: flex; flex-direction: column; align-items: start;">
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Contato</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Telefone do investidor</p>
+        </div>
+    
+        <div>
+          <app-form [label]="'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
+            <input type="text" formControlName="phone"
+              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              placeholder="Telefone" />
+          </app-form>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </form>

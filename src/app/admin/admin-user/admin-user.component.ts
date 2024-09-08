@@ -367,7 +367,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     toastr.error('Em desenvolvimento');
   }
 
-  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários',];
+  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários'];
+
   tabContents: string[] = [
     'Dados gerais da conta',
     'Meu endereço',

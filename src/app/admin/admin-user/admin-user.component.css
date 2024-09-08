@@ -12,6 +12,16 @@ dl dd {
   padding: 0px 20px;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 450px) {
   .content-desktop {
     display: none;
