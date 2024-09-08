@@ -1,8 +1,8 @@
 <div
-class="simule-investment"
 (click)="toggleInvestmentModal()"
   *ngIf="!loader && !investmentModalOppened"
-  style="width: 100%; background-color: white; position: fixed; bottom: 0; height: 60px; border-top-left-radius: 16px; border-top-right-radius: 16px; z-index: 99; align-items: center; justify-content: center; display: flex; gap: 5px; box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);">
+  class="simule-investment"
+  style="width: 100%; background-color: white; position: fixed; bottom: 0; height: 60px; border-top-left-radius: 16px; border-top-right-radius: 16px; z-index: 99; align-items: center; justify-content: center; gap: 5px; box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);">
   <p style="margin-bottom: 0px;">Simular investimento</p>
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M3.5 9.04163L7 5.54163L10.5 9.04163" stroke="black" stroke-width="1.5" stroke-linecap="round"
@@ -11,7 +11,7 @@ class="simule-investment"
 </div>
 
 <div 
-class="simule-investment"
+class="mobile-session"
 (click)="toggleInvestmentModal()"
 style="width: 100%; background-color: white; position: fixed; bottom: 0; height: 650px; border-top-left-radius: 16px; border-top-right-radius: 16px; z-index: 99; justify-content: center; display: flex; gap: 5px; box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1); flex-direction: column;"
 *ngIf="!loader && investmentModalOppened">

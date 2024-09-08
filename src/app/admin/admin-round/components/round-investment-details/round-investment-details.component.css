@@ -34,7 +34,7 @@
   }
 
   .simule-investment {
-    display: block;
+    display: flex;
   }
 }
 
