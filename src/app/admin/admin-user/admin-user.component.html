@@ -1052,19 +1052,19 @@
 
     <div *ngIf="activeTab === 0">
       <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
-        <div style="width: 30%;">
+        <div style="width: 50%;">
           <h3 style="font-weight: 600; margin-bottom: 12px;">Profissão</h3>
           <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Minha profissão</p>
         </div>
     
         <div
-          style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px; margin-bottom: 10px;">
+          style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px; margin-bottom: 10px;">
           {{ investor?.profession }}
         </div>
       </div>
     
       <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
-        <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+        <div style="width: 50%; display: flex; flex-direction: column; align-items: start;">
           <h3 style="font-weight: 600; margin-bottom: 12px;">Pessoal</h3>
           <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações pessoais</p>
         </div>
@@ -1072,13 +1072,13 @@
         <div>
           <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
             <input type="text" (blur)="validateDate()" formControlName="dateOfBirth"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Data de nascimento" />
           </app-form>
     
           <app-form [label]="'Nacionalidade'" [errorMessage]="'Nacionalidade é um campo obrigatório.'">
             <select formControlName="nationality"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <option [ngValue]="null">Selecione uma opção...</option>
               <option value="BRASILEIRO">Brasileiro</option>
               <option value="AMERICANO">Americano</option>
@@ -1196,7 +1196,7 @@
     
           <app-form [label]="'Sexo'" [errorMessage]="'Sexo é um campo obrigatório.'">
             <select formControlName="gender"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <option [ngValue]="null">Selecione uma opção...</option>
               <option value="MALE">Masculino</option>
               <option value="FEMALE">Feminino</option>
@@ -1205,7 +1205,7 @@
     
           <app-form [label]="'Estado civil'" [errorMessage]="'Estado civil é um campo obrigatório.'">
             <select formControlName="maritalStatus"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <option [ngValue]="null">Selecione uma opção...</option>
               <option value="SINGLE">Solteiro</option>
               <option value="MARRIED">Casado</option>
@@ -1228,13 +1228,13 @@
                       ? 'Número do RG do sócio administrador'
                       : 'Número do RG'" [errorMessage]="'Número do RG é um campo obrigatório.'">
             <input type="text" formControlName="rg"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               maxlength="13" placeholder="Número do RG" />
           </app-form>
     
           <app-form [label]="'Orgão emissor'" [errorMessage]="'Orgão emissor é um campo obrigatório.'">
             <select formControlName="rgEmitter"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <option [ngValue]="null">Selecione uma opção...</option>
               <option value="SSP">SSP</option>
               <option value="SSP-AC">SSP-AC</option>
@@ -1277,7 +1277,7 @@
           <div style="margin-bottom: 20px;">
             <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">Frente RG</p>
             <div
-              style="height: 50px; width: 390px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M4.16665 18.3327H15.8333C16.2936 18.3327 16.6666 17.9596 16.6666 17.4993V5.83268H12.5V1.66602H4.16665C3.70641 1.66602 3.33331 2.03911 3.33331 2.49935V17.4993C3.33331 17.9596 3.70641 18.3327 4.16665 18.3327Z"
@@ -1306,7 +1306,7 @@
             <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600;">Verso RG</p>
     
             <div
-              style="height: 50px; width: 390px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M4.16665 18.3327H15.8333C16.2936 18.3327 16.6666 17.9596 16.6666 17.4993V5.83268H12.5V1.66602H4.16665C3.70641 1.66602 3.33331 2.03911 3.33331 2.49935V17.4993C3.33331 17.9596 3.70641 18.3327 4.16665 18.3327Z"
@@ -1343,7 +1343,7 @@
         <div>
           <app-form [label]="'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
             <input type="text" formControlName="phone"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Telefone" />
           </app-form>
         </div>
@@ -1359,45 +1359,45 @@
     
         <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">
           <input type="text" (blur)="getCep()" formControlName="zipCode"
-            style="height: 50px; width: 300px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+            style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
             placeholder="CEP" />
     
           <app-form [label]="'Logradouro'" [errorMessage]="'Logradouro é um campo obrigatório.'">
             <input type="text" formControlName="street"
-              style="height: 50px; width: 400px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Logradouro" />
           </app-form>
     
-          <div style="display: flex; align-items: center; gap: 15px;">
+          <div>
             <app-form [label]="'Número'" [errorMessage]="'Número é um campo obrigatório.'">
               <input type="text" formControlName="number"
-                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Número" />
             </app-form>
     
             <app-form [label]="'Bairro'" [errorMessage]="'Bairro é um campo obrigatório.'">
               <input type="text" formControlName="neighborhood"
-                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Bairro" />
             </app-form>
           </div>
     
           <app-form [label]="'Complemento'" [errorMessage]="'Complemento é um campo obrigatório.'">
             <input type="text" formControlName="complement"
-              style="height: 50px; width: 400px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Complemento" />
           </app-form>
     
-          <div style="display: flex; align-items: center; gap: 15px;">
+          <div>
             <app-form [label]="'Cidade'" [errorMessage]="'Cidade é um campo obrigatório.'">
               <input type="text" formControlName="city"
-                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Cidade" />
             </app-form>
     
             <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
               <input type="text" formControlName="uf"
-                style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Estado" />
             </app-form>
           </div>
@@ -1430,35 +1430,41 @@
           </p>
         </div>
     
-        <div>
+        <div style="width: 100%;">
           <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
-            <div class="input-group">
+            <div 
+            style="width: 100%;"
+            class="input-group">
               <input type="text" formControlName="investedUpangel"
-                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 disabled placeholder="Na plataforma da InvestPlus" />
             </div>
           </app-form>
     
           <app-form [label]="'Outras plataformas'" [errorMessage]="'Outras plataformas é um campo obrigatório.'">
-            <div class="input-group">
+            <div 
+            style="width: 100%;"
+            class="input-group">
               <input (keyup)="calculateInvestment(form.value.totalInvestedOthers)" type="text"
                 formControlName="totalInvestedOthers"
-                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 maxlength="13" placeholder="Outras plataformas" />
             </div>
           </app-form>
     
           <app-form [label]="'Total'" [errorMessage]="'Total é um campo obrigatório.'">
-            <div class="input-group">
+            <div 
+            style="width: 100%;"
+            class="input-group">
               <input [(ngModel)]="investmentValue" type="text" formControlName="totalInvested"
-                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 disabled placeholder="Total" />
             </div>
           </app-form>
         </div>
       </div>
     
-      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%; margin-bottom: 20px;">
         <div style="width: 100%;">
           <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração pessoa politicamente exposta</h3>
           <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
@@ -1486,7 +1492,7 @@
     
         <app-form [label]="'Website'" [errorMessage]="'Website é um campo obrigatório.'">
           <input type="text" formControlName="personalWebsite"
-            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
             placeholder="Website" />
         </app-form>
       </div>
@@ -1499,7 +1505,7 @@
     
         <app-form [label]="'Facebook'" [errorMessage]="'Facebook é um campo obrigatório.'">
           <input type="text" formControlName="facebook"
-            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
             placeholder="Facebook" />
         </app-form>
       </div>
@@ -1512,7 +1518,7 @@
     
         <app-form [label]="'Twitter'" [errorMessage]="'Twitter é um campo obrigatório.'">
           <input type="text" formControlName="twitter"
-            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
             placeholder="Twitter" />
         </app-form>
       </div>
@@ -1525,7 +1531,7 @@
     
         <app-form [label]="'Linkedin'" [errorMessage]="'Linkedin é um campo obrigatório.'">
           <input type="text" formControlName="linkedin"
-            style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
+            style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; align-items: center; padding: 0 16px;"
             placeholder="Linkedin" />
         </app-form>
       </div>
@@ -1541,7 +1547,7 @@
           <app-form [label]="'Como você soube da InvestPlus'"
             [errorMessage]="'Como soube da InvestPlus é um campo obrigatório.'">
             <select formControlName="aboutUpangel"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
               <option [ngValue]="null">Selecione uma opção...</option>
               <option value="INDICACAO">Uma indicação</option>
               <option value="EVENTO">Um evento</option>
@@ -1560,7 +1566,7 @@
     
           <app-form [label]="'Código do agente indicador'" [errorMessage]="'Agente indicador é um campo obrigatório.'">
             <input type="text" formControlName="agent"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               maxlength="4" placeholder="Código do agente indicador" />
           </app-form>
         </div>
@@ -1577,7 +1583,7 @@
         <div>
           <app-form [label]="'Instituição'" [errorMessage]="'Instituição é um campo obrigatório.'">
             <select formControlName="accountBank"
-              style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Instituição">
               <option [ngValue]="null">Selecione uma opção...</option>
               <ng-container *ngFor="let bank of banks">
@@ -1588,13 +1594,13 @@
           <div>
             <app-form [label]="'Agência'" [errorMessage]="'Agência é um campo obrigatório.'">
               <input type="text" formControlName="accountAgency"
-                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Agência" />
             </app-form>
     
             <app-form [label]="'Conta Corrente (com dígito)'" [errorMessage]="'Conta é um campo obrigatório.'">
               <input type="text" formControlName="accountNumber"
-                style="height: 50px; width: 390px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="Conta Corrente (com dígito)" />
             </app-form>
           </div>
