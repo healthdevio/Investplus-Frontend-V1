@@ -68,13 +68,13 @@ export class AdminUserPortfolioComponent implements OnInit {
       showSvg: true
     },
     {
-      title: 'Total investido',
+      title: 'Total investido - Outras Plataformas',
       value: 'R$ 5.000',
       backgroundColor: 'white',
       showSvg: true
     },
     {
-      title: 'Valuation total',
+      title: 'Total Investido - Investplus',
       value: 'R$ 3.000',
       backgroundColor: 'white',
       showSvg: true
