@@ -397,7 +397,8 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                 <div>
                   <p style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">Total
                     investido</p>
-                  <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">R$ 415.000
+                  <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">
+                    {{companyDataComplete?.round?.resume?.total | moneyMask:true }}
                   </p>
                 </div>
                 
@@ -1248,8 +1249,8 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
     style="background-color: white; border-radius: 8px;"
     >
       <div style="padding: 20px 16px;">
-        <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">R$
-          415.000
+        <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">
+          {{companyDataComplete?.round?.resume?.total | moneyMask:true }}
         </p>
         <div style="display: flex; align-items: end; justify-content: space-between;">
           <div style="display: flex; align-items: end;">    
