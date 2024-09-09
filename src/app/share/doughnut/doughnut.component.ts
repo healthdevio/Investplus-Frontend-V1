@@ -45,7 +45,6 @@ export class DoughnutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   dashboard() {
-    console.log('[type] ', this.type);
     this.myChart = new Chart(this.id, {
       type: this.type,
       data: this.dataDashboard(),

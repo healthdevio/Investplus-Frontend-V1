@@ -71,27 +71,35 @@ class="desktop-screen"
             <p>Meus ativos</p>
       
             <div style="width: 150px; height: 150px; display: flex; gap: 16px;">
-              <app-doughnut [nChart]="'1'" width="150" height="150" type="doughnut"
-                [backgroundColor]="['#035A7A66', '#035A7A']" [borderColor]="['#035A7A66', '#035A7A']"
-                [labels]="['Startup', 'Totais investidos']" [data]="[2000100, 274350]"
-                [options]="{ legend: {display: false}, maintainAspectRatio: false }">
-              </app-doughnut>
+              <app-doughnut 
+              [nChart]="'1'" 
+              width="150" 
+              height="150" 
+              type="doughnut" 
+              [backgroundColor]="['#035A7A66', '#035A7A']"
+              [borderColor]="['#035A7A66', '#035A7A']" 
+              [labels]="['Plataforma', 'Externos']" 
+              [data]="[investedInPlatform, investedInOthers]"
+              [options]="{ legend: {display: false}, maintainAspectRatio: false }">
+            </app-doughnut> 
       
               <div style="width: 100%;">
                 <div style="width: 100%;">
-                  <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
-                      style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Startup</p>
-                  <p
-                    style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
-                    R$2.000.100,00
-                  </p>
+                  <div>
+                    <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
+                      <span style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Ativos na Plataforma
+                    </p>
+                    <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                      {{ investedInPlatform | currency:'BRL':'symbol':'1.2-2' }}
+                    </p>
+                  </div>
       
                   <div>
-                    <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
-                        style="color: #035A7A; font-size: 18px;">•</span> Totais investidos</p>
-                    <p
-                      style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
-                      R$274.350,00
+                    <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
+                      <span style="color: #035A7A; font-size: 18px;">•</span>Investimentos Externos
+                    </p>
+                    <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                      {{ investedInOthers | currency:'BRL':'symbol':'1.2-2' }}
                     </p>
                   </div>
                 </div>
@@ -375,24 +383,32 @@ style="padding: 0 16px;"
   <div
     style="width: 100%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
     <div style="width: 100%;">
-      <app-doughnut [nChart]="'1'" width="150" height="150" type="doughnut" [backgroundColor]="['#035A7A66', '#035A7A']"
-        [borderColor]="['#035A7A66', '#035A7A']" [labels]="['Startup', 'Totais investidos']" [data]="[2000100, 274350]"
-        [options]="{ legend: {display: false}, maintainAspectRatio: false }">
-      </app-doughnut>
+      <app-doughnut 
+      [nChart]="'1'" 
+      width="150" 
+      height="150" 
+      type="doughnut" 
+      [backgroundColor]="['#035A7A66', '#035A7A']"
+      [borderColor]="['#035A7A66', '#035A7A']" 
+      [labels]="['Plataforma', 'Externos']" 
+      [data]="[investedInPlatform, investedInOthers]"
+      [options]="{ legend: {display: false}, maintainAspectRatio: false }">
+    </app-doughnut>    
   
       <div style="width: 100%;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
           <div>
-            <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
-                style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Startup</p>
+            <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 100%;">
+              <span style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Ativos na Plataforma
+            </p>
             <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
-              R$2.000.100,00
+              {{ investedInPlatform | currency:'BRL':'symbol':'1.2-2' }}
             </p>
           </div>
   
           <div>
             <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
-                style="color: #035A7A; font-size: 18px;">•</span> Totais investidos</p>
+                style="color: #035A7A; font-size: 18px;">•</span>Investimentos Externos</p>
             <p
               style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
               R$274.350,00

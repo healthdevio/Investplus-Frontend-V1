@@ -60,7 +60,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   adjustContentWidth(sidebarExpanded: boolean) {
-    console.log("Admin componente", sidebarExpanded);
     this.sidebarExpanded = sidebarExpanded;
     this.updateContentStyle();
   }

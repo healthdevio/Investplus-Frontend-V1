@@ -19,6 +19,8 @@ export class AdminUserPortfolioComponent implements OnInit {
   portfolio: boolean;
   yieldLabel = "PRÉ FIXADO";
   currentDate: string; 
+  investedInPlatform: number;  
+  investedInOthers: number;  
   rounds: any;
   upangel: any;
   upimob: any;
@@ -259,6 +261,13 @@ export class AdminUserPortfolioComponent implements OnInit {
       const patrimonioTotal = totalInvestedOthers + totalInvestedInvestplus;
       this.cards[0].value = `R$ ${patrimonioTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
+      // Armazenar os valores para o gráfico
+      this.investedInPlatform = totalInvestedInvestplus;
+      this.investedInOthers = totalInvestedOthers;
+
+      // Atualizar o gráfico
+      this.updateGraph();
+
       this.datas = this.dateResume(new Date());
       this.setResumeInvestments();
       this.setGraphPie();
@@ -266,6 +275,20 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.setResumeInstallments(0);
       this.getRounds();
     });
+  }
+
+  private updateGraph(): void {
+    this.dataPie = [this.investedInPlatform, this.investedInOthers];
+
+    this.optionsPie = {
+      legend: {
+        display: false,
+      },
+      animation: {
+        duration: 2000,
+      },
+      cutoutPercentage: 93,
+    };
   }
 
   private getRounds(): void {
