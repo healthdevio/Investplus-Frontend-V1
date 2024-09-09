@@ -159,14 +159,16 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
+      addressId: [null], 
     });
-  }
+  }  
 
   getUser() {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
       if (response.address !== undefined) {
+        this.setFormValue("addressId", response.address.id);
         this.setFormValue("profession", response.profession);
         this.setFormValue("nationality", response.nationality);
         this.setFormValue("gender", response.gender);
@@ -291,12 +293,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
       dataSend.phone = this.unmaskInput(dataSend.phone);
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
-      
+      dataSend.profession = dataSend.profession
       dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
       dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
       dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
   
       const address = {
+        id: dataSend.addressId, 
         zipCode: dataSend.zipCode,
         street: dataSend.street,
         number: dataSend.number,
