@@ -18,6 +18,7 @@ export class AdminUserPortfolioComponent implements OnInit {
   loader: boolean;
   portfolio: boolean;
   yieldLabel = "PRÉ FIXADO";
+  currentDate: string; 
   rounds: any;
   upangel: any;
   upimob: any;
@@ -208,6 +209,14 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.titleHeader.title = "Meu Perfil / Análise da Carteira";
     this.data.changeTitle(this.titleHeader);
     this.getUserInvestments();
+
+    this.currentDate = this.formatCurrentDate();
+  }
+
+  private formatCurrentDate(): string {
+    const date = new Date();
+    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+    return date.toLocaleDateString('pt-BR', options);
   }
 
   openSheet(): void {
