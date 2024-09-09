@@ -63,19 +63,19 @@ export class AdminUserPortfolioComponent implements OnInit {
   cards = [
     {
       title: 'Patrimônio total',
-      value: 'R$ 10,000.00',
+      value: 'R$ 000',
       backgroundColor: 'white',
       showSvg: true
     },
     {
       title: 'Total investido - Outras Plataformas',
-      value: 'R$ 5.000',
+      value: 'R$ 000',
       backgroundColor: 'white',
       showSvg: true
     },
     {
       title: 'Total Investido - Investplus',
-      value: 'R$ 3.000',
+      value: 'R$ 000',
       backgroundColor: 'white',
       showSvg: true
     }
@@ -235,6 +235,9 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.upangel = response.companyInvestments;
       this.upimob = response.realStateInvestments;
       this.installments = response.investmentsInstallments;
+
+      const totalInvestedOthers = response.totalInvestedOthers || 0;
+      this.cards[1].value = `R$ ${totalInvestedOthers.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
       this.datas = this.dateResume(new Date());
       this.setResumeInvestments();
