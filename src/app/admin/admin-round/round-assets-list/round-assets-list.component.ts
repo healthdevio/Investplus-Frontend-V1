@@ -81,7 +81,7 @@ export class RoundAssetsListComponent implements OnInit {
     this.loadAllRounds();
   }
   
-  selectedText: string = 'Todas as oportunidades';
+  selectedText: string = 'Andamento';
 
   setSelectedText(text: string) {
     this.selectedText = text;
@@ -112,9 +112,7 @@ export class RoundAssetsListComponent implements OnInit {
     let status = this.selectedSession === 'Andamento' ? 'IN_PROGRESS' : this.selectedSession === 'Concluidas' ? 'FINISHED' : null;
     searchTerm = searchTerm.toLowerCase();
 
-    console.log('teste')
     this.empresas = this.allEmpresas.filter(company => {
-      console.log(company)
       const matchesStatus = status ? company.round.status === status : true;
       const matchesSearch = company.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
