@@ -240,31 +240,38 @@ export class AdminUserPortfolioComponent implements OnInit {
   private getUserInvestments(): void {
     this.loader = true;
     this.portfolio = false;
-
+  
     this.investorService.getUser().subscribe((response) => {
       this.upangel = response.companyInvestments;
       this.upimob = response.realStateInvestments;
       this.installments = response.investmentsInstallments;
-
-      this.companyInvestments = response.companyInvestments;
-
+  
+      this.companyInvestments = response.companyInvestments.map(investment => {
+        return {
+          company: investment.company,
+          logo: investment.logo,
+          value: investment.value,   
+          quotas: investment.quotas  
+        };
+      });
+  
       const totalInvestedInvestplus = this.upangel
         .map(investment => investment.value)
         .reduce((acc, value) => acc + value, 0);
-
+  
       const totalInvestedOthers = response.totalInvestedOthers || 0;
-
+  
       this.cards[1].value = `R$ ${totalInvestedOthers.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
       this.cards[2].value = `R$ ${totalInvestedInvestplus.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
+  
       const patrimonioTotal = totalInvestedOthers + totalInvestedInvestplus;
       this.cards[0].value = `R$ ${patrimonioTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-
+  
       this.investedInPlatform = totalInvestedInvestplus;
       this.investedInOthers = totalInvestedOthers;
-
+  
       this.updateGraph();
-
+  
       this.datas = this.dateResume(new Date());
       this.setResumeInvestments();
       this.setGraphPie();
@@ -273,6 +280,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.getRounds();
     });
   }
+  
 
   private updateGraph(): void {
     this.dataPie = [this.investedInPlatform, this.investedInOthers];
@@ -739,5 +747,5 @@ export class AdminUserPortfolioComponent implements OnInit {
   getCompanyLogo(logo: string): string {
     return `./assets/img/${logo}`;
   }
-  
+
 }

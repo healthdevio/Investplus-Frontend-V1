@@ -139,30 +139,39 @@ class="desktop-screen"
           <input type="text" placeholder="Pesquisar investimentos" style="border: none; outline: none; width: 100%; height: 100%; color: #707070; background-color: transparent;">
         </div>
       
-        <!-- Listagem de investimentos -->
-        <div *ngIf="companyInvestments.length > 0" style="max-height: 300px; overflow-y: auto;">
-          <div *ngFor="let invest of companyInvestments" style="width: 100%; height: 72px; border: 1px solid #E5E5E5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 10px;">
-            
-            <!-- Logo da empresa -->
-            <div style="width: 48px; height: 48px; border-radius: 100%; border: 1px solid #EEEEEE; display: flex; align-items: center; justify-content: center;">
-              <img [src]="getCompanyLogo(invest.logo)" alt="{{ invest.company }}" style="max-width: 100%; max-height: 100%; border-radius: 100%;">
-            </div>
+<div *ngIf="companyInvestments.length > 0" style="max-height: 300px; overflow-y: auto;">
+  <div *ngFor="let invest of companyInvestments" 
+       style="width: 100%; height: 72px; border: 1px solid #E5E5E5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 10px;">
       
-            <!-- Detalhes da empresa -->
-            <div>
-              <p>{{ invest.company }}</p>
-              <p style="color: #505050; font-size: 14px; font-family: 'Poppins', sans-serif;">{{ invest.value | currency:'BRL' }}</p>
-            </div>
+    <div style="width: 48px; height: 48px; border-radius: 100%; border: 1px solid #EEEEEE; display: flex; align-items: center; justify-content: center;">
+      <img [src]="getCompanyLogo(invest.logo)" alt="{{ invest.company }}" style="max-width: 100%; max-height: 100%; border-radius: 100%;">
+    </div>
+
+    <div>
+      <p>{{ invest.company }}</p>
+      <p style="color: #505050; font-size: 14px; font-family: 'Poppins', sans-serif;">
+        {{ invest.value | currency:'BRL' }}</p>
+    </div>
+
+    <div style="text-align: center;">
+      <p style="color: #505050; font-family: 'Poppins'">Cotas</p>
+      <p style="color: #035A7A; font-family: 'Poppins'">{{ invest.quotas }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="companyInvestments.length === 0" style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.33437 29.334H8.00104H10.6677" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round" />
+    <path d="M8 29.3327V2.66602" stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M26.6667 4H8V14.6667H26.6667L24 9.33333L26.6667 4Z" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round" />
+  </svg>
+  <p style="font-size: 12px; color: #707070;">Você não possui investimentos</p>
+</div>
+
       
-            <!-- Quotas -->
-            <div style="text-align: center;">
-              <p style="color: #505050; font-family: 'Poppins'">Cotas</p>
-              <p style="color: #035A7A; font-family: 'Poppins'">{{ invest.quotas }}</p>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Caso não tenha investimentos -->
         <div *ngIf="companyInvestments.length === 0" style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.33437 29.334H8.00104H10.6677" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
