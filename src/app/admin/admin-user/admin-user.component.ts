@@ -128,6 +128,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   initForm() {
     this.form = this.formBuilder.group({
       nameResponsible: [null],
+      nickname: [null, [Validators.required]],
+      fullName: [null, [Validators.required]],
       cpfResponsible: [null],
       profession: [null, [Validators.required]],
       nationality: [null, [Validators.required]],
@@ -168,6 +170,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
       if (response.address !== undefined) {
+        this.setFormValue("nickname", response.investor.nickname)
+        this.setFormValue("fullName", response.investor.fullName)
         this.setFormValue("addressId", response.address.id);
         this.setFormValue("profession", response.profession);
         this.setFormValue("nationality", response.nationality);
@@ -289,14 +293,16 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   onSubmit() {
     if (this.form.valid) {
       const dataSend = this.form.value;
-  
       dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
       dataSend.phone = this.unmaskInput(dataSend.phone);
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
       dataSend.profession = dataSend.profession
+      dataSend.nickname = dataSend.nickname
+      dataSend.fullName = dataSend.fullName
       dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
       dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
       dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
+      dataSend.nameResponsible = dataSend.nameResponsible
   
       const address = {
         id: dataSend.addressId, 
