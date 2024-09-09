@@ -1,6 +1,6 @@
   <div 
   class="box box-widget widget-user" 
-  style=" height: 300px; min-width: 390px; border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between;" *ngIf="company">
+  style=" height: 300px;border-radius: 8px; border: 1px solid #E5E5E5; background: #FFF; justify-content: space-between;" *ngIf="company">
     <div class="box-header">
       <div class="row" style="gap: 40; display: flex;">
         <div class="col-xs-3 col-md-3">
@@ -21,7 +21,8 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="list-group list-group-unbordered">
-            <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <li style="border-bottom: 1px solid #E5E5E5;" 
+            class="list-group-item">
               <span class="description-text">Modalidade</span>
               <a class="newdetails pull-right">{{company.round?.modality == undefined ? '--' : maskModality(company.round?.modality)}}</a>
             </li>
