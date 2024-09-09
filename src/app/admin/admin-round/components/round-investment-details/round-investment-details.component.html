@@ -160,23 +160,23 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
   </div>
 </div>
 <section class="content">
-  <div class="text-with-icon">
-    <a href="http://localhost:4200/admin/rounds/assets/list" class="icon-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M1.93298 8H13.933" stroke="#909090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#909090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <p class="offer-text">
-      Ofertas públicas 
-      <span class="invest-text">/ investir</span>
-    </p>
-  </div>
-
   <app-loader [loader]="loader"></app-loader>
   <div 
   class="desktop-session"
   *ngIf="!loader">
+    <div class="text-with-icon">
+      <a href="http://localhost:4200/admin/rounds/assets/list" class="icon-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M1.93298 8H13.933" stroke="#909090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </a>
+      <p class="offer-text">
+        Ofertas públicas
+        <span class="invest-text">/ investir</span>
+      </p>
+    </div>
     <div class="row">
       <div class="col-xs-12 col-md-8">
         <div class="box custom-background">
@@ -1044,6 +1044,21 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
     class="mobile-session"
     *ngIf="!loader"
     >
+      <div 
+      style="padding-top: 60px;"
+      class="text-with-icon">
+        <a href="http://localhost:4200/admin/rounds/assets/list" class="icon-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M1.93298 8H13.933" stroke="#909090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5.93297 12L1.93298 8L5.93297 4" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+        <p class="offer-text">
+          Ofertas públicas
+          <span class="invest-text">/ investir</span>
+        </p>
+      </div>
     <div style="display: flex; justify-content: space-between;">
       <div style="display: flex; align-items: center; gap: 16px;">
         <div>
@@ -1377,148 +1392,31 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           </div>
           </div>
     </div>
-
-    <p
-      style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important; margin-top: 10px; margin-bottom: 10px;">
-      Documentos disponíveis</p>
-
-      <div style="padding-top: 20px; padding-left: 16px; padding-right: 16px;">
-        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
-                              border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
-          [ngClass]="{'isDisabled': !roundInvestment?.round?.presentationOffer}">
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationOffer }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationOffer)">
-            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px; margin-bottom: 5px;"></i>Termos de
-            Investimento e Fatores de Risco
-          </a>
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationOffer }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationOffer)">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
-                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-    
-    
-        </div>
-        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
-                              border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
-          [ngClass]="{'isDisabled': !roundInvestment?.round?.presentationInvestors}">
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationInvestors }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationInvestors)">
-            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Apresentação
-          </a>
-    
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationInvestors }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationInvestors)">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
-                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
-    
-        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
-                              border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
-          [ngClass]="{'isDisabled': !roundInvestment?.round?.legalDocuments}">
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.legalDocuments }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docLegalDocuments)">
-            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Documentos Jurídicos
-          </a>
-    
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.legalDocuments }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docLegalDocuments)">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
-                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-    
-    
-        </div>
-    
-        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
-                              border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
-          [ngClass]="{'isDisabled': !roundInvestment?.round?.valuationDoc}">
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.valuationDoc }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docValuation)">
-            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Documentos Financeiros
-          </a>
-    
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.valuationDoc }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docValuation)">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
-                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-    
-        </div>
-    
-        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;border-bottom: 1px solid #E5E5E5; margin-bottom: 20px;"
-          [ngClass]="{'isDisabled': !roundInvestment?.round?.fiscalDossier}">
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.fiscalDossier }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docFiscalDossier)">
-            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Informações essenciais sobre a oferta
-            pública
-          </a>
-    
-          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.fiscalDossier }}"
-            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docFiscalDossier)">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
-                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
         <p
           style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important; margin-top: 10px; margin-bottom: 10px;">
           Mais detalhes</p>
 
-    <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto;">
-      <div *ngFor="let session of sessionsTable" (click)="selectSession(session.name)"
-        [style.color]="session.name === selectedSession ? '#035A7A' : 'black'"
-        [style.border-color]="session.name === selectedSession ? '#035A7A' : '#E8E5E5'"
-        style="padding: 8px 16px; background: white; border-radius: 100px; border: 1px solid; width: fit-content; margin-top: 15px; cursor: pointer;">
-        <p style="margin-bottom: 0px;">{{ session.name }}</p>
+      <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto;">
+        <div *ngFor="let session of sessionsTable" (click)="selectSession(session.name)"
+          [style.color]="session.name === selectedSession ? '#035A7A' : 'black'"
+          [style.border-color]="session.name === selectedSession ? '#035A7A' : '#E8E5E5'"
+          style="padding: 8px 16px; background: white; border-radius: 100px; border: 1px solid; width: fit-content; margin-top: 15px; cursor: pointer; white-space: nowrap;">
+          <p style="margin-bottom: 0px; white-space: nowrap;">{{ session.name }}</p>
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="selectedSession === 'Apresentação'">
+    <div 
+    style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Apresentação'">
       <div class="embed-responsive embed-responsive-16by9">
         <iframe class="embed-responsive-item" [src]="offerVideo" frameborder="0" allowfullscreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
       </div>
     </div>
 
-    <div *ngIf="selectedSession === 'Informações'">
+    <div 
+    style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Informações'">
       <div class="col-xs-12 col-md-6">
         <br />
         <p class="container-description">
@@ -1565,7 +1463,9 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
       </div>
     </div>
 
-    <div *ngIf="selectedSession === 'Equipe'">
+    <div 
+     style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Equipe'">
       <div class="col-md-12">
         <div class="box-comment" style="display: flex; flex-direction: column;">
           <ng-container *ngFor="let member of roundInvestment?.executives">
@@ -1577,7 +1477,9 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
       </div>
     </div>
     
-    <div *ngIf="selectedSession === 'Indicadores'">
+    <div 
+     style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Indicadores'">
       <div class="row">
         <div class="col-md-12">
           <div class="box-comment">
@@ -1606,7 +1508,9 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
       </div>
     </div>
 
-    <div *ngIf="selectedSession === 'Captable'">
+    <div 
+     style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Captable'">
       <div class="row">
         <div class="col-md-12">
           <div class="box-comment" style="display: flex; flex-wrap: wrap;">
@@ -1622,7 +1526,9 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
       </div>
     </div>
 
-    <div *ngIf="selectedSession === 'Investidores'">
+    <div 
+     style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Investidores'">
       <div>
         <div class="box-comment">
           <div *ngIf="investments && investments.length > 0; else noInvestors">
@@ -1669,6 +1575,127 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           <ng-template #noInvestors>
             <p>Essa rodada ainda não conta com investidores.</p>
           </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div 
+    style="margin-bottom: 80px;"
+    *ngIf="selectedSession === 'Inf. da oferta pública'">
+      <div style="padding-top: 20px; padding-left: 16px; padding-right: 16px; background: white; margin-top: 20px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
+                                    border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
+          [ngClass]="{'isDisabled': !roundInvestment?.round?.presentationOffer}">
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationOffer }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationOffer)">
+            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px; margin-bottom: 5px;"></i>Termos de
+            Investimento e Fatores de Risco
+          </a>
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationOffer }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationOffer)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+      
+      
+        </div>
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
+                                    border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
+          [ngClass]="{'isDisabled': !roundInvestment?.round?.presentationInvestors}">
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationInvestors }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationInvestors)">
+            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Apresentação
+          </a>
+      
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.presentationInvestors }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docPresentationInvestors)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
+                                    border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
+          [ngClass]="{'isDisabled': !roundInvestment?.round?.legalDocuments}">
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.legalDocuments }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docLegalDocuments)">
+            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Documentos Jurídicos
+          </a>
+      
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.legalDocuments }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docLegalDocuments)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+      
+      
+        </div>
+      
+        <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;
+                                    border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;"
+          [ngClass]="{'isDisabled': !roundInvestment?.round?.valuationDoc}">
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.valuationDoc }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docValuation)">
+            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Documentos Financeiros
+          </a>
+      
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.valuationDoc }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docValuation)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+      
+        </div>
+      
+        <div
+          style="display: flex; align-items: center; width: 100%; justify-content: space-between;border-bottom: 1px solid #E5E5E5; margin-bottom: 20px;"
+          [ngClass]="{'isDisabled': !roundInvestment?.round?.fiscalDossier}">
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.fiscalDossier }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docFiscalDossier)">
+            <i class="fa fa-file-pdf-o" style="color: #999; margin-right: 5px;"></i>Informações essenciais sobre a oferta
+            pública
+          </a>
+      
+          <a class="text-doc" target="_blank" download="{{ roundInvestment?.round?.fiscalDossier }}"
+            [href]="sanitizer.bypassSecurityTrustResourceUrl(roundInvestment?.round?.docFiscalDossier)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M13.5059 11.4384C14.6015 10.668 15.0712 9.27641 14.6667 7.99968C14.2622 6.72294 13.0235 6.02348 11.6842 6.02451H10.9106C10.4048 4.05344 8.73608 2.59825 6.71451 2.36541C4.69291 2.13257 2.73708 3.17028 1.79645 4.97478C0.855813 6.77928 1.12516 8.97691 2.47373 10.5008"
+                stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.0035 13.667L8 7.66699" stroke="#035A7A" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.1213 11.5449L7.99993 13.6663L5.8786 11.5449" stroke="#035A7A" stroke-width="1.66667"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>

@@ -127,6 +127,9 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     {
       name: "Investidores"
     },
+    {
+      name: "Inf. da oferta pública"
+    },
   ]
 
   selectedSession = "Apresentação";
