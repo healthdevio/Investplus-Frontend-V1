@@ -22,6 +22,10 @@ dl dd {
   align-items: center;
 }
 
+.mobile-update {
+  display: none;
+}
+
 @media (max-width: 450px) {
   .content-desktop {
     display: none;
@@ -30,6 +34,10 @@ dl dd {
   .content-mobile {
     display: block;
   }
+
+    .mobile-update {
+      display: flex;
+    }
 }
 
 .h1,
