@@ -41,17 +41,17 @@ export class RoundAssetsListComponent implements OnInit {
 
   sessionsTable = [
     {
-      name: "Total"
-    },
-    {
       name: "Andamento"
     },
     {
       name: "Concluidas"
     },
+    {
+      name: "Total"
+    },
   ]
 
-  selectedSession = "Total";
+  selectedSession = "Andamento";
 
   selectSession(sessionName: string) {
     this.selectedSession = sessionName;
@@ -72,6 +72,7 @@ export class RoundAssetsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.applyFiltersMobile();
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Investimentos / Ofertas Públicas';
     this.data.changeTitle(this.titleHeader);
@@ -108,12 +109,12 @@ export class RoundAssetsListComponent implements OnInit {
   }
 
   applyFiltersMobile(searchTerm: string = '') {
-    let status = this.selectedSession === 'Andamento' ? 'IN_PROGRESS' :
-      this.selectedSession === 'Concluidas' ? 'FINISHED' : null;
-
+    let status = this.selectedSession === 'Andamento' ? 'IN_PROGRESS' : this.selectedSession === 'Concluidas' ? 'FINISHED' : null;
     searchTerm = searchTerm.toLowerCase();
 
+    console.log('teste')
     this.empresas = this.allEmpresas.filter(company => {
+      console.log(company)
       const matchesStatus = status ? company.round.status === status : true;
       const matchesSearch = company.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
@@ -124,7 +125,6 @@ export class RoundAssetsListComponent implements OnInit {
       const matchesSearch = realState.name.toLowerCase().includes(searchTerm);
       return matchesStatus && matchesSearch;
     });
-
   }
   
 
@@ -142,6 +142,7 @@ export class RoundAssetsListComponent implements OnInit {
 
         // Aplicar filtros inicialmente para garantir a exibição correta
         this.applyFilters();
+        this.applyFiltersMobile();
       }, (error) => {
         this.loader = false;
         this.responseError = true;
