@@ -26,7 +26,7 @@
     </div>
   </section>
 
-  <section class="content" style="background-color: #ffff; margin: 50px; border-radius: 20px;">
+  <section class="content" style="background-color: #ffff; margin: 30px; border-radius: 20px;">
     <div class="row" *ngIf="responseError">
       <div class="col-xs-14">
         <div class="box">
@@ -43,14 +43,14 @@
     </div>
 
     <div style="width: 100%; border-bottom: 1px solid #E5E5E5; display: flex; margin-bottom: 32px; align-items: center;">
-      <div style="display: flex; align-items: center; gap: 50px;">
+      <div style="display: flex; align-items: center; gap: 30px;">
         <p [style.color]="getColor('Andamento')" (click)="setSelectedText('Andamento')" style="cursor: pointer;">Andamento</p>
         <p [style.color]="getColor('Concluidas')" (click)="setSelectedText('Concluidas')" style="cursor: pointer;">Concluídas</p>
         <p [style.color]="getColor('Todas as oportunidades')" (click)="setSelectedText('Todas as oportunidades')"
           style="cursor: pointer;">Todas as oportunidades</p>
       </div>
 
-      <div style="height: 36px; min-width: 300px; margin-left: 50px; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 16px; padding-right: 16px; margin-bottom: 10px;">
+      <div style="height: 2.5em; min-width: 3.5em; margin-left: 7%; display: flex; align-items: center; border-radius: 100px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 16px; padding-left: 3%; padding-right: 3%; margin-bottom: 10px;">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
             stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
@@ -58,7 +58,7 @@
             stroke-linejoin="round" />
         </svg>
         <input
-        style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none;"
+        style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
         placeholder="Pesquisar ativo"
         (input)="applyFilters($event.target.value)"
         />            
