@@ -12,10 +12,11 @@
 
 <div 
 class="mobile-session"
-(click)="toggleInvestmentModal()"
 style="width: 100%; background-color: white; position: fixed; bottom: 0; height: 650px; border-top-left-radius: 16px; border-top-right-radius: 16px; z-index: 99; justify-content: center; display: flex; gap: 5px; box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1); flex-direction: column;"
 *ngIf="!loader && investmentModalOppened">
-  <div style="display: flex; gap: 5px; width: 100%; justify-content: center; margin-bottom: 10px;">
+  <div 
+  (click)="toggleInvestmentModal()"
+  style="display: flex; gap: 5px; width: 100%; justify-content: center; margin-bottom: 10px;">
     <p style="margin-bottom: 0px;">Simular investimento</p>
     <div style="transform: rotate(180deg);">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -725,7 +726,7 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           </li>
           <li class="nav-item" style="cursor: pointer;" [ngClass]="{'active': selectedTab === 'EssentialInfo'}" (click)="selectedTab = 'EssentialInfo'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'EssentialInfo' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Informações da Oferta Pública</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Inf. da Oferta Pública</div>
               <div *ngIf="selectedTab === 'EssentialInfo'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
