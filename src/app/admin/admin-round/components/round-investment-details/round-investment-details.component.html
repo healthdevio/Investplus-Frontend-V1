@@ -690,43 +690,43 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           <li 
           class="nav-item" [ngClass]="{'active': selectedTab === 'presentation'}" (click)="selectedTab = 'presentation'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'presentation' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Apresentação</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Apresentação</div>
               <div *ngIf="selectedTab === 'presentation'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'information'}" (click)="selectedTab = 'information'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'information' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Informações</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Informações</div>
               <div *ngIf="selectedTab === 'information'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'executiveTeam'}" (click)="selectedTab = 'executiveTeam'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'executiveTeam' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Equipe Executiva e Conselho</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Equipe Executiva e Conselho</div>
               <div *ngIf="selectedTab === 'executiveTeam'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'indicators'}" (click)="selectedTab = 'indicators'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'indicators' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Indicadores</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Indicadores</div>
               <div *ngIf="selectedTab === 'indicators'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'captable'}" (click)="selectedTab = 'captable'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'captable' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Captable</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Captable</div>
               <div *ngIf="selectedTab === 'captable'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'investors'}" (click)="selectedTab = 'investors'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'investors' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Investidores</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Investidores</div>
               <div *ngIf="selectedTab === 'investors'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
           <li class="nav-item" [ngClass]="{'active': selectedTab === 'EssentialInfo'}" (click)="selectedTab = 'EssentialInfo'">
             <a class="nav-link" [ngStyle]="{'color': selectedTab === 'EssentialInfo' ? '#035A7A' : '#505050'}">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem;">Informações da Ofeta Pública</div>
+              <div style="display: flex; justify-content: center; align-items: center; gap: 0.625rem; cursor: pointer;">Informações da Oferta Pública</div>
               <div *ngIf="selectedTab === 'EssentialInfo'" style="width: 6.25rem; height: 0.125rem; background: #035A7A;"></div>
             </a>
           </li>
@@ -736,12 +736,12 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           <div *ngSwitchCase="'presentation'">
             <div class="row">
               <div class="col-md-12">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" [src]="offerVideo" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <div class="embed-responsive" style="padding-bottom: 56.25%; height: 300px; max-width: 100%;">
+                  <iframe class="embed-responsive-item" [src]="offerVideo" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="width: 100%; height: 100%;"></iframe>
                 </div>
               </div>
             </div>
-          </div>
+          </div>          
           <div *ngSwitchCase="'EssentialInfo'">
             <div style="background-color: white; width: 40%; border-radius: 8px;">
               <div style="padding-top: 20px; padding-left: 16px; padding-right: 16px;">
