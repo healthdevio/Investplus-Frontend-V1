@@ -223,22 +223,22 @@
               *ngFor="let invest of investsData; let i = index"
               [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
               <td
-                style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
+                style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: left; vertical-align: middle;">
                 {{ invest.title }}
               </td>
               <td
-                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
+                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: left; vertical-align: middle;">
                 {{ invest.date }}
               </td>
               <td
-                style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
+                style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: left; vertical-align: middle;">
                 {{ invest.participation }}
               </td>
               <td
-                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
+                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: left; vertical-align: middle;">
                 {{ invest.valuation }}
               </td>
-              <td (click)="openSheet()" style="text-align: center; vertical-align: middle; position: relative;">
+              <td style="text-align: left; vertical-align: middle; position: relative;">
                 <svg class="hover-svg" width="4" height="14" viewBox="0 0 4 14" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
