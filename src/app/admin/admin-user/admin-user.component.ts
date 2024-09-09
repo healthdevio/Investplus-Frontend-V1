@@ -170,8 +170,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
       if (response.address !== undefined) {
-        this.setFormValue("nickname", response.investor.nickname)
-        this.setFormValue("fullName", response.investor.fullName)
+        this.setFormValue("nickname", response.nickname)
+        this.setFormValue("fullName", response.fullName)
         this.setFormValue("addressId", response.address.id);
         this.setFormValue("profession", response.profession);
         this.setFormValue("nationality", response.nationality);
