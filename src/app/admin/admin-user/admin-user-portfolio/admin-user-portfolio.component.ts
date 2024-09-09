@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { InvestorService } from "../../../core/service/investor.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TitleHeader } from "../../../core/interface/title-header";
@@ -63,6 +63,8 @@ export class AdminUserPortfolioComponent implements OnInit {
   quarterNow: any;
 
   isSheetOpen = false;
+  isDesktop: boolean = true;
+
 
   cards = [
     {
@@ -208,12 +210,22 @@ export class AdminUserPortfolioComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.checkScreenSize();
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
     this.titleHeader.title = "Meu Perfil / Análise da Carteira";
     this.data.changeTitle(this.titleHeader);
     this.getUserInvestments();
 
     this.currentDate = this.formatCurrentDate();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768; // Ajuste o valor conforme necessário
   }
 
   private formatCurrentDate(): string {

@@ -1,41 +1,42 @@
 <div *ngIf="loader">
   <app-loader [loader]="loader"></app-loader>
 </div>
-<div 
-class="desktop-screen"
-*ngIf="!loader">
+
+<div class="desktop-screen" *ngIf="!loader && isDesktop">
   <section class="content">
     <div style="margin-top: 40px;">
-      <h3 style="font-size: 24px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;">Análise de carteira
+      <h3 style="font-size: 24px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;">Análise de
+        carteira
       </h3>
-      <p style="color: #505050; font-family: 'Poppins', sans-serif; font-size: 14px;">Verifique aqui todos os dados da sua carteira.</p>
+      <p style="color: #505050; font-family: 'Poppins', sans-serif; font-size: 14px;">Verifique aqui todos os dados da
+        sua carteira.</p>
     </div>
 
     <div style="width: 100%; height: 100%; display: flex; gap: 16px;">
-<div *ngIf="isSheetOpen" class="sideSheet">
-  <div style="min-height: 80px; margin-top: 70px; padding: 10px;">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <p style="color: #1F1F1F; font-size: 18px; margin-bottom: 0;">Startup 1</p>
-      <div (click)="closeSheet()" style="cursor: pointer;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.7268 3.33398L8.00016 7.06065L4.2735 3.33398L3.3335 4.27398L7.06016 8.00065L3.3335 11.7273L4.2735 12.6673L8.00016 8.94065L11.7268 12.6673L12.6668 11.7273L8.94016 8.00065L12.6668 4.27398L11.7268 3.33398Z"
-            fill="#C4C4C4" />
-        </svg>
-      </div>
-    </div>
-    <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">Detalhes do investimento</p>
-    <div style="width: 100%; height: 1px; background-color: #E5E5E5;"></div>
+      <div *ngIf="isSheetOpen" class="sideSheet">
+        <div style="min-height: 80px; margin-top: 70px; padding: 10px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="color: #1F1F1F; font-size: 18px; margin-bottom: 0;">Startup 1</p>
+            <div (click)="closeSheet()" style="cursor: pointer;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11.7268 3.33398L8.00016 7.06065L4.2735 3.33398L3.3335 4.27398L7.06016 8.00065L3.3335 11.7273L4.2735 12.6673L8.00016 8.94065L11.7268 12.6673L12.6668 11.7273L8.94016 8.00065L12.6668 4.27398L11.7268 3.33398Z"
+                  fill="#C4C4C4" />
+              </svg>
+            </div>
+          </div>
+          <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">Detalhes do investimento</p>
+          <div style="width: 100%; height: 1px; background-color: #E5E5E5;"></div>
 
-    <div *ngFor="let item of sheetData" style="margin-top: 30px; border-bottom: 1px solid #E5E5E5;">
-      <p style="font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 14px;">{{ item.title }}</p>
-      <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">({{ item.subTittle }})</p>
-      <p
-        style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #035A7A; font-size: 18px; margin-bottom: 16px;">
-        {{ item.value }}</p>
-    </div>
-  </div>
-</div>
+          <div *ngFor="let item of sheetData" style="margin-top: 30px; border-bottom: 1px solid #E5E5E5;">
+            <p style="font-weight: 500; font-family: 'Poppins', sans-serif; font-size: 14px;">{{ item.title }}</p>
+            <p style="font-weight: 400; font-family: 'Poppins', sans-serif; color: #293137;">({{ item.subTittle }})</p>
+            <p
+              style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #035A7A; font-size: 18px; margin-bottom: 16px;">
+              {{ item.value }}</p>
+          </div>
+        </div>
+      </div>
       <div style="width: 100%; height: 100%;">
         <div class="portfolio-grid">
           <div *ngFor="let card of cards" class="portfolio-item" [ngStyle]="{'background-color': card.backgroundColor}">
@@ -64,41 +65,39 @@ class="desktop-screen"
             </div>
           </div>
         </div>
-      
+
         <div style="width: 100%; display: flex; gap: 16px;">
           <div
             style="width: 50%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
             <p>Meus ativos</p>
-      
+
             <div style="width: 150px; height: 150px; display: flex; gap: 16px;">
-              <app-doughnut 
-              [nChart]="'1'" 
-              width="150" 
-              height="150" 
-              type="doughnut" 
-              [backgroundColor]="['#035A7A66', '#035A7A']"
-              [borderColor]="['#035A7A66', '#035A7A']" 
-              [labels]="['Plataforma', 'Externos']" 
-              [data]="[investedInPlatform, investedInOthers]"
-              [options]="{ legend: {display: false}, maintainAspectRatio: false }">
-            </app-doughnut> 
-      
+              <app-doughnut [nChart]="'1'" width="150" height="150" type="doughnut"
+                [backgroundColor]="['#035A7A66', '#035A7A']" [borderColor]="['#035A7A66', '#035A7A']"
+                [labels]="['Plataforma', 'Externos']" [data]="[investedInPlatform, investedInOthers]"
+                [options]="{ legend: {display: false}, maintainAspectRatio: false }">
+              </app-doughnut>
+
               <div style="width: 100%;">
                 <div style="width: 100%;">
                   <div>
-                    <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
+                    <p
+                      style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
                       <span style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Ativos na Plataforma
                     </p>
-                    <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                    <p
+                      style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
                       {{ investedInPlatform | currency:'BRL':'symbol':'1.2-2' }}
                     </p>
                   </div>
-      
+
                   <div>
-                    <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
+                    <p
+                      style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 200%;">
                       <span style="color: #035A7A; font-size: 18px;">•</span>Investimentos Externos
                     </p>
-                    <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+                    <p
+                      style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
                       {{ investedInOthers | currency:'BRL':'symbol':'1.2-2' }}
                     </p>
                   </div>
@@ -106,11 +105,11 @@ class="desktop-screen"
               </div>
             </div>
           </div>
-      
+
           <div
             style="width: 50%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
             <p>Meu histórico</p>
-      
+
             <app-bar nChart="'4'" type="bar" [data]="dataBar" height="180" [options]="optionsBar">
             </app-bar>
           </div>
@@ -123,11 +122,13 @@ class="desktop-screen"
             <p style="font-size: 14px; font-weight: 600;">Últimos investimentos</p>
             <p style="font-size: 12px; color: #555555;">Ultima leitura {{ currentDate }}</p>
           </div>
-          <p style="font-size: 12px; color: #555555;">Resultados <span style="color: #035A7A;">{{ companyInvestments.length }}</span></p>
+          <p style="font-size: 12px; color: #555555;">Resultados <span style="color: #035A7A;">{{
+              companyInvestments.length }}</span></p>
         </div>
-      
+
         <!-- Input de busca -->
-        <div style="width: 100%; height: 40px; background-color: #F6F6F8; border-radius: 4px; margin-top: 24px; padding: 0 16px; gap: 18px; display: flex; align-items: center; margin-bottom: 24px;">
+        <div
+          style="width: 100%; height: 40px; background-color: #F6F6F8; border-radius: 4px; margin-top: 24px; padding: 0 16px; gap: 18px; display: flex; align-items: center; margin-bottom: 24px;">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M6.12496 11.0827C8.86336 11.0827 11.0833 8.86275 11.0833 6.12435C11.0833 3.38595 8.86336 1.16602 6.12496 1.16602C3.38656 1.16602 1.16663 3.38595 1.16663 6.12435C1.16663 8.86275 3.38656 11.0827 6.12496 11.0827Z"
@@ -135,55 +136,62 @@ class="desktop-screen"
             <path d="M9.68958 9.68945L12.1645 12.1643" stroke="#505050" stroke-width="1.5" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-      
-          <input type="text" placeholder="Pesquisar investimentos" style="border: none; outline: none; width: 100%; height: 100%; color: #707070; background-color: transparent;">
+
+          <input type="text" placeholder="Pesquisar investimentos"
+            style="border: none; outline: none; width: 100%; height: 100%; color: #707070; background-color: transparent;">
         </div>
-      
-<div *ngIf="companyInvestments.length > 0" style="max-height: 300px; overflow-y: auto;">
-  <div *ngFor="let invest of companyInvestments" 
-       style="width: 100%; height: 72px; border: 1px solid #E5E5E5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 10px;">
-      
-    <div style="width: 48px; height: 48px; border-radius: 100%; border: 1px solid #EEEEEE; display: flex; align-items: center; justify-content: center;">
-      <img [src]="getCompanyLogo(invest.logo)" alt="{{ invest.company }}" style="max-width: 100%; max-height: 100%; border-radius: 100%;">
-    </div>
 
-    <div>
-      <p>{{ invest.company }}</p>
-      <p style="color: #505050; font-size: 14px; font-family: 'Poppins', sans-serif;">
-        {{ invest.value | currency:'BRL' }}</p>
-    </div>
+        <div *ngIf="companyInvestments.length > 0" style="max-height: 300px; overflow-y: auto;">
+          <div *ngFor="let invest of companyInvestments"
+            style="width: 100%; height: 72px; border: 1px solid #E5E5E5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 10px;">
 
-    <div style="text-align: center;">
-      <p style="color: #505050; font-family: 'Poppins'">Cotas</p>
-      <p style="color: #035A7A; font-family: 'Poppins'">{{ invest.quotas }}</p>
-    </div>
-  </div>
-</div>
+            <div
+              style="width: 48px; height: 48px; border-radius: 100%; border: 1px solid #EEEEEE; display: flex; align-items: center; justify-content: center;">
+              <img [src]="getCompanyLogo(invest.logo)" alt="{{ invest.company }}"
+                style="max-width: 100%; max-height: 100%; border-radius: 100%;">
+            </div>
 
-<div *ngIf="companyInvestments.length === 0" style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33437 29.334H8.00104H10.6677" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
-      stroke-linejoin="round" />
-    <path d="M8 29.3327V2.66602" stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M26.6667 4H8V14.6667H26.6667L24 9.33333L26.6667 4Z" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
-      stroke-linejoin="round" />
-  </svg>
-  <p style="font-size: 12px; color: #707070;">Você não possui investimentos</p>
-</div>
+            <div>
+              <p>{{ invest.company }}</p>
+              <p style="color: #505050; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                {{ invest.value | currency:'BRL' }}</p>
+            </div>
 
-      
-        <div *ngIf="companyInvestments.length === 0" style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
+            <div style="text-align: center;">
+              <p style="color: #505050; font-family: 'Poppins'">Cotas</p>
+              <p style="color: #035A7A; font-family: 'Poppins'">{{ invest.quotas }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="companyInvestments.length === 0"
+          style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.33437 29.334H8.00104H10.6677" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
-            <path d="M8 29.3327V2.66602" stroke="#035A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M26.6667 4H8V14.6667H26.6667L24 9.33333L26.6667 4Z" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+            <path d="M8 29.3327V2.66602" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
+            <path d="M26.6667 4H8V14.6667H26.6667L24 9.33333L26.6667 4Z" stroke="#035A7A" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <p style="font-size: 12px; color: #707070;">Você não possui investimentos</p>
+        </div>
+
+
+        <div *ngIf="companyInvestments.length === 0"
+          style="display: flex; align-items: center; margin-top: 30px; flex-direction: column; gap: 5px;">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.33437 29.334H8.00104H10.6677" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M8 29.3327V2.66602" stroke="#035A7A" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M26.6667 4H8V14.6667H26.6667L24 9.33333L26.6667 4Z" stroke="#035A7A" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <p style="font-size: 12px; color: #707070;">Você não possui investimentos</p>
         </div>
       </div>
-      
+
     </div>
 
   <div style="display: flex; align-items: center; gap: 10px;">
@@ -210,71 +218,72 @@ class="desktop-screen"
           </tr>
         </thead>
 
-        <tbody>
-          <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
-            *ngFor="let invest of investsData; let i = index" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
-            <td
-              style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
-              {{ invest.title }}
-            </td>
-            <td
-              style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
-              {{ invest.date }}
-            </td>
-            <td
-              style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
-              {{ invest.participation }}
-            </td>
-            <td
-              style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
-              {{ invest.valuation }}
-            </td>
-            <td 
-            (click)="openSheet()"
-            style="text-align: center; vertical-align: middle; position: relative;">
-              <svg class="hover-svg" width="4" height="14" viewBox="0 0 4 14" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1.99998 13.6673C1.07951 13.6673 0.333313 12.9211 0.333313 12.0007C0.333313 11.0802 1.07951 10.334 1.99998 10.334C2.92045 10.334 3.66665 11.0802 3.66665 12.0007C3.66665 12.9211 2.92045 13.6673 1.99998 13.6673ZM1.99998 8.66732C1.07951 8.66732 0.333313 7.92113 0.333313 7.00065C0.333313 6.08018 1.07951 5.33398 1.99998 5.33398C2.92045 5.33398 3.66665 6.08018 3.66665 7.00065C3.66665 7.44268 3.49105 7.8666 3.17849 8.17916C2.86593 8.49172 2.44201 8.66732 1.99998 8.66732ZM1.99998 3.66732C1.07951 3.66732 0.333313 2.92113 0.333313 2.00065C0.333313 1.08018 1.07951 0.333984 1.99998 0.333984C2.92045 0.333984 3.66665 1.08018 3.66665 2.00065C3.66665 2.44268 3.49105 2.8666 3.17849 3.17916C2.86593 3.49172 2.44201 3.66732 1.99998 3.66732Z"
-                  fill="#909090" />
-              </svg>
-              <div class="tooltipContainer">
-                <div class="minimize-tooltip">
-                  <span>Opções</span>
+          <tbody>
+            <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
+              *ngFor="let invest of investsData; let i = index"
+              [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+              <td
+                style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
+                {{ invest.title }}
+              </td>
+              <td
+                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
+                {{ invest.date }}
+              </td>
+              <td
+                style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 10px 0; text-align: center; vertical-align: middle;">
+                {{ invest.participation }}
+              </td>
+              <td
+                style="color: #505050; font-family: Poppins, sans-serif; padding: 10px 0; text-align: center; vertical-align: middle;">
+                {{ invest.valuation }}
+              </td>
+              <td (click)="openSheet()" style="text-align: center; vertical-align: middle; position: relative;">
+                <svg class="hover-svg" width="4" height="14" viewBox="0 0 4 14" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.99998 13.6673C1.07951 13.6673 0.333313 12.9211 0.333313 12.0007C0.333313 11.0802 1.07951 10.334 1.99998 10.334C2.92045 10.334 3.66665 11.0802 3.66665 12.0007C3.66665 12.9211 2.92045 13.6673 1.99998 13.6673ZM1.99998 8.66732C1.07951 8.66732 0.333313 7.92113 0.333313 7.00065C0.333313 6.08018 1.07951 5.33398 1.99998 5.33398C2.92045 5.33398 3.66665 6.08018 3.66665 7.00065C3.66665 7.44268 3.49105 7.8666 3.17849 8.17916C2.86593 8.49172 2.44201 8.66732 1.99998 8.66732ZM1.99998 3.66732C1.07951 3.66732 0.333313 2.92113 0.333313 2.00065C0.333313 1.08018 1.07951 0.333984 1.99998 0.333984C2.92045 0.333984 3.66665 1.08018 3.66665 2.00065C3.66665 2.44268 3.49105 2.8666 3.17849 3.17916C2.86593 3.49172 2.44201 3.66732 1.99998 3.66732Z"
+                    fill="#909090" />
+                </svg>
+                <div class="tooltipContainer">
+                  <div class="minimize-tooltip">
+                    <span>Opções</span>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="width: 100%; display: flex; align-items: center; gap: 32px; margin-top: 40px; justify-content: center;">
-        <div style="display: flex; align-items: center;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M6.21531 8.99969L10.7228 13.5072L11.7841 12.4474L8.33406 8.99969L11.7841 5.55269L10.7236 4.49219L6.21531 8.99969Z"
-              fill="#909090" />
-          </svg>
-          <p style="color: #909090; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
-            Anterior</p>
-        </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         <div
-          style="width: 28px; height: 28px; background: #035A7A; display: flex; align-items:center; justify-content:center; border-radius: 8px;">
-          <p style="color: white; font-size: 14px; font-family: Poppins, sans-serif; padding: 0; margin-bottom: 0;">1</p>
-        </div>
+          style="width: 100%; display: flex; align-items: center; gap: 32px; margin-top: 40px; justify-content: center;">
+          <div style="display: flex; align-items: center;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6.21531 8.99969L10.7228 13.5072L11.7841 12.4474L8.33406 8.99969L11.7841 5.55269L10.7236 4.49219L6.21531 8.99969Z"
+                fill="#909090" />
+            </svg>
+            <p style="color: #909090; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
+              Anterior</p>
+          </div>
 
-        <div style="display: flex; align-items: center;">
-          <p style="color: #035A7A; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
-            Próximo</p>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.7848 9.00031L7.27725 4.49281L6.216 5.55256L9.666 9.00031L6.216 12.4473L7.2765 13.5078L11.7848 9.00031Z"
-              fill="#035A7A" />
-          </svg>
+          <div
+            style="width: 28px; height: 28px; background: #035A7A; display: flex; align-items:center; justify-content:center; border-radius: 8px;">
+            <p style="color: white; font-size: 14px; font-family: Poppins, sans-serif; padding: 0; margin-bottom: 0;">1
+            </p>
+          </div>
+
+          <div style="display: flex; align-items: center;">
+            <p style="color: #035A7A; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
+              Próximo</p>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.7848 9.00031L7.27725 4.49281L6.216 5.55256L9.666 9.00031L6.216 12.4473L7.2765 13.5078L11.7848 9.00031Z"
+                fill="#035A7A" />
+            </svg>
+          </div>
         </div>
       </div>
-    </div>
 
     <!-- <div style="width: 50%; background-color: white; border-radius: 4px; margin-top: 16px; max-height: 290px; overflow-x: auto;">
       <p style="padding: 20px 16px;">Todas as transações</p>
@@ -293,35 +302,41 @@ class="desktop-screen"
           </tr>
         </thead>
 
-        <tbody>
-          <tr 
-            style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
-            *ngFor="let transactions of transactionsData; let i = index" 
-            [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
-            <td style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 400; padding: 10px 0;">{{transactions.type }}</td>
-            <td style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding-bottom: 10px; font-weight: 400;">{{
-              transactions.value }}</td>
-            <td style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding-bottom: 10px; font-weight: 400;">{{
-              transactions.date }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="width: 100%; display: flex; align-items: center; gap: 32px; margin-top: 40px; justify-content: center;">
-        <div style="display: flex; align-items: center;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M6.21531 8.99969L10.7228 13.5072L11.7841 12.4474L8.33406 8.99969L11.7841 5.55269L10.7236 4.49219L6.21531 8.99969Z"
-              fill="#909090" />
-          </svg>
-          <p style="color: #909090; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
-            Anterior</p>
-        </div>
+          <tbody>
+            <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
+              *ngFor="let transactions of transactionsData; let i = index"
+              [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}">
+              <td style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 400; padding: 10px 0;">
+                {{transactions.type }}</td>
+              <td
+                style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding-bottom: 10px; font-weight: 400;">
+                {{
+                transactions.value }}</td>
+              <td
+                style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding-bottom: 10px; font-weight: 400;">
+                {{
+                transactions.date }}</td>
+            </tr>
+          </tbody>
+        </table>
 
         <div
-          style="width: 28px; height: 28px; background: #035A7A; display: flex; align-items:center; justify-content:center; border-radius: 8px;">
-          <p style="color: white; font-size: 14px; font-family: Poppins, sans-serif; padding: 0; margin-bottom: 0;">1</p>
-        </div>
+          style="width: 100%; display: flex; align-items: center; gap: 32px; margin-top: 40px; justify-content: center;">
+          <div style="display: flex; align-items: center;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6.21531 8.99969L10.7228 13.5072L11.7841 12.4474L8.33406 8.99969L11.7841 5.55269L10.7236 4.49219L6.21531 8.99969Z"
+                fill="#909090" />
+            </svg>
+            <p style="color: #909090; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
+              Anterior</p>
+          </div>
+
+          <div
+            style="width: 28px; height: 28px; background: #035A7A; display: flex; align-items:center; justify-content:center; border-radius: 8px;">
+            <p style="color: white; font-size: 14px; font-family: Poppins, sans-serif; padding: 0; margin-bottom: 0;">1
+            </p>
+          </div>
 
         <div style="display: flex; align-items: center;">
           <p style="color: #035A7A; padding: 0; margin-bottom: 0; font-size: 14px; font-family: Poppins, sans-serif;">
@@ -340,18 +355,19 @@ class="desktop-screen"
   </section>
 </div>
 
-<div
-class="mobile-screen"
-style="padding: 0 16px;"
->
+<div *ngIf="!loader && !isDesktop"
+class="mobile-screen" 
+style="padding: 0 16px;">
   <div style="display: flex; align-items: center; gap: 10px; padding-top: 30px;">
-    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.375 6V14H14.625V6L9 2L3.375 6Z" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M7.12508 9.66641V13.9997H10.8751V9.66641H7.12508Z" stroke="#909090" stroke-width="1.5"
-        stroke-linejoin="round" />
-      <path d="M3.375 14H14.625" stroke="#909090" stroke-width="1.5" stroke-linecap="round" />
-    </svg>
+    <a href="admin/rounds/assets/list">
+      <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.375 6V14H14.625V6L9 2L3.375 6Z" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M7.12508 9.66641V13.9997H10.8751V9.66641H7.12508Z" stroke="#909090" stroke-width="1.5"
+          stroke-linejoin="round" />
+        <path d="M3.375 14H14.625" stroke="#909090" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </a>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4.95833 3.5L8.45833 7L4.95833 10.5" stroke="#909090" stroke-width="1.5" stroke-linecap="round"
         stroke-linejoin="round" />
@@ -360,16 +376,15 @@ style="padding: 0 16px;"
   </div>
 
   <div style="margin-top: 20px;">
-    <p style="color: #1F1F1F; font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: 500;">Analise de carteira</p>
-    <p style="color: #909090; font-size: 12px; font-family: 'Poppins', sans-serif; margin-bottom: 30px;">Verifique aqui todos os dados da sua carteira.</p>
+    <p style="color: #1F1F1F; font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: 500;">Analise de
+      carteira</p>
+    <p style="color: #909090; font-size: 12px; font-family: 'Poppins', sans-serif; margin-bottom: 30px;">Verifique aqui
+      todos os dados da sua carteira.</p>
   </div>
 
   <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto; width: 100%;">
-    <div 
-  style="min-width: 250px;"
-    *ngFor="let card of cards" 
-    class="portfolio-item" 
-    [ngStyle]="{'background-color': card.backgroundColor}">
+    <div style="min-width: 250px;" *ngFor="let card of cards" class="portfolio-item"
+      [ngStyle]="{'background-color': card.backgroundColor}">
       <p style="font-size: 14px; color: #909090; font-family: 'Poppins', sans-serif;">{{ card.title }}</p>
       <div class="portfolio-content">
         <p style="font-size: 24px; color: #1F1F1F; font-family: 'Poppins', sans-serif;">{{ card.value }}</p>
@@ -396,7 +411,9 @@ style="padding: 0 16px;"
     </div>
   </div>
 
-  <p style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">Meus ativos</p>
+  <p
+    style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">
+    Meus ativos</p>
 
   <div
     style="width: 100%; background-color: white; border-radius: 4px; margin-top: 16px; padding: 20px 16px; border-radius: 4px;">
@@ -407,23 +424,24 @@ style="padding: 0 16px;"
       height="150" 
       type="doughnut" 
       [backgroundColor]="['#035A7A66', '#035A7A']"
-      [borderColor]="['#035A7A66', '#035A7A']" 
-      [labels]="['Plataforma', 'Externos']" 
-      [data]="[investedInPlatform, investedInOthers]"
-      [options]="{ legend: {display: false}, maintainAspectRatio: false }">
-    </app-doughnut>    
-  
+        [borderColor]="['#035A7A66', '#035A7A']" [labels]="['Plataforma', 'Externos']"
+        [data]="[investedInPlatform, investedInOthers]"
+        [options]="{ legend: {display: false}, maintainAspectRatio: false }">
+      </app-doughnut>
+
       <div style="width: 100%;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
           <div>
-            <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 100%;">
+            <p
+              style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500; width: 100%;">
               <span style="color: #035A7A; font-size: 18px; margin-right: 5px;">º</span>Ativos na Plataforma
             </p>
-            <p style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
+            <p
+              style="font-size: 14px; color: #121212; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px;">
               {{ investedInPlatform | currency:'BRL':'symbol':'1.2-2' }}
             </p>
           </div>
-  
+
           <div>
             <p style="font-size: 14px; color: #1F1F1F; font-family: 'Poppins', sans-serif; font-weight: 500;"><span
                 style="color: #035A7A; font-size: 18px;">•</span>Investimentos Externos</p>
@@ -437,40 +455,44 @@ style="padding: 0 16px;"
     </div>
   </div>
 
-    <p style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">Meu histórico</p>
+  <p
+    style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">
+    Meu histórico</p>
 
-    <div style="width: 100%; background-color: white; border-radius: 8px; padding: 20px;">
-      <app-bar nChart="'4'" type="bar" [data]="dataBar" height="180" [options]="optionsBar">
-      </app-bar>
+  <div style="width: 100%; background-color: white; border-radius: 8px; padding: 20px;">
+    <app-bar nChart="'4'" type="bar" [data]="dataBar" height="180" [options]="optionsBar">
+    </app-bar>
+  </div>
+
+  <p
+    style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">
+    Investimentos</p>
+
+  <div style="width: 100%; background: white; border-radius: 8px; padding: 20px;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <p style="color: #1F1F1F; font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: 500;">Startup</p>
+
+      <p style="color: #035A7A; font-family: 'Poppins', sans-serif; font-weight: 500;">Detalhes +</p>
     </div>
 
-    <p style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">Investimentos</p>
+    <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
+      <p>Data</p>
 
-    <div style="width: 100%; background: white; border-radius: 8px; padding: 20px;">
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <p style="color: #1F1F1F; font-size: 18px; font-family: 'Poppins', sans-serif; font-weight: 500;">Startup</p>
-
-        <p style="color: #035A7A; font-family: 'Poppins', sans-serif; font-weight: 500;">Detalhes +</p>
-      </div>
-
-      <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
-        <p>Data</p>
-
-        <p>31/10/2000</p>
-      </div>
-
-      <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
-        <p>Participação</p>
-
-        <p style="color: #035A7A; font-family: 'Poppins', sans-serif; font-weight: 500;">40</p>
-      </div>
-
-      <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
-        <p>Valor investido</p>
-
-        <p>R$ 10.000,00</p>
-      </div>
+      <p>31/10/2000</p>
     </div>
+
+    <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
+      <p>Participação</p>
+
+      <p style="color: #035A7A; font-family: 'Poppins', sans-serif; font-weight: 500;">40</p>
+    </div>
+
+    <div style="border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between; margin-top: 10px;">
+      <p>Valor investido</p>
+
+      <p>R$ 10.000,00</p>
+    </div>
+  </div>
 
     <!-- <p
       style="color: #777777; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; margin-top: 20px; margin-bottom: 20px;">
