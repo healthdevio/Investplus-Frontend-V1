@@ -21,6 +21,7 @@ export class AdminUserPortfolioComponent implements OnInit {
   currentDate: string; 
   investedInPlatform: number;  
   investedInOthers: number;  
+  companyInvestments: any;
   rounds: any;
   upangel: any;
   upimob: any;
@@ -241,31 +242,27 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.portfolio = false;
 
     this.investorService.getUser().subscribe((response) => {
-      // Obter investimentos Upangel e Imobiliário
       this.upangel = response.companyInvestments;
       this.upimob = response.realStateInvestments;
       this.installments = response.investmentsInstallments;
 
-      // Soma todos os valores encontrados em companyInvestments
+      this.companyInvestments = response.companyInvestments;
+
       const totalInvestedInvestplus = this.upangel
         .map(investment => investment.value)
         .reduce((acc, value) => acc + value, 0);
 
-      // Obter valor de totalInvestedOthers
       const totalInvestedOthers = response.totalInvestedOthers || 0;
 
-      // Atualizar os valores dos cards com as somas necessárias
       this.cards[1].value = `R$ ${totalInvestedOthers.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
       this.cards[2].value = `R$ ${totalInvestedInvestplus.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
       const patrimonioTotal = totalInvestedOthers + totalInvestedInvestplus;
       this.cards[0].value = `R$ ${patrimonioTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 
-      // Armazenar os valores para o gráfico
       this.investedInPlatform = totalInvestedInvestplus;
       this.investedInOthers = totalInvestedOthers;
 
-      // Atualizar o gráfico
       this.updateGraph();
 
       this.datas = this.dateResume(new Date());
@@ -738,4 +735,9 @@ export class AdminUserPortfolioComponent implements OnInit {
   public nvl(input: any, replace: any): any {
     return input == null ? replace : input;
   }
+
+  getCompanyLogo(logo: string): string {
+    return `./assets/img/${logo}`;
+  }
+  
 }
