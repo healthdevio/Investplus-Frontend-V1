@@ -65,7 +65,6 @@ export class AdminUserPortfolioComponent implements OnInit {
   isSheetOpen = false;
   isDesktop: boolean = true;
 
-
   cards = [
     {
       title: 'Patrimônio total',
@@ -85,12 +84,6 @@ export class AdminUserPortfolioComponent implements OnInit {
       backgroundColor: 'white',
       showSvg: true
     }
-    // {
-    //   title: '',
-    //   value: '',
-    //   backgroundColor: '#00000014',
-    //   showSvg: false
-    // }
   ];
 
   investsData = [
@@ -112,7 +105,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       participation: '40',
       valuation: 'R$ 10.000,00',
     },
-  ]
+  ];
 
   transactionsData = [
     {
@@ -140,7 +133,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       value: 'R$ 10.000,00',
       date: '31/10/2000',
     },
-  ]
+  ];
 
   sheetData = [
     {
@@ -183,7 +176,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       subTittle: 'Cash runway',
       value: 'R$ 10,000.00',
     },
-  ]
+  ];
 
   valuationProjected = {
     company: "FCJ Invest",
@@ -202,6 +195,11 @@ export class AdminUserPortfolioComponent implements OnInit {
     percentAnnual: 0,
   };
 
+  // Variáveis para controle de paginação
+  currentPage = 1;
+  itemsPerPage = 5;
+  paginatedInvestments = [];
+
   constructor(
     private investorService: InvestorService,
     private roundService: RoundService,
@@ -215,7 +213,6 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.titleHeader.title = "Meu Perfil / Análise da Carteira";
     this.data.changeTitle(this.titleHeader);
     this.getUserInvestments();
-
     this.currentDate = this.formatCurrentDate();
   }
 
@@ -266,7 +263,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           quotas: investment.quotas,
           date: investment.date,
           roundStatus: investment.roundStatus,
-          status: investment.status
+          status: investment.status,
+          model: investment.model
         };
       });
   
@@ -293,9 +291,27 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.setGraphBar();
       this.setResumeInstallments(0);
       this.getRounds();
+      this.paginateInvestments(); // Pagina os dados após recebê-los
     });
   }
-  
+
+  // Função para paginar os investimentos
+  paginateInvestments(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedInvestments = this.companyInvestments.slice(startIndex, endIndex);
+  }
+
+  // Função para mudar a página
+  changePage(newPage: number): void {
+    this.currentPage = newPage;
+    this.paginateInvestments();
+  }
+
+  // Função para obter o total de páginas
+  get totalPages(): number {
+    return Math.ceil(this.companyInvestments.length / this.itemsPerPage);
+  }
 
   private updateGraph(): void {
     this.dataPie = [this.investedInPlatform, this.investedInOthers];
@@ -673,21 +689,16 @@ export class AdminUserPortfolioComponent implements OnInit {
   }
 
   private reducer(data: any, groupBy: string, reduceValue: string): any {
-    // Reduz os dados e inicializa com um objeto vazio
     return [].concat
       .apply(
         data.reduce(function (hash, current) {
-          // Se o hash obtiver a chave atual, recupera e adiciona a propriedade sum
           hash[current[groupBy]] =
             (hash[current[groupBy]] || 0) + current[reduceValue];
-          // Retorna o hash atual
           return hash;
         }, {})
       )
       .map(function (elm) {
-        // Recupera chaves de objeto
         return Object.keys(elm).map(function (key) {
-          // Construção do objeto
           const obj = {};
           obj[groupBy] = +key;
           obj[reduceValue] = elm[key];
@@ -759,5 +770,4 @@ export class AdminUserPortfolioComponent implements OnInit {
   getCompanyLogo(logo: string): string {
     return `./assets/img/${logo}`;
   }
-
 }

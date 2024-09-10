@@ -196,33 +196,22 @@
 
     <div style="display: flex; align-items: center; gap: 5px; margin: 8px;">
       <div style="width: 100%; background-color: white; border-radius: 4px; margin-top: 16px;">
-        <p style="padding: 20px 16px; font-size: 18px; font-weight: bold;">Investimentos</p>
+        <p style="padding: 20px 16px; font-size: 18px; font-weight: bold;">Tabela de Investimentos Detalhada</p>
         <table style="width: 100%; border-collapse: collapse;">
           <thead style="padding: 0 16px; background-color: #f0f0f0;">
             <tr>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
-                Nome
-              </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 15%;">
-                Data
-              </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">
-                Participação
-              </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 15%;">
-                Valor investido
-              </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
-                Rodada
-              </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
-                Status contratual
-              </th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Nome</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 8%;">Data</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 6%;">Participação</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 9%;">Valor investido</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Rodada</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Status contratual</th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Tipo de investimento</th>
             </tr>
           </thead>
     
           <tbody>
-            <tr *ngFor="let invest of companyInvestments; let i = index" 
+            <tr *ngFor="let invest of paginatedInvestments; let i = index" 
                 [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
                 style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;">
               <td style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
@@ -243,11 +232,23 @@
               <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
                 {{ invest.status === 'PENDING' ? 'Status Pendente' : 'Status Assinado' }}
               </td>
+              <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+                {{ invest.model === 'TRADITIONAL' ? 'Empresa' : 'Startup' }}
+              </td>
             </tr>
           </tbody>
         </table>
+    
+        <!-- Controles de Paginação -->
+        <div style="display: flex; justify-content: center; margin: 16px 0;">
+          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+          <span style="margin: 0 16px;">Página {{ currentPage }} de {{ totalPages }}</span>
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
+        </div>
       </div>
     </div>
+    
+    
 
   </section>
 </div>
