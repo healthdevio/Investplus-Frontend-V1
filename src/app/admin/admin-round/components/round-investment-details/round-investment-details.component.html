@@ -378,22 +378,35 @@
                       href="https://investplus-public.s3.us-east-2.amazonaws.com/Termodecienciaderisco_fcj_invest.pdf"
                       target="_blank"
                       >termo de ciência de risco</a
-                    >
-                    <a de contrato
-                    *ngIf="roundInvestment.id === 9; else defaultLink"
-                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
-                    target="_blank"
-                    > minuta de contrato</a
-                  >
-                  <ng-template #defaultLink>
-                    <a de contrato
-                      href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                    >.
+                    
+                    <!-- Verifica se o ID da rodada de investimento é 9 -->
+                    <a
+                      *ngIf="roundInvestment.id === 9; else idTenLink"
+                      href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
                       target="_blank"
-                      > minuta de contrato</a
+                      >minuta de contrato</a
                     >
-                  </ng-template>                  
+                
+                    <!-- Verifica se o ID da rodada de investimento é 10 -->
+                    <ng-template #idTenLink>
+                      <a
+                        *ngIf="roundInvestment.id === 10; else defaultLink"
+                        href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS+DE+CONTRATO/Acordo+de+Investimentos+IARIS.docx"
+                        target="_blank"
+                      >minuta de contrato (IARIS)</a>
+                    </ng-template>
+                
+                    <!-- Link padrão caso não seja ID 9 ou 10 -->
+                    <ng-template #defaultLink>
+                      <a
+                        href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                        target="_blank"
+                      >minuta de contrato</a>
+                    </ng-template>
                   </p>
                 </div>
+                                              
               </div>
               <div class="row margin-t-20">
                 <div class="col-xs-10 col-xs-offset-1">
