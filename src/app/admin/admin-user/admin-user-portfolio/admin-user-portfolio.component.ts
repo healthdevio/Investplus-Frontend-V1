@@ -264,7 +264,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           date: investment.date,
           roundStatus: investment.roundStatus,
           status: investment.status,
-          model: investment.model
+          model: investment.model,
+          docLogo: investment.docLogo
         };
       });
   
@@ -768,6 +769,11 @@ export class AdminUserPortfolioComponent implements OnInit {
   }
 
   getCompanyLogo(logo: string): string {
-    return `./assets/img/${logo}`;
+    console.log(logo)
+    if (logo.startsWith('http')) {
+      return logo;
+    }
+    return `https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/fcjinvest/${logo}`;
   }
+  
 }
