@@ -225,7 +225,7 @@ export class AdminUserPortfolioComponent implements OnInit {
   }
 
   checkScreenSize() {
-    this.isDesktop = window.innerWidth > 768; // Ajuste o valor conforme necessário
+    this.isDesktop = window.innerWidth > 768; 
   }
 
   private formatCurrentDate(): string {
@@ -263,7 +263,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           company: investment.company,
           logo: investment.logo,
           value: investment.value,   
-          quotas: investment.quotas  
+          quotas: investment.quotas,
+          date: investment.date  
         };
       });
   
@@ -452,7 +453,6 @@ export class AdminUserPortfolioComponent implements OnInit {
         const pos = this.datas.lastIndexOf(dataInvestment);
 
         if (value.model === "TRADITIONAL") {
-          // Empresa
 
           this.sumCompany += value.value;
 
@@ -460,7 +460,6 @@ export class AdminUserPortfolioComponent implements OnInit {
             this.dataCompany[pos] = this.dataCompany[pos] + value.value;
           }
         } else {
-          // Startup
 
           this.sumStartup += value.value;
 
@@ -471,7 +470,6 @@ export class AdminUserPortfolioComponent implements OnInit {
       }
 
       for (const value of this.upimob) {
-        // Imobiliário
         this.sumReal += value.value;
 
         const dateFinal = new Date(value.date);
