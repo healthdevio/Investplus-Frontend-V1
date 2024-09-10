@@ -200,17 +200,23 @@
         <table style="width: 100%; border-collapse: collapse;">
           <thead style="padding: 0 16px; background-color: #f0f0f0;">
             <tr>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 40%;">
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
                 Nome
               </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 15%;">
                 Data
               </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">
                 Participação
               </th>
-              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 15%;">
                 Valor investido
+              </th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
+                Rodada
+              </th>
+              <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 20%;">
+                Status contratual
               </th>
             </tr>
           </thead>
@@ -223,7 +229,6 @@
                 {{ invest.company }}
               </td>
               <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-                <!-- Se houver data, formate com o pipe de data -->
                 {{ invest.date ? (invest.date | date: 'dd/MM/yyyy') : 'N/A' }}
               </td>
               <td style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
@@ -232,14 +237,17 @@
               <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
                 {{ invest.value | currency: 'BRL' }}
               </td>
+              <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+                {{ invest.roundStatus === 'IN_PROGRESS' ? 'Rodada em andamento' : 'Rodada concluída' }}
+              </td>
+              <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+                {{ invest.status === 'PENDING' ? 'Status Pendente' : 'Status Assinado' }}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    
-    
-    
 
   </section>
 </div>

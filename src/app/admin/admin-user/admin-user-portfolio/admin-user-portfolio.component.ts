@@ -264,7 +264,9 @@ export class AdminUserPortfolioComponent implements OnInit {
           logo: investment.logo,
           value: investment.value,   
           quotas: investment.quotas,
-          date: investment.date  
+          date: investment.date,
+          roundStatus: investment.roundStatus,
+          status: investment.status
         };
       });
   
