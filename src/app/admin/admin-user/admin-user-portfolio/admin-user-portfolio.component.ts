@@ -251,10 +251,10 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.portfolio = false;
   
     this.investorService.getUser().subscribe((response) => {
-      this.upangel = response.companyInvestments;
-      this.upimob = response.realStateInvestments;
-      this.installments = response.investmentsInstallments;
-  
+      this.upangel = response.companyInvestments || [];  
+      this.upimob = response.realStateInvestments || []; 
+      this.installments = response.investmentsInstallments || [];  
+    
       this.companyInvestments = response.companyInvestments ? response.companyInvestments.map(investment => {
         return {
           company: investment.company,
