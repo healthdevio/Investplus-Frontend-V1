@@ -255,7 +255,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.upimob = response.realStateInvestments;
       this.installments = response.investmentsInstallments;
   
-      this.companyInvestments = response.companyInvestments.map(investment => {
+      this.companyInvestments = response.companyInvestments ? response.companyInvestments.map(investment => {
         return {
           company: investment.company,
           logo: investment.logo,
@@ -268,7 +268,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           docLogo: investment.docLogo,
           contractLink: investment.contractLink
         };
-      });
+      }) : [];
+    
   
       const totalInvestedInvestplus = this.upangel
         .map(investment => investment.value)
