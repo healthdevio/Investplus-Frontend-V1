@@ -156,8 +156,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   initForm() {
     this.form = this.formBuilder.group({
       nameResponsible: [null],
-      nickname: [null, [Validators.required]],
-      fullName: [null, [Validators.required]],
+      nickname: [null],
+      fullName: [null],
       cpfResponsible: [null],
       profession: [null, [Validators.required]],
       nationality: [null, [Validators.required]],
