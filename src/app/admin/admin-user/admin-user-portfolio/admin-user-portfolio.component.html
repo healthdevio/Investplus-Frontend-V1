@@ -207,9 +207,10 @@
               <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Rodada</th>
               <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Status contratual</th>
               <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Tipo de investimento</th>
+              <!-- <th style="font-family: Poppins, sans-serif; color: #333333; text-align: center; padding: 5px; font-weight: 400; width: 10%;">Ver Contrato</th> Nova coluna -->
             </tr>
           </thead>
-    
+        
           <tbody>
             <tr *ngFor="let invest of paginatedInvestments; let i = index" 
                 [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
@@ -235,9 +236,18 @@
               <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
                 {{ invest.model === 'TRADITIONAL' ? 'Empresa' : 'Startup' }}
               </td>
+              <!-- <td style="padding: 8px; text-align: left;">
+                <a [href]="invest.contractLink" target="_blank" style="text-decoration: none;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+                  </svg>
+                </a>
+              </td> Coluna com o novo ícone de olho -->
             </tr>
           </tbody>
         </table>
+        
+        
     
         <!-- Controles de Paginação -->
         <div style="display: flex; justify-content: center; margin: 16px 0;">

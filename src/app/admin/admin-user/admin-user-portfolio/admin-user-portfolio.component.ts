@@ -265,7 +265,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           roundStatus: investment.roundStatus,
           status: investment.status,
           model: investment.model,
-          docLogo: investment.docLogo
+          docLogo: investment.docLogo,
+          contractLink: investment.contractLink
         };
       });
   
