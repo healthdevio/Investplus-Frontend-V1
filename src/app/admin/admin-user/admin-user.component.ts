@@ -59,6 +59,32 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   descriptionDate: string;
   descriptionSite: string;
 
+  validationMessages = {
+    nameResponsible: "Nome do responsável é obrigatório.",
+    nickname: "Apelido é obrigatório.",
+    fullName: "Nome completo é obrigatório.",
+    cpfResponsible: "CPF do responsável é obrigatório.",
+    profession: "Profissão é obrigatória.",
+    nationality: "Nacionalidade é obrigatória.",
+    gender: "Gênero é obrigatório.",
+    maritalStatus: "Estado civil é obrigatório.",
+    rgEmitter: "Órgão emissor do RG é obrigatório.",
+    rg: "RG é obrigatório e deve ter no máximo 13 caracteres.",
+    phone: "Número de telefone é obrigatório.",
+    dateOfBirth: "Data de nascimento é obrigatória.",
+    zipCode: "CEP é obrigatório.",
+    street: "Rua é obrigatória.",
+    number: "Número do endereço é obrigatório.",
+    neighborhood: "Bairro é obrigatório.",
+    city: "Cidade é obrigatória.",
+    uf: "UF é obrigatório.",
+    investorProfileStatement: "Escolha uma declaração de perfil de investidor.",
+    totalInvestedOthers: "Valor total investido é obrigatório e deve ser válido.",
+    publicFigure: "Informe se você é uma figura pública.",
+    publicProfile: "Informe se o perfil é público.",
+    aboutUpangel: "Escolha uma opção de como conheceu a UpAngel.",
+  };
+
   publicFigures: RadioOption[] = [
     {
       label: "Sim",
@@ -476,14 +502,35 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({
-          onlySelf: true,
-        });
+        control.markAsTouched({ onlySelf: true });
+  
+        if (control.invalid) {
+          const errorMessage = this.validationMessages[field];
+          if (errorMessage) {
+            toastr.error(errorMessage, "Erro no formulário", {
+              timeOut: 10000,
+              extendedTimeOut: 1000,
+              closeButton: true,
+              progressBar: true,
+              positionClass: "toast-top-right",
+            });
+          } else {
+            toastr.error(`O campo ${field} está incorreto.`, "Erro no formulário", {
+              timeOut: 10000,
+              extendedTimeOut: 1000,
+              closeButton: true,
+              progressBar: true,
+              positionClass: "toast-top-right",
+            });
+          }
+        }
       } else if (control instanceof FormGroup) {
-        this.validateAllFields(control);
+        this.validateAllFields(control); 
       }
     });
   }
+  
+  
 
   validateDate() {
     const date = this.form.controls["dateOfBirth"].value;
