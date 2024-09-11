@@ -389,21 +389,24 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
+    if (!this.form.get('nickname')?.value) {
+      this.setFormValue('nickname', this.investor.nickname);
+    }
+    if (!this.form.get('fullName')?.value) {
+      this.setFormValue('fullName', this.investor.fullName);
+    }
+  
     if (this.form.valid) {
       const dataSend = this.form.value;
       dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
       dataSend.phone = this.unmaskInput(dataSend.phone);
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
-      dataSend.profession = dataSend.profession
-      dataSend.nickname = dataSend.nickname
-      dataSend.fullName = dataSend.fullName
       dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
       dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
       dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
-      dataSend.nameResponsible = dataSend.nameResponsible
-  
+      
       const address = {
-        id: dataSend.addressId, 
+        id: dataSend.addressId,
         zipCode: dataSend.zipCode,
         street: dataSend.street,
         number: dataSend.number,
@@ -418,16 +421,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.loaderService.load(this.loading);
   
-      this.investorService
-        .updateInvestor(dataSend)
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.loaderService.load(this.loading);
-          })
-        )
+      this.investorService.updateInvestor(dataSend)
+        .pipe(finalize(() => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        }))
         .subscribe({
-          next: (response) => {
+          next: () => {
             toastr.success("Dados atualizados.");
             this.router.navigate(["/admin/rounds/incorporator/list"]);
           },
@@ -444,13 +444,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       this.validateAllFields(this.form);
       this.loading = false;
       this.loaderService.load(this.loading);
-      toastr.error(
-        "Formulário preenchido incorretamente. Por favor revise seus dados."
-      );
+      toastr.error("Formulário preenchido incorretamente. Por favor revise seus dados.");
     }
   }
-  
-  
 
   onDevelopmentToast() {
     toastr.options = {
