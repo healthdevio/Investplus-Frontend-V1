@@ -644,21 +644,27 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                                           text-decoration-line: underline;
                   "> termo de ciência do risco</a>
                   <p style="margin-bottom: 0;">e</p>
-                  <a *ngIf="roundInvestment.id === 9; else defaultLink"
-                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
-                    target="_blank" style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;"> minuta de contrato</a>
-                  <ng-template #defaultLink>
-      <a href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
-        target="_blank" style="
-                          color: #035A7A;
-                          font-family: Poppins;
-                          font-size: 12px;
-                          font-style: normal;
-                          font-weight: 400;
-                          line-height: 150%;
-                          text-decoration-line: underline;
-                        ">minuta de contrato</a>
-                  </ng-template>
+                  <a *ngIf="roundInvestment.id === 9; else checkRoundTen"
+                  href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
+                  target="_blank"
+                  style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;">
+                  minuta de contrato</a>
+               
+               <ng-template #checkRoundTen>
+                 <a *ngIf="roundInvestment.id === 10; else defaultLink"
+                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS+DE+CONTRATO/Acordo+de+Investimentos+IARIS.docx"
+                    target="_blank"
+                    style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;">
+                    minuta de contrato</a>
+               </ng-template>
+               
+               <ng-template #defaultLink>
+                 <a href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
+                    target="_blank"
+                    style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline;">
+                    minuta de contrato</a>
+               </ng-template>
+               
                 </div>
                 
               </div>
