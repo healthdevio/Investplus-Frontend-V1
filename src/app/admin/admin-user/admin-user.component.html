@@ -265,8 +265,8 @@
     
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
-                <input type="text" (blur)="validateDate()" formControlName="dateOfBirth"
-                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                <input type="text" (input)="formatDate()" (blur)="validateDate()" formControlName="dateOfBirth"
+                  style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                   placeholder="Data de nascimento" />
               </app-form>
     
@@ -537,7 +537,7 @@
     
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <app-form [label]="'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
-                <input type="text" formControlName="phone"
+                <input type="text" (input)="formatPhone()" formControlName="phone"
                   style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                   placeholder="Telefone" />
               </app-form>
@@ -553,7 +553,7 @@
             </div>
     
             <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">
-              <input type="text" (blur)="getCep()" formControlName="zipCode"
+              <input type="text" (input)="onCepInput()" formControlName="zipCode"
                 style="height: 50px; width: 300px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                 placeholder="CEP" />
     
@@ -591,9 +591,38 @@
                 </app-form>
     
                 <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
-                  <input type="text" formControlName="uf"
-                    style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                    placeholder="Estado" />
+                  <select 
+                    formControlName="uf"
+                    style="height: 50px; width: 195px; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                    <option [ngValue]="null">Selecione uma opção...</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                  </select>
                 </app-form>
               </div>
             </app-form>
@@ -1102,7 +1131,7 @@
     
         <div>
           <app-form [label]="'Data de nascimento'" [errorMessage]="'Data de nascimento é um campo obrigatório.'">
-            <input type="text" (blur)="validateDate()" formControlName="dateOfBirth"
+            <input type="text" (input)="formatDate()" (blur)="validateDate()" formControlName="dateOfBirth"
               style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Data de nascimento" />
           </app-form>
@@ -1373,7 +1402,7 @@
     
         <div>
           <app-form [label]="'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
-            <input type="text" formControlName="phone"
+            <input type="text" (input)="formatPhone()" formControlName="phone"
               style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
               placeholder="Telefone" />
           </app-form>
@@ -1391,7 +1420,7 @@
         </div>
     
         <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">
-          <input type="text" (blur)="getCep()" formControlName="zipCode"
+          <input type="text" (input)="onCepInput()" formControlName="zipCode"
             style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
             placeholder="CEP" />
     
@@ -1428,11 +1457,40 @@
                 placeholder="Cidade" />
             </app-form>
     
-            <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
-              <input type="text" formControlName="uf"
-                style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                placeholder="Estado" />
-            </app-form>
+                  <app-form [label]="'Estado'" [errorMessage]="'Estado é um campo obrigatório.'">
+                  <select 
+                    formControlName="uf"
+                    style="height: 50px; width: 100%; margin-top: 10px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                    <option [ngValue]="null">Selecione uma opção...</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                  </select>
+                </app-form>
           </div>
         </app-form>
       </div>

@@ -8,6 +8,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { InvestorService } from "../../core/service/investor.service";
 import { Investor } from "../../core/interface/investor";
 import { UserService } from "../../core/service/user.service";
+import { HttpClient } from '@angular/common/http';
 import {
   FormGroup,
   FormBuilder,
@@ -109,7 +110,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     private cepMask: CepMaskPipe,
     private dateMask: DateMaskPipe,
     private loaderService: LoaderService,
-    private bankService: BankService
+    private bankService: BankService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -164,6 +166,76 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       addressId: [null], 
     });
   }  
+
+  formatDate() {
+    let date = this.form.get('dateOfBirth')?.value;
+    if (date) {
+      date = date.replace(/\D/g, '');
+      if (date.length > 2) {
+        date = date.substring(0, 2) + '/' + date.substring(2);
+      }
+      if (date.length > 5) {
+        date = date.substring(0, 5) + '/' + date.substring(5, 9);
+      }
+      this.form.get('dateOfBirth')?.setValue(date, { emitEvent: false });
+    }
+  }
+
+  formatPhone() {
+    let phone = this.form.get('phone')?.value;
+    if (phone) {
+      phone = phone.replace(/\D/g, '');
+      if (phone.length > 0) {
+        phone = '(' + phone.substring(0, 2) + ') ' + phone.substring(2);
+      }
+      if (phone.length > 9) {
+        phone = phone.substring(0, 9) + '-' + phone.substring(9, 14);
+      }
+      this.form.get('phone')?.setValue(phone, { emitEvent: false });
+    }
+  }
+
+  getCepAddress() {
+    const cep = this.form.get('zipCode')?.value.replace(/\D/g, '');
+    if (cep && cep.length === 8) {
+      this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe((data: any) => {
+        if (data) {
+          this.form.patchValue({
+            street: data.logradouro,
+            neighborhood: data.bairro,
+            city: data.localidade,
+            uf: data.uf,
+            number: null,
+            complement: null
+          });
+        }
+      }, error => {
+        console.error('Erro ao buscar CEP:', error);
+      });
+    }
+  }
+
+  formatCep() {
+    let cep = this.form.get('zipCode')?.value;
+    if (cep) {
+      cep = cep.replace(/\D/g, '');
+      if (cep.length === 8) {
+        cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+        this.form.get('zipCode')?.setValue(cep, { emitEvent: false });
+      }
+    }
+  }
+
+  onCepInput() {
+    let cep = this.form.get('zipCode')?.value;
+    if (cep) {
+      cep = cep.replace(/\D/g, '');
+      if (cep.length === 8) {
+        this.formatCep();
+        this.getCepAddress();
+      }
+    }
+  }
 
   getUser() {
     this.loader = true;
