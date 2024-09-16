@@ -217,20 +217,34 @@
       </div>
       <div
         style="width: 100%; height: 705px; background: white; border-radius: 8px; margin-top: 30px; padding: 24px 16px; margin-bottom: 50px; overflow-y: auto;">
-        <div style="width: 100%; display: flex; gap: 32px;">
-          <p *ngFor="let tab of tabs; let i = index"
+        <div style="width: 100%; display: flex; gap: 32px; ">
+          <p 
+          style="white-space: nowrap;"
+          *ngFor="let tab of tabs; let i = index"
             [ngClass]="{'active-tab': activeTab === i, 'inactive-tab': activeTab !== i}" (click)="setActiveTab(i)">
             {{ tab }}
           </p>
-          <div class="row" style="margin-left: 30%; margin-top: -0.3%;">
+          <div class="row" style="margin-left: 20%; margin-top: -0.3%;">
             <div class="col-xs-12">
               <style>
                 .btn-upangel:hover {
                   color: #FFFFFF !important;
                 }
               </style>
-              <button type="submit" [disabled]="loading" class="btn btn-upangel"
-                style="background: #035A7A; cursor: pointer;">
+              <div 
+              *ngIf="activeTab !== 4"
+              style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <div *ngIf="activeTab > 0" (click)="setActiveTab(activeTab - 1)" [disabled]="loading"
+                  style="border: 1px solid #E5E5E5; cursor: pointer; width: 100%; background-color: transparent; color: #333333; border-radius: 8px; min-width: 120px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
+                  Voltar
+                </div>
+                <div (click)="setActiveTab(activeTab + 1)" [disabled]="loading"
+                  style="border: 1px solid #035A7A; cursor: pointer; width: 100%; background-color: transparent; color: #035A7A; border-radius: 8px; min-width: 120px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
+                  Próximo
+                </div>
+              </div>
+              <button *ngIf="activeTab === 4" type="submit" [disabled]="loading" class="btn btn-upangel"
+                style="background: #035A7A; cursor: pointer; width: 100%;">
                 Atualizar
               </button>
             </div>
@@ -762,7 +776,7 @@
               </p>
             </div>
     
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-left: 10px;">
+            <div>
               <app-form [label]="'Como você soube da InvestPlus'"
                 [errorMessage]="'Como soube da InvestPlus é um campo obrigatório.'">
                 <select formControlName="aboutUpangel"
@@ -1092,7 +1106,7 @@
       </p>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 15px; overflow-x: auto; width: 100%; ">
       <div *ngFor="let tab of tabs; let i = index" (click)="setActiveTab(i)"
         [style.color]="i === activeTab ? '#035A7A' : '#909090'"
         [style.border-color]="i === activeTab ? '#035A7A' : '#E8E5E5'"
