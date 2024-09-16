@@ -224,31 +224,6 @@
             [ngClass]="{'active-tab': activeTab === i, 'inactive-tab': activeTab !== i}" (click)="setActiveTab(i)">
             {{ tab }}
           </p>
-          <div class="row" style="margin-left: 20%; margin-top: -0.3%;">
-            <div class="col-xs-12">
-              <style>
-                .btn-upangel:hover {
-                  color: #FFFFFF !important;
-                }
-              </style>
-              <div 
-              *ngIf="activeTab !== 4"
-              style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <div *ngIf="activeTab > 0" (click)="setActiveTab(activeTab - 1)" [disabled]="loading"
-                  style="border: 1px solid #E5E5E5; cursor: pointer; width: 100%; background-color: transparent; color: #333333; border-radius: 8px; min-width: 120px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
-                  Voltar
-                </div>
-                <div (click)="setActiveTab(activeTab + 1)" [disabled]="loading"
-                  style="border: 1px solid #035A7A; cursor: pointer; width: 100%; background-color: transparent; color: #035A7A; border-radius: 8px; min-width: 120px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
-                  Próximo
-                </div>
-              </div>
-              <button *ngIf="activeTab === 4" type="submit" [disabled]="loading" class="btn btn-upangel"
-                style="background: #035A7A; cursor: pointer; width: 100%;">
-                Atualizar
-              </button>
-            </div>
-          </div>
         </div>
     
         <div style="margin-top: 32px; border-bottom: 1px solid #E5E5E5;">
@@ -856,6 +831,27 @@
             </legend>
           </div>
         </div>
+
+        <div *ngIf="activeTab !== 4" 
+        
+        style="display: flex; align-items: center; justify-content: end; gap: 10px; margin-top: 20px;">
+          <div *ngIf="activeTab > 0" (click)="setActiveTab(activeTab - 1)" [disabled]="loading"
+            style="border: 1px solid #E5E5E5; cursor: pointer; width: 120px; background-color: transparent; color: #333333; border-radius: 8px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
+            Voltar
+          </div>
+          <div (click)="setActiveTab(activeTab + 1)" [disabled]="loading"
+            style="border: 1px solid #035A7A; cursor: pointer; width: 120px; background-color: transparent; color: #035A7A; border-radius: 8px; padding: 5px 0; display: flex; align-items: center; justify-content: center;">
+            Próximo
+          </div>
+        </div>
+        <div 
+        style="display: flex; align-items: center; justify-content: end; gap: 10px; margin-top: 20px;"
+        *ngIf="activeTab === 4">
+          <button type="submit" [disabled]="loading" class="btn btn-upangel"
+            style="background: #035A7A; cursor: pointer; width: 120px;">
+            Finalizar
+          </button>
+          </div>
       </div>
     </section>
   </div>
