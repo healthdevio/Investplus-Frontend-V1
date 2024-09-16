@@ -42,9 +42,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   titleHeader: TitleHeader;
   totalInvestedUpangel: any;
   totalInvested: any;
-  fileName: string | null = null;
-  fileSize: string | null = null;
-  fileDate: string | null = null;
+  fileNameRG: string;
+  fileSizeRG: string;
+  fileNameRGVerse: string;
+  fileSizeRGVerse: string;
   investor: Investor;
   investmentValue = "";
   loader: boolean;
@@ -141,6 +142,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.clearFiles()
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
     this.titleHeader.title = "Meu Perfil / Meus Dados";
     this.data.changeTitle(this.titleHeader);
@@ -267,9 +269,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
+  
       if (response.address !== undefined) {
-        this.setFormValue("nickname", response.nickname)
-        this.setFormValue("fullName", response.fullName)
+        this.setFormValue("nickname", response.nickname);
+        this.setFormValue("fullName", response.fullName);
         this.setFormValue("addressId", response.address.id);
         this.setFormValue("profession", response.profession);
         this.setFormValue("nationality", response.nationality);
@@ -288,9 +291,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.setFormValue("dateOfBirth", this.dateMask.transform(response.dateOfBirth));
         this.form.get('address')?.patchValue(response.address);
         this.form.get('address')?.patchValue({
-          "zipCode": this.cepMask.transform(response.address.zipCode)
+          "zipCode": this.cepMask.transform(response.address.zipCode),
         });
-
+  
         this.setFormValue("investorProfileStatement", response.investorProfileStatement);
         this.setFormValue("totalInvestedOthers", this.maskMoney.transform(response.totalInvestedOthers));
         this.setFormValue("investedUpangel", this.maskMoney.transform(response.investedUpangel));
@@ -308,41 +311,44 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.setFormValue("accountAgency", response.accountAgency);
         this.setFormValue("accountBank", response.accountBank);
         this.setFormValue("accountNumber", response.accountNumber);
-
+  
         this.descriptionCity = response.address.city;
         this.descriptionSite = response.personalWebsite;
         this.facebook = response.facebook;
         this.linkedin = response.linkedin;
         this.twitter = response.twitter;
-
-        if (response.dateOfBirth != null || response.dateOfBirth !== undefined) {
-          this.descriptionDate =
-            moment(response.dateOfBirth).format("DD") +
-            " de " +
+  
+        if (response.dateOfBirth != null) {
+          this.descriptionDate = moment(response.dateOfBirth).format("DD") + " de " +
             moment(response.dateOfBirth).locale("pt-br").format("MMMM");
         }
       }
-
-      this.base64textString =
-        response.avatar === undefined
-          ? "./../../../assets/img/default-profile_01.png"
-          : "data:image/png;base64," + response.avatar;
-
-      this.base64RG =
-        response.rgDocument === undefined && response.rgDocumentVerse === undefined
-          ? null
-          : response.rgDocument !== undefined
-            ? "data:image/png;base64," + response.rgDocument
-            : "data:image/png;base64," + response.rgDocumentVerse;
-
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
+  
+      this.base64textString = response.avatar
+        ? "data:image/png;base64," + response.avatar
+        : "./../../../assets/img/default-profile_01.png";
+  
+      if (response.rgDocument) {
+        this.fileNameRG = "RG_FRENTE.png";  
+        this.fileSizeRG = ((response.rgDocument.length * (3/4)) / (1024 * 1024)).toFixed(2);  
+        this.base64RG = "data:image/png;base64," + response.rgDocument;
+      }
+  
+      if (response.rgDocumentVerse) {
+        this.fileNameRGVerse = "RG_VERSO.png"; 
+        this.fileSizeRGVerse = ((response.rgDocumentVerse.length * (3/4)) / (1024 * 1024)).toFixed(2); 
+        this.base64RG = "data:image/png;base64," + response.rgDocumentVerse;
+      }
+  
+      setTimeout(() => {
+        this.initMask();
       }, 1000);
-
+  
       this.loader = false;
     });
   }
+  
+  
 
   private setFormValue(controlName: string, value: any) {
     if (this.form.controls[controlName]) {
@@ -668,11 +674,19 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.msg = "";
         const reader = new FileReader();
 
-        reader.onload = this.handleRGLoaded.bind(this);
-        reader.readAsBinaryString(file);
+        reader.onload = (event: any) => {
+          const fileContent = event.target.result;
+          this.handleRGLoaded(fileContent);
+
+          this.fileNameRG = file.name;
+          this.fileSizeRG = (file.size / (1024 * 1024)).toFixed(2);  
+        };
+
+        reader.readAsDataURL(file);
       }
     }
   }
+
 
   onUploadRGVerse(evt: any) {
     const file = evt.target.files[0];
@@ -684,19 +698,29 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.msg = "";
         const reader = new FileReader();
 
-        reader.onload = this.handleRGLoadedVerse.bind(this);
-        reader.readAsBinaryString(file);
+        reader.onload = (event: any) => {
+          const fileContent = event.target.result;
+          this.handleRGLoadedVerse(fileContent);
+          console.log(file)
+          this.fileNameRGVerse = file.name;
+          this.fileSizeRGVerse = (file.size / (1024 * 1024)).toFixed(2);  
+        };
+
+        reader.readAsDataURL(file);
       }
     }
   }
 
-  handleRGLoaded(e) {
-    this.loading = true;
-    this.base64RG = "data:image/png;base64," + btoa(e.target.result);
-    const rg = {
-      rg: btoa(e.target.result),
-    };
 
+  handleRGLoaded(fileContent: string) {
+    this.loading = true;
+  
+    const base64Data = fileContent.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+  
+    const rg = {
+      rg: base64Data,
+    };
+  
     this.investorService
       .uploadRG(rg)
       .pipe(
@@ -709,15 +733,19 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           toastr.error(erro, "Erro");
         }
       );
-  }
+  }  
 
-  handleRGLoadedVerse(e) {
+  handleRGLoadedVerse(fileContent: string) {
     this.loading = true;
-    this.base64RG = "data:image/png;base64," + btoa(e.target.result);
+  
+    const base64Data = fileContent.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+  
+    this.base64RG = fileContent; 
+  
     const rg = {
-      rg: btoa(e.target.result),
+      rg: base64Data,  
     };
-
+  
     this.investorService
       .uploadRGVerse(rg)
       .pipe(
@@ -730,7 +758,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           toastr.error(erro, "Erro");
         }
       );
-  }
+  }  
 
   handleReaderLoaded(e) {
     this.loading = true;
@@ -792,5 +820,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             .sort((a: Bank, b: Bank) => a.name > b.name ? 1 : -1);
         }
       });
+  }
+
+  clearFiles() {
+    this.fileNameRG = null;
+    this.fileSizeRG = null;
+    this.fileNameRGVerse = null;
+    this.fileSizeRGVerse = null;
   }
 }
