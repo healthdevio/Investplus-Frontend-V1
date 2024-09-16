@@ -31,6 +31,7 @@ export class RoundTokenComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("teste")
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Investimentos / Rodadas Exclusivas';
     this.data.changeTitle(this.titleHeader);

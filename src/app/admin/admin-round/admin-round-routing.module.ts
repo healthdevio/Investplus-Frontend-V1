@@ -45,8 +45,7 @@ const routes: Routes = [
     },
     {
         path: "token",
-        component: RoundTokenComponent,
-        data: { scopes: ["ROLE_INVESTOR"] },
+        component: RoundTokenComponent    
     },
 ];
 

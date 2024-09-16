@@ -9,6 +9,7 @@ import { AdminManagerInvestorsComponent } from "../admin-manager/admin-manager-i
 import { RouteGuard } from "../../guards/route.guard";
 import { AdminUserIncommingComponent } from "../admin-user/admin-user-incomming/admin-user-incomming.component";
 import { AdminUserStatementComponent } from "../admin-user/admin-user-statement/admin-user-statement.component";
+import { RoundTokenComponent } from '../admin-round/round-token/round-token.component';
 @NgModule({
   imports: [
     RouterModule.forChild([
@@ -20,6 +21,10 @@ import { AdminUserStatementComponent } from "../admin-user/admin-user-statement/
         canActivateChild: [RouteGuard],
         children: [
           { path: "", redirectTo: "rounds", pathMatch: "full" },
+          {
+            path: "rounds/token",
+            component: RoundTokenComponent
+          },
           {
             path: "portfolio",
             component: AdminUserPortfolioComponent,
