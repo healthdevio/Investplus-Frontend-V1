@@ -181,7 +181,7 @@
     <div>
       <div *ngIf="imobiliarias?.length > 0 && filterAtivoType === AtivosTipo.REALSTATE">
         <div
-          style="background-color: #F6F6F8;"
+          style="background-color: #f8f6f6; margin-bottom: 10px;"
           *ngFor="let imobiliaria of imobiliarias | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
           <div>
             <admin-round-incorporator [incorporator]="imobiliaria"></admin-round-incorporator>
@@ -190,10 +190,13 @@
       </div>
     
       <div
+      style="padding-bottom: 10px;" 
         *ngIf="empresas?.length > 0 && filterAtivoType === AtivosTipo.STARTUP">
         <div
           *ngFor="let empresa of empresas | filter: filterInvestment | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel'}">
-          <div>
+          <div
+
+          >
             <admin-round-company [company]="empresa"></admin-round-company>
           </div>
         </div>
