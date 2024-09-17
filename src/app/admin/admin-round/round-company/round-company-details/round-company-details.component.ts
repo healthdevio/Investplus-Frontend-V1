@@ -30,7 +30,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
   id: number;
   idRound: number;
   nameCompany: string;
-  buttonText: string;  // Adicione esta linha
+  buttonText: string;
 
   loading: boolean = false;
 
@@ -42,7 +42,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
     private roundService: RoundService,
     private data: TitleService,
     private modalityService: ModalityService,
-    private router: Router  // Adicione esta linha
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -54,16 +54,16 @@ export class RoundCompanyDetailsComponent implements OnInit {
     this.id = this.activedRouter.snapshot.params['id'];
     this.idRound = this.activedRouter.snapshot.params['idRound'];
 
-    // Defina o texto do botão com base na rota
     this.setButtonText();
 
-    if(this.idRound){
+    if (this.idRound) {
       this.roundService
         .getRound(this.id, this.idRound)
         .subscribe({
-          next: (response)=>{
+          next: (response) => {
             const dataForm = response.round as any;
             this.form.patchValue(dataForm);
+            this.adjustDurationDate();
           }
         })
       return;
@@ -151,6 +151,15 @@ export class RoundCompanyDetailsComponent implements OnInit {
     });
   }
 
+  adjustDurationDate() {
+    const duration = this.form.get('duration').value;
+    const startDate = new Date(this.form.get('startedAt').value);
+    startDate.setDate(startDate.getDate() + duration);
+    const adjustedDate = startDate.toISOString().split('T')[0];
+
+    this.form.get('duration').setValue(adjustedDate);
+  }
+
   public onDocumentoFileChange(file: File | null) {
     this.form.get('documentsFile').setValue(file);
   }
@@ -181,6 +190,10 @@ export class RoundCompanyDetailsComponent implements OnInit {
     if (this.form.valid) {
       const $this = this;
       const dataForm = this.form.value;
+      const durationDate = new Date(dataForm.duration);
+      const currentDate = new Date();
+      const durationInDays = Math.ceil((durationDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24) + 1);
+      dataForm.duration = durationInDays;
 
       this.loading = true;
       this.roundService.createRound(this.id, dataForm).subscribe((response) => {
@@ -224,7 +237,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
     return input.replace(/[^\d]+/g, '');
   }
 
-  uploadFile(evt: any, fieldName: string, fieldDoc: string){
+  uploadFile(evt: any, fieldName: string, fieldDoc: string) {
     const file = evt.target.files[0];
     const fileName = file.name;
     if (file) {

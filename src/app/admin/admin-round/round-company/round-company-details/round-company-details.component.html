@@ -121,9 +121,8 @@
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Duração da rodada (dias)'"
-                    [errorMessage]="'O campo Duração da rodada é obrigatório.'">
-                    <input type="text" formControlName="duration" class="form-control number" />
+                  <app-form [label]="'Duração da rodada (dias)'" [errorMessage]="'O campo Duração da rodada é obrigatório.'">
+                    <input type="date" formControlName="duration" class="form-control" />
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
