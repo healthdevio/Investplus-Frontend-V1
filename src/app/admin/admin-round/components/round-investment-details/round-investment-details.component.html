@@ -936,25 +936,52 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
               </div>
             </div>
           </div>
-          <div *ngSwitchCase="'executiveTeam'">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box-comment" style="display: flex; flex-wrap: wrap;">
-                  <ng-container *ngFor="let member of roundInvestment?.executives">
-                    <app-card-member
-                      [name]="member.fullName"
-                      [photo]="member.photo"
-                      [department]="member.role"
-                      [activities]="member.activities"
-                      [linkedin]="member.linkedin"
-                      class="col-md-4"
-                    >
-                    </app-card-member>
-                  </ng-container>
-                </div>
+
+        <div *ngSwitchCase="'executiveTeam'">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 style="font-weight: 500; font-size: 18px; color: #035A7A; font-family: Poppins, sans-serif; margin-bottom: 20px; text-align: center; margin-top: 30px;">
+                Equipe Executiva
+              </h3>
+              <div class="box-comment" style="display: flex; flex-wrap: wrap;">
+                <ng-container *ngFor="let member of roundInvestment?.executives">
+                  <app-card-member
+                    [name]="member.fullName"
+                    [photo]="member.photo"
+                    [department]="member.role"
+                    [activities]="member.activities"
+                    [linkedin]="member.linkedin"
+                    class="col-md-4"
+                  >
+                  </app-card-member>
+                </ng-container>
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h3 style="font-weight: 500; font-size: 18px; color: #035A7A; font-family: Poppins, sans-serif; margin-bottom: 20px; text-align: center;">
+                Conselheiros e Advisors
+              </h3>
+              <div class="box-comment" style="display: flex; flex-wrap: wrap;">
+                <ng-container *ngFor="let member of roundInvestment?.advices">
+                  <app-card-member
+                    [name]="member.fullName"
+                    [photo]="member.photo"
+                    [department]="member.role"
+                    [activities]="member.activities"
+                    [linkedin]="member.linkedin"
+                    class="col-md-4"
+                  >
+                  </app-card-member>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
           <div *ngSwitchCase="'indicators'">
             <div class="row">
               <div class="col-md-12">
