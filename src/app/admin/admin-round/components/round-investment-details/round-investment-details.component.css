@@ -1000,14 +1000,14 @@ legend {
   top: 43px; /* Ajuste para que as bolinhas fiquem abaixo da barra */
   transform: translateX(-50%);
   background-color: #fff;
-  border: 2px double;
+  border: 2px solid;
   border-radius: 50%;
-  width: 30px; /* Diminui o tamanho das bolinhas */
-  height: 30px;
+  width: 40px; /* Diminui o tamanho das bolinhas */
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: bold;
   color: #1F1F1F;
   z-index: 3; /* Colocar as bolinhas acima das barras */
@@ -1036,8 +1036,8 @@ legend {
 
 .line-connector {
   position: absolute;
-  top: -8px; /* Posição acima da bolinha */
-  height: 8px;
+  top: -7px; /* Posição acima da bolinha */
+  height: 7px;
   width: 2px;
   background-color: #777777;
   left: 50%;
