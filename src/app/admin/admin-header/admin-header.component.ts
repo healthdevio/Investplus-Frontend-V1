@@ -84,7 +84,11 @@ export class AdminHeaderComponent implements OnInit {
           link: '/admin/rounds/company/admin',
         },
         {
-          name: 'Quadro societario',
+          name: 'Equipe Executiva',
+          link: '/admin/rounds/company/team',
+        },
+        {
+          name: 'Quadro societário',
           link: '/admin/rounds/company/partners',
         },
       ],
