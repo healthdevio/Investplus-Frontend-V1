@@ -297,20 +297,18 @@ p {
 
 .progress-bar-background {
   position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
-  background-color: #035A7A3D;
-  z-index: 1;
+  background-color: #035A7A66; /* Cor da barra reservada */
+  z-index: 1; /* Colocar a barra reservada atrás da investida */
+  transition: width 0.3s ease;
 }
 
 .progress-bar-foreground {
   position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
-  background-color: #035A7A;
-  z-index: 2;
+  background-color: #035A7A; /* Cor da barra investida */
+  z-index: 2; /* Colocar a barra investida na frente */
+  transition: width 0.3s ease;
 }
 
 .progress.sm,
@@ -967,3 +965,102 @@ legend {
   line-height: 100%; 
 }
 
+.progress-container {
+  position: relative;
+  height: 25px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: visible; 
+  padding-bottom: 40px; 
+}
+
+.progress-bar-background,
+.progress-bar-foreground {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  border-radius: 5px;
+}
+
+.progress-bar-background {
+  background-color: #035A7A66;
+  z-index: 1;
+}
+
+.progress-bar-foreground {
+  background-color: #035A7A;
+  z-index: 2;
+}
+
+.progress-marker {
+  position: absolute;
+  top: 43px; /* Ajuste para que as bolinhas fiquem abaixo da barra */
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 2px double;
+  border-radius: 50%;
+  width: 30px; /* Diminui o tamanho das bolinhas */
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: #1F1F1F;
+  z-index: 3; /* Colocar as bolinhas acima das barras */
+}
+
+.progress-marker.above { 
+  top: 25px; /* Eleva a bolinha se estiver sobreposta */
+  z-index: 2; /* Faz com que a bolinha superior esteja acima da outra */
+}
+
+.progress-marker span {
+  z-index: 5;
+}
+
+.investido-marker {
+  border-color: #035A7A;
+}
+
+.reservado-marker {
+  border-color: #035A7A66;
+}
+
+.final-marker {
+  border-color: #777777;
+}
+
+.line-connector {
+  position: absolute;
+  top: -8px; /* Posição acima da bolinha */
+  height: 8px;
+  width: 2px;
+  background-color: #777777;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.final-marker .line-connector {
+  background-color: #777777;
+}
+
+.investido-marker .line-connector {
+  background-color: #035A7A;
+}
+
+.reservado-marker .line-connector {
+  background-color: #035A7A66;
+}
+
+.single-line {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  display: flex; 
+  align-items: center;
+  gap: 15px;
+}

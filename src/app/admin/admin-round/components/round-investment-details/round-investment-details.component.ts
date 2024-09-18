@@ -160,6 +160,19 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     private modalityService: ModalityService,
   ) { }
 
+  ngAfterViewInit() {
+    const investidoMarker = document.querySelector('.investido-marker');
+    const reservadoMarker = document.querySelector('.reservado-marker');
+  
+    const investidoLeft = investidoMarker.getBoundingClientRect().left;
+    const reservadoLeft = reservadoMarker.getBoundingClientRect().left;
+  
+    if (Math.abs(investidoLeft - reservadoLeft) < 1) { 
+      reservadoMarker.classList.add('above'); 
+    }
+  }
+  
+
   ngOnInit() {
     this.activedRouter.params.subscribe((params) => {
       this.company = params["id"];
