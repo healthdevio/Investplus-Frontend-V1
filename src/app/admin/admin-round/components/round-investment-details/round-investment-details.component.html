@@ -396,40 +396,57 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
             <div style="display: flex; align-items: end; justify-content: space-between;">
               <div style="display: flex; align-items: end;">
                 <div>
-                  <p style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">Total
-                    investido</p>
+                  <p style="font-weight: 500; font-size: 14px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">
+                    Total investido
+                  </p>
                   <p style="font-weight: 600; font-size: 20px; color: #1F1F1F; font-family: Poppins, sans-serif !important;">
-                    {{companyDataComplete?.round?.resume?.total | moneyMask:true }}
+                    {{ investidoValue | currency:'BRL':'symbol':'1.2-2' }}
                   </p>
                 </div>
                 
                 <div style="display: flex; gap: 15px; align-items: center; margin-left: 20px; margin-bottom: 15px;">
                   <div style="display: flex; gap: 8px; align-items: center;">
-                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A;">
-                    </div>
-                    <!-- background: #035A7A3D; -->
-                    <p style="margin-bottom: 0;">{{ dataResume[1]}}% investidos</p>
+                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A;"></div>
+                    <p style="margin-bottom: 0;" [matTooltip]="'Investido: ' + investidoPercent + '% | ' + (investidoValue | currency:'BRL':'symbol':'1.2-2')">
+                      {{ investidoPercent }}% - {{ investidoValue | currency:'BRL':'symbol':'1.2-2' }} investidos
+                    </p>
                   </div>
-        
-                  <!-- <div style="display: flex; gap: 8px; align-items: center;">
-                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A;">
-                    </div>
-                    <p style="margin-bottom: 0;">26% investidos</p>
-                  </div> -->
+          
+                  <div style="display: flex; gap: 8px; align-items: center; margin-left: 5px; ">
+                    <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A66;"></div>
+                    <p style="margin-bottom: 0;" [matTooltip]="'Reservado: ' + reservadoPercent + '% | ' + (reservadoValue | currency:'BRL':'symbol':'1.2-2')">
+                      {{ reservadoPercent }}% - {{ reservadoValue | currency:'BRL':'symbol':'1.2-2' }} reservado
+                    </p>
+                  </div>
                 </div>
               </div>
-
+          
               <div style="margin-bottom: 15px;">
-                <p style="color: #777777; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 400; margin-bottom: 0;">Meta final</p>
-                <p style="color: #035A7A; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 600; margin-bottom: 0;">{{ companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
+                <p style="color: #777777; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 400; margin-bottom: 0;">
+                  Meta final
+                </p>
+                <p style="color: #035A7A; font-size: 12px; font-family: Poppins, sans-serif !important; font-weight: 600; margin-bottom: 0;">
+                  {{ companyDataComplete?.round?.maximumValuation | currency:'BRL':'symbol':'1.2-2' }}
+                </p>
               </div>
             </div>
-
+          
             <div class="progress sm">
-              <!-- <div class="progress-bar-background" [ngStyle]="{ width: 'calc(' + porcent + ' * 2)' }"></div> -->
-              <div class="progress-bar-foreground" [ngStyle]="{ width: porcent }"></div>
+              <div 
+                class="progress-bar-background" 
+                [ngStyle]="{ width: reservadoPercent + '%' }" 
+                style="background-color: #035A7A66;" 
+                [matTooltip]="'Reservado: ' + reservadoPercent + '% | ' + (reservadoValue | currency:'BRL':'symbol':'1.2-2')">
+              </div>
+              <div 
+                class="progress-bar-foreground" 
+                [ngStyle]="{ width: investidoPercent + '%' }" 
+                style="background-color: #035A7A;" 
+                [matTooltip]="'Investido: ' + investidoPercent + '% | ' + (investidoValue | currency:'BRL':'symbol':'1.2-2')">
+              </div>
             </div>
           </div>
+                    
         </div>
 
         <div style="display: flex; align-items: center; width: 100%; margin-left: 20px; gap: 16px;">
@@ -466,7 +483,7 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                   <div class="col-xs-12 col-md-6" style="margin-top: 5%;">
                     <p class="description-title-3">Objetivo</p>
                     <p class="description-title-4">{{ companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
-                    <p class="description-title-3 margin-t-20">Investidos</p>
+                    <p class="description-title-3 margin-t-20">Investidos / Reservados</p>
                     <p style="font-size: 24px; color: #035A7A;">{{ companyDataComplete?.round?.resume?.total | moneyMask:true }}</p>
                   </div>
                   
@@ -1290,7 +1307,7 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                 <div style="width: 12px; height: 12px; border-radius: 2px; background: #035A7A;">
                 </div>
                 <!-- background: #035A7A3D; -->
-                <p style="margin-bottom: 0;">{{ dataResume[1]}}% investidos</p>
+                <p style="margin-bottom: 0;">{{ dataResume[1]}}% investidos / Reservados</p>
               </div>
     
               <!-- <div style="display: flex; gap: 8px; align-items: center;">
@@ -1362,7 +1379,7 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                 <div>
                   <div style="display: flex; align-items: center; gap: 5px;">
                     <p style="color: #035A7A; font-size: 32px;">•</p>
-                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Investidos</p>
+                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Investidos / Reservados </p>
                   </div>
     
                   <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px;">{{

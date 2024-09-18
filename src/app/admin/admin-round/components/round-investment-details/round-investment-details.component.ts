@@ -39,6 +39,10 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   quotaValue = 0;
   startedAt: any;
   finishAt: any;
+  investidoPercent: any;
+  investidoValue: any;
+  reservadoPercent: any;
+  reservadoValue: any;
   status = "";
   porcent = "";
   disabled = false;
@@ -211,6 +215,10 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         this.advices = response.advices || [];
         this.investments = response.round?.investments || [];
         this.options.ceil = this.quotas - this.quotasSold;
+        this.investidoPercent = response.investidoPercent ?? 0;
+        this.investidoValue = response.investidoValue ?? 0;
+        this.reservadoPercent = response.reservadoPercent ?? 0;
+        this.reservadoValue = response.reservadoValue ?? 0;
 
         this.data.currentMessage.subscribe(
           (titles) => (this.titleHeader = titles)
