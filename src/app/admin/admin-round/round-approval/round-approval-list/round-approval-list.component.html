@@ -1,7 +1,57 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
-  <div *ngIf="!loader">
-    <div class="row">
+  <div 
+  style="padding: 40px 20px;"
+  *ngIf="!loader">
+    <h1 style="color: #1F1F1F;">Empresas</h1>
+    <p style="color: #505050;">Verifique aqui todas as empresas da plataforma.</p>
+
+    <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
+      <p style="margin-left: 16px; font-size: 16px;">Empresas</p>
+
+      <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <div style="display: flex; align-items: center; gap: 32px;">
+            <p>Empresas ativas</p>
+            <p>Empresas inativas</p>
+          </div>
+          
+          <div
+            style="height: 2.5em; width: 30%; display: flex; align-items: center; border-radius: 4px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 5px; padding: 0 16px; margin-bottom: 10px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
+                stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <input
+              style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
+              placeholder="Pesquisar empresas" />
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button style="width: 140px; height: 36px; border: 1px solid #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; background-color: white;">
+              <p style="margin-bottom: 0;">Exportar</p>
+
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 8.00277V14H14V8" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11 7.66602L8 10.666L5 7.66602" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M7.99724 2V10.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <button
+              style=" height: 36px; background-color: #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 0px 32px; margin-bottom: 10px;">
+              <p style="margin-bottom: 0; color: white;">Cadastrar empresa +</p>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- <div class="row">
       <div class="col-xs-12">
         <div class="box">
           <div class="box-body no-padding">
@@ -30,6 +80,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
