@@ -107,7 +107,7 @@ export class RoundCompanyDetailsComponent implements OnInit {
       quotas: [null, [Validators.required]],
       duration: [null, [Validators.required]],
       deadline: [null, [Validators.required]],
-      partnerParticipation: [null],
+      partnerParticipation: [null, [Validators.required]],
       business: [null, [Validators.required, Validators.maxLength(4000)]],
       achievements: [null, [Validators.required, Validators.maxLength(4000)]],
       potentialMarket: [null, [Validators.required, Validators.maxLength(4000)]],

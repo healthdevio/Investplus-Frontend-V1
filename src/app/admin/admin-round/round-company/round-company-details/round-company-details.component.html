@@ -21,14 +21,17 @@
             <div class="tab-pane active" id="tab_1">
               <div class="row">
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Tipo da rodada'" [errorMessage]="'Tipo da rodada é um campo obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Tipo da rodada <span style="color: red;">*</span></p>
+                  <app-form
+                  [errorMessage]="'Tipo da rodada é um campo obrigatório.'">
                     <select formControlName="type" class="form-control">
                       <option [ngValue]="null">Selecione uma opção...</option>
                       <option value="PUBLIC"> Pública </option>
                       <option value="EXCLUSIVE"> Exclusiva </option>
                     </select>
                   </app-form>
-                  <app-form [label]="'Data de início'" [errorMessage]="'Data de início é um campo obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Data de início <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'Data de início é um campo obrigatório.'">
                     <input type="date" name="startedAt" id="startedAt" formControlName="startedAt" class="form-control" required>
                   </app-form>
                 </div>
@@ -40,7 +43,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Vídeo da oferta'" [errorMessage]="'O campo Vídeo da oferta é obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Vídeo da oferta <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Vídeo da oferta é obrigatório.'">
                     <input type="text"
                       placeholder="URL do vídeo (Vimeo ou Youtube), descrevendo a oferta em no máximo 5 minutos."
                       formControlName="offerVideo" class="form-control" />
@@ -50,7 +54,7 @@
               <div class="row">
                 <div class="col-xs-12 col-md-6">
                   <div class="upload-btn-wrapper">
-                    <label for="">Logo</label>
+                    <p style="margin-bottom: 0; font-weight: 600;">Logo <span style="color: red;">*</span></p>
                     <div>
                       <button class="btn-photo" style="cursor: pointer;">{{ form.get('logo').value ?? 'Selecione o Logo.'}}</button>
                       <input
@@ -85,7 +89,8 @@
             <div class="tab-pane" id="tab_2">
               <div class="row">
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Valor da captação mínima'" [errorMessage]="
+                  <p style="margin-bottom: 0; font-weight: 600;">Valor da captação mínima <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="
                       'O campo Valor da captação mínima é obrigatório.'
                     ">
                     <div class="input-group">
@@ -95,7 +100,8 @@
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Valor da captação máxima'" [errorMessage]="
+                  <p style="margin-bottom: 0; font-weight: 600;">Valor da captação máxima <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="
                       'O campo Valor da captação máxima é obrigatório.'
                     ">
                     <div class="input-group">
@@ -105,7 +111,8 @@
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Participação societária (%)'" [errorMessage]="
+                  <p style="margin-bottom: 0; font-weight: 600;">Participação societária (%) <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="
                       'O campo Participação societária é obrigatório.'
                     ">
                     <input type="text" formControlName="partnerParticipation" class="form-control" currencyMask />
@@ -114,19 +121,22 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Quantidade de cotas'" [errorMessage]="
+                  <p style="margin-bottom: 0; font-weight: 600;">Quantidade de cotas <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="
                       'O campo Quantidade de cotas é obrigatório.'
                     ">
                     <input type="text" formControlName="quotas" class="form-control number" />
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Duração da rodada (dias)'" [errorMessage]="'O campo Duração da rodada é obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Duração da rodada (dias) <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Duração da rodada é obrigatório.'">
                     <input type="date" formControlName="duration" class="form-control" />
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Valor da cota'" [errorMessage]="'O campo Valor da cota é obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Valor da cota <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Valor da cota é obrigatório.'">
                     <div class="input-group">
                       <span class="input-group-addon">R$</span>
                       <input type="text" formControlName="quotaValue" class="form-control" currencyMask />
@@ -136,7 +146,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Modalidade'" [errorMessage]="'Modalidade é um campo obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Modalidade <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'Modalidade é um campo obrigatório.'">
                     <select formControlName="modality" class="form-control">
                       <option [ngValue]="null">Selecione uma opção...</option>
                       <option [value]="modality.initials" *ngFor="let modality of modalities">{{ modality.description }}</option>
@@ -144,7 +155,8 @@
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Garantia'" [errorMessage]="'Garantia é um campo obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Garantia <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'Garantia é um campo obrigatório.'">
                     <select formControlName="guarantee" class="form-control">
                       <option [ngValue]="null">Selecione uma opção...</option>
                       <option value="T"> Título conversível </option>
@@ -153,14 +165,16 @@
                   </app-form>
                 </div>
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Custo InvestPlus (%)'" [errorMessage]="'O campo Custo InvestPlus é obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Custo InvestPlus (%) <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Custo InvestPlus é obrigatório.'">
                     <input type="text" formControlName="upangelCost" class="form-control" currencyMask />
                   </app-form>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-3">
-                  <app-form [label]="'Duração máxima'" [errorMessage]="'O campo Duração máxima é obrigatório.'">
+                  <p style="margin-bottom: 0; font-weight: 600;">Duração máxima <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Duração máxima é obrigatório.'">
                     <input type="text" formControlName="deadline" class="form-control number" />
                   </app-form>
                 </div>
@@ -169,7 +183,8 @@
             <div class="tab-pane" id="tab_3">
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Negócio'" [errorMessage]="'O campo Negócio' + textValidator">
+                  <p style="margin-bottom: 0; font-weight: 600;">Negócio <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Negócio' + textValidator">
                     <textarea rows="5" placeholder="Descrição do negócio" formControlName="business"
                       class="form-control"></textarea>
                   </app-form>
@@ -177,21 +192,24 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Realizações'" [errorMessage]="'O campo Realizações' + textValidator">
+                  <p style="margin-bottom: 0; font-weight: 600;">Realizações <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Realizações' + textValidator">
                     <textarea rows="5" formControlName="achievements" class="form-control"></textarea>
                   </app-form>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Mercado potencial'" [errorMessage]="'O campo Mercado potencial' + textValidator">
+                  <p style="margin-bottom: 0; font-weight: 600;">Mercado potencial <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Mercado potencial' + textValidator">
                     <textarea rows="5" formControlName="potentialMarket" class="form-control"></textarea>
                   </app-form>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Metas de 12 meses com o investimento'"
+                  <p style="margin-bottom: 0; font-weight: 600;">Metas de 12 meses com o investimento <span style="color: red;">*</span></p>
+                  <app-form
                     [errorMessage]="'O campo Meta portencial' + textValidator">
                     <textarea rows="5" formControlName="targets" class="form-control"></textarea>
                   </app-form>
@@ -199,7 +217,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Roadmap'" [errorMessage]="'O campo Roadmap' + textValidator">
+                  <p style="margin-bottom: 0; font-weight: 600;">Roadmap <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Roadmap' + textValidator">
                     <textarea rows="5" placeholder="Roadmap de produtos e serviços" formControlName="roadmap"
                       class="form-control"></textarea>
                   </app-form>
@@ -207,7 +226,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <app-form [label]="'Fatores de riscos'" [errorMessage]="'O campo Fatores de riscos' + textValidator">
+                  <p style="margin-bottom: 0; font-weight: 600;">Fatores de riscos <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'O campo Fatores de riscos' + textValidator">
                     <textarea rows="5" formControlName="riskiness" class="form-control"></textarea>
                   </app-form>
                 </div>

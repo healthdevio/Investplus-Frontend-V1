@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="list-group list-group-unbordered">
-            <li style="border-bottom: 1px solid #E5E5E5;" 
+            <li style="border-bottom: 1px solid #E5E5E5; " 
             class="list-group-item">
               <span class="description-text">Modalidade</span>
               <a class="newdetails pull-right">{{company.round?.modality == undefined ? '--' : maskModality(company.round?.modality)}}</a>
@@ -33,13 +33,15 @@
               <span class="description-text">Prazo máximo</span>
               <a class="newdetails pull-right">{{company.round?.deadline + ' ANO(S)'}}</a>
             </li>
-            <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
+            <li style="border-bottom: 1px solid #E5E5E5; padding-bottom: 15px;" class="list-group-item">
               <span class="description-text">Participação por cota</span>
               <a class="newdetails pull-right">
                 <span *ngIf="company.round?.modality != 'SAFE'">
                   {{ formatParticipation(company.round?.partnerParticipation / company?.round?.quotas) }}
                 </span>
-                <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
+                <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">
+                  Depende do valuation da prox <br> rodada
+                </span>
               </a>
             </li>
             <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
