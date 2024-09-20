@@ -1,34 +1,110 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
-  <div *ngIf="!loader">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-          <div class="box-body no-padding">
-            <table class="table table-responsive">
-              <tr>
-                <th>Empresa</th>
-                <th>Nome do responsável</th>
-                <th>CNPJ</th>
-                <th>Modelo</th>
-              </tr>
-              <tr [routerLink]="'/admin/rounds/approval/'+company.id+'/details'"
-                *ngFor="let company of companies | paginate: { itemsPerPage: 12, currentPage: p }">
-                <td>{{ company.name }}</td>
-                <td>{{ company.responsible.name }}</td>
-                <td>{{ company.cnpj | cnpj }}</td>
-                <td>
-                  <span class="label label-success">{{ maskModel(company.model) }}</span>
-                </td>
-              </tr>
-            </table>
-            <app-count [count]="!(companies?.length > 0)" [textContador]="textRegister"></app-count>
-            <div class="pagination-footer">
-              <pagination-controls class="custom-pagination" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
-                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
-            </div>            
+  <div 
+  style="padding: 40px 20px;"
+  *ngIf="!loader">
+    <h1 style="color: #1F1F1F;">Empresas</h1>
+    <p style="color: #505050;">Verifique aqui todas as empresas da plataforma.</p>
+
+    <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
+      <p style="margin-left: 16px; font-size: 16px;">Empresas</p>
+
+      <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <div style="display: flex; align-items: center; gap: 32px;">
+            <p (click)="setStatus('APPROVED')" 
+            [ngStyle]="{'color': status === 'APPROVED' ? '#035A7A' : '#000000'}"
+              style="cursor: pointer;">
+              Empresas ativas
+            </p>
+            <p (click)="setStatus('PENDING_EVALUATION')" 
+            [ngStyle]="{'color': status === 'PENDING_EVALUATION' ? '#035A7A' : '#000000'}"
+              style="cursor: pointer;">
+              Empresas inativas
+            </p>
+          </div>
+          
+          <div
+            style="height: 2.5em; width: 30%; display: flex; align-items: center; border-radius: 4px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 5px; padding: 0 16px; margin-bottom: 10px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
+                stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <input
+              style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
+              placeholder="Pesquisar empresas" />
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <button style="width: 140px; height: 36px; border: 1px solid #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; background-color: white;">
+              <p style="margin-bottom: 0; color: #035A7A;">Exportar</p>
+
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 8.00277V14H14V8" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11 7.66602L8 10.666L5 7.66602" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M7.99724 2V10.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <button
+              style=" height: 36px; background-color: #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 0px 32px; margin-bottom: 10px;">
+              <p style="margin-bottom: 0; color: white;">Cadastrar empresa +</p>
+            </button>
           </div>
         </div>
+
+      </div>
+
+      <table style="width: 100%; margin-top: 35px;">
+        <tr >
+          <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
+          <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Nome do responsável</th>
+          <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">CNPJ</th>
+          <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
+        </tr>
+        <tr [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+          style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
+          [routerLink]="'/admin/rounds/approval/'+company.id+'/details'"
+          *ngFor="let company of companies | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ company.name }}</td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.responsible.name }}</td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.cnpj | cnpj }}</td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
+            <span>{{ maskModel(company.model) }}</span>
+          </td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 16.6673C9.07953 16.6673 8.33334 15.9211 8.33334 15.0007C8.33334 14.0802 9.07953 13.334 10 13.334C10.9205 13.334 11.6667 14.0802 11.6667 15.0007C11.6667 15.9211 10.9205 16.6673 10 16.6673ZM10 11.6673C9.07953 11.6673 8.33334 10.9211 8.33334 10.0007C8.33334 9.08018 9.07953 8.33398 10 8.33398C10.9205 8.33398 11.6667 9.08018 11.6667 10.0007C11.6667 10.4427 11.4911 10.8666 11.1785 11.1792C10.866 11.4917 10.442 11.6673 10 11.6673ZM10 6.66732C9.07953 6.66732 8.33334 5.92113 8.33334 5.00065C8.33334 4.08018 9.07953 3.33398 10 3.33398C10.9205 3.33398 11.6667 4.08018 11.6667 5.00065C11.6667 5.44268 11.4911 5.8666 11.1785 6.17916C10.866 6.49172 10.442 6.66732 10 6.66732Z"
+                fill="#909090" />
+            </svg>
+          </td>
+        </tr>
+      </table>
+
+      <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
+        <p (click)="changePage(currentPage - 1)" [ngClass]="{'disabled': currentPage === 1}"
+          style="font-family: Poppins, sans-serif; font-weight: 400; color: #909090; margin-bottom: 0; cursor: pointer;">
+          Anterior</p>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div *ngFor="let page of [].constructor(totalPages); let i = index" (click)="changePage(i + 1)"
+            [ngClass]="{'active-page': currentPage === i + 1}"
+            [style.background-color]="currentPage === i + 1 ? '#035A7A' : 'transparent'"
+            style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer;">
+            <p [style.color]="currentPage === i + 1 ? 'white' : '#909090'"
+              style="font-family: Poppins, sans-serif; font-weight: 400; margin-bottom: 0;">
+              {{ i + 1 }}</p>
+          </div>
+        </div>
+        <p (click)="changePage(currentPage + 1)" [ngClass]="{'disabled': currentPage === totalPages}"
+          [ngStyle]="{'cursor': currentPage === totalPages ? 'not-allowed' : 'pointer'}"
+          style="font-family: Poppins, sans-serif; font-weight: 500; color: #035A7A; margin-bottom: 0;">
+          Próximo
+        </p>
       </div>
     </div>
   </div>

@@ -14,10 +14,12 @@ export class RoundApprovalListComponent implements OnInit {
   titleHeader: TitleHeader;
   companies = [];
   total = [];
-  status = 'PENDING_EVALUATION';
+  status = 'APPROVED';
   loader: boolean;
   textRegister = 'Nenhum registro encontrado.';
-  p = 1;
+  totalPages: number;
+  itemsPerPage: number = 12;
+  currentPage: number = 1;
   responsive = true;
   labels: any = {
       previousLabel: 'Anterior',
@@ -33,21 +35,38 @@ export class RoundApprovalListComponent implements OnInit {
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Administração / Atualizar Dados';
     this.data.changeTitle(this.titleHeader);
+    this.loadCompanies();
+  }
+
+  loadCompanies() {
+    this.companies = [];
     this.getAllByStatus(this.status);
-    this.getAllByStatus('APPROVED');
   }
 
   private getAllByStatus(status: any): void {
     this.loader = true;
     this.companyService.getAllByStatus(status).subscribe(
       (response) => {
-
         for (const company of response) {
           this.companies.push(company);
         }
-
-        this.loader = false;
+        this.calculateTotalPages();
       });
+    this.loader = false;
+  }
+
+  calculateTotalPages() {
+    const totalCompanies = this.companies.length;
+    this.totalPages = Math.ceil(totalCompanies / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+
+  setStatus(newStatus: string) {
+    this.status = newStatus;
+    this.loadCompanies();
   }
 
   public maskModel(model: string): string {

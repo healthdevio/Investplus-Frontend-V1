@@ -16,6 +16,19 @@ tr {
   cursor: pointer;
 }
 
+.even-row {
+  background-color: #FAFAFA;
+}
+
+.odd-row {
+  background-color: #FFFFFF;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .box {
   position: relative;
   border-radius: 3px;
