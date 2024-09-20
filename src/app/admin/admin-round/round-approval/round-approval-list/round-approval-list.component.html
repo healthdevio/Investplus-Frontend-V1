@@ -35,7 +35,7 @@
             </svg>
             <input
               style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
-              placeholder="Pesquisar empresas" />
+              placeholder="Pesquisar empresas" (input)="filterCompanies($event.target.value)" />
           </div>
           
           <div style="display: flex; align-items: center; gap: 10px;">
@@ -69,7 +69,7 @@
         <tr [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
           style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;"
           [routerLink]="'/admin/rounds/approval/'+company.id+'/details'"
-          *ngFor="let company of companies | paginate: { itemsPerPage: 12, currentPage: p }; let i = index">
+          *ngFor="let company of filteredCompanies | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ company.name }}</td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.responsible.name }}</td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.cnpj | cnpj }}</td>

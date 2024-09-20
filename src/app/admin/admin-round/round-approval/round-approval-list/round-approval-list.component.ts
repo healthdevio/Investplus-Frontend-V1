@@ -14,6 +14,7 @@ export class RoundApprovalListComponent implements OnInit {
   titleHeader: TitleHeader;
   companies = [];
   total = [];
+  filteredCompanies = [];
   status = 'APPROVED';
   loader: boolean;
   textRegister = 'Nenhum registro encontrado.';
@@ -40,6 +41,7 @@ export class RoundApprovalListComponent implements OnInit {
 
   loadCompanies() {
     this.companies = [];
+    this.filteredCompanies = [];
     this.getAllByStatus(this.status);
   }
 
@@ -49,10 +51,11 @@ export class RoundApprovalListComponent implements OnInit {
       (response) => {
         for (const company of response) {
           this.companies.push(company);
+          this.filteredCompanies.push(company);
         }
         this.calculateTotalPages();
+        this.loader = false;
       });
-    this.loader = false;
   }
 
   calculateTotalPages() {
@@ -69,12 +72,22 @@ export class RoundApprovalListComponent implements OnInit {
     this.loadCompanies();
   }
 
+  filterCompanies(searchTerm: string) {
+    if (searchTerm) {
+      this.filteredCompanies = this.companies.filter(company =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredCompanies = this.companies;
+    }
+    this.calculateTotalPages();
+  }
+
   public maskModel(model: string): string {
     const aux = TiposModalidades[model];
     if (!aux) {
-      return ""
+      return "";
     }
-
     return aux;
   }
 
