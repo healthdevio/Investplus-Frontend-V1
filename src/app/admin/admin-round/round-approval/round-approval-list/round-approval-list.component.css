@@ -20,6 +20,14 @@ tr {
   background-color: #FAFAFA;
 }
 
+.hover-svg:hover path {
+  fill: #035A7A;
+}
+
+.hover-background:hover {
+  background-color: #FBFBFB;
+}
+
 .odd-row {
   background-color: #FFFFFF;
 }

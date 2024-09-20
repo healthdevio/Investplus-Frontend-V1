@@ -26,6 +26,7 @@ export class RoundApprovalListComponent implements OnInit {
       previousLabel: 'Anterior',
       nextLabel: 'Próximo'
   };
+  isDropdownVisible: number | null = null;
 
   constructor(
     private companyService: CompanyService,
@@ -81,6 +82,10 @@ export class RoundApprovalListComponent implements OnInit {
       this.filteredCompanies = this.companies;
     }
     this.calculateTotalPages();
+  }
+
+  toggleDropdown(index: number) {
+    this.isDropdownVisible = this.isDropdownVisible === index ? null : index;
   }
 
   public maskModel(model: string): string {
