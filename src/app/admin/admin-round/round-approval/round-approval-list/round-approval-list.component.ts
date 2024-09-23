@@ -27,11 +27,33 @@ export class RoundApprovalListComponent implements OnInit {
       nextLabel: 'Próximo'
   };
   isDropdownVisible: number | null = null;
+  isSingUpCompanyModalOpen = false;
+
+  singUpCompanySessions = [
+    {
+      name: "Geral"
+    },
+    {
+      name: "Responsável"
+    },
+    {
+      name: "Endereço"
+    },
+    {
+      name: "Indicadores"
+    },
+  ]
 
   constructor(
     private companyService: CompanyService,
     private data: TitleService
   ) { }
+
+  selectedSession = "Geral";
+
+  selectSession(sessionName: string) {
+    this.selectedSession = sessionName;
+  }
 
   ngOnInit() {
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
@@ -46,6 +68,8 @@ export class RoundApprovalListComponent implements OnInit {
     this.getAllByStatus(this.status);
   }
 
+
+
   private getAllByStatus(status: any): void {
     this.loader = true;
     this.companyService.getAllByStatus(status).subscribe(
@@ -57,6 +81,10 @@ export class RoundApprovalListComponent implements OnInit {
         this.calculateTotalPages();
         this.loader = false;
       });
+  }
+
+  changeModalStatus() {
+    this.isSingUpCompanyModalOpen = !this.isSingUpCompanyModalOpen;
   }
 
   calculateTotalPages() {

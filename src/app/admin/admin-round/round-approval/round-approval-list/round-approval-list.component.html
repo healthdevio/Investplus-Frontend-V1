@@ -3,6 +3,25 @@
   <div 
   style="padding: 40px 20px;"
   *ngIf="!loader">
+
+    <div 
+    *ngIf="isSingUpCompanyModalOpen"
+    style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
+      <div style="width: 500px; background-color: white; border-radius: 8px; padding: 24px 20px;">
+        <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
+          <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Cadastrar empresa</p>
+          <p style="color: #777777;">Preencha aqui os dados da empresa.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 32px; overflow-x: auto; margin-top: 28px; border-bottom: 1px solid #E5E5E5;">
+          <div *ngFor="let session of singUpCompanySessions" (click)="selectSession(session.name)"
+            [style.color]="session.name === selectedSession ? '#035A7A' : '#505050'">
+            <p style="margin-bottom: 20px; white-space: nowrap; cursor: pointer;">{{ session.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <h1 style="color: #1F1F1F;">Empresas</h1>
     <p style="color: #505050;">Verifique aqui todas as empresas da plataforma.</p>
 
@@ -51,6 +70,7 @@
             </button>
 
             <button
+              (click)="changeModalStatus(true)"
               style=" height: 36px; background-color: #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 0px 32px; margin-bottom: 10px;">
               <p style="margin-bottom: 0; color: white;">Cadastrar empresa +</p>
             </button>
@@ -170,3 +190,5 @@
     </div>
   </div>
 </section>
+
+//[routerLink]="'/admin/rounds/approval/'+company.id+'/details'"
