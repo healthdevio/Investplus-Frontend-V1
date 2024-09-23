@@ -9,7 +9,16 @@
     style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
       <div style="width: 500px; background-color: white; border-radius: 8px; padding: 24px 20px;">
         <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
-          <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Cadastrar empresa</p>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Cadastrar empresa</p>
+            <svg 
+            style="cursor: pointer;"
+            (click)="changeModalStatus()"
+            width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.59 0L5 3.59L1.41 0L0 1.41L3.59 5L0 8.59L1.41 10L5 6.41L8.59 10L10 8.59L6.41 5L10 1.41L8.59 0Z"
+                fill="#C4C4C4" />
+            </svg>
+          </div>
           <p style="color: #777777;">Preencha aqui os dados da empresa.</p>
         </div>
 
