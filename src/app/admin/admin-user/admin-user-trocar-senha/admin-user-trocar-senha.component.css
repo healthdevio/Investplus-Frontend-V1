@@ -3,18 +3,24 @@
     font-weight: bold;
 }
 
-.password-strength.fraca {
-    color: red;
+.progress {
+    height: 20px;
 }
 
-.password-strength.media {
-    color: orange;
+.bg-danger {
+    background-color: red;
 }
 
-.password-strength.forte {
-    color: green;
+.bg-warning {
+    background-color: orange;
 }
 
-.password-strength.muito-forte {
-    color: darkgreen;
+.bg-success {
+    background-color: green;
+}
+
+ul {
+    margin-top: 10px;
+    color: darkred;
+    font-size: 14px;
 }

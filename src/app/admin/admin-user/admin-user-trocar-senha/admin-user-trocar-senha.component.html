@@ -6,20 +6,34 @@
                     [errorMessage]="'Senha é obrigatório'">
                     <input type="password" formControlName="senhaAtual" class="form-control" />
                 </app-form>
+
                 <app-form [label]="'Nova senha'"
                     [errorMessage]="'Nova senha é obrigatório'">
                     <input type="password" formControlName="novaSenha" class="form-control" />
                 </app-form>
 
-                <!-- Indicador de força da senha -->
-                <div *ngIf="form.get('novaSenha').value" class="password-strength">
-                    Força da senha: {{ senhaStrength }}
-                </div>
-
                 <app-form [label]="'Repetir nova senha'"
                     [errorMessage]="'Nova senha é obrigatório'">
                     <input type="password" formControlName="repetirSenha" class="form-control" />
                 </app-form>
+
+                <div *ngIf="form.get('novaSenha').value || form.get('repetirSenha').value" class="password-strength">
+                    <label>Força da senha: {{ senhaStrength }}</label>
+                    <div class="progress">
+                        <div class="progress-bar" 
+                             [ngClass]="{
+                                'bg-danger': senhaScore <= 2, 
+                                'bg-warning': senhaScore === 3, 
+                                'bg-success': senhaScore === 4, 
+                                'bg-very-strong': senhaScore === 5}"
+                             [style.width]="(senhaScore / 5) * 100 + '%'">
+                        </div>
+                    </div>
+                    <ul *ngIf="senhaSuggestions.length > 0">
+                        <li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
+                    </ul>
+                </div>
+
                 <button class="btn" type="submit" [disabled]="(!form.valid || loading)">Alterar</button>
             </div>
         </div>

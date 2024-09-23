@@ -21,6 +21,8 @@ declare var toastr: any;
 export class AdminUserTrocarSenhaComponent implements OnInit {
     form: FormGroup;
     senhaStrength: string = ''; 
+    senhaScore: number = 0; 
+    senhaSuggestions: string[] = [];
     loading: boolean = false;
 
     constructor(
@@ -39,7 +41,10 @@ export class AdminUserTrocarSenhaComponent implements OnInit {
         });
 
         this.form.get('novaSenha').valueChanges.subscribe(value => {
-            this.senhaStrength = this.passwordStrengthService.calculateStrength(value);
+            const result = this.passwordStrengthService.calculateStrength(value);
+            this.senhaStrength = result.level;
+            this.senhaScore = result.score;
+            this.senhaSuggestions = result.suggestions;
         });
     }
 
