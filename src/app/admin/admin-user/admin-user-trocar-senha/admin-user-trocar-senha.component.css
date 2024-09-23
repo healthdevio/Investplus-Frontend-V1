@@ -1,0 +1,20 @@
+.password-strength {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.password-strength.fraca {
+    color: red;
+}
+
+.password-strength.media {
+    color: orange;
+}
+
+.password-strength.forte {
+    color: green;
+}
+
+.password-strength.muito-forte {
+    color: darkgreen;
+}

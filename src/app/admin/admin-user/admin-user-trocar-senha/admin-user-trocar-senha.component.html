@@ -10,6 +10,12 @@
                     [errorMessage]="'Nova senha é obrigatório'">
                     <input type="password" formControlName="novaSenha" class="form-control" />
                 </app-form>
+
+                <!-- Indicador de força da senha -->
+                <div *ngIf="form.get('novaSenha').value" class="password-strength">
+                    Força da senha: {{ senhaStrength }}
+                </div>
+
                 <app-form [label]="'Repetir nova senha'"
                     [errorMessage]="'Nova senha é obrigatório'">
                     <input type="password" formControlName="repetirSenha" class="form-control" />

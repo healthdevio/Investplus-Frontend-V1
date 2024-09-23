@@ -1,4 +1,5 @@
 import { LoaderService } from './service/loader.service';
+import { PasswordStrengthService } from './service/PasswordStrengthService.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from './service/user.service';
@@ -52,6 +53,7 @@ import { BankService } from './service/bank.service';
     CompanyFinancialService,
     InvestmentInstallmentService,
     LoaderService,
+    PasswordStrengthService,
     CompanyPartnersService,
     BankService
   ],

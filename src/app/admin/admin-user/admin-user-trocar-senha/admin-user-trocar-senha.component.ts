@@ -8,6 +8,7 @@ import {
     Validators,
     FormControl,
 } from "@angular/forms";
+import { PasswordStrengthService } from './../../../core/service/PasswordStrengthService.service';
 import { finalize } from 'rxjs/operators';
 
 declare var toastr: any;
@@ -19,14 +20,15 @@ declare var toastr: any;
 })
 export class AdminUserTrocarSenhaComponent implements OnInit {
     form: FormGroup;
-
+    senhaStrength: string = ''; 
     loading: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private cognitoUtil: CognitoUtil,
-        private loaderService: LoaderService
+        private loaderService: LoaderService,
+        private passwordStrengthService: PasswordStrengthService  
     ) { }
 
     ngOnInit(): void {
@@ -34,6 +36,10 @@ export class AdminUserTrocarSenhaComponent implements OnInit {
             senhaAtual: ['', [Validators.required]],
             novaSenha: ['', [Validators.required]],
             repetirSenha: ['', [Validators.required]],
+        });
+
+        this.form.get('novaSenha').valueChanges.subscribe(value => {
+            this.senhaStrength = this.passwordStrengthService.calculateStrength(value);
         });
     }
 
