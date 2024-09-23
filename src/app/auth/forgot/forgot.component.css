@@ -99,3 +99,34 @@ label {
     transform: translateX(-2px);
   }
 }
+
+.password-strength {
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.progress {
+  height: 20px;
+}
+
+.bg-danger {
+  background-color: red;
+}
+
+.bg-warning {
+  background-color: orange;
+}
+
+.bg-success {
+  background-color: green;
+}
+
+.bg-very-strong {
+  background-color: #006400; 
+}
+
+ul {
+  margin-top: 10px;
+  color: darkred;
+  font-size: 14px;
+}
