@@ -5,6 +5,7 @@ import { ChallengeParameters, CognitoCallback, LoggedInCallback } from '../../co
 import { UserRegistrationService } from '../../core/service/cognito/user-registration.service';
 import { InvestorService } from '../../core/service/investor.service';
 import { LoaderService } from './../../core/service/loader.service';
+import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service'; 
 
 declare var toastr: any;
 
@@ -23,6 +24,10 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
   registrationUser: NewPasswordUser;
   router: Router;
   errorMessage: any;
+  senhaStrength: string = ''; 
+  senhaScore: number = 0;
+  senhaSuggestions: string[] = [];
+  passwordFieldType: string = 'password';
   email: string;
   password: string;
   messageReturn: string;
@@ -40,14 +45,15 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
   login: boolean;
   newPassword: boolean;
   alert: boolean;
-  passwordFieldType: string = 'password';
 
   constructor(
     router: Router,
     public userService: UserLoginService,
     public userRegistration: UserRegistrationService,
     private investorService: InvestorService,
-    private loadService: LoaderService
+    private loadService: LoaderService,
+    private passwordStrengthService: PasswordStrengthService,
+
   ) {
     this.router = router;
   }
@@ -175,5 +181,18 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
 
   togglePasswordVisibility() {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  onPasswordInput() {
+    if (this.registrationUser.password) {
+      const result = this.passwordStrengthService.calculateStrength(this.registrationUser.password);
+      this.senhaStrength = result.level;
+      this.senhaScore = result.score;
+      this.senhaSuggestions = result.suggestions;
+    } else {
+      this.senhaStrength = '';
+      this.senhaScore = 0;
+      this.senhaSuggestions = [];
+    }
   }
 }
