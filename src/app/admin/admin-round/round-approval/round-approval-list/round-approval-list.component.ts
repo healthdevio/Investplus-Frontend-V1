@@ -6,6 +6,11 @@ import { TitleHeader } from '../../../../core/interface/title-header';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoaderService } from './../../../../core/service/loader.service';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
+import { CepMaskPipe } from './../../../../core/pipes/cep-mask.pipe';
+import { CpfMaskPipe } from './../../../../core/pipes/cpf-mask.pipe';
+import { PhoneMaskPipe } from './../../../../core/pipes/phone-mask.pipe';
+import { CnpjMaskPipe } from './../../../../core/pipes/cnpj-mask.pipe';
+import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
 
 declare var toastr: any;
 @Component({
@@ -14,7 +19,6 @@ declare var toastr: any;
   styleUrls: ['./round-approval-list.component.css']
 })
 export class RoundApprovalListComponent implements OnInit {
-
   titleHeader: TitleHeader;
   form: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -34,6 +38,7 @@ export class RoundApprovalListComponent implements OnInit {
   };
   isDropdownVisible: number | null = null;
   isSingUpCompanyModalOpen = false;
+  isEditCompanyModalOpen = false;
 
   singUpCompanySessions = [
     {
@@ -59,6 +64,11 @@ export class RoundApprovalListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private dateMask: DateMaskPipe,
+    private cepMask: CepMaskPipe,
+    private cpfMask: CpfMaskPipe,
+    private phoneMask: PhoneMaskPipe,
+    private cnpjMask: CnpjMaskPipe,
+    private moneyMask: MoneyMaskPipe,
   ) { }
 
   selectedSession = "Geral";
@@ -73,6 +83,11 @@ export class RoundApprovalListComponent implements OnInit {
     this.data.changeTitle(this.titleHeader);
     this.loadCompanies();
     this.initForm();
+
+    const $this = this;
+    setTimeout(function () {
+      $this.initMask();
+    }, 1000);
   }
 
   public initForm(): void {
@@ -243,7 +258,88 @@ export class RoundApprovalListComponent implements OnInit {
     this.getAllByStatus(this.status);
   }
 
-
+  public getCompany(id): void {
+    this.companyService.getCompany(id).subscribe((response) => {
+      this.form.get('address').setValue({
+        city: response.address.city,
+        complement: response.address.complement,
+        neighborhood: response.address.neighborhood,
+        number: response.address.number,
+        street: response.address.street,
+        uf: response.address.uf,
+        zipCode: this.cepMask.transform(response.address.zipCode)
+      });
+      this.form.get('responsible').setValue({
+        name: response.responsible.name,
+        profession: response.responsible.profession,
+        dateOfBirth: this.dateMask.transform(response.responsible.dateOfBirth),
+        rg: response.responsible.rg,
+        cpf: this.cpfMask.transform(response.responsible.cpf),
+        email: response.responsible.email,
+        phone: this.phoneMask.transform(response.responsible.phone)
+      });
+      this.form.get('businessName').setValue(response.businessName);
+      this.form.get('cnpj').setValue(this.cnpjMask.transform(response.cnpj));
+      this.form.get('website').setValue(response.website);
+      this.form.get('facebook').setValue(response.facebook);
+      this.form.get('linkedin').setValue(response.linkedin);
+      this.form.get('twitter').setValue(response.twitter);
+      this.form.get('category').setValue(response.category);
+      this.form.get('type').setValue(response.type);
+      this.form.get('yearOfIncorporation').setValue(response.yearOfIncorporation);
+      this.form.get('generalInfo').setValue(response.generalInfo);
+      this.form.get('revenueModel').setValue(response.revenueModel);
+      this.form.get('customersDescription').setValue(response.customersDescription);
+      this.form.get('competitors').setValue(response.competitors);
+      this.form.get('benchmarks').setValue(response.benchmarks);
+      this.form.get('numberOfCustomers').setValue(response.numberOfCustomers);
+      this.form.get('payingCustomers').setValue(response.payingCustomers);
+      this.form.get('grossRevenue').setValue(response.grossRevenue);
+      this.form.get('operations').setValue(response.operations);
+      this.form.get('totalExpenditure').setValue(this.moneyMask.transform(response.totalExpenditure));
+      this.form.get('investments').setValue(response.investments);
+      this.form.get('investmentsDeposited').setValue(response.investmentsDeposited);
+      this.form.get('incubation').setValue(response.incubation);
+      this.form.get('valuation').setValue(response.valuation);
+      this.form.get('roundValue').setValue(response.roundValue);
+      this.form.get('providers').setValue(response.providers);
+      this.form.get('description').setValue(response.description);
+      this.form.get('contractModel').setValue(response.contractModel);
+      this.form.get('hasDividends').setValue(response.hasDividends);
+      this.form.get('model').setValue(response.model);
+      this.form.get('video').setValue(response.video);
+      this.form.get('pitch').setValue(response.pitch);
+      this.form.get('name').setValue(response.name);
+      this.form.get('upgestao').setValue(response.upgestao);
+      this.form.get('bank').setValue(response.bank);
+      this.form.get('payment').setValue(response.payment);
+      this.form.get('managementIndicator').setValue(response.managementIndicator);
+      this.form.get('technologyIndicator').setValue(response.technologyIndicator);
+      this.form.get('strategicIndicator').setValue(response.strategicIndicator);
+      this.form.get('intellectualIndicator').setValue(response.intellectualIndicator);
+      this.form.get('societyIndicator').setValue(response.societyIndicator);
+      this.form.get('peopleIndicator').setValue(response.peopleIndicator);
+      this.form.get('processIndicator').setValue(response.processIndicator);
+      this.form.get('resourceIndicator').setValue(response.resourceIndicator);
+      this.form.get('cac').setValue(this.moneyMask.transform(response.cac));
+      this.form.get('averageTicket').setValue(this.moneyMask.transform(response.averageTicket));
+      this.form.get('ltv').setValue(this.moneyMask.transform(response.ltv));
+      this.form.get('activeCustomers').setValue(response.activeCustomers);
+      this.form.get('cmv').setValue(this.moneyMask.transform(response.cmv));
+      this.form.get('score').setValue(response.score);
+      this.form.get('cnae').setValue(response.cnae);
+      this.form.get('nire').setValue(response.nire);
+      this.form.get('legalType').setValue(response.legalType);
+      this.form.get('accountAgency').setValue(response.accountAgency);
+      this.form.get('accountBank').setValue(response.accountBank);
+      this.form.get('accountNumber').setValue(response.accountNumber);
+      this.form.get('volutiId').setValue(response.volutiId);
+      this.form.get('ltvCac').setValue(this.moneyMask.transform(response.ltvCac));
+      this.form.get('cashburnIndicator').setValue(this.moneyMask.transform(response.cashburnIndicator));
+      this.form.get('sharePriceIndicator').setValue(this.moneyMask.transform(response.sharePriceIndicator));
+      this.initMask();
+    });
+  }
 
   private getAllByStatus(status: any): void {
     this.loader = true;
@@ -262,6 +358,11 @@ export class RoundApprovalListComponent implements OnInit {
     this.isSingUpCompanyModalOpen = !this.isSingUpCompanyModalOpen;
   }
 
+  changeEditModalStatus(id: any) {
+    this.getCompany(id);
+    this.isEditCompanyModalOpen = !this.isEditCompanyModalOpen;
+  }
+
   calculateTotalPages() {
     const totalCompanies = this.companies.length;
     this.totalPages = Math.ceil(totalCompanies / this.itemsPerPage);
@@ -275,6 +376,8 @@ export class RoundApprovalListComponent implements OnInit {
     this.status = newStatus;
     this.loadCompanies();
   }
+
+
 
   filterCompanies(searchTerm: string) {
     if (searchTerm) {
@@ -297,6 +400,33 @@ export class RoundApprovalListComponent implements OnInit {
       return "";
     }
     return aux;
+  }
+
+  public initMask(): void {
+    const SPMaskBehavior = function (val) {
+      return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+      spOptions = {
+        onKeyPress: function (val, e, field, options) {
+          field.mask(SPMaskBehavior.apply({}, arguments), options);
+        }
+      };
+
+    $('.phone').mask(SPMaskBehavior, spOptions);
+    $('.zipCode').mask('00000-000');
+    $('.dateOfBirth').mask('00/00/0000');
+    $('.money').mask('#.##0,00', {
+      reverse: true
+    });
+    $('.yearOfIncorporation').mask('0000', {
+      reverse: true
+    });
+    $('.cnpj').mask('00.000.000/0000-00', {
+      reverse: true
+    });
+    $('.cpf').mask('000.000.000-00', {
+      reverse: true
+    });
   }
 
 }
