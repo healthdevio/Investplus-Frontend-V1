@@ -11,8 +11,6 @@
         </a>
       </div>
 
-      <!-- <router-outlet></router-outlet> -->
-
       <p style="
       font-family: Poppins, sans-serif;
       font-size: 19px;
@@ -71,6 +69,7 @@
           </div>          
         </form>
       </div>
+      
       <div *ngIf="!statusForgot">
         <div class="callout callout-info">
           <h4>Regras de segurança</h4>
@@ -79,10 +78,11 @@
             maiúscula e um numeral.
           </p>
         </div>
+
         <form class="form-signin" method="POST" action="#" role="form">
           <div class="form-group">
             <label class="control-label" for="verificationCode"
-              >Codigo de verificação</label
+              >Código de verificação</label
             >
             <input
               id="verificationCode"
@@ -95,6 +95,7 @@
               style="background-color: #F5F5FA; border: none; padding: 20px;"
             />
           </div>
+
           <div class="form-group">
             <label class="control-label" for="newPassword">Nova senha</label>
             <input
@@ -102,29 +103,45 @@
               type="password"
               maxlength="25"
               class="form-control"
-              length="40"
               [(ngModel)]="password"
+              (input)="onPasswordInput()"
               placeholder="Sua senha"
               [ngModelOptions]="{ standalone: true }"
-              style="background-color: #F5F5FA; border: none; 	padding: 20px;"
+              style="background-color: #F5F5FA; border: none; padding: 20px;"
             />
           </div>
+
+          <div *ngIf="password" class="password-strength">
+            <label>Força da senha: {{ senhaStrength }}</label>
+            <div class="progress">
+              <div class="progress-bar" 
+                   [ngClass]="{
+                      'bg-danger': senhaScore <= 2, 
+                      'bg-warning': senhaScore === 3, 
+                      'bg-success': senhaScore === 4, 
+                      'bg-very-strong': senhaScore === 5}"
+                   [style.width]="(senhaScore / 5) * 100 + '%'">
+              </div>
+            </div>
+            <ul *ngIf="senhaSuggestions.length > 0">
+              <li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
+            </ul>
+          </div>
+
           <div class="form-group">
-            <label class="control-label" for="confirmPassword"
-              >Confirmar senha</label
-            >
+            <label class="control-label" for="confirmPassword">Confirmar senha</label>
             <input
               id="confirmPassword"
               type="password"
               maxlength="25"
               class="form-control"
-              length="40"
               [(ngModel)]="confirmPassword"
               placeholder="Repita sua senha"
               [ngModelOptions]="{ standalone: true }"
-              style="background-color: #F5F5FA; border: none; 	padding: 20px;"
+              style="background-color: #F5F5FA; border: none; padding: 20px;"
             />
           </div>
+
           <div class="form-group text-center">
             <button
               (click)="onSubmit()"

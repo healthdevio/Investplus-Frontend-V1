@@ -1,5 +1,4 @@
 <div class="login-box" style="border: 1px solid #E5E5E5">
-	<!-- Box do login -->
 	<div *ngIf="!mfaStep">
 	  <div class="login-box-body">
 		<div *ngIf="login">
@@ -9,17 +8,13 @@
 			</a>
 		  </div>
 		  
-			<div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-				<p
-					style="font-weight: 400; font-size: 16px; line-height: 16px; font-family: Poppins, sans-serif; color: #5F5F5F; margin-top: -9%; margin-bottom: 9%;">
-					Entre para iniciar sua sessão!</p>
-			</div>
+		  <p style="font-weight: 400; font-size: 16px; color: #5F5F5F; margin-top: -9%; margin-bottom: 9%;">
+			Entre para iniciar sua sessão!
+		  </p>
   
 		  <form class="form-signin" method="POST" action="#" role="form" style="margin-left: 5%; gap: 1;">
 			<div class="form-group">
-			  <label class="control-label" for="signupEmail" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">
-				E-mail
-			  </label>
+			  <label for="signupEmail">E-mail</label>
 			  <div class="input-group">
 				<input
 				  (blur)="validateEmail()"
@@ -40,9 +35,7 @@
 			</div>
   
 			<div class="form-group">
-			  <label class="control-label" for="signupPassword" style="font-family: Poppins, sans-serif; font-weight: 500; font-size: 14px; line-height: 16px; color: #27272A; margin-bottom: 0.7em;">
-				Senha
-			  </label>
+			  <label for="signupPassword">Senha</label>
 			  <div class="input-group">
 				<input
 				  id="signupPassword"
@@ -57,16 +50,15 @@
 				/>
 				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
 			  </div>
-			  <div class="forgot-password" style="text-align: left; margin-top: 0.5em;">
-				<span style="font-family: Poppins, sans-serif; font-size: 13px; font-weight: 400; line-height: 16.8px; color: #38383D;">
-				  Esqueceu sua senha? 
+			  <div class="forgot-password">
+				<span>Esqueceu sua senha? 
 				  <a [routerLink]="['/auth/forgot']" style="color: #003A7D;">Clique aqui</a>
 				</span>
 			  </div>
 			</div>
   
 			<div class="row text-center">
-			  <div style="margin-top: -0.8em;" class="col-xs-11 text-center">
+			  <div class="col-xs-11 text-center">
 				<button
 				  (click)="onLogin()"
 				  id="signupSubmit"
@@ -78,22 +70,21 @@
 				</button>
 			  </div>
 			</div>
-			<div style="margin-top: 1em; font-family: Poppins, sans-serif; font-size: 13px; font-weight: 400; line-height: 16.8px; color: #38383D; width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+			<div style="margin-top: 1em;">
 				Ainda não tem uma conta? 
 				<a [routerLink]="['/auth/register']" style="color: #003A7D;">Cadastre-se agora!</a>
 			</div>
 		  </form>
 		</div>
+
 		<div *ngIf="!login">
 		  <form class="form-signin" method="POST" action="#" role="form">
 			<p class="login-box-msg text-center">
-			  Digite por favor sua senha definitiva para entrar na
-			  plataforma.
+			  Digite por favor sua senha definitiva para entrar na plataforma.
 			</p>
+
 			<div class="form-group">
-			  <label class="control-label" for="signupPassword">
-				Digite sua nova senha *
-			  </label>
+			  <label for="signupPassword">Digite sua nova senha *</label>
 			  <div class="input-group">
 				<input
 				  id="signupPassword"
@@ -101,14 +92,32 @@
 				  maxlength="25"
 				  class="form-control"
 				  placeholder="Digite pelo menos 8 caracteres"
-				  length="40"
 				  [(ngModel)]="registrationUser.password"
+				  (input)="onPasswordInput()"
 				  [ngModelOptions]="{ standalone: true }"
 				  style="background-color: #F5F5FA; padding-right: 40px;"
 				/>
 				<i (click)="togglePasswordVisibility()" [class]="passwordFieldType === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'" class="eye-icon"></i>
 			  </div>
 			</div>
+
+			<div *ngIf="registrationUser.password" class="password-strength">
+			  <label>Força da senha: {{ senhaStrength }}</label>
+			  <div class="progress">
+				<div class="progress-bar" 
+					 [ngClass]="{
+						'bg-danger': senhaScore <= 2, 
+						'bg-warning': senhaScore === 3, 
+						'bg-success': senhaScore === 4, 
+						'bg-very-strong': senhaScore === 5}"
+					 [style.width]="(senhaScore / 5) * 100 + '%'">
+				</div>
+			  </div>
+			  <ul *ngIf="senhaSuggestions.length > 0">
+				<li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
+			  </ul>
+			</div>
+
 			<div class="form-group text-center">
 			  <button
 				(click)="onRegister()"
@@ -119,12 +128,12 @@
 				Confirmar
 			  </button>
 			</div>
+
 			<p class="login-box-password">
-			  * A senha deve conter no mínimo 6 caracteres, incluindo
-			  uma letra maiúscula e um numeral.
+			  * A senha deve conter no mínimo 6 caracteres, incluindo uma letra maiúscula e um numeral.
 			</p>
 		  </form>
 		</div>
 	  </div>
 	</div>
-  </div>
+</div>

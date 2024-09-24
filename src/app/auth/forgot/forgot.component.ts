@@ -1,9 +1,10 @@
-import { LoaderService } from './../../core/service/loader.service';
 import { Component } from '@angular/core';
 import { CognitoCallback } from '../../core/service/cognito/cognito.service';
 import { Router } from '@angular/router';
 import { UserLoginService } from '../../core/service/cognito/user-login.service';
 import { EventEmitterService } from '../../core/service/event-emitter-service.service';
+import { LoaderService } from './../../core/service/loader.service';
+import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -23,11 +24,16 @@ export class ForgotComponent implements CognitoCallback {
   statusForgot: boolean;
   loader: boolean = false;
 
+  senhaStrength: string = ''; 
+  senhaScore: number = 0;
+  senhaSuggestions: string[] = [];
+
   constructor(
     public router: Router,
     public userService: UserLoginService,
     private eventEmitter: EventEmitterService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private passwordStrengthService: PasswordStrengthService  
   ) {
     this.statusForgot = true;
   }
@@ -53,6 +59,19 @@ export class ForgotComponent implements CognitoCallback {
     }
   }
 
+  onPasswordInput() {
+    if (this.password) {
+      const result = this.passwordStrengthService.calculateStrength(this.password);
+      this.senhaStrength = result.level;
+      this.senhaScore = result.score;
+      this.senhaSuggestions = result.suggestions;
+    } else {
+      this.senhaStrength = '';
+      this.senhaScore = 0;
+      this.senhaSuggestions = [];
+    }
+  }
+
   cognitoCallback(message: string, result: any) {
     this.loader = false;
     this.loaderService.load(this.loader);
@@ -75,28 +94,18 @@ export class ForgotComponent implements CognitoCallback {
         });
       }
     } else {
-      if (message === 'Username/client id combination not found.') {
-        toastr.error('E-mail inválido');
-      } else if (message === 'Password does not conform to policy: Password must have uppercase characters') {
-        toastr.error('A senha deve conter caracteres maiúsculos');
-      } else if (message === 'Password does not conform to policy: Password must have numeric characters') {
-        toastr.error('A senha deve conter caracteres numericos');
-      } else if (message === '1 validation error detected: Value at \'password\' failed to satisfy constraint: Member must have length greater than or equal to 6') {
-        toastr.error('A senha deve conter no mínimo 6 caracteres');
-        // tslint:disable-next-line:curly
-      } else if (message === '2 validation errors detected: Value at \'password\' failed to satisfy constraint: Member must have length greater than or equal to 6; Value at \'password\' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\\S]+.*[\\S]+$') {
-        toastr.error('A senha deve conter ao menos uma letra maiscula e um caracter numérico.');
-      } else if (message === 'Password does not conform to policy: Password not long enough') {
-        toastr.error('A senha deve conter no mínimo 6 caracteres');
-      } else if (message === 'Attempt limit exceeded, please try after some time.') {
-        toastr.error('O limite de tentativas foi excedido. Tente daqui 30 minutos.');
-      } else if (message === 'User password cannot be reset in the current state.') {
-        toastr.error('Não se pode mudar de senha sem antes fazer o login pela primeira vez na plataforma. Favor fazer o login com o código que enviamos de cadastro, o mesmo foi enviado via e-mail.');
-      } else {
-        toastr.error('Sua solicitação não pode ser completada. Tente novamente mais tarde.');
-        this.errorMessage = message;
-      }
+      this.handleError(message);
+    }
+  }
+
+  handleError(message: string) {
+    if (message === 'Username/client id combination not found.') {
+      toastr.error('E-mail inválido');
+    } else if (message.includes('Password')) {
+      toastr.error(message);  
+    } else {
+      toastr.error('Sua solicitação não pode ser completada. Tente novamente mais tarde.');
+      this.errorMessage = message;
     }
   }
 }
-
