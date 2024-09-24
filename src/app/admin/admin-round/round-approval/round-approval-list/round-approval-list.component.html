@@ -1,287 +1,300 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
-  <div 
-  style="padding: 40px 20px;"
-  *ngIf="!loader">
+  <div style="padding: 40px 20px;" *ngIf="!loader">
 
-    <div 
-    *ngIf="isSingUpCompanyModalOpen"
-    style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
-      <div style="width: 500px; background-color: white; border-radius: 8px; padding: 24px 20px;">
-        <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Cadastrar empresa</p>
-            <svg 
-            style="cursor: pointer;"
-            (click)="changeModalStatus()"
-            width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.59 0L5 3.59L1.41 0L0 1.41L3.59 5L0 8.59L1.41 10L5 6.41L8.59 10L10 8.59L6.41 5L10 1.41L8.59 0Z"
-                fill="#C4C4C4" />
-            </svg>
-          </div>
-          <p style="color: #777777;">Preencha aqui os dados da empresa.</p>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 32px; overflow-x: auto; margin-top: 28px; border-bottom: 1px solid #E5E5E5;
-        margin-bottom: 32px;">
-          <div *ngFor="let session of singUpCompanySessions" (click)="selectSession(session.name)"
-            [style.color]="session.name === selectedSession ? '#035A7A' : '#505050'">
-            <p style="margin-bottom: 20px; white-space: nowrap; cursor: pointer;">{{ session.name }}</p>
-          </div>
-        </div>
-
-        <div *ngIf="selectedSession === 'Geral'">
-          <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Nome da empresa</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="Nome"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Razão social</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="Razão social"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-
-          <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Site</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="Site"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
+    <form [formGroup]="form" >
+      <div *ngIf="isSingUpCompanyModalOpen"
+        style="width: 100%; height: 1050px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
+        <div style="width: 500px; background-color: white; border-radius: 8px; padding: 24px 20px;">
+          <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Cadastrar empresa</p>
+              <svg style="cursor: pointer;" (click)="changeModalStatus()" width="10" height="10" viewBox="0 0 10 10"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.59 0L5 3.59L1.41 0L0 1.41L3.59 5L0 8.59L1.41 10L5 6.41L8.59 10L10 8.59L6.41 5L10 1.41L8.59 0Z"
+                  fill="#C4C4C4" />
+              </svg>
             </div>
-
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">CNPJ</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="00.000.000/0000-00"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
+            <p style="color: #777777;">Preencha aqui os dados da empresa.</p>
+          </div>
+      
+          <div style="display: flex; align-items: center; gap: 32px; overflow-x: auto; margin-top: 28px; border-bottom: 1px solid #E5E5E5;
+                margin-bottom: 32px;">
+            <div *ngFor="let session of singUpCompanySessions" (click)="selectSession(session.name)"
+              [style.color]="session.name === selectedSession ? '#035A7A' : '#505050'">
+              <p style="margin-bottom: 20px; white-space: nowrap; cursor: pointer;">{{ session.name }}</p>
             </div>
           </div>
-
-          <div style="margin-bottom: 15px; width: 100%;">
-            <p style="margin-top: 24px;">Modelo</p>
-          
-            <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
-              <div style="display: flex; gap: 10px;">
-                <input type="checkbox" style="border-radius: 100px;" />
-                <p style="color: #707070; margin-bottom: 0;">Startup</p>
+      
+          <div *ngIf="selectedSession === 'Geral'">
+            <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Nome da empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Nome da empresa é obrigatório.'">
+                <input type="text" formControlName="name" placeholder="Nome"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                  type="text">
+              </app-form>
+            </div>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Razão social <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="businessName" placeholder="Razão social"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                  type="text">
+              </app-form>
+            </div>
+      
+            <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Site</p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input type="text" formControlName="website" placeholder="Site"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
               </div>
-              <div style="display: flex; gap: 10px;">
-                <input type="checkbox" style="border-radius: 100px;" />
-                <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">CNPJ <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input type="text" formControlName="cnpj" placeholder="00.000.000/0000-00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
               </div>
             </div>
-          </div>
-
-          
-        </div>
-
-        <div *ngIf="selectedSession === 'Responsável'">
-          <p style="margin-bottom: 0; color: #777777;">Responsável</p>
-        
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Nome</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="Nome completo"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-        
-          <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Profissão</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="Profissão"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
+      
+            <div style="margin-bottom: 15px; width: 100%;">
+              <p style="margin-top: 24px;">Modelo <span style="color: red;">*</span></p>
+      
+              <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
+                <div style="display: flex; gap: 10px;">
+                  <input type="checkbox" style="border-radius: 100px;" />
+                  <p style="color: #707070; margin-bottom: 0;">Startup</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <input type="checkbox" style="border-radius: 100px;" />
+                  <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+                </div>
+              </div>
             </div>
-          
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Data de nascimento</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="dd/mm/aaaa"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
-            </div>
+      
+      
           </div>
-
-          <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">CPF</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="000.000.000-00"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
-            </div>
-          
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">RG</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="0000000000-0"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-              </app-form>
-            </div>
-          </div>
-
-          <p style="margin-bottom: 0; color: #777777;">Contato</p>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">E-mail</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="email@teste.com"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Telefone</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="(00) 00000-0000"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-        </div>
-
-        <div *ngIf="selectedSession === 'Endereço'">
-          <p style="margin-bottom: 0; color: #777777;">Endereço</p>
-        
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">CEP</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="CEP"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Logradouro</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="Logradouro"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-        
-          <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Número</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="Número"
+      
+          <div formGroupName="responsible" *ngIf="selectedSession === 'Responsável'">
+            <p style="margin-bottom: 0; color: #777777;">Responsável</p>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Nome <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="name" placeholder="Nome completo"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                   type="text">
               </app-form>
             </div>
-        
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Bairro</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="Bairro"
+      
+            <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Profissão <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input type="text" formControlName="profession" placeholder="Profissão"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Data de nascimento <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input type="text" formControlName="dateOfBirth" placeholder="dd/mm/aaaa"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+            </div>
+      
+            <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">CPF <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input type="text" formControlName="cpf" placeholder="000.000.000-00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">RG <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input type="text" formControlName="rg" placeholder="0000000000-0"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+            </div>
+      
+            <p style="margin-bottom: 0; color: #777777;">Contato</p>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">E-mail <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="email" placeholder="email@teste.com"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                   type="text">
               </app-form>
             </div>
-          </div>
-
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Complemento</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="Complemento"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-        
-          <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Estado</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="Estado"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                  type="text">
-              </app-form>
-            </div>
-        
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Cidade</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="Cidade"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                  type="text">
-              </app-form>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="selectedSession === 'Indicadores'">
-          <p style="margin-bottom: 0; color: #777777;">Indicadores</p>
-        
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">CAC</p>
-            <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-              <input placeholder="R$ 0,00"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
-            </app-form>
-          </div>
-        
-          <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Ticket Médio</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="Ticket Médio"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                  type="text">
-              </app-form>
-            </div>
-        
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">LTV</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="LTV"
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Telefone <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="phone" placeholder="(00) 00000-0000"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                   type="text">
               </app-form>
             </div>
           </div>
       
-        
-          <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">CMV</p>
-              <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                <input placeholder="R$ 0,00"
+          <div formGroupName="address" *ngIf="selectedSession === 'Endereço'">
+            <p style="margin-bottom: 0; color: #777777;">Endereço </p>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">CEP <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="zipCode" placeholder="CEP"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                   type="text">
               </app-form>
             </div>
-        
-            <div style="width: 100%;">
-              <p style="margin-top: 24px;">Clientes</p>
-              <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                <input placeholder="Clientes"
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Logradouro <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="street" placeholder="Logradouro"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                   type="text">
               </app-form>
+            </div>
+      
+            <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Número <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input formControlName="number" placeholder="Número"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Bairro <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input formControlName="neighborhood" placeholder="Bairro"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+            </div>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Complemento <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input type="text" formControlName="complement" placeholder="Complemento"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                  type="text">
+              </app-form>
+            </div>
+      
+            <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Estado <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input formControlName="uf" placeholder="Estado"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Cidade <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input formControlName="city" placeholder="Cidade"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
-          <div style="width: 100%; border-top: 1px solid #E5E5E5;">
-            <button
-              style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #C7C7C7; border-radius: 4px;">
-              <p style="margin-bottom: 0;">Cadastrar empresa +</p>
-            </button>
+      
+          <div *ngIf="selectedSession === 'Indicadores'">
+            <p style="margin-bottom: 0; color: #777777;">Indicadores</p>
+      
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">CAC</p>
+              <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
+                <input formControlName="cac" type="text" placeholder="R$ 0,00"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                  type="text">
+              </app-form>
+            </div>
+      
+            <div style="margin-bottom: 10px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Ticket Médio <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input formControlName="averageTicket" placeholder="Ticket Médio"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">LTV</p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input formControlName="ltv" placeholder="LTV"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+            </div>
+      
+      
+            <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">CMV</p>
+                <app-form [errorMessage]="'Site da empresa é obrigatório.'">
+                  <input formControlName="cmv" placeholder="R$ 0,00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+      
+              <div style="width: 100%;">
+                <p style="margin-top: 24px;">Clientes <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
+                  <input type="text" formControlName="activeCustomers" placeholder="Clientes"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    type="text">
+                </app-form>
+              </div>
+            </div>
+          </div>
+      
+          <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
+            <div style="width: 100%; border-top: 1px solid #E5E5E5;">
+              <button
+                (click)="onSubmit()"
+                style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
+                <p style="margin-bottom: 0; color: white;">Cadastrar empresa +</p>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
 
     <h1 style="color: #1F1F1F;">Empresas</h1>
     <p style="color: #505050;">Verifique aqui todas as empresas da plataforma.</p>
@@ -292,18 +305,16 @@
       <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
           <div style="display: flex; align-items: center; gap: 32px;">
-            <p (click)="setStatus('APPROVED')" 
-            [ngStyle]="{'color': status === 'APPROVED' ? '#035A7A' : '#000000'}"
+            <p (click)="setStatus('APPROVED')" [ngStyle]="{'color': status === 'APPROVED' ? '#035A7A' : '#000000'}"
               style="cursor: pointer;">
               Empresas ativas
             </p>
-            <p (click)="setStatus('PENDING_EVALUATION')" 
-            [ngStyle]="{'color': status === 'PENDING_EVALUATION' ? '#035A7A' : '#000000'}"
-              style="cursor: pointer;">
+            <p (click)="setStatus('PENDING_EVALUATION')"
+              [ngStyle]="{'color': status === 'PENDING_EVALUATION' ? '#035A7A' : '#000000'}" style="cursor: pointer;">
               Empresas inativas
             </p>
           </div>
-          
+
           <div
             style="height: 2.5em; width: 30%; display: flex; align-items: center; border-radius: 4px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 5px; padding: 0 16px; margin-bottom: 10px;">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -317,21 +328,23 @@
               style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
               placeholder="Pesquisar empresas" (input)="filterCompanies($event.target.value)" />
           </div>
-          
+
           <div style="display: flex; align-items: center; gap: 10px;">
-            <button style="width: 140px; height: 36px; border: 1px solid #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; background-color: white;">
+            <button
+              style="width: 140px; height: 36px; border: 1px solid #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; background-color: white;">
               <p style="margin-bottom: 0; color: #035A7A;">Exportar</p>
 
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 8.00277V14H14V8" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 8.00277V14H14V8" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
                 <path d="M11 7.66602L8 10.666L5 7.66602" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
                   stroke-linejoin="round" />
-                <path d="M7.99724 2V10.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M7.99724 2V10.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </svg>
             </button>
 
-            <button
-              (click)="changeModalStatus(true)"
+            <button (click)="changeModalStatus(true)"
               style=" height: 36px; background-color: #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 0px 32px; margin-bottom: 10px;">
               <p style="margin-bottom: 0; color: white;">Cadastrar empresa +</p>
             </button>
@@ -341,7 +354,7 @@
       </div>
 
       <table style="width: 100%; margin-top: 35px;">
-        <tr >
+        <tr>
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Nome do responsável</th>
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">CNPJ</th>
@@ -352,7 +365,8 @@
           style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
           *ngFor="let company of filteredCompanies | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ company.name }}</td>
-          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.responsible.name }}</td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.responsible.name }}
+          </td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ company.cnpj | cnpj }}</td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
             <span>{{ maskModel(company.model) }}</span>
@@ -367,34 +381,32 @@
 
             <div *ngIf="isDropdownVisible === i"
               style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
-              <div 
-             class="hover-background" 
-              style="display: flex; gap: 16px; align-items: center; border-bottom: 1px solid #E5E5E5; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
+              <div class="hover-background"
+                style="display: flex; gap: 16px; align-items: center; border-bottom: 1px solid #E5E5E5; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
                     stroke-linejoin="round" />
-                  <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
+                    stroke-linejoin="round" />
                   <path
                     d="M14 8C14 4.6863 11.3137 2 8 2C6.30483 2 4.77387 2.70299 3.6827 3.83333M2 8C2 11.3137 4.6863 14 8 14C9.61853 14 11.0874 13.3591 12.1667 12.3173"
                     stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <p style="margin-bottom: 0;">Atualizações</p>
               </div>
-              <div 
-              class="hover-background"
-              style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
+              <div class="hover-background"
+                style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1.77499 14.5L4.60333 14.5001L14.9742 4.12919L12.1458 1.30078L1.7749 11.6717L1.77499 14.5Z" stroke="#505050"
-                    stroke-width="1.5" stroke-linejoin="round" />
+                  <path d="M1.77499 14.5L4.60333 14.5001L14.9742 4.12919L12.1458 1.30078L1.7749 11.6717L1.77499 14.5Z"
+                    stroke="#505050" stroke-width="1.5" stroke-linejoin="round" />
                   <path d="M9.31735 4.12891L12.1458 6.95734" stroke="#505050" stroke-width="1.5" stroke-linecap="round"
                     stroke-linejoin="round" />
                 </svg>
                 <p style="margin-bottom: 0;">Editar</p>
               </div>
 
-              <div 
-              class="hover-background"
-              style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
+              <div class="hover-background"
+                style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1028_3073)">
                     <path
@@ -414,10 +426,12 @@
               <div class="hover-background"
                 style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; cursor: pointer;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 3.99935L5.4 1.66602H10.6L11 3.99935" stroke="#FF3A44" stroke-width="1.5" stroke-linejoin="round" />
+                  <path d="M5 3.99935L5.4 1.66602H10.6L11 3.99935" stroke="#FF3A44" stroke-width="1.5"
+                    stroke-linejoin="round" />
                   <path d="M2 4H14" stroke="#FF3A44" stroke-width="1.5" stroke-linecap="round" />
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.3333 4L11.6667 14.3333H4.33332L3.66666 4H12.3333Z"
-                    stroke="#FF3A44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M12.3333 4L11.6667 14.3333H4.33332L3.66666 4H12.3333Z" stroke="#FF3A44" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M6.33334 11.666H9.66668" stroke="#FF3A44" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
                 <p style="margin-bottom: 0; color: red;">Excluir</p>
@@ -425,10 +439,11 @@
             </div>
           </td>
         </tr>
-        
+
       </table>
 
-      <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
+      <div
+        style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
         <p (click)="changePage(currentPage - 1)" [ngClass]="{'disabled': currentPage === 1}"
           style="font-family: Poppins, sans-serif; font-weight: 400; color: #909090; margin-bottom: 0; cursor: pointer;">
           Anterior</p>

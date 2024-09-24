@@ -160,9 +160,6 @@ export class RoundApprovalDetailsComponent implements OnInit {
 
   public getCompany(id): void {
     this.companyService.getCompany(id).subscribe((response) => {
-      //this.addPartner();
-      //this.addPartner();
-
       this.form.get('address').setValue({
         city: response.address.city,
         complement: response.address.complement,
