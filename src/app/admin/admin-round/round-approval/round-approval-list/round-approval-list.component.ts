@@ -25,7 +25,7 @@ export class RoundApprovalListComponent implements OnInit {
   companies = [];
   total = [];
   filteredCompanies = [];
-  status = 'APPROVED';
+  status = true;
   loader: boolean;
   textRegister = 'Nenhum registro encontrado.';
   totalPages: number;
@@ -54,6 +54,7 @@ export class RoundApprovalListComponent implements OnInit {
       name: "Indicadores"
     },
   ]
+  active: boolean = false;
 
   loading: boolean = false;
   id: number;
@@ -82,7 +83,6 @@ export class RoundApprovalListComponent implements OnInit {
     this.titleHeader.title = 'Administração / Atualizar Dados';
     this.data.changeTitle(this.titleHeader);
     this.loadCompanies();
-    this.initForm();
 
     const $this = this;
     setTimeout(function () {
@@ -258,6 +258,24 @@ export class RoundApprovalListComponent implements OnInit {
     this.getAllByStatus(this.status);
   }
 
+  setStatus() {
+    this.status = !this.status;
+    this.loadCompanies();
+    this.loader = false;
+  }
+
+  toggleCompanyStatus(id: number) {
+    this.loader = true;
+    this.companyService.changeCompanyActiveStatus(id).subscribe(
+      (response) => {
+        toastr.success('Status atualizados.');
+        this.loader = false;
+        this.isDropdownVisible = null;
+        this.loadCompanies();
+      },
+    );
+  }
+
   public getCompany(id): void {
     this.companyService.getCompany(id).subscribe((response) => {
       this.form.get('address').setValue({
@@ -351,10 +369,12 @@ export class RoundApprovalListComponent implements OnInit {
         }
         this.calculateTotalPages();
         this.loader = false;
-      });
+      },
+    );
   }
 
   changeModalStatus() {
+    this.initForm();
     this.isSingUpCompanyModalOpen = !this.isSingUpCompanyModalOpen;
   }
 
@@ -371,13 +391,6 @@ export class RoundApprovalListComponent implements OnInit {
   changePage(page: number) {
     this.currentPage = page;
   }
-
-  setStatus(newStatus: string) {
-    this.status = newStatus;
-    this.loadCompanies();
-  }
-
-
 
   filterCompanies(searchTerm: string) {
     if (searchTerm) {

@@ -1,7 +1,6 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
   <div style="padding: 40px 20px;" *ngIf="!loader">
-
     <form [formGroup]="form" >
       <div *ngIf="isSingUpCompanyModalOpen"
         style="width: 100%; height: 1050px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
@@ -598,12 +597,12 @@
       <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
           <div style="display: flex; align-items: center; gap: 32px;">
-            <p (click)="setStatus('APPROVED')" [ngStyle]="{'color': status === 'APPROVED' ? '#035A7A' : '#000000'}"
+            <p (click)="setStatus(true)" [ngStyle]="{'color': status === true ? '#035A7A' : '#000000'}"
               style="cursor: pointer;">
               Empresas ativas
             </p>
-            <p (click)="setStatus('PENDING_EVALUATION')"
-              [ngStyle]="{'color': status === 'PENDING_EVALUATION' ? '#035A7A' : '#000000'}" style="cursor: pointer;">
+            <p (click)="setStatus(false)"
+              [ngStyle]="{'color': status === false ? '#035A7A' : '#000000'}" style="cursor: pointer;">
               Empresas inativas
             </p>
           </div>
@@ -654,7 +653,8 @@
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
         </tr>
 
-        <tr [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+        <tr 
+          [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
           style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
           *ngFor="let company of filteredCompanies | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ company.name }}</td>
@@ -701,7 +701,8 @@
               </div>
 
               <div class="hover-background"
-                style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
+                style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;"
+                (click)="toggleCompanyStatus(company.id)">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1028_3073)">
                     <path
@@ -715,7 +716,7 @@
                     </clipPath>
                   </defs>
                 </svg>
-                <p style="margin-bottom: 0;">Inativar</p>
+                <p style="margin-bottom: 0;">{{ status ? 'Inativar' : 'Ativar' }}</p>
               </div>
             </div>
           </td>
