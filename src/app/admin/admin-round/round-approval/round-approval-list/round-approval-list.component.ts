@@ -185,7 +185,7 @@ export class RoundApprovalListComponent implements OnInit {
       dataSend.investmentFund2 = this.unmaskMoney(dataSend.investmentFund2);
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.captableService.createCaptable(this.companyId, dataSend).subscribe((response) => {
+      this.captableService.createCaptable(this.id, dataSend).subscribe((response) => {
         toastr.success('Dados enviados.');
       }, (error) => {
         toastr.error('Ocorreu um erro, contate o administrador.');
