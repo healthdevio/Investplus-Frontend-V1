@@ -11,6 +11,7 @@ import { CpfMaskPipe } from './../../../../core/pipes/cpf-mask.pipe';
 import { PhoneMaskPipe } from './../../../../core/pipes/phone-mask.pipe';
 import { CnpjMaskPipe } from './../../../../core/pipes/cnpj-mask.pipe';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
+import { CompanyFinancialService } from '../../../../core/service/company-financial.service';
 
 declare var toastr: any;
 @Component({
@@ -22,6 +23,7 @@ export class RoundApprovalListComponent implements OnInit {
   titleHeader: TitleHeader;
   form: FormGroup;
   adminForm: FormGroup;
+  expenseForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
   total = [];
@@ -57,7 +59,6 @@ export class RoundApprovalListComponent implements OnInit {
       name: "Indicadores"
     },
   ]
-
   updateCompanySessions = [
     {
       name: "Valuation"
@@ -95,6 +96,7 @@ export class RoundApprovalListComponent implements OnInit {
     private phoneMask: PhoneMaskPipe,
     private cnpjMask: CnpjMaskPipe,
     private moneyMask: MoneyMaskPipe,
+    private financialService: CompanyFinancialService,
   ) { }
 
   selectedSession = "Geral";
@@ -119,6 +121,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.data.changeTitle(this.titleHeader);
     this.loadCompanies();
     this.initAdminForm();
+    this.initExpenseForm();
 
     const $this = this;
     setTimeout(function () {
@@ -130,6 +133,57 @@ export class RoundApprovalListComponent implements OnInit {
     this.adminForm = this.formBuilder.group({
       userName: [null, [Validators.required]]
     });
+  }
+
+  public initExpenseForm(): void {
+    this.expenseForm = this.formBuilder.group({
+      date: [null, [Validators.required]],
+      revenueAmount: ['0,00', [Validators.required, Validators.minLength(3)]],
+      expenseAmount: ['0,00', [Validators.required, Validators.minLength(3)]]
+    });
+  }
+
+
+  maskMoney(value: string): string {
+    value = value.replace(/\D/g, ''); 
+    value = (Number(value) / 100).toFixed(2) + ''; 
+    value = value.replace('.', ',');
+    value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return value;
+  }
+
+  onInputChange(event: any, controlName: string) {
+    const value = event.target.value;
+    this.expenseForm.get(controlName).setValue(this.maskMoney(value), { emitEvent: false });
+  }
+
+
+  unmaskMoney(input) {
+    return (Number(input.replace(/[^\d]+/g, '')) / 100).toFixed(2);
+  }
+
+  onExpenseSubmit() {
+    if (this.expenseForm.valid) {
+      const dataSend = this.expenseForm.value;
+      dataSend.date = this.dateMask.transform(dataSend.date, 'AMERICAN');
+      dataSend.revenueAmount = this.unmaskMoney(dataSend.revenueAmount);
+      dataSend.expenseAmount = this.unmaskMoney(dataSend.expenseAmount);
+
+      this.loading = true;
+      this.loaderService.load(this.loading);
+      this.financialService.createFinancial(this.companyId, dataSend).subscribe((response) => {
+        toastr.success('Dados enviados.');
+        this.expenseForm.reset();
+      }, (error) => {
+        toastr.error('Ocorreu um erro, contate o administrador.');
+      }, () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      });
+    } else {
+      this.validateAllFields(this.expenseForm);
+      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+    }
   }
 
   onSubmitAdmin() {

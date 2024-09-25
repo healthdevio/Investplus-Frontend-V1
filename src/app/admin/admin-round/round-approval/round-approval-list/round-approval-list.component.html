@@ -787,36 +787,49 @@
           </div>
         </div>
     
-        <div *ngIf="selectedUpdateSession === 'Receita e despesa'">
-          <p style="margin-bottom: 0; color: #777777;">Receita e despesa da empresa</p>
-    
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Data <span style="color: red;">*</span></p>
-    
-            <app-form [errorMessage]="'Data atual da empresa é obrigatório.'">
-              <input type="date"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
-            </app-form>
+        <form [formGroup]="expenseForm">
+          <div *ngIf="selectedUpdateSession === 'Receita e despesa'">
+            <p style="margin-bottom: 0; color: #777777;">Receita e despesa da empresa</p>
+          
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Data <span style="color: red;">*</span></p>
+          
+              <app-form [errorMessage]="'Data atual da empresa é obrigatório.'">
+                <input 
+                formControlName="date"
+                type="date"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+              </app-form>
+            </div>
+          
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Receita <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Receita da empresa é obrigatório.'">
+                  <input type="text" formControlName="revenueAmount" placeholder="0,00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    (input)="onInputChange($event, 'revenueAmount')">
+              </app-form>
+            </div>
+          
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Despesa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Despesa da empresa é obrigatório.'">
+                <input type="text" formControlName="expenseAmount" placeholder="0,00"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                  (input)="onInputChange($event, 'expenseAmount')">
+              </app-form>
+            </div>
+          
+            <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
+              <div style="width: 100%; border-top: 1px solid #E5E5E5;">
+                <button (click)="onExpenseSubmit()"
+                  style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
+                  <p style="margin-bottom: 0; color: white;">Atualizar dados</p>
+                </button>
+              </div>
+            </div>
           </div>
-    
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Receita <span style="color: red;">*</span></p>
-            <app-form [errorMessage]="'Receita da empresa é obrigatório.'">
-              <input type="text" formControlName="businessName" placeholder="0,00"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                type="text">
-            </app-form>
-          </div>
-    
-          <div style="margin-bottom: 15px;">
-            <p style="margin-top: 24px;">Despesa <span style="color: red;">*</span></p>
-            <app-form [errorMessage]="'Despesa da empresa é obrigatório.'">
-              <input type="text" formControlName="businessName" placeholder="0,00"
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                type="text">
-            </app-form>
-          </div>
-        </div>
+        </form>
         
         <form [formGroup]="adminForm">
           <div *ngIf="selectedUpdateSession === 'Administradores'">
