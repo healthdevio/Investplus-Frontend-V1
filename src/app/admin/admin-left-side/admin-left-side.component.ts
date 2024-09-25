@@ -5,6 +5,7 @@ import { EventEmitterService } from '../../core/service/event-emitter-service.se
 import { Investor } from '../../core/interface/investor';
 import { InvestorService } from '../../core/service/investor.service';
 import { UserLoginService } from "../../core/service/cognito/user-login.service";
+import { Router } from '@angular/router';
 
 declare var toastr: any;
 
@@ -32,21 +33,6 @@ export class AdminLeftSideComponent implements OnInit {
       link: '/admin/rounds/approval',
       isExpanded: false
     },
-    {
-      name: 'Atualizações',
-      link: null,
-      subCategory: [
-        {
-          name: 'Equipe Executiva',
-          link: '/admin/rounds/company/team',
-        },
-        {
-          name: 'Quadro societário',
-          link: '/admin/rounds/company/partners',
-        },
-      ],
-      isExpanded: false
-    }
   ];
 
   importatedSubItens = [
@@ -70,6 +56,17 @@ export class AdminLeftSideComponent implements OnInit {
     this.isSvgRotated = !this.isSvgRotated;
   }
 
+  companyTabs(): void {
+    this.redirectTo('/admin/rounds/approval/');
+  }
+
+  public redirectTo(uri: string): void {
+    this.router.navigateByUrl('/', {
+      skipLocationChange: true
+    }).then(() =>
+      this.router.navigate([uri]));
+  }
+
   toggleSvgRotationImportated(): void {
     this.isSvgRotatedImportated = !this.isSvgRotatedImportated;
   }
@@ -83,6 +80,7 @@ export class AdminLeftSideComponent implements OnInit {
     private eventEmitter: EventEmitterService,
     private investorService: InvestorService,
     private userService: UserLoginService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
