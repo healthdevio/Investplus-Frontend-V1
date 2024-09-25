@@ -152,6 +152,50 @@ max-width: 17.4% !important;">
           <span class="menu-text">Extrato financeiro</span>
         </a>
       </li>
+
+      <li 
+      *ngIf="scopes.ROLE_ADMIN" 
+      class="treeview">
+        <a routerLink="/admin/investors">
+          <i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <g clip-path="url(#clip0_460_1402)">
+                <path
+                  d="M4.66671 5.00033C6.50766 5.00033 8.00004 4.25413 8.00004 3.33366C8.00004 2.41318 6.50766 1.66699 4.66671 1.66699C2.82576 1.66699 1.33337 2.41318 1.33337 3.33366C1.33337 4.25413 2.82576 5.00033 4.66671 5.00033Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 3.33301C1.33337 3.33301 1.33337 4.74587 1.33337 5.66634C1.33337 6.58681 2.82576 7.33301 4.66671 7.33301C6.50764 7.33301 8.00004 6.58681 8.00004 5.66634C8.00004 5.12114 8.00004 3.33301 8.00004 3.33301"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 5.66699C1.33337 5.66699 1.33337 7.07986 1.33337 8.00033C1.33337 8.92079 2.82576 9.66699 4.66671 9.66699C6.50764 9.66699 8.00004 8.92079 8.00004 8.00033C8.00004 7.45513 8.00004 5.66699 8.00004 5.66699"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 8C1.33337 8 1.33337 9.41287 1.33337 10.3333C1.33337 11.2538 2.82576 12 4.66671 12C6.50764 12 8.00004 11.2538 8.00004 10.3333C8.00004 9.78813 8.00004 8 8.00004 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 10.333C1.33337 10.333 1.33337 11.7459 1.33337 12.6663C1.33337 13.5868 2.82576 14.333 4.66671 14.333C6.50764 14.333 8.00004 13.5868 8.00004 12.6663C8.00004 12.1211 8.00004 10.333 8.00004 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M11.3333 9.66634C13.1743 9.66634 14.6667 8.92015 14.6667 7.99967C14.6667 7.0792 13.1743 6.33301 11.3333 6.33301C9.49238 6.33301 8 7.0792 8 7.99967C8 8.92015 9.49238 9.66634 11.3333 9.66634Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 8C8 8 8 9.41287 8 10.3333C8 11.2538 9.4924 12 11.3333 12C13.1743 12 14.6667 11.2538 14.6667 10.3333C14.6667 9.78813 14.6667 8 14.6667 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 10.333C8 10.333 8 11.7459 8 12.6663C8 13.5868 9.4924 14.333 11.3333 14.333C13.1743 14.333 14.6667 13.5868 14.6667 12.6663C14.6667 12.1211 14.6667 10.333 14.6667 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_460_1402">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </i>
+          <span class="header-menu">Investidores</span>
+        </a>
+      </li>
+
       <li 
       (click)="toggleSvgRotation()"
       *ngIf="scopes.ROLE_ADMIN" class="treeview">
@@ -216,6 +260,7 @@ max-width: 17.4% !important;">
           </ul>
         </div>
       </div>
+
       <li 
       (click)="toggleSvgRotationImportated()"
       *ngIf="scopes.ROLE_ADMIN" 
@@ -491,6 +536,47 @@ max-width: 6% !important;">
                 stroke-linejoin="round" />
               <path d="M5.33337 11.667H8.00004" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round"
                 stroke-linejoin="round" />
+            </svg>
+          </i>
+        </a>
+      </li>
+      <li 
+      *ngIf="scopes.ROLE_ADMIN" 
+      class="treeview">
+        <a routerLink="/admin/investors">
+          <i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <g clip-path="url(#clip0_460_1402)">
+                <path
+                  d="M4.66671 5.00033C6.50766 5.00033 8.00004 4.25413 8.00004 3.33366C8.00004 2.41318 6.50766 1.66699 4.66671 1.66699C2.82576 1.66699 1.33337 2.41318 1.33337 3.33366C1.33337 4.25413 2.82576 5.00033 4.66671 5.00033Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 3.33301C1.33337 3.33301 1.33337 4.74587 1.33337 5.66634C1.33337 6.58681 2.82576 7.33301 4.66671 7.33301C6.50764 7.33301 8.00004 6.58681 8.00004 5.66634C8.00004 5.12114 8.00004 3.33301 8.00004 3.33301"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 5.66699C1.33337 5.66699 1.33337 7.07986 1.33337 8.00033C1.33337 8.92079 2.82576 9.66699 4.66671 9.66699C6.50764 9.66699 8.00004 8.92079 8.00004 8.00033C8.00004 7.45513 8.00004 5.66699 8.00004 5.66699"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 8C1.33337 8 1.33337 9.41287 1.33337 10.3333C1.33337 11.2538 2.82576 12 4.66671 12C6.50764 12 8.00004 11.2538 8.00004 10.3333C8.00004 9.78813 8.00004 8 8.00004 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.33337 10.333C1.33337 10.333 1.33337 11.7459 1.33337 12.6663C1.33337 13.5868 2.82576 14.333 4.66671 14.333C6.50764 14.333 8.00004 13.5868 8.00004 12.6663C8.00004 12.1211 8.00004 10.333 8.00004 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M11.3333 9.66634C13.1743 9.66634 14.6667 8.92015 14.6667 7.99967C14.6667 7.0792 13.1743 6.33301 11.3333 6.33301C9.49238 6.33301 8 7.0792 8 7.99967C8 8.92015 9.49238 9.66634 11.3333 9.66634Z"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 8C8 8 8 9.41287 8 10.3333C8 11.2538 9.4924 12 11.3333 12C13.1743 12 14.6667 11.2538 14.6667 10.3333C14.6667 9.78813 14.6667 8 14.6667 8"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8 10.333C8 10.333 8 11.7459 8 12.6663C8 13.5868 9.4924 14.333 11.3333 14.333C13.1743 14.333 14.6667 13.5868 14.6667 12.6663C14.6667 12.1211 14.6667 10.333 14.6667 10.333"
+                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+              <defs>
+                <clipPath id="clip0_460_1402">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
             </svg>
           </i>
         </a>

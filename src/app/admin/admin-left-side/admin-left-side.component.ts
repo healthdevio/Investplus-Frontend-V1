@@ -28,12 +28,6 @@ export class AdminLeftSideComponent implements OnInit {
 
   enterpriseSubItens = [
     {
-      name: 'Investidores',
-      link: '/admin/investors',
-      subCategory: null,
-      isExpanded: false
-    },
-    {
       name: 'Publicação',
       link: null,
       subCategory: [
