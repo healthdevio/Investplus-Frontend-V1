@@ -13,8 +13,10 @@ import { PhoneMaskPipe } from './../../../../core/pipes/phone-mask.pipe';
 import { CnpjMaskPipe } from './../../../../core/pipes/cnpj-mask.pipe';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
 import { CompanyFinancialService } from '../../../../core/service/company-financial.service';
+import { Valuation } from '../../../../core/interface/valuation';
 
 declare var toastr: any;
+declare var moment: any;
 @Component({
   selector: 'app-round-approval-list',
   templateUrl: './round-approval-list.component.html',
@@ -25,6 +27,7 @@ export class RoundApprovalListComponent implements OnInit {
   form: FormGroup;
   adminForm: FormGroup;
   expenseForm: FormGroup;
+  valuationForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
   total = [];
@@ -45,6 +48,7 @@ export class RoundApprovalListComponent implements OnInit {
   isEditCompanyModalOpen = false;
   isUpdateCompanyModalOpen = false;
   companyId = 0;
+  valuation: Valuation;
 
   singUpCompanySessions = [
     {
@@ -106,6 +110,7 @@ export class RoundApprovalListComponent implements OnInit {
   openUpdateCompanyModal(id: number) {
     this.id = id;
     this.isUpdateCompanyModalOpen = true;
+    this.getValuation(id);
   }
 
   selectSession(sessionName: string) {
@@ -123,6 +128,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.loadCompanies();
     this.initAdminForm();
     this.initExpenseForm();
+    this.initValuationForm();
 
     const $this = this;
     setTimeout(function () {
@@ -133,6 +139,62 @@ export class RoundApprovalListComponent implements OnInit {
   public initAdminForm(): void {
     this.adminForm = this.formBuilder.group({
       userName: [null, [Validators.required]]
+    });
+  }
+
+  public initValuationForm(): void {
+    this.valuationForm = this.formBuilder.group({
+      current: ['0,00', [Validators.required, Validators.minLength(3)]],
+      shortTerm: ['0,00', [Validators.required, Validators.minLength(3)]],
+      longTerm: ['0,00', [Validators.required, Validators.minLength(3)]]
+    });
+  }
+
+  onValuationSubmit() {
+    if (this.form.valid) {
+      const dataSend = this.form.value;
+      dataSend.date = moment(new Date()).format('DD/MM/YYYY hh:mm:ss');
+      dataSend.current = this.unmaskMoney(dataSend.current);
+      dataSend.shortTerm = this.unmaskMoney(dataSend.shortTerm);
+      dataSend.longTerm = this.unmaskMoney(dataSend.longTerm);
+
+      this.loading = true;
+      this.loaderService.load(this.loading);
+      this.companyService.createValuation(this.companyId, dataSend).subscribe((response) => {
+        toastr.success('Dados atualizados.');
+        this.getValuation(this.companyId);
+      }, (error) => {
+        toastr.error('Ocorreu um erro, contate o administrador.');
+      }, () => {
+        this.loading = true;
+        this.loaderService.load(this.loading);
+      });
+    } else {
+      this.validateAllFields(this.form);
+      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+    }
+  }
+
+  getValuation(idCompany: number) {
+    this.companyService.getValuation(idCompany).subscribe((response) => {
+      this.valuation = response;
+
+      this.valuationForm.controls['current'].setValue(this.moneyMask.transform(response.current));
+      this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(response.shortTerm));
+      this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(response.longTerm));
+
+      const $this = this;
+      setTimeout(function () {
+        $this.initMask();
+      }, 1000);
+
+      this.loader = false;
+    }, (error) => {
+      this.loader = false;
+      const $this = this;
+      setTimeout(function () {
+        $this.initMask();
+      }, 1000);
     });
   }
 
