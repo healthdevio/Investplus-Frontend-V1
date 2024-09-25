@@ -42,6 +42,14 @@ export class CompanyService {
   getAllByStatus(status: string): Observable<any> {
     return this.http.get<Company>(`${environment.url_api}/${this.prefixService}?status=${status}`);
   }
+  
+  getAllByActiveStatus(status: string): Observable<any> {
+    return this.http.get<Company>(`${environment.url_api}/${this.prefixService}-active-status?active=${status}`);
+  }
+
+  changeCompanyActiveStatus(id: number): Observable<any> {
+    return this.http.patch<Company>(`${environment.url_api}/${this.prefixService}-active-status/${id}`, {});
+  }
 
   getDocsByCompany(id: number): Observable<any> {
     return this.http.get<any>(`${environment.url_api}/${this.prefixService}/${id}/docs`);
