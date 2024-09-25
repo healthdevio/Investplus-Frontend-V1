@@ -37,10 +37,6 @@ export class AdminLeftSideComponent implements OnInit {
       link: null,
       subCategory: [
         {
-          name: 'Captable',
-          link: '/admin/rounds/company/captable',
-        },
-        {
           name: 'Equipe Executiva',
           link: '/admin/rounds/company/team',
         },
