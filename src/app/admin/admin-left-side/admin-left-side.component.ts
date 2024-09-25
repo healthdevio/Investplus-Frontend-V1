@@ -28,26 +28,8 @@ export class AdminLeftSideComponent implements OnInit {
 
   enterpriseSubItens = [
     {
-      name: 'Publicação',
-      link: null,
-      subCategory: [
-        {
-          name: 'Cadastrar Empresa',
-          link: '/admin/rounds/approval/create',
-        },
-        {
-          name: 'Atualizar Dados',
-          link: '/admin/rounds/approval',
-        },
-        {
-          name: 'Criar Rodada',
-          link: '/admin/rounds/approval/company/final',
-        },
-        {
-          name: 'Atualizar Rodada',
-          link: '/admin/rounds/approval/company/publish',
-        },
-      ],
+      name: 'Cadastrar empresas',
+      link: '/admin/rounds/approval',
       isExpanded: false
     },
     {
@@ -84,45 +66,18 @@ export class AdminLeftSideComponent implements OnInit {
         },
       ],
       isExpanded: false
-    },
-    {
-      name: 'Investimentos',
-      link: null,
-      subCategory: [
-        {
-          name: 'Investimentos Realizados',
-          link: '/admin/rounds/company/investments',
-        },
-      ],
-      isExpanded: false
-    },
+    }
   ];
 
   importatedSubItens = [
     {
-      name: 'Aprovação',
-      link: null,
-      subCategory: [
-        {
-          name: 'Criar Rodada',
-          link: '/admin/rounds/incorporator/create',
-        },
-        {
-          name: 'Publicar Rodada',
-          link: '/admin/rounds/approval/incorporator/publish',
-        },
-      ],
+      name: 'Criar Rodada',
+      link: '/admin/rounds/incorporator/create',
       isExpanded: false
     },
     {
-      name: 'Investimentos',
-      link: null,
-      subCategory: [
-        {
-          name: 'Investimentos Realizados',
-          link: '/admin/rounds/incorporator/investments',
-        },
-      ],
+      name: 'Publicar Rodada',
+      link: '/admin/rounds/approval/incorporator/publish',
       isExpanded: false
     },
   ];
