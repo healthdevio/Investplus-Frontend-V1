@@ -14,6 +14,7 @@ import { CnpjMaskPipe } from './../../../../core/pipes/cnpj-mask.pipe';
 import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
 import { CompanyFinancialService } from '../../../../core/service/company-financial.service';
 import { Valuation } from '../../../../core/interface/valuation';
+import { CompanyCaptableService } from '../../../../core/service/company-captable.service';
 
 declare var toastr: any;
 declare var moment: any;
@@ -28,6 +29,7 @@ export class RoundApprovalListComponent implements OnInit {
   adminForm: FormGroup;
   expenseForm: FormGroup;
   valuationForm: FormGroup;
+  captableForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
   total = [];
@@ -102,6 +104,7 @@ export class RoundApprovalListComponent implements OnInit {
     private cnpjMask: CnpjMaskPipe,
     private moneyMask: MoneyMaskPipe,
     private financialService: CompanyFinancialService,
+    private captableService: CompanyCaptableService,
   ) { }
 
   selectedSession = "Geral";
@@ -129,6 +132,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.initAdminForm();
     this.initExpenseForm();
     this.initValuationForm();
+    this.initCaptableForm();
 
     const $this = this;
     setTimeout(function () {
@@ -140,6 +144,59 @@ export class RoundApprovalListComponent implements OnInit {
     this.adminForm = this.formBuilder.group({
       userName: [null, [Validators.required]]
     });
+  }
+
+  initCaptableForm() {
+    this.captableForm = this.formBuilder.group({
+      id: [null],
+      founders: ['0,00', [Validators.required, Validators.minLength(3)]],
+      coFounders: ['0,00', [Validators.required, Validators.minLength(3)]],
+      vesting: ['0,00', [Validators.required, Validators.minLength(3)]],
+      accelerator: ['0,00', [Validators.required, Validators.minLength(3)]],
+      crowdfunding: ['0,00', [Validators.required, Validators.minLength(3)]],
+      angel: ['0,00', [Validators.required, Validators.minLength(3)]],
+      venture1: ['0,00', [Validators.required, Validators.minLength(3)]],
+      venture2: ['0,00', [Validators.required, Validators.minLength(3)]],
+      venture3: ['0,00', [Validators.required, Validators.minLength(3)]],
+      ventureBuilder1: ['0,00', [Validators.required, Validators.minLength(3)]],
+      ventureBuilder2: ['0,00', [Validators.required, Validators.minLength(3)]],
+      ventureBuilder3: ['0,00', [Validators.required, Validators.minLength(3)]],
+      investmentFund1: ['0,00', [Validators.required, Validators.minLength(3)]],
+      investmentFund2: ['0,00', [Validators.required, Validators.minLength(3)]]
+    });
+  }
+
+  onCaptableSubmit() {
+    if (this.captableForm.valid) {
+      const dataSend = this.captableForm.value;
+      dataSend.founders = this.unmaskMoney(dataSend.founders);
+      dataSend.coFounders = this.unmaskMoney(dataSend.coFounders);
+      dataSend.vesting = this.unmaskMoney(dataSend.vesting);
+      dataSend.accelerator = this.unmaskMoney(dataSend.accelerator);
+      dataSend.crowdfunding = this.unmaskMoney(dataSend.crowdfunding);
+      dataSend.angel = this.unmaskMoney(dataSend.angel);
+      dataSend.venture1 = this.unmaskMoney(dataSend.venture1);
+      dataSend.venture2 = this.unmaskMoney(dataSend.venture2);
+      dataSend.venture3 = this.unmaskMoney(dataSend.venture3);
+      dataSend.ventureBuilder1 = this.unmaskMoney(dataSend.ventureBuilder1);
+      dataSend.ventureBuilder2 = this.unmaskMoney(dataSend.ventureBuilder2);
+      dataSend.ventureBuilder3 = this.unmaskMoney(dataSend.ventureBuilder3);
+      dataSend.investmentFund1 = this.unmaskMoney(dataSend.investmentFund1);
+      dataSend.investmentFund2 = this.unmaskMoney(dataSend.investmentFund2);
+      this.loading = true;
+      this.loaderService.load(this.loading);
+      this.captableService.createCaptable(this.id, dataSend).subscribe((response) => {
+        toastr.success('Dados enviados.');
+      }, (error) => {
+        toastr.error('Ocorreu um erro, contate o administrador.');
+      }, () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      });
+    } else {
+      this.validateAllFields(this.form);
+      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+    }
   }
 
   public initValuationForm(): void {

@@ -37,26 +37,6 @@ export class AdminLeftSideComponent implements OnInit {
       link: null,
       subCategory: [
         {
-          name: 'Dados gerais',
-          link: '/admin/rounds/approval',
-        },
-        {
-          name: 'Valutation',
-          link: '/admin/rounds/company/valuation',
-        },
-        {
-          name: 'Captable',
-          link: '/admin/rounds/company/captable',
-        },
-        {
-          name: 'Receita e despesa',
-          link: '/admin/rounds/company/financial',
-        },
-        {
-          name: 'Administradores',
-          link: '/admin/rounds/company/admin',
-        },
-        {
           name: 'Equipe Executiva',
           link: '/admin/rounds/company/team',
         },
