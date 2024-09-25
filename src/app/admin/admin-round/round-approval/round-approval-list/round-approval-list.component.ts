@@ -21,6 +21,7 @@ declare var toastr: any;
 export class RoundApprovalListComponent implements OnInit {
   titleHeader: TitleHeader;
   form: FormGroup;
+  adminForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
   total = [];
@@ -40,6 +41,7 @@ export class RoundApprovalListComponent implements OnInit {
   isSingUpCompanyModalOpen = false;
   isEditCompanyModalOpen = false;
   isUpdateCompanyModalOpen = false;
+  companyId = 0;
 
   singUpCompanySessions = [
     {
@@ -98,6 +100,11 @@ export class RoundApprovalListComponent implements OnInit {
   selectedSession = "Geral";
   selectedUpdateSession = "Valuation";
 
+  openUpdateCompanyModal(id: number) {
+    this.id = id;
+    this.isUpdateCompanyModalOpen = true;
+  }
+
   selectSession(sessionName: string) {
     this.selectedSession = sessionName;
   }
@@ -111,11 +118,38 @@ export class RoundApprovalListComponent implements OnInit {
     this.titleHeader.title = 'Administração / Atualizar Dados';
     this.data.changeTitle(this.titleHeader);
     this.loadCompanies();
+    this.initAdminForm();
 
     const $this = this;
     setTimeout(function () {
       $this.initMask();
     }, 1000);
+  }
+
+  public initAdminForm(): void {
+    this.adminForm = this.formBuilder.group({
+      userName: [null, [Validators.required]]
+    });
+  }
+
+  onSubmitAdmin() {
+    if (this.adminForm.valid) {
+      const dataSend = this.adminForm.value;
+      this.loading = true;
+      this.loaderService.load(this.loading);
+      this.companyService.createAdmin(this.companyId, dataSend).subscribe((response) => {
+        toastr.success('Administrador atualizado.');
+        this.adminForm.reset();
+      }, (error) => {
+        toastr.error('Ocorreu um erro, contate o administrador.');
+      }, () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      });
+    } else {
+      this.validateAllFields(this.adminForm);
+      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+    }
   }
 
   public initForm(): void {
