@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../../../core/service/company.service';
 import { TitleService } from '../../../../core/service/title.service';
 import { TitleHeader } from '../../../../core/interface/title-header';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoaderService } from './../../../../core/service/loader.service';
 import { saveAs } from 'file-saver';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
@@ -15,6 +16,10 @@ import { MoneyMaskPipe } from './../../../../core/pipes/money-mask.pipe';
 import { CompanyFinancialService } from '../../../../core/service/company-financial.service';
 import { Valuation } from '../../../../core/interface/valuation';
 import { CompanyCaptableService } from '../../../../core/service/company-captable.service';
+import { Team } from '../../../../core/interface/team';
+import { CompanyPartner } from '../../../../core/interface/company-partners';
+import { finalize } from 'rxjs/operators';
+import { CompanyPartnersService } from '../../../../core/service/company-partners.service';
 
 declare var toastr: any;
 declare var moment: any;
@@ -30,6 +35,7 @@ export class RoundApprovalListComponent implements OnInit {
   expenseForm: FormGroup;
   valuationForm: FormGroup;
   captableForm: FormGroup;
+  partnerForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
   total = [];
@@ -51,6 +57,8 @@ export class RoundApprovalListComponent implements OnInit {
   isUpdateCompanyModalOpen = false;
   companyId = 0;
   valuation: Valuation;
+  members: Team[] = [];
+  partners: CompanyPartner[];
 
   singUpCompanySessions = [
     {
@@ -105,6 +113,8 @@ export class RoundApprovalListComponent implements OnInit {
     private moneyMask: MoneyMaskPipe,
     private financialService: CompanyFinancialService,
     private captableService: CompanyCaptableService,
+    private router: Router,
+    private partnersService: CompanyPartnersService,
   ) { }
 
   selectedSession = "Geral";
@@ -114,6 +124,23 @@ export class RoundApprovalListComponent implements OnInit {
     this.id = id;
     this.isUpdateCompanyModalOpen = true;
     this.getValuation(id);
+    this.getTeam();
+    this.getPartners();
+  }
+
+  sendMemberSession() {
+    this.redirectTo('admin/rounds/company/team/' + this.id);
+  }
+
+  sendPartnerSession() {
+    this.redirectTo('admin/rounds/company/partners/' + this.id);
+  }
+
+  public redirectTo(uri: string): void {
+    this.router.navigateByUrl('/', {
+      skipLocationChange: true
+    }).then(() =>
+      this.router.navigate([uri]));
   }
 
   selectSession(sessionName: string) {
@@ -122,6 +149,48 @@ export class RoundApprovalListComponent implements OnInit {
 
   selectUpdateSession(sessionName: string) {
     this.selectedUpdateSession = sessionName;
+  }
+
+  get partnersForm() {
+    return this.form.get("partners") as FormArray;
+  }
+
+  addPartner() {
+    this.partnersForm.push(this.formBuilder.group({
+      id: [null],
+      email: [null, [Validators.required]],
+      fullName: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
+      cpf: [null, [Validators.required]],
+      rg: [null, [Validators.required]],
+      rgDate: [null, [Validators.required]],
+      maritalStatus: [null, [Validators.required]],
+      profession: [null, [Validators.required]],
+      dateOfBirth: [null, [Validators.required]],
+      address: this.formBuilder.group({
+        city: [null, [Validators.required]],
+        complement: [''],
+        neighborhood: [null, [Validators.required]],
+        number: [null, [Validators.required]],
+        street: [null, [Validators.required]],
+        uf: [null, [Validators.required]],
+        zipCode: [null, [Validators.required, Validators.minLength(8)]]
+      })
+    }));
+  }
+
+  getPartners() {
+    this.partnersService.getPartner(this.id).subscribe((response) => {
+      this.partners = response;
+      this.loader = false;
+    }, (error) => {
+      const $this = this;
+      setTimeout(function () {
+        $this.initMask();
+      }, 1000);
+
+      this.loader = false;
+    });
   }
 
   ngOnInit() {
@@ -230,6 +299,22 @@ export class RoundApprovalListComponent implements OnInit {
       this.validateAllFields(this.form);
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
+  }
+
+  getTeam() {
+    this.companyService
+      .getTeam(this.id)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.members = response;
+        }
+      })
   }
 
   getValuation(idCompany: number) {
