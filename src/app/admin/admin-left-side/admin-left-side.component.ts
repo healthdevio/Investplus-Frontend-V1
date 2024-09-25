@@ -80,6 +80,10 @@ export class AdminLeftSideComponent implements OnInit {
       link: '/admin/rounds/approval/incorporator/publish',
       isExpanded: false
     },
+    {
+      name: 'Atualizar Rodada',
+      link: '/admin/rounds/approval/company/publish',
+    }
   ];
 
   toggleSvgRotation(): void {
