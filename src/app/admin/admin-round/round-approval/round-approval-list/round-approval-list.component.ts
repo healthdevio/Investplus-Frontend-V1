@@ -39,6 +39,7 @@ export class RoundApprovalListComponent implements OnInit {
   isDropdownVisible: number | null = null;
   isSingUpCompanyModalOpen = false;
   isEditCompanyModalOpen = false;
+  isUpdateCompanyModalOpen = false;
 
   singUpCompanySessions = [
     {
@@ -54,6 +55,28 @@ export class RoundApprovalListComponent implements OnInit {
       name: "Indicadores"
     },
   ]
+
+  updateCompanySessions = [
+    {
+      name: "Valuation"
+    },
+    {
+      name: "Captable"
+    },
+    {
+      name: "Receita e despesa"
+    },
+    {
+      name: "Administradores"
+    },
+    {
+      name: "Equipe Executiva"
+    },
+    {
+      name: "Quadro societário"
+    },
+  ]
+
   active: boolean = false;
 
   loading: boolean = false;
@@ -73,9 +96,14 @@ export class RoundApprovalListComponent implements OnInit {
   ) { }
 
   selectedSession = "Geral";
+  selectedUpdateSession = "Valuation";
 
   selectSession(sessionName: string) {
     this.selectedSession = sessionName;
+  }
+
+  selectUpdateSession(sessionName: string) {
+    this.selectedUpdateSession = sessionName;
   }
 
   ngOnInit() {
