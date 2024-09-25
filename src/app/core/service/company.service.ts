@@ -40,6 +40,10 @@ export class CompanyService {
   }
 
   getAllByStatus(status: string): Observable<any> {
+    return this.http.get<Company>(`${environment.url_api}/${this.prefixService}?status=${status}`);
+  }
+  
+  getAllByActiveStatus(status: string): Observable<any> {
     return this.http.get<Company>(`${environment.url_api}/${this.prefixService}-active-status?active=${status}`);
   }
 

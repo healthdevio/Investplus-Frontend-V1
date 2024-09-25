@@ -361,7 +361,7 @@ export class RoundApprovalListComponent implements OnInit {
 
   private getAllByStatus(status: any): void {
     this.loader = true;
-    this.companyService.getAllByStatus(status).subscribe(
+    this.companyService.getAllByActiveStatus(status).subscribe(
       (response) => {
         for (const company of response) {
           this.companies.push(company);
