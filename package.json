@@ -59,7 +59,7 @@
     "datatables.net-scroller-bs": "^1.5.1",
     "datatables.net-select-bs": "^1.2.7",
     "daterangepicker": "^2.1.25",
-    "file-saver": "^2.0.2",
+    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "icheck": "^1.0.2",

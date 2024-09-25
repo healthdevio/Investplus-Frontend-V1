@@ -5,6 +5,7 @@ import { TitleService } from '../../../../core/service/title.service';
 import { TitleHeader } from '../../../../core/interface/title-header';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoaderService } from './../../../../core/service/loader.service';
+import { saveAs } from 'file-saver';
 import { DateMaskPipe } from './../../../../core/pipes/date-mask.pipe';
 import { CepMaskPipe } from './../../../../core/pipes/cep-mask.pipe';
 import { CpfMaskPipe } from './../../../../core/pipes/cpf-mask.pipe';
@@ -556,6 +557,40 @@ export class RoundApprovalListComponent implements OnInit {
     $('.cpf').mask('000.000.000-00', {
       reverse: true
     });
+  }
+
+  exportToCSV() {
+    const companies = this.filteredCompanies; 
+    if (companies && companies.length > 0) {
+      const csvData = this.convertToCSV(companies);
+      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, 'empresas.csv'); 
+
+      // Alternativa usando JavaScript puro (sem FileSaver.js)
+      // const url = window.URL.createObjectURL(blob);
+      // const a = document.createElement('a');
+      // a.setAttribute('href', url);
+      // a.setAttribute('download', 'empresas.csv');
+      // document.body.appendChild(a);
+      // a.click();
+      // document.body.removeChild(a);
+    }
+  }
+
+  convertToCSV(objArray: any[]): string {
+    const header = ['Empresa', 'Responsável', 'CNPJ', 'Modelo']; 
+    const rows = objArray.map(company => [
+      company.name,
+      company.responsible.name,
+      company.cnpj,
+      this.maskModel(company.model) 
+    ]);
+
+    const csvContent = [header, ...rows]
+      .map(row => row.join(','))
+      .join('\n');
+
+    return csvContent;
   }
 
 }
