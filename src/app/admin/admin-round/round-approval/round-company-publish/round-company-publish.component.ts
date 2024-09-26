@@ -17,8 +17,10 @@ declare var bootbox: any;
 export class RoundCompanyPublishComponent implements OnInit {
   titleHeader: TitleHeader;
   rounds: any;
-  status = "PENDING";
+  status = "IN_PROGRESS";
+  isSingUpPublishModalOpen = false;
   statusApproved = { status: "IN_PROGRESS" };
+  isDropdownVisible: number | null = null;
   loader: boolean;
   responseError: boolean;
   textRegister = "Nenhum registro encontrado.";
@@ -28,6 +30,26 @@ export class RoundCompanyPublishComponent implements OnInit {
     previousLabel: "Anterior",
     nextLabel: "Próximo",
   };
+
+  singUpPublishSessions = [
+    {
+      name: "Geral"
+    },
+    {
+      name: "Detalhes"
+    },
+    {
+      name: "Localização"
+    },
+    {
+      name: "Resumo"
+    },
+    {
+      name: "Documentos"
+    },
+  ]
+
+  selectedSession = "Geral";
 
   form: FormGroup;
 
@@ -48,6 +70,20 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.titleHeader.title = "Administração / Publicar Rodada";
     this.data.changeTitle(this.titleHeader);
     this.getAllByStatus();
+  }
+
+  toggleDropdown(index: number) {
+    this.isDropdownVisible = this.isDropdownVisible === index ? null : index;
+  }
+
+  toggleTab() {
+    this.form.get('status').value === 'IN_PROGRESS' ? this.form.get('status').setValue('PENDING') : this.form.get('status').setValue('IN_PROGRESS');
+    this.status = this.form.get('status').value;
+    this.getAllByStatus();
+  }
+
+  selectSession(sessionName: string) {
+    this.selectedSession = sessionName;
   }
 
   getAllByStatus(){
@@ -76,7 +112,6 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   publishRound(company, round) {
     const $this = this;
-
     this.roundService
       .updateStatus(company, round, this.statusApproved)
       .subscribe(

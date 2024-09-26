@@ -701,6 +701,7 @@ export class RoundApprovalListComponent implements OnInit {
 
   changeEditModalStatus(id: any) {
     this.getCompany(id);
+    this.isUpdateCompanyModalOpen = false;
     this.isEditCompanyModalOpen = !this.isEditCompanyModalOpen;
   }
 
