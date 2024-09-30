@@ -436,7 +436,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div (click)="openUpdateCompanyModal(company.id)" *ngIf="isDropdownVisible === i"
                 style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
                 <div class="hover-background"
-                  style="display: flex; gap: 16px; align-items: center; border-bottom: 1px solid #E5E5E5; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
+                  style="display: flex; gap: 16px; align-items: center; cursor: pointer;">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
                       stroke-linejoin="round" />
@@ -447,25 +447,6 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                       stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                   <p style="margin-bottom: 0;">Atualizar</p>
-                </div>
-      
-                <div class="hover-background"
-                  style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;"
-                  (click)="toggleCompanyStatus(company.id)">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_1028_3073)">
-                      <path
-                        d="M8.00001 14.6673C9.84094 14.6673 11.5076 13.9211 12.714 12.7147C13.9205 11.5083 14.6667 9.84158 14.6667 8.00065C14.6667 6.15972 13.9205 4.49305 12.714 3.2866C11.5076 2.08018 9.84094 1.33398 8.00001 1.33398C6.15908 1.33398 4.49241 2.08018 3.28596 3.2866C2.07954 4.49305 1.33334 6.15972 1.33334 8.00065C1.33334 9.84158 2.07954 11.5083 3.28596 12.7147C4.49241 13.9211 6.15908 14.6673 8.00001 14.6673Z"
-                        stroke="#505050" stroke-width="1.5" stroke-linejoin="round" />
-                      <rect x="5" y="7" width="6" height="2" rx="1" fill="#505050" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_1028_3073">
-                        <rect width="16" height="16" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <p style="margin-bottom: 0;">{{ status ? 'Inativar' : 'Ativar' }}</p>
                 </div>
               </div>
             </td>
