@@ -59,7 +59,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
       
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
                 <div style="width: 100%;">
-                  <p style="margin-top: 24px;">Total de unidades</p>
+                  <p style="margin-top: 24px;">Total de unidades <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Total de unidades é obrigatório.'">
                     <input 
                       type="text" 
@@ -93,7 +93,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
 
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Banner <span style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Banner</p>
                 <app-form [errorMessage]="'Banner é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -113,7 +113,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
             
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%; margin-top: 20px;">
                 <div style="width: 100%;">
-                  <p style=" font-size: 12px;">Rentabilidade/projetada mínima</p>
+                  <p style=" font-size: 12px;">Rentabilidade/projetada mínima <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Rentabilidade projetada mínima é obrigatório.'">
                     <input type="text" formControlName="projectedMinProfitability" placeholder="0,00"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
@@ -131,7 +131,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
                 <div style="width: 100%;">
-                  <p style=" font-size: 12px;">Tempo de retorno total(dias)</p>
+                  <p style=" font-size: 12px;">Tempo de retorno total(dias) <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Tempo de retorno total é obrigatório.'">
                     <input type="text" formControlName="returnTimeInMonths" placeholder="Tempo de retorno total"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
@@ -149,7 +149,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
                 <div style="width: 100%;">
-                  <p style="font-size: 12px;">Valor da cota</p>
+                  <p style="font-size: 12px;">Valor da cota <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Valor da cota é obrigatório.'">
                     <input type="text" formControlName="quotaValue" placeholder="Valor da cota"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
@@ -175,7 +175,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 </div>
               
                 <div style="width: 100%;">
-                  <p style="font-size: 12px;">Valor da Captação(Máxima) <span style="color: red;">*</span></p>
+                  <p style="font-size: 12px;">Valor da Captação(Máxima)</p>
                   <app-form [errorMessage]="'Valor Total da Captação (Máxima) é obrigatório.'">
                     <input type="text" formControlName="maximumCaptation" placeholder="Valor Total da Captação"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
@@ -212,7 +212,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Negócio <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Negócio é obrigatório.'">
-                  <input type="text" fformControlName="business" placeholder="Descrição do negócio"
+                  <input type="text" formControlName="business" placeholder="Descrição do negócio"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>

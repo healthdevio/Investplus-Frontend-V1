@@ -153,7 +153,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       achievements: [null, [Validators.required, Validators.maxLength(4000)]],
 
       logo: [null, [Validators.required]],
-      logoDocUrl: [null],
+      logoDocUrl: [null, [Validators.required]],
       banner: [null],
       bannerDocUrl: [null],
 
