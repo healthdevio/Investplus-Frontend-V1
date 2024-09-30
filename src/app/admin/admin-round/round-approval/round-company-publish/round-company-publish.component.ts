@@ -9,6 +9,7 @@ import { CompanyService } from '../../../../core/service/company.service';
 import { LoaderService } from './../../../../core/service/loader.service';
 import { finalize } from 'rxjs/operators';
 import { RealStateService } from '../../../../core/service/real-state.service';
+import { Modality, ModalityService } from '../../../../core/service/modality.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -25,6 +26,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   formStatus: FormGroup;
   updateForm: FormGroup;
   status = "IN_PROGRESS";
+  modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
   statusApproved = { status: "IN_PROGRESS" };
@@ -85,6 +87,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
     private loaderService: LoaderService,
+    private modalityService: ModalityService,
   ) { }
 
   ngOnInit() {
@@ -95,6 +98,11 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.getAllByStatus();
     this.initForm();
     this.initUpdateForm();
+    this.getModalities();
+  }
+
+  getModalities() {
+    this.modalities = this.modalityService.getModalities();
   }
 
   initStatus() {
