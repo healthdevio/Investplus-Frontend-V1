@@ -347,6 +347,99 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
           </div>
         </div>
       </form>
+
+      <form [formGroup]="updateForm">
+        <div 
+        *ngIf="isUpdatePublishModalOpen"
+          style="width: 100%; height: 1100px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: end; padding: 10px;">
+          <div style="width: 500px; background-color: white; border-radius: 8px; padding: 24px 20px;">
+            <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Atualizar Rodada</p>
+                <svg style="cursor: pointer;" (click)="isUpdatePublishModalOpen = false" width="10" height="10"
+                  viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.59 0L5 3.59L1.41 0L0 1.41L3.59 5L0 8.59L1.41 10L5 6.41L8.59 10L10 8.59L6.41 5L10 1.41L8.59 0Z"
+                    fill="#C4C4C4" />
+                </svg>
+              </div>
+              <p style="color: #777777;">Preencha aqui os dados da rodada.</p>
+            </div>
+      
+            <div style="display: flex; align-items: center; gap: 32px; overflow-x: auto; margin-top: 28px; border-bottom: 1px solid #E5E5E5;margin-bottom: 32px;">
+              <div *ngFor="let session of upDatePublishSessions" (click)="selectUpdateSession(session.name)"
+                [style.color]="session.name === selectedUpdateSession ? '#035A7A' : '#505050'">
+                <p style="margin-bottom: 20px; white-space: nowrap; cursor: pointer;">{{ session.name }}</p>
+              </div>
+            </div>
+
+            <div *ngIf="selectedUpdateSession === 'Geral'">
+              <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
+            
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
+                    <select formControlName="type" style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                      <option [ngValue]="null">Selecione uma opção...</option>
+                      <option value="PUBLIC"> Pública </option>
+                      <option value="EXCLUSIVE"> Exclusiva </option>
+                    </select>
+                </app-form>
+              </div>
+            
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px;">Data de Início <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Data de Início da empresa é obrigatório.'">
+                  <input type="date" name="startedAt" id="startedAt" formControlName="startedAt"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                </app-form>
+              </div>
+            
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px;">Vídeo da oferta <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
+                  <input type="text" formControlName="offerVideo" placeholder="URL do vídeo"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
+                </app-form>
+              </div>
+            
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px; margin-bottom: 0;">Logo <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Logo é obrigatório.'">
+                  <div
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="fileInput.click()">
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('logo').value ?? 'Anexar arquivo'}}</p>
+                    <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')" style="display: none;" />
+                  </div>
+                </app-form>
+              </div>
+            
+            
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px; margin-bottom: 0;">Banner</p>
+                <app-form [errorMessage]="'Banner é obrigatório.'">
+                  <div
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="bannerInput.click()">
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('banner').value ?? 'Anexar arquivo'}}</p>
+                    <input #bannerInput title="Selecione o banner." type="file"
+                      (change)="uploadFile($event, 'banner', 'docBanner')" style="display: none;" />
+                  </div>
+                </app-form>
+              </div>
+            </div>
+      
+            <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
+              <div style="width: 100%; border-top: 1px solid #E5E5E5;">
+                <button (click)="onSubmit()"
+                  style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
+                  <p style="margin-bottom: 0; color: white;">Atualizar Rodada</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
   <h1 style="color: #1F1F1F;">Rodadas</h1>
   <p style="color: #505050;">Verifique aqui todas as rodadas da plataforma.</p>
 
@@ -418,12 +511,12 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
           <tr
             style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
             *ngFor="let round of rounds; let i = index">
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round.name }}</td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.model }}
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name || round?.property }}</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.model }}
             </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.round.partnerParticipation }}%</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.round?.partnerParticipation }}%</td>
             <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
-              <span>{{ round.round.maximumValuation | moneyMask : true }}</span>
+              <span>{{ round?.round?.maximumValuation | moneyMask : true }}</span>
             </td>
             <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; position: relative;">
               <svg class="hover-svg" style="cursor: pointer;" width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -433,7 +526,9 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                   fill="#909090" />
               </svg>
       
-              <div (click)="openUpdateCompanyModal(company.id)" *ngIf="isDropdownVisible === i"
+              <div 
+              (click)="updateRound(round.id, round.round.id)" 
+              *ngIf="isDropdownVisible === i"
                 style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
                 <div class="hover-background"
                   style="display: flex; gap: 16px; align-items: center; cursor: pointer;">

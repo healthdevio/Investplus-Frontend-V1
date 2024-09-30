@@ -23,8 +23,10 @@ export class RoundCompanyPublishComponent implements OnInit {
   rounds: any;
   form: FormGroup;
   formStatus: FormGroup;
+  updateForm: FormGroup;
   status = "IN_PROGRESS";
   isSingUpPublishModalOpen = false;
+  isUpdatePublishModalOpen = false;
   statusApproved = { status: "IN_PROGRESS" };
   isDropdownVisible: number | null = null;
   loader: boolean;
@@ -56,7 +58,23 @@ export class RoundCompanyPublishComponent implements OnInit {
     },
   ]
 
+  upDatePublishSessions = [
+    {
+      name: "Geral"
+    },
+    {
+      name: "Valores"
+    },
+    {
+      name: "Resumo"
+    },
+    {
+      name: "Documentos"
+    },
+  ]
+
   selectedSession = "Geral";
+  selectedUpdateSession = "Geral";
 
   constructor(
     private roundService: RoundService,
@@ -76,6 +94,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.initStatus();
     this.getAllByStatus();
     this.initForm();
+    this.initUpdateForm();
   }
 
   initStatus() {
@@ -92,6 +111,28 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.formStatus.get('status').value === 'IN_PROGRESS' ? this.formStatus.get('status').setValue('PENDING') : this.formStatus.get('status').setValue('IN_PROGRESS');
     this.status = this.formStatus.get('status').value;
     this.getAllByStatus();
+  }
+
+  updateRound(id: number, roundId: number) {
+    this.roundService
+      .getRound(id, roundId)
+      .subscribe({
+        next: (response) => {
+          const dataForm = response.round as any;
+          this.updateForm.patchValue(dataForm);
+          this.adjustDurationDate();
+        }
+      })
+    this.isUpdatePublishModalOpen = true
+  }
+
+  adjustDurationDate() {
+    const duration = this.updateForm.get('duration').value;
+    const startDate = new Date(this.updateForm.get('startedAt').value);
+    startDate.setDate(startDate.getDate() + duration);
+    const adjustedDate = startDate.toISOString().split('T')[0];
+
+    this.updateForm.get('duration').setValue(adjustedDate);
   }
 
   uploadFile(evt: any, fieldName: string, fieldDoc: string) {
@@ -178,10 +219,74 @@ export class RoundCompanyPublishComponent implements OnInit {
       totalApartments: [null, [Validators.required]],
       availableApartments: [null, [Validators.required]]
     });
+
+  }
+
+  initUpdateForm() {
+    this.updateForm = this.formBuilder.group({
+      id: [null],
+      status: [null],
+      type: [null, [Validators.required]],
+      token: [null],
+      offerVideo: [null, [Validators.required]],
+      minimumValuation: [null, [Validators.required]],
+      maximumValuation: [null, [Validators.required]],
+      quotaValue: [null, [Validators.required]],
+      logo: [null, [Validators.required]],
+      banner: [null],
+      quotas: [null, [Validators.required]],
+      duration: [null, [Validators.required]],
+      deadline: [null, [Validators.required]],
+      partnerParticipation: [null, [Validators.required]],
+      business: [null, [Validators.required, Validators.maxLength(4000)]],
+      achievements: [null, [Validators.required, Validators.maxLength(4000)]],
+      potentialMarket: [null, [Validators.required, Validators.maxLength(4000)]],
+      targets: [null, [Validators.required, Validators.maxLength(4000)]],
+      roadmap: [null, [Validators.required, Validators.maxLength(4000)]],
+      riskiness: [null, [Validators.required, Validators.maxLength(4000)]],
+      presentationOffer: [null],
+      presentationInvestors: [null],
+      legalDocuments: [null],
+      valuationDoc: [null],
+      reputationalDossier: [null],
+      fiscalDossier: [null],
+      expansionPlan: [null],
+      documentsFile: [null],
+      cdiPercentage: [null],
+      cdiValue: [null],
+      startedAt: [null],
+      percentageOfIncome: [null],
+      upangelCost: [null, [Validators.required]],
+      modality: [null, [Validators.required]],
+      guarantee: [null, [Validators.required]],
+      valuation: [null],
+      docExpansionPlan: [null],
+      docFiscalDossier: [null],
+      docPresentationOffer: [null],
+      docPresentationInvestors: [null],
+      docReputationalDossier: [null],
+      docValuation: [null],
+      docLegalDocuments: [null],
+      docLogo: [null],
+      docBanner: [null],
+      docTypeExpansionPlan: [null],
+      docTypeFiscalDossier: [null],
+      docTypeReputationalDossier: [null],
+      docTypeValuation: [null],
+      docTypeLegalDocuments: [null],
+      docTypeLogo: [null],
+      docTypeBanner: [null],
+      docTypePresentationOffer: [null],
+      docTypePresentationInvestors: [null]
+    });
   }
 
   selectSession(sessionName: string) {
     this.selectedSession = sessionName;
+  }
+
+  selectUpdateSession(sessionName: string) {
+    this.selectedUpdateSession = sessionName;
   }
 
   getAllByStatus(){
@@ -198,7 +303,7 @@ export class RoundCompanyPublishComponent implements OnInit {
           this.loader = false;
           return;
         }
-        this.rounds = response.companiesRounds;
+        this.rounds = [...response.companiesRounds, ...response.realStateRounds]
         this.loader = false;
       },
       (error) => {
@@ -240,6 +345,7 @@ export class RoundCompanyPublishComponent implements OnInit {
             }
           }
         });
+        this.isSingUpPublishModalOpen = false
       }, (error) => {
         const erro = 'Ocorreu um erro, entre em contato com o administrador.';
         toastr.options = {
