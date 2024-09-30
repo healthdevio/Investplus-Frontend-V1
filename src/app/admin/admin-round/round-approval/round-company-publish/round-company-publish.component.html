@@ -34,7 +34,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Incorporadora/Empreendedor <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Incorporadora/Empreendedor é obrigatório.'">
-                  <input type="text" formControlName="name" placeholder="Incorporadora/Empreendedor"
+                  <input type="text" formControlName="builder" placeholder="Incorporadora/Empreendedor"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                     type="text">
                 </app-form>
@@ -43,7 +43,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Empreendimento <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Empreendimento da empresa é obrigatório.'">
-                  <input type="text" formControlName="businessName" placeholder="Empreendimento"
+                  <input type="text" formControlName="property" placeholder="Empreendimento"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                     type="text">
                 </app-form>
@@ -52,7 +52,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Vídeo da oferta <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
-                  <input type="text" formControlName="businessName" placeholder="URL do vídeo"
+                  <input type="text" formControlName="offerVideo" placeholder="URL do vídeo"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
@@ -61,16 +61,18 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style="margin-top: 24px;">Total de unidades</p>
                   <app-form [errorMessage]="'Total de unidades é obrigatório.'">
-                    <input type="text" formControlName="website" placeholder="Total de unidades"
-                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                      type="text">
+                    <input 
+                      type="text" 
+                    formControlName="totalApartments"
+                    placeholder="Total de unidades"
+                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
                   </app-form>
                 </div>
       
                 <div style="width: 100%;">
-                  <p style="margin-top: 24px;">Total de unidades <span style="color: red;">*</span></p>
-                  <app-form [errorMessage]="'Total de unidades é obrigatório.'">
-                    <input type="text" formControlName="" placeholder="cnpj"
+                  <p style="margin-top: 24px;">Unidades Disponíveis <span style="color: red;">*</span></p>
+                  <app-form [errorMessage]="'Unidades Disponíveis é obrigatório.'">
+                    <input type="text" formControlName="availableApartments" placeholder="Unidades Disponíveis"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
                       type="text">
                   </app-form>
@@ -79,19 +81,26 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Logo <span style="color: red;">*</span></p>
-                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
-                  <div style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                      <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                <app-form [errorMessage]="'Logo é obrigatório.'">
+                  <div
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="fileInput.click()">
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('logo').value ?? 'Anexar arquivo'}}</p>
+                    <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'logoDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
 
+
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Banner <span style="color: red;">*</span></p>
-                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
+                <app-form [errorMessage]="'Banner é obrigatório.'">
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="bannerInput.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('banner').value ?? 'Anexar arquivo'}}</p>
+                    <input #bannerInput title="Selecione o banner." type="file" (change)="uploadFile($event, 'banner', 'bannerDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -106,7 +115,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style=" font-size: 12px;">Rentabilidade/projetada mínima</p>
                   <app-form [errorMessage]="'Rentabilidade projetada mínima é obrigatório.'">
-                    <input type="text" formControlName="website" placeholder="0,00"
+                    <input type="text" formControlName="projectedMinProfitability" placeholder="0,00"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -114,7 +123,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style=" font-size: 12px;">Rentabilidade/projetada máxima <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Rentabilidade projetada máxima é obrigatório.'">
-                    <input type="text" formControlName="cnpj" placeholder="0,00"
+                    <input type="text" formControlName="projectedMaxProfitability" placeholder="0,00"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -124,15 +133,15 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style=" font-size: 12px;">Tempo de retorno total(dias)</p>
                   <app-form [errorMessage]="'Tempo de retorno total é obrigatório.'">
-                    <input type="text" formControlName="website" placeholder="Tempo de retorno total"
+                    <input type="text" formControlName="returnTimeInMonths" placeholder="Tempo de retorno total"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
               
                 <div style="width: 100%;">
-                  <p style="">Quantidade de cotas <span style="color: red;">*</span></p>
+                  <p>Quantidade de cotas <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Quantidade de cotas é obrigatório.'">
-                    <input type="text" formControlName="cnpj" placeholder="Quantidade de cotas"
+                    <input type="text" formControlName="quotas" placeholder="Quantidade de cotas"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -142,7 +151,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style="font-size: 12px;">Valor da cota</p>
                   <app-form [errorMessage]="'Valor da cota é obrigatório.'">
-                    <input type="text" formControlName="website" placeholder="Valor da cota"
+                    <input type="text" formControlName="quotaValue" placeholder="Valor da cota"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -150,7 +159,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style="font-size: 12px;">Duração da rodada(dias) <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Duração da rodada (dias) é obrigatório.'">
-                    <input type="text" formControlName="cnpj" placeholder="Duração da rodada"
+                    <input type="text" formControlName="duration" placeholder="Duração da rodada"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -160,7 +169,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style="font-size: 12px;">Valor da Captação(Mínimo)</p>
                   <app-form [errorMessage]="'Valor Total da Captação(Mínimo) é obrigatório.'">
-                    <input type="text" formControlName="website" placeholder="Valor Total da Captação"
+                    <input type="text" formControlName="minimumCaptation" placeholder="Valor Total da Captação"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -168,7 +177,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <div style="width: 100%;">
                   <p style="font-size: 12px;">Valor da Captação(Máxima) <span style="color: red;">*</span></p>
                   <app-form [errorMessage]="'Valor Total da Captação (Máxima) é obrigatório.'">
-                    <input type="text" formControlName="cnpj" placeholder="Valor Total da Captação"
+                    <input type="text" formControlName="maximumCaptation" placeholder="Valor Total da Captação"
                       style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                   </app-form>
                 </div>
@@ -183,7 +192,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Localização <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Localização é obrigatório.'">
-                  <input type="text" formControlName="name" placeholder="Localização"
+                  <input type="text" formControlName="location" placeholder="Localização"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
@@ -191,7 +200,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Link da localização <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Link da localização é obrigatório.'">
-                  <input type="text" formControlName="businessName" placeholder="Link da localização"
+                  <input type="text" formControlName="locationLink" placeholder="Link da localização"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>         
@@ -203,7 +212,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Negócio <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Negócio é obrigatório.'">
-                  <input type="text" formControlName="name" placeholder="Descrição do negócio"
+                  <input type="text" fformControlName="business" placeholder="Descrição do negócio"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
@@ -211,7 +220,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Realizações <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Realizações é obrigatório.'">
-                  <input type="text" formControlName="businessName" placeholder="Realizações"
+                  <input type="text" formControlName="achievements" placeholder="Realizações"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
@@ -219,7 +228,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Riscos <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Riscos é obrigatório.'">
-                  <input type="text" formControlName="businessName" placeholder="Riscos"
+                  <input type="text" formControlName="riskiness" placeholder="Riscos"
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
@@ -227,7 +236,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Detalhes do empreendimento <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Detalhes do empreendimento é obrigatório.'">
-                <input type="text" formControlName="businessName" placeholder="Detalhes do empreendimento"
+                <input type="text" formControlName="description" placeholder="Detalhes do empreendimento"
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
               </app-form>
               </div>
@@ -238,10 +247,13 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
           
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Documentos da rodada </p>
-                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
+                <app-form>
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="roundDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('roundDoc').value ?? 'Anexar arquivo'}}</p>
+                    <input #roundDoc title="Selecione o documento da rodada." type="file" (change)="uploadFile($event, 'roundDoc', 'roundDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -250,9 +262,13 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Documentos da construtora </p>
                 <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="builderDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('builderDoc').value ?? 'Anexar arquivo'}}</p>
                   </div>
+                  <input #builderDoc title="Selecione o documento da construtora." type="file"
+                    (change)="uploadFile($event, 'builderDoc', 'builderDocUrl')" style="display: none;" />
                 </app-form>
               </div>
 
@@ -260,8 +276,12 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Informações sobre o empreendimento</p>
                 <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="propertyDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('propertyDoc').value ?? 'Anexar arquivo'}}</p>
+                    <input #propertyDoc title="Selecione o documento com as informações sobre o empreendimento." type="file"
+                      (change)="uploadFile($event, 'propertyDoc', 'propertyDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -269,10 +289,16 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Documento de viabilidade
                 </p>
-                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
+                <app-form>
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="viabilityDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('viabilityDoc').value ?? 'Anexar arquivo'}}</p>
+                    <input 
+                    #viabilityDoc
+                    title="Selecione o documento de viabilidade." type="file"
+                      (change)="uploadFile($event, 'viabilityDoc', 'viabilityDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -280,10 +306,16 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px; margin-bottom: 0;">Caracteristicas de oferta e tributação
                 </p>
-                <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
+                <app-form>
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="taxationDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('taxationDoc').value ?? 'Anexar arquivo'}}</p>
+                    <input 
+                    #taxationDoc
+                    title="Selecione o documento de caractetísticas da Oferta e Tributação." type="file"
+                      (change)="uploadFile($event, 'taxationDoc', 'taxationDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -293,8 +325,12 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                 </p>
                 <app-form [errorMessage]="'Vídeo da oferta é obrigatório.'">
                   <div
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <p style="margin-bottom: 0px; color: #035A7A;">Anexar arquivo</p>
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="fileLegalDoc.click()"
+                    >
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ form.get('legalDoc').value ? form.get('legalDoc').value : 'Anexar arquivo'}}</p>
+
+                    <input title="Selecione o documento jurídico." #fileLegalDoc  type="file" (change)="uploadFile($event, 'legalDoc', 'legalDocUrl')" style="display: none;" />
                   </div>
                 </app-form>
               </div>
@@ -410,17 +446,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                       d="M14 8C14 4.6863 11.3137 2 8 2C6.30483 2 4.77387 2.70299 3.6827 3.83333M2 8C2 11.3137 4.6863 14 8 14C9.61853 14 11.0874 13.3591 12.1667 12.3173"
                       stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <p style="margin-bottom: 0;">Atualizações</p>
-                </div>
-                <div (click)="changeEditModalStatus(company.id)" class="hover-background"
-                  style="display: flex; gap: 16px; align-items: center; padding-bottom: 5px; margin-bottom: 10px; cursor: pointer;">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.77499 14.5L4.60333 14.5001L14.9742 4.12919L12.1458 1.30078L1.7749 11.6717L1.77499 14.5Z"
-                      stroke="#505050" stroke-width="1.5" stroke-linejoin="round" />
-                    <path d="M9.31735 4.12891L12.1458 6.95734" stroke="#505050" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                  <p style="margin-bottom: 0;">Editar</p>
+                  <p style="margin-bottom: 0;">Atualizar</p>
                 </div>
       
                 <div class="hover-background"
@@ -468,57 +494,5 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
           </p>
         </div>
       </div>
-
-    <!-- <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-          <div class="box-body no-padding">
-            <form [formGroup]="form" style="width: 100%; margin-bottom: 3rem;">
-              <div>
-                <div class="input-group">
-                  <app-form [label]="'Status'">
-                    <div class="filtros">
-                      <select
-                        formControlName="status"
-                        class="form-control"
-                        (change)="getAllByStatus()"
-                      >
-                        <option value="PENDING" selected>Pendentes</option>
-                        <option value="IN_PROGRESS">Em Andamento</option>
-                      </select>
-                    </div>
-                  </app-form>
-                </div>
-              </div>
-            </form>
-            <table class="table table-responsive">
-              <tr>
-                <th>Empresa</th>
-                <th>Modelo</th>
-                <th>Participação</th>
-                <th>Prazo</th>
-                <th>Objetivo</th>
-                <th></th>
-                <th></th>
-              </tr>
-              <tr *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
-                <td>{{ round.name }}</td>
-                <td>{{ round.model }}</td>
-                <td>{{ round.round.partnerParticipation }}%</td>
-                <td>{{ round.round.deadline }} anos</td>
-                <td>{{ round.round.maximumValuation | moneyMask : true }}</td>
-                <td style="text-align: end;"><a class="btn-upangel" style="margin-bottom: 5px" [routerLink]="[ '/admin/rounds/company', round.id, 'update', round.round.id ]">Atualizar</a></td>
-                <td style="text-align: end;"><button (click)="publishRound(round.id, round.round.id)" class="btn-upangel" style="margin-bottom: 5px" *ngIf="round.round.status == 'PENDING'">Publicar</button></td>
-              </tr>
-            </table>
-            <app-count [count]="!(rounds?.length > 0)" [textContador]="textRegister"></app-count>
-            <div class="pagination-footer">
-              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
-                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </section>

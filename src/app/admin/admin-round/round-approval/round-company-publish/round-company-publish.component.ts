@@ -4,7 +4,11 @@ import { Router } from "@angular/router";
 import { TitleService } from "../../../../core/service/title.service";
 import { TitleHeader } from "../../../../core/interface/title-header";
 import { DomSanitizer } from "@angular/platform-browser";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { CompanyService } from '../../../../core/service/company.service';
+import { LoaderService } from './../../../../core/service/loader.service';
+import { finalize } from 'rxjs/operators';
+import { RealStateService } from '../../../../core/service/real-state.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -17,11 +21,14 @@ declare var bootbox: any;
 export class RoundCompanyPublishComponent implements OnInit {
   titleHeader: TitleHeader;
   rounds: any;
+  form: FormGroup;
+  formStatus: FormGroup;
   status = "IN_PROGRESS";
   isSingUpPublishModalOpen = false;
   statusApproved = { status: "IN_PROGRESS" };
   isDropdownVisible: number | null = null;
   loader: boolean;
+  id = 0;
   responseError: boolean;
   textRegister = "Nenhum registro encontrado.";
   p = 1;
@@ -51,25 +58,30 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   selectedSession = "Geral";
 
-  form: FormGroup;
-
   constructor(
     private roundService: RoundService,
+    private roundService2: RealStateService,
     private router: Router,
     private data: TitleService,
     private sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder
-  ) {
-    this.form = this.formBuilder.group({
-      status: [this.status]
-    })
-  }
+    private formBuilder: FormBuilder,
+    private companyService: CompanyService,
+    private loaderService: LoaderService,
+  ) { }
 
   ngOnInit() {
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
     this.titleHeader.title = "Administração / Publicar Rodada";
     this.data.changeTitle(this.titleHeader);
+    this.initStatus();
     this.getAllByStatus();
+    this.initForm();
+  }
+
+  initStatus() {
+    this.formStatus = this.formBuilder.group({
+      status: [this.status]
+    })
   }
 
   toggleDropdown(index: number) {
@@ -77,9 +89,95 @@ export class RoundCompanyPublishComponent implements OnInit {
   }
 
   toggleTab() {
-    this.form.get('status').value === 'IN_PROGRESS' ? this.form.get('status').setValue('PENDING') : this.form.get('status').setValue('IN_PROGRESS');
-    this.status = this.form.get('status').value;
+    this.formStatus.get('status').value === 'IN_PROGRESS' ? this.formStatus.get('status').setValue('PENDING') : this.formStatus.get('status').setValue('IN_PROGRESS');
+    this.status = this.formStatus.get('status').value;
     this.getAllByStatus();
+  }
+
+  uploadFile(evt: any, fieldName: string, fieldDoc: string) {
+    const file = evt.target.files[0];
+    const fileName = file.name;
+    if (file) {
+      if (file.size > 52428800) {
+        toastr.error("O tamanho máximo permitido é 50MB.");
+      } else {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const dataSend = {
+            file: btoa(e.target.result),
+            name: fileName
+          };
+
+          this.companyService
+            .uploadDocs(this.id, dataSend)
+            .subscribe({
+              next: (response: any) => {
+                this.form.get(fieldName).setValue(fileName);
+                this.form.get(fieldDoc).setValue(response.url);
+              },
+              error: (error: any) => {
+                toastr.error(error)
+              }
+            })
+        }
+        reader.readAsBinaryString(file);
+      }
+    }
+  }
+
+  consoleTeste() {
+    console.log(this.form.get('legalDoc').value)
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      property: [null, [Validators.required]],
+      builder: [null, [Validators.required]],
+      offerVideo: [null, [Validators.required]],
+      annualMinProfitability: [null],//, [Validators.required]],
+      annualMaxProfitability: [null],//, [Validators.required]],
+      minimalProfitability: [null],//, [Validators.required]],
+      minimumCaptation: [null],//, [Validators.required]],
+      maximumCaptation: [null],//, [Validators.required]],
+      projectedMinProfitability: [null, [Validators.required]],
+      projectedMaxProfitability: [null, [Validators.required]],
+      returnTimeInMonths: [null, [Validators.required]],
+      quotaValue: [null, [Validators.required]],
+      quotas: [null, [Validators.required]],
+      duration: [null, [Validators.required]],
+      location: [null, [Validators.required]],
+      locationLink: [null, [Validators.required]],
+      riskiness: [null, [Validators.required, Validators.maxLength(4000)]],
+      description: [null, [Validators.required, Validators.maxLength(4000)]],
+      business: [null, [Validators.required, Validators.maxLength(4000)]],
+      achievements: [null, [Validators.required, Validators.maxLength(4000)]],
+
+      logo: [null, [Validators.required]],
+      logoDocUrl: [null],
+      banner: [null],
+      bannerDocUrl: [null],
+
+      roundDocUrl: [null],
+      roundDoc: [null],
+
+      builderDocUrl: [null],
+      builderDoc: [null],
+
+      propertyDocUrl: [null],
+      propertyDoc: [null],
+
+      viabilityDocUrl: [null],
+      viabilityDoc: [null],
+
+      taxationDocUrl: [null],
+      taxationDoc: [null],
+
+      legalDocUrl: [null],
+      legalDoc: [null],
+
+      totalApartments: [null, [Validators.required]],
+      availableApartments: [null, [Validators.required]]
+    });
   }
 
   selectSession(sessionName: string) {
@@ -90,7 +188,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.responseError = false;
     this.loader = true;
     this.rounds = [];
-    this.roundService.getAllByStatus(this.form.get('status').value).subscribe(
+    this.roundService.getAllByStatus(this.formStatus.get('status').value).subscribe(
       (response) => {
         if (
           response.companiesRounds == null ||
@@ -108,6 +206,81 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.responseError = true;
       }
     );
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      const $this = this;
+
+      // this.form.controls['annualMinProfitability'].setValue((Number(this.form.controls['annualMinProfitability']?.value?.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      // this.form.controls['annualMaxProfitability'].setValue((Number(this.form.controls['annualMaxProfitability']?.value?.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      // this.form.controls['minimalProfitability'].setValue((Number(this.form.controls['minimalProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      this.form.controls['projectedMinProfitability'].setValue((Number(this.form.controls['projectedMinProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      this.form.controls['projectedMaxProfitability'].setValue((Number(this.form.controls['projectedMaxProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      this.form.controls['quotaValue'].setValue((Number(this.form.controls['quotaValue'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
+      this.form.controls['returnTimeInMonths'].setValue(this.form.controls['returnTimeInMonths'].value.replace(/[^\d]+/g, ''));
+      this.form.controls['quotas'].setValue(this.form.controls['quotas'].value.replace(/[^\d]+/g, ''));
+      this.form.controls['duration'].setValue(this.form.controls['duration'].value.replace(/[^\d]+/g, ''));
+      this.form.controls['totalApartments'].setValue(this.form.controls['totalApartments'].value.replace(/[^\d]+/g, ''));
+      this.form.controls['availableApartments'].setValue(this.form.controls['availableApartments'].value.replace(/[^\d]+/g, ''));
+
+      this.loader = true;
+      this.loaderService.load(this.loader);
+      this.roundService2.createRound(this.form.value).pipe(finalize(() => this.loader = false)).subscribe((response) => {
+        bootbox.dialog({
+          title: '',
+          message: 'Rodada criada com sucesso.',
+          buttons: {
+            'success': {
+              label: 'Entendi',
+              className: 'bg-upangel',
+              callback: function () {
+                $this.router.navigate(['/admin/rounds/approval/incorporator/publish']);
+              }
+            }
+          }
+        });
+      }, (error) => {
+        const erro = 'Ocorreu um erro, entre em contato com o administrador.';
+        toastr.options = {
+          'closeButton': true,
+          'debug': false,
+          'newestOnTop': false,
+          'progressBar': true,
+          'positionClass': 'toast-top-center',
+          'preventDuplicates': true,
+          'onclick': null,
+          'showDuration': '300',
+          'hideDuration': '1000',
+          'timeOut': '10000',
+          'extendedTimeOut': '1000',
+          'showEasing': 'swing',
+          'hideEasing': 'linear',
+          'showMethod': 'fadeIn',
+          'hideMethod': 'fadeOut'
+        };
+        toastr.error(erro, 'Erro');
+      }, () => {
+        this.loader = false;
+        this.loaderService.load(this.loader);
+      });
+    } else {
+      this.validateAllFields(this.form);
+      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+    }
+  }
+
+  validateAllFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({
+          onlySelf: true
+        });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
   }
 
   publishRound(company, round) {
