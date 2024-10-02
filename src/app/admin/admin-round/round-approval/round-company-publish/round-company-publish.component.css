@@ -13,6 +13,10 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+.hover-svg:hover path {
+  fill: #035A7A;
+}
+
 .widget-user .widget-user-header {
   padding: 20px;
   height: 120px;

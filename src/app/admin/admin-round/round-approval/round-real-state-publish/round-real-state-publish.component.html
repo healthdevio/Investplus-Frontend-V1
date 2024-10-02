@@ -1,36 +1,51 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
   <div *ngIf="!loader">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-          <div class="box-body no-padding">
-            <table class="table table-responsive">
-              <tr>
-                <th>Empresa</th>
-                <th>Modelo</th>
-                <th>Retorno</th>
-                <th>Prazo</th>
-                <th>Objetivo</th>
-                <th></th>
-              </tr>
-              <tr *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
-                <td>{{ round.property + ' - ' + round.builder }}</td>
-                <td> Imobiliário </td>
-                <td>{{ round.returnTimeInMonths }} meses </td>
-                <td>{{ round.duration }} dias</td>
-                <td>R$ {{ round.quotas * round.quotaValue | moneyMask : true }}</td>
-                <td><button (click)="publishRound(round.id)" class="btn-upangel" style="margin-bottom: 5px;">Publicar</button></td>
-              </tr>
-            </table>
-            <app-count [count]="!(rounds?.length > 0)" [textContador]="textRegister"></app-count>
-            <div class="pagination-footer">
-              <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
-                [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+      <h1 style="color: #1F1F1F;">Rodadas</h1>
+      <p style="color: #505050;">Verifique aqui todas as rodadas para serem publicadas</p>
+      
+      <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
+        <p style="margin-left: 16px; font-size: 16px;">Publicar Rodada</p>      
+        <table style="width: 100%; margin-top: 35px;">
+          <tr>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Retorno</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
+          </tr>
+          <tr 
+          style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
+          *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.property + ' - ' + round.builder }}</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;"> Imobiliário </td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.returnTimeInMonths }} meses </td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.duration }} dias</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">R$ {{ round.quotas * round.quotaValue | moneyMask : true }}</td>
+            <td><button (click)="publishRound(round.id)" class="btn-upangel" style="margin-bottom: 5px;">Publicar</button></td>
+          </tr>
+        </table>
+      
+        <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
+          <p (click)="changePage(currentPage - 1)" [ngClass]="{'disabled': currentPage === 1}"
+            style="font-family: Poppins, sans-serif; font-weight: 400; color: #909090; margin-bottom: 0; cursor: pointer;">
+            Anterior</p>
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div *ngFor="let page of [].constructor(totalPages); let i = index" (click)="changePage(i + 1)"
+              [ngClass]="{'active-page': currentPage === i + 1}"
+              [style.background-color]="currentPage === i + 1 ? '#035A7A' : 'transparent'"
+              style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer;">
+              <p [style.color]="currentPage === i + 1 ? 'white' : '#909090'"
+                style="font-family: Poppins, sans-serif; font-weight: 400; margin-bottom: 0;">
+                {{ i + 1 }}</p>
             </div>
           </div>
+          <p (click)="changePage(currentPage + 1)" [ngClass]="{'disabled': currentPage === totalPages}"
+            [ngStyle]="{'cursor': currentPage === totalPages ? 'not-allowed' : 'pointer'}"
+            style="font-family: Poppins, sans-serif; font-weight: 500; color: #035A7A; margin-bottom: 0;">
+            Próximo
+          </p>
         </div>
       </div>
-    </div>
   </div>
 </section>
