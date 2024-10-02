@@ -47,10 +47,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       name: "Geral"
     },
     {
-      name: "Detalhes"
-    },
-    {
-      name: "Localização"
+      name: "Valores"
     },
     {
       name: "Resumo"
@@ -119,6 +116,11 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.formStatus.get('status').value === 'IN_PROGRESS' ? this.formStatus.get('status').setValue('PENDING') : this.formStatus.get('status').setValue('IN_PROGRESS');
     this.status = this.formStatus.get('status').value;
     this.getAllByStatus();
+  }
+
+  openSingUpModal() {
+    this.updateForm.reset();
+    this.isSingUpPublishModalOpen = true;
   }
 
   updateRound(id: number, roundId: number) {
@@ -262,7 +264,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       documentsFile: [null],
       cdiPercentage: [null],
       cdiValue: [null],
-      startedAt: [null],
+      startedAt: [null, [Validators.required]],
       percentageOfIncome: [null],
       upangelCost: [null, [Validators.required]],
       modality: [null, [Validators.required]],
@@ -275,7 +277,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       docReputationalDossier: [null],
       docValuation: [null],
       docLegalDocuments: [null],
-      docLogo: [null],
+      docLogo: [null, [Validators.required]],
       docBanner: [null],
       docTypeExpansionPlan: [null],
       docTypeFiscalDossier: [null],
@@ -321,68 +323,59 @@ export class RoundCompanyPublishComponent implements OnInit {
     );
   }
 
-  onSubmit() {
-    if (this.form.valid) {
+  public onSubmit(): void {
+    if (this.updateForm.valid) {
       const $this = this;
-
-      // this.form.controls['annualMinProfitability'].setValue((Number(this.form.controls['annualMinProfitability']?.value?.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      // this.form.controls['annualMaxProfitability'].setValue((Number(this.form.controls['annualMaxProfitability']?.value?.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      // this.form.controls['minimalProfitability'].setValue((Number(this.form.controls['minimalProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      this.form.controls['projectedMinProfitability'].setValue((Number(this.form.controls['projectedMinProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      this.form.controls['projectedMaxProfitability'].setValue((Number(this.form.controls['projectedMaxProfitability'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      this.form.controls['quotaValue'].setValue((Number(this.form.controls['quotaValue'].value.replace(/[^\d]+/g, '')) / 100).toFixed(2));
-      this.form.controls['returnTimeInMonths'].setValue(this.form.controls['returnTimeInMonths'].value.replace(/[^\d]+/g, ''));
-      this.form.controls['quotas'].setValue(this.form.controls['quotas'].value.replace(/[^\d]+/g, ''));
-      this.form.controls['duration'].setValue(this.form.controls['duration'].value.replace(/[^\d]+/g, ''));
-      this.form.controls['totalApartments'].setValue(this.form.controls['totalApartments'].value.replace(/[^\d]+/g, ''));
-      this.form.controls['availableApartments'].setValue(this.form.controls['availableApartments'].value.replace(/[^\d]+/g, ''));
-
-      this.loader = true;
-      this.loaderService.load(this.loader);
-      this.roundService2.createRound(this.form.value).pipe(finalize(() => this.loader = false)).subscribe((response) => {
+      const dataForm = this.updateForm.value;
+      const durationDate = new Date(dataForm.duration);
+      const currentDate = new Date();
+      const durationInDays = Math.ceil((durationDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24) + 1);
+      dataForm.duration = durationInDays;
+      this.roundService.createRound(this.id, dataForm).subscribe((response) => {
         bootbox.dialog({
           title: '',
-          message: 'Rodada criada com sucesso.',
+          message: 'Rodada atualizada com sucesso.',
           buttons: {
             'success': {
               label: 'Entendi',
               className: 'bg-upangel',
-              callback: function () {
-                $this.router.navigate(['/admin/rounds/approval/incorporator/publish']);
-              }
             }
           }
         });
-        this.isSingUpPublishModalOpen = false
+
+        this.isSingUpPublishModalOpen = false;
+        this.updateForm.reset();
+        this.initForm();
+        this.getAllByStatus();
       }, (error) => {
-        const erro = 'Ocorreu um erro, entre em contato com o administrador.';
-        toastr.options = {
-          'closeButton': true,
-          'debug': false,
-          'newestOnTop': false,
-          'progressBar': true,
-          'positionClass': 'toast-top-center',
-          'preventDuplicates': true,
-          'onclick': null,
-          'showDuration': '300',
-          'hideDuration': '1000',
-          'timeOut': '10000',
-          'extendedTimeOut': '1000',
-          'showEasing': 'swing',
-          'hideEasing': 'linear',
-          'showMethod': 'fadeIn',
-          'hideMethod': 'fadeOut'
-        };
-        toastr.error(erro, 'Erro');
+        toastr.error('Ocorreu um erro, entre em contato com o administrador', 'Erro');
       }, () => {
-        this.loader = false;
-        this.loaderService.load(this.loader);
+        // this.loading = true;
+        // this.loaderService.load(this.loading);
       });
     } else {
-      this.validateAllFields(this.form);
+      this.validateAllFields(this.updateForm);
+      this.initMask();
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
   }
+
+  public initMask(): void {
+    const SPMaskBehavior = function (val: string) {
+      return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-0000';
+    },
+      spOptions = {
+        onKeyPress: function (val: string, e: KeyboardEvent, field: any, options: any) {
+          field.mask(SPMaskBehavior.apply({}, arguments), options);
+        }
+      };
+
+    $('.number').keyup(function () {
+      const inputElement = this as HTMLInputElement;
+      inputElement.value = inputElement.value.replace(/\D/g, '');
+    });
+  }
+
 
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
