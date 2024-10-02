@@ -27,7 +27,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   form: FormGroup;
   formStatus: FormGroup;
   updateForm: FormGroup;
-  status = "APPROVED";
+  status = "IN_PROGRESS";
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -101,6 +101,20 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.getModalities();
   }
 
+  getRoundInformation(id: number, roundId: number) {
+    this.isUpdatePublishModalOpen = true
+
+    this.roundService
+      .getRound(id, roundId)
+      .subscribe({
+        next: (response) => {
+          const dataForm = response.round as any;
+          this.updateForm.patchValue(dataForm);
+          this.adjustDurationDate();
+        }
+      })
+  }
+
   getModalities() {
     this.modalities = this.modalityService.getModalities();
   }
@@ -124,19 +138,6 @@ export class RoundCompanyPublishComponent implements OnInit {
   openSingUpModal() {
     this.updateForm.reset();
     this.isSingUpPublishModalOpen = true;
-  }
-
-  updateRound(id: number, roundId: number) {
-    this.roundService
-      .getRound(id, roundId)
-      .subscribe({
-        next: (response) => {
-          const dataForm = response.round as any;
-          this.updateForm.patchValue(dataForm);
-          this.adjustDurationDate();
-        }
-      })
-    this.isUpdatePublishModalOpen = true
   }
 
   adjustDurationDate() {
@@ -309,15 +310,15 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.roundService.getAllByStatus(this.formStatus.get('status').value).subscribe(
       (response) => {
         if (
-          response == null ||
-          response.length === 0
+          response.companiesRounds == null ||
+          response.companiesRounds.length === 0
         ) {
           this.responseError = true;
           this.loader = false;
           return;
         }
-        this.rounds = response
-        this.filteredCompanies = response;
+        this.rounds = response.companiesRounds
+        this.filteredCompanies = response.companiesRounds;
         this.loader = false;
       },
       (error) => {
