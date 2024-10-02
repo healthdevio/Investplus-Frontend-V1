@@ -432,6 +432,35 @@ export class RoundCompanyPublishComponent implements OnInit {
     });
   }
 
+  formatCNPJ(cnpj: string): string {
+    if (!cnpj) return '';
+
+    cnpj = cnpj.replace(/\D/g, '');
+
+    if (cnpj.length !== 14) return cnpj;
+
+    return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+  }
+
+  formatPhoneNumber(phone: string): string {
+    if (!phone) return '';
+    phone = phone.replace(/\D/g, '');
+
+    if (phone.length > 11) {
+      phone = phone.substr(0, 11);
+    }
+
+    if (phone.length === 11) {
+      return phone.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+    } else if (phone.length === 10) {
+      return phone.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+    }
+
+    return phone;
+  }
+
+
+
 
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
