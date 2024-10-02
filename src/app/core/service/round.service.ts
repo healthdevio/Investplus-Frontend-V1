@@ -49,7 +49,7 @@ export class RoundService {
 
   getAllByStatus(status: string): Observable<any> {
     return this.http.get<Round>(
-      `${environment.url_api}/${this.prefixCompany}?status=${status}`
+      `${environment.url_api}/${this.prefixRound}?status=${status}`
     );
   }
 
