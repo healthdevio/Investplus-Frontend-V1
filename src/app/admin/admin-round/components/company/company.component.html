@@ -88,7 +88,7 @@
         <div>
           <a 
           *ngIf="company.round?.status == 'IN_PROGRESS'"
-          [routerLink]="['../../company', company?.id, 'round', company.round?.id]"
+          [href]="'admin/rounds/company/' + company?.id + '/round/' + company.round?.id"
           (click)="handleClick()" 
           class="btn-upangel"
           style="width: 75%;"

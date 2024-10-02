@@ -809,7 +809,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           if (response.status !== 200) {
             return;
           }
-
           this.banks = response.body
             .map(bank => {
               if (bank.code) {
