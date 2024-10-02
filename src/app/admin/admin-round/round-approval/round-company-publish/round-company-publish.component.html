@@ -625,17 +625,6 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
       
         <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
           <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
-            <div style="display: flex; align-items: center; gap: 32px;">
-              <p (click)="toggleTab()" [ngStyle]="{'color': status === 'IN_PROGRESS' ? '#035A7A' : '#000000'}"
-                style="cursor: pointer;">
-                Rodadas ativas
-              </p>
-              <p (click)="toggleTab()" [ngStyle]="{'color': status === 'PENDING' ? '#035A7A' : '#000000'}"
-                style="cursor: pointer;">
-                Rodadas inativas
-              </p>
-            </div>
-      
             <div
               style="height: 2.5em; width: 30%; display: flex; align-items: center; border-radius: 4px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 5px; padding: 0 16px; margin-bottom: 10px;">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -679,21 +668,20 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
         <table style="width: 100%; margin-top: 35px;">
           <tr>
             <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Participação</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Responsável</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">CNPJ</th>
+            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Telefone</th>
           </tr>
       
           <tr
             style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
-            *ngFor="let round of rounds; let i = index">
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name || round?.property }}</td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.model }}
+            *ngFor="let round of filteredCompanies; let i = index">
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name }}</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.responsible?.name }}
             </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.round?.partnerParticipation }}%</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.cnpj }}</td>
             <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
-              <span>{{ round?.round?.maximumValuation | moneyMask : true }}</span>
+              <span>{{ round?.responsible?.phone }}</span>
             </td>
             <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; position: relative;">
               <svg class="hover-svg" style="cursor: pointer;" width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -702,7 +690,6 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                   d="M10 16.6673C9.07953 16.6673 8.33334 15.9211 8.33334 15.0007C8.33334 14.0802 9.07953 13.334 10 13.334C10.9205 13.334 11.6667 14.0802 11.6667 15.0007C11.6667 15.9211 10.9205 16.6673 10 16.6673ZM10 11.6673C9.07953 11.6673 8.33334 10.9211 8.33334 10.0007C8.33334 9.08018 9.07953 8.33398 10 8.33398C10.9205 8.33398 11.6667 9.08018 11.6667 10.0007C11.6667 10.4427 11.4911 10.8666 11.1785 11.1792C10.866 11.4917 10.442 11.6673 10 11.6673ZM10 6.66732C9.07953 6.66732 8.33334 5.92113 8.33334 5.00065C8.33334 4.08018 9.07953 3.33398 10 3.33398C10.9205 3.33398 11.6667 4.08018 11.6667 5.00065C11.6667 5.44268 11.4911 5.8666 11.1785 6.17916C10.866 6.49172 10.442 6.66732 10 6.66732Z"
                   fill="#909090" />
               </svg>
-      
               <div 
               (click)="updateRound(round.id, round.round.id)" 
               *ngIf="isDropdownVisible === i"

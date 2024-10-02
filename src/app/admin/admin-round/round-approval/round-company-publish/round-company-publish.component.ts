@@ -5,10 +5,12 @@ import { TitleService } from "../../../../core/service/title.service";
 import { TitleHeader } from "../../../../core/interface/title-header";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
 import { CompanyService } from '../../../../core/service/company.service';
 import { LoaderService } from './../../../../core/service/loader.service';
 import { finalize } from 'rxjs/operators';
 import { RealStateService } from '../../../../core/service/real-state.service';
+import { saveAs } from 'file-saver';
 import { Modality, ModalityService } from '../../../../core/service/modality.service';
 
 declare var toastr: any;
@@ -25,7 +27,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   form: FormGroup;
   formStatus: FormGroup;
   updateForm: FormGroup;
-  status = "IN_PROGRESS";
+  status = "APPROVED";
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -41,6 +43,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     previousLabel: "Anterior",
     nextLabel: "Próximo",
   };
+  filteredCompanies: []
 
   singUpPublishSessions = [
     {
@@ -306,14 +309,15 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.roundService.getAllByStatus(this.formStatus.get('status').value).subscribe(
       (response) => {
         if (
-          response.companiesRounds == null ||
-          response.companiesRounds.length === 0
+          response == null ||
+          response.length === 0
         ) {
           this.responseError = true;
           this.loader = false;
           return;
         }
-        this.rounds = [...response.companiesRounds, ...response.realStateRounds]
+        this.rounds = response
+        this.filteredCompanies = response;
         this.loader = false;
       },
       (error) => {
@@ -321,6 +325,58 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.responseError = true;
       }
     );
+  }
+
+  filterCompanies(searchTerm: string) {
+    if (searchTerm) {
+      this.filteredCompanies = this.rounds.filter(company =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredCompanies = this.rounds;
+    }
+  }
+
+  exportToCSV() {
+    const roundsFilteres = this.filteredCompanies;
+    if (roundsFilteres && roundsFilteres.length > 0) {
+      const csvData = this.convertToCSV(roundsFilteres);
+      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, 'rodadas.csv');
+
+      // Alternativa usando JavaScript puro (sem FileSaver.js)
+      // const url = window.URL.createObjectURL(blob);
+      // const a = document.createElement('a');
+      // a.setAttribute('href', url);
+      // a.setAttribute('download', 'empresas.csv');
+      // document.body.appendChild(a);
+      // a.click();
+      // document.body.removeChild(a);
+    }
+  }
+
+  convertToCSV(objArray: any[]): string {
+    const header = ['Empresa', 'Responsável', 'CNPJ', 'Modelo'];
+    const rows = objArray.map(company => [
+      company.name,
+      company.responsible.name,
+      company.cnpj,
+      this.maskModel(company.model)
+    ]);
+
+    const csvContent = [header, ...rows]
+      .map(row => row.join(','))
+      .join('\n');
+
+    return csvContent;
+  }
+
+  public maskModel(model: string): string {
+    const aux = TiposModalidades[model];
+    if (!aux) {
+      return "";
+    }
+    return aux;
   }
 
   public onSubmit(): void {
