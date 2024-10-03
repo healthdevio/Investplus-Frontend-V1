@@ -17,6 +17,8 @@ import { TitleHeader } from "../../../../core/interface/title-header";
 import { CompanyCaptableService } from '../../../../core/service/company-captable.service';
 import { ModalityService } from '../../../../core/service/modality.service';
 import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
+import { InvestorService } from "./../../../../core/service/investor.service";
+import { Investor } from "./../../../../core/interface/investor";
 
 declare var $: any;
 declare var bootbox: any;
@@ -34,6 +36,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   form: FormGroup;
   companyData: any;
   titleHeader: TitleHeader;
+  investor: Investor;
   roundInvestment: any = {}; 
   companyInvestment: any;
   quotaValue = 0;
@@ -158,6 +161,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     private loaderService: LoaderService,
     private captableService: CompanyCaptableService,
     private modalityService: ModalityService,
+    private investorService: InvestorService,
   ) { }
 
   ngAfterViewInit() {
@@ -194,6 +198,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.initForm();
     this.getValuation();
     this.getCaptable();
+    this.getUser();
 
     const $this = this;
     setTimeout(function () {
@@ -318,6 +323,14 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       investment: [null],
       publicAccess: [false],
       installments: ["1", [Validators.required]],
+    });
+  }
+
+  getUser() {
+    this.loader = true;
+    this.investorService.getUser().subscribe((response) => {
+      this.investor = response;
+      this.loader = false;
     });
   }
 
@@ -549,6 +562,23 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   
     const dataSend = this.form.value;
     dataSend.investment = undefined;
+    let data: any = {
+      quotas: dataSend.quotas,
+      investment: this.amountQuota * this.quotaValue,
+      publicAccess: dataSend.publicAccess,
+      installments: dataSend.installments,
+      cpf: this.investor.cpfResponsible,
+    }
+
+    if (this.investor.cpf) {
+      data = {
+        quotas: dataSend.quotas,
+        investment: this.amountQuota * this.quotaValue,
+        publicAccess: dataSend.publicAccess,
+        installments: dataSend.installments,
+        cpf: this.investor.cpfResponsible,
+      }
+    }
   
     if (this.form.controls["quotas"].value <= 0) {
       toastr.error("O número de cotas solicitado é inválido. Por favor, insira um valor maior que zero.", "Erro");
@@ -558,7 +588,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       this.loader = true;
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.investmentService.createInvestment(dataSend, this.company, this.rounds)
+      this.investmentService.createInvestment(data, this.company, this.rounds)
         .pipe(
           finalize(() => {
             this.loading = false;
@@ -574,6 +604,9 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             this.router.navigate(["/admin/rounds/assets/list"]);
           },
           error: (error) => {
+            console.log(error)
+            console.log(error.status)
+            console.log(error.error.code)
             let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
             if (error.status === 400) {
               switch (error.error.code) {

@@ -410,6 +410,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
       dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
       dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
+      if (this.investor.cnpj !== undefined) {
+        dataSend.nameResponsible = dataSend.nameResponsible;
+        dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
+        console.log(dataSend.nameResponsible)
+        console.log(dataSend.cpfResponsible)
+      }
       
       const address = {
         id: dataSend.addressId,
