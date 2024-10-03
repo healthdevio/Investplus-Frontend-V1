@@ -26,6 +26,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   rounds: any;
   form: FormGroup;
   formStatus: FormGroup;
+  loadingRounds = false;
   updateForm: FormGroup;
   status = "IN_PROGRESS";
   modalities: Modality[] = [];
@@ -103,7 +104,8 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   getRoundInformation(id: number, roundId: number) {
     this.isUpdatePublishModalOpen = true
-
+    this.loadingRounds = true;
+    this.id = id;
     this.roundService
       .getRound(id, roundId)
       .subscribe({
@@ -111,6 +113,7 @@ export class RoundCompanyPublishComponent implements OnInit {
           const dataForm = response.round as any;
           this.updateForm.patchValue(dataForm);
           this.adjustDurationDate();
+          this.loadingRounds = false;
         }
       })
   }
@@ -384,10 +387,11 @@ export class RoundCompanyPublishComponent implements OnInit {
     if (this.updateForm.valid) {
       const $this = this;
       const dataForm = this.updateForm.value;
-      const durationDate = new Date(dataForm.duration);
-      const currentDate = new Date();
-      const durationInDays = Math.ceil((durationDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24) + 1);
-      dataForm.duration = durationInDays;
+      const startedAt = new Date(dataForm.startedAt);
+      const duration = new Date(dataForm.duration);
+      const timeDifference = duration.getTime() - startedAt.getTime();
+      const daysDifference = timeDifference / (1000 * 3600 * 24);
+      dataForm.duration = daysDifference;
       this.roundService.createRound(this.id, dataForm).subscribe((response) => {
         bootbox.dialog({
           title: '',
@@ -401,6 +405,7 @@ export class RoundCompanyPublishComponent implements OnInit {
         });
 
         this.isSingUpPublishModalOpen = false;
+        this.isUpdatePublishModalOpen = false;
         this.updateForm.reset();
         this.initForm();
         this.getAllByStatus();
