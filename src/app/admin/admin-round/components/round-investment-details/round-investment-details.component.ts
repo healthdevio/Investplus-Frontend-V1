@@ -194,11 +194,11 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     }
 
     this.getCompanyIndicators(this.company);
-    this.getRound();
     this.initForm();
     this.getValuation();
     this.getCaptable();
     this.getUser();
+    this.getRound();
 
     const $this = this;
     setTimeout(function () {
@@ -330,7 +330,6 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
-      this.loader = false;
     });
   }
 
@@ -593,7 +592,6 @@ export class RoundInvestmentDetailsComponent implements OnInit {
           finalize(() => {
             this.loading = false;
             this.loaderService.load(false);
-            this.loader = false;
           })
         )
         .subscribe({

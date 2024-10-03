@@ -1,3 +1,4 @@
+<app-loader [loader]="loader"></app-loader>
 <div
 (click)="toggleInvestmentModal()"
   *ngIf="!loader && !investmentModalOppened"
@@ -160,8 +161,8 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
     </form>
   </div>
 </div>
+
 <section class="content">
-  <app-loader [loader]="loader"></app-loader>
   <div 
   class="desktop-session"
   *ngIf="!loader">
