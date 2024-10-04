@@ -1,159 +1,228 @@
 <div class="banner">
-  <div class="login-box" style="border: 1px solid #E5E5E5; background: #FFFFFF; width: 34%;">
-    <div class="login-box-body">
-      <div class="login-logo text-center">
-        <a routerLink="/">
-          <img
-            src="/assets/img/fcjinvestplus.png"
-            class="img-responsive"
-            style="width: 30%; margin-bottom: 3%; margin-top: -2%;"
-          />
-        </a>
-      </div>
-
-      <p style="
-      font-family: Poppins, sans-serif;
-      font-size: 19px;
-      font-weight: 600;
-      line-height: 24px;
-      text-align: center;
-      color: #27272A;
-      margin-top: 2;
-      margin-bottom: 1%;
-      ">
-        Esqueceu sua senha?   
-      </p>
-
-      <div *ngIf="statusForgot">
-        <form class="form-signin" method="POST" action="#" role="form">
-          <p class="login-box-msg" style="
+  <div class="login-desktop">
+    <div class="login-box" style="border: 1px solid #E5E5E5; background: #FFFFFF; width: 34%;">
+      <div class="login-box-body">
+        <div class="login-logo text-center">
+          <a routerLink="/">
+            <img src="/assets/img/fcjinvestplus.png" class="img-responsive"
+              style="width: 30%; margin-bottom: 3%; margin-top: -2%;" />
+          </a>
+        </div>
+    
+        <p style="
           font-family: Poppins, sans-serif;
-          font-size: 15px;
-          font-weight: 400;
+          font-size: 19px;
+          font-weight: 600;
+          line-height: 24px;
           text-align: center;
-          color: #5F5F5F;
+          color: #27272A;
           margin-top: 2;
           margin-bottom: 1%;
-          width: 100%;
           ">
-            Iremos enviar um código de verificação no seu e-mail cadastrado na plataforma, para redefinir sua senha
-          </p>
-          <div class="form-group">
-            <label class="control-label" for="signupEmail" style="margin-left: 8%">E-mail</label>
-            <input
-              id="signupEmail"
-              type="email"
-              maxlength="50"
-              class="form-control"
-              [(ngModel)]="email"
-              placeholder="Digite aqui o seu e-mail"
-              style="background-color: #F5F5FA; border: none; padding: 20px; width: 85%; margin-left: 8%"
-              [ngModelOptions]="{ standalone: true }"
-              required
-            />
-          </div>
-          <div class="form-group text-center">
-            <button
-              (click)="onNext()"
-              id="nextPage"
-              type="submit"
-              class="btn"
-            >
-              Enviar Código
-            </button>
-          </div>
-          <div class="form-group return text-center" style="margin-top: -1%;">
-            <a [routerLink]="['/auth/login']" class="custom-link">
-              <a class="custom-icon">&#8592;</a> Retornar ao login
-            </a>
-          </div>          
-        </form>
-      </div>
-      
-      <div *ngIf="!statusForgot">
-        <div class="callout callout-info">
-          <h4>Regras de segurança</h4>
-          <p>
-            A senha deve conter no mínimo 6 caracteres, incluindo uma letra
-            maiúscula e um numeral.
-          </p>
-        </div>
-
-        <form class="form-signin" method="POST" action="#" role="form">
-          <div class="form-group">
-            <label class="control-label" for="verificationCode"
-              >Código de verificação</label
-            >
-            <input
-              id="verificationCode"
-              type="text"
-              maxlength="50"
-              placeholder="Digite aqui o código"
-              class="form-control"
-              [(ngModel)]="verificationCode"
-              [ngModelOptions]="{ standalone: true }"
-              style="background-color: #F5F5FA; border: none; padding: 20px;"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="control-label" for="newPassword">Nova senha</label>
-            <input
-              id="newPassword"
-              type="password"
-              maxlength="25"
-              class="form-control"
-              [(ngModel)]="password"
-              (input)="onPasswordInput()"
-              placeholder="Sua senha"
-              [ngModelOptions]="{ standalone: true }"
-              style="background-color: #F5F5FA; border: none; padding: 20px;"
-            />
-          </div>
-
-          <div *ngIf="password" class="password-strength">
-            <label>Força da senha: {{ senhaStrength }}</label>
-            <div class="progress">
-              <div class="progress-bar" 
-                   [ngClass]="{
-                      'bg-danger': senhaScore <= 2, 
-                      'bg-warning': senhaScore === 3, 
-                      'bg-success': senhaScore === 4, 
-                      'bg-very-strong': senhaScore === 5}"
-                   [style.width]="(senhaScore / 5) * 100 + '%'">
-              </div>
+          Esqueceu sua senha?
+        </p>
+    
+        <div *ngIf="statusForgot">
+          <form class="form-signin" method="POST" action="#" role="form">
+            <p class="login-box-msg" style="
+              font-family: Poppins, sans-serif;
+              font-size: 15px;
+              font-weight: 400;
+              text-align: center;
+              color: #5F5F5F;
+              margin-top: 2;
+              margin-bottom: 1%;
+              width: 100%;
+              ">
+              Iremos enviar um código de verificação no seu e-mail cadastrado na plataforma, para redefinir sua senha
+            </p>
+            <div class="form-group">
+              <label class="control-label" for="signupEmail" style="margin-left: 8%">E-mail</label>
+              <input id="signupEmail" type="email" maxlength="50" class="form-control" [(ngModel)]="email"
+                placeholder="Digite aqui o seu e-mail"
+                style="background-color: #F5F5FA; border: none; padding: 20px; width: 85%; margin-left: 8%"
+                [ngModelOptions]="{ standalone: true }" required />
             </div>
-            <ul *ngIf="senhaSuggestions.length > 0">
-              <li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
-            </ul>
+            <div class="form-group text-center">
+              <button (click)="onNext()" id="nextPage" type="submit" class="btn">
+                Enviar Código
+              </button>
+            </div>
+            <div class="form-group return text-center" style="margin-top: -1%;">
+              <a [routerLink]="['/auth/login']" class="custom-link">
+                <a class="custom-icon">&#8592;</a> Retornar ao login
+              </a>
+            </div>
+          </form>
+        </div>
+    
+        <div *ngIf="!statusForgot">
+          <div class="callout callout-info">
+            <h4>Regras de segurança</h4>
+            <p>
+              A senha deve conter no mínimo 6 caracteres, incluindo uma letra
+              maiúscula e um numeral.
+            </p>
           </div>
+    
+          <form class="form-signin" method="POST" action="#" role="form">
+            <div class="form-group">
+              <label class="control-label" for="verificationCode">Código de verificação</label>
+              <input id="verificationCode" type="text" maxlength="50" placeholder="Digite aqui o código"
+                class="form-control" [(ngModel)]="verificationCode" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div class="form-group">
+              <label class="control-label" for="newPassword">Nova senha</label>
+              <input id="newPassword" type="password" maxlength="25" class="form-control" [(ngModel)]="password"
+                (input)="onPasswordInput()" placeholder="Sua senha" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div *ngIf="password" class="password-strength">
+              <label>Força da senha: {{ senhaStrength }}</label>
+              <div class="progress">
+                <div class="progress-bar" [ngClass]="{
+                          'bg-danger': senhaScore <= 2, 
+                          'bg-warning': senhaScore === 3, 
+                          'bg-success': senhaScore === 4, 
+                          'bg-very-strong': senhaScore === 5}" [style.width]="(senhaScore / 5) * 100 + '%'">
+                </div>
+              </div>
+              <ul *ngIf="senhaSuggestions.length > 0">
+                <li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
+              </ul>
+            </div>
+    
+            <div class="form-group">
+              <label class="control-label" for="confirmPassword">Confirmar senha</label>
+              <input id="confirmPassword" type="password" maxlength="25" class="form-control" [(ngModel)]="confirmPassword"
+                placeholder="Repita sua senha" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div class="form-group text-center">
+              <button (click)="onSubmit()" id="signupSubmit" [disabled]="loader" type="submit" class="btn btn-primary">
+                Resetar senha
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="form-group">
-            <label class="control-label" for="confirmPassword">Confirmar senha</label>
-            <input
-              id="confirmPassword"
-              type="password"
-              maxlength="25"
-              class="form-control"
-              [(ngModel)]="confirmPassword"
-              placeholder="Repita sua senha"
-              [ngModelOptions]="{ standalone: true }"
-              style="background-color: #F5F5FA; border: none; padding: 20px;"
-            />
+  <div class="login-mobile">
+    <div class="login-box" style="border: 1px solid #E5E5E5; background: #FFFFFF; width: 80%;">
+      <div class="login-box-body">
+        <div class="login-logo text-center">
+          <a routerLink="/">
+            <img src="/assets/img/fcjinvestplus.png" class="img-responsive"
+              style="width: 50%; margin-bottom: 3%; margin-top: -2%;" />
+          </a>
+        </div>
+    
+        <p style="
+              font-family: Poppins, sans-serif;
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 24px;
+              text-align: center;
+              color: #27272A;
+              margin-top: 2;
+              margin-bottom: 1%;
+              ">
+          Esqueceu sua senha?
+        </p>
+    
+        <div *ngIf="statusForgot">
+          <form class="form-signin" method="POST" action="#" role="form">
+            <p class="login-box-msg" style="
+                  font-family: Poppins, sans-serif;
+                  font-size: 10px;
+                  font-weight: 400;
+                  text-align: center;
+                  color: #5F5F5F;
+                  margin-top: 2;
+                  margin-bottom: 1%;
+                  width: 100%;
+                  ">
+              Iremos enviar um código de verificação no seu e-mail cadastrado na plataforma, para redefinir sua senha
+            </p>
+            <div class="form-group">
+              <label class="control-label" for="signupEmail" style="margin-left: 8%">E-mail</label>
+              <input id="signupEmail" type="email" maxlength="50" class="form-control" [(ngModel)]="email"
+                placeholder="Digite aqui o seu e-mail"
+                style="background-color: #F5F5FA; border: none; padding: 20px; width: 85%; margin-left: 8%"
+                [ngModelOptions]="{ standalone: true }" required />
+            </div>
+            <div class="form-group text-center">
+              <button (click)="onNext()" id="nextPage" type="submit" class="btn">
+                Enviar Código
+              </button>
+            </div>
+            <div class="form-group return text-center" style="margin-top: -1%;">
+              <a [routerLink]="['/auth/login']" class="custom-link">
+                <a class="custom-icon">&#8592;</a> Retornar ao login
+              </a>
+            </div>
+          </form>
+        </div>
+    
+        <div *ngIf="!statusForgot">
+          <div class="callout callout-info">
+            <h4>Regras de segurança</h4>
+            <p>
+              A senha deve conter no mínimo 6 caracteres, incluindo uma letra
+              maiúscula e um numeral.
+            </p>
           </div>
-
-          <div class="form-group text-center">
-            <button
-              (click)="onSubmit()"
-              id="signupSubmit"
-              [disabled]="loader"
-              type="submit"
-              class="btn btn-primary"
-            >
-              Resetar senha
-            </button>
-          </div>
-        </form>
+    
+          <form class="form-signin" method="POST" action="#" role="form">
+            <div class="form-group">
+              <label class="control-label" for="verificationCode">Código de verificação</label>
+              <input id="verificationCode" type="text" maxlength="50" placeholder="Digite aqui o código"
+                class="form-control" [(ngModel)]="verificationCode" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div class="form-group">
+              <label class="control-label" for="newPassword">Nova senha</label>
+              <input id="newPassword" type="password" maxlength="25" class="form-control" [(ngModel)]="password"
+                (input)="onPasswordInput()" placeholder="Sua senha" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div *ngIf="password" class="password-strength">
+              <label>Força da senha: {{ senhaStrength }}</label>
+              <div class="progress">
+                <div class="progress-bar" [ngClass]="{
+                              'bg-danger': senhaScore <= 2, 
+                              'bg-warning': senhaScore === 3, 
+                              'bg-success': senhaScore === 4, 
+                              'bg-very-strong': senhaScore === 5}" [style.width]="(senhaScore / 5) * 100 + '%'">
+                </div>
+              </div>
+              <ul *ngIf="senhaSuggestions.length > 0">
+                <li *ngFor="let suggestion of senhaSuggestions">{{ suggestion }}</li>
+              </ul>
+            </div>
+    
+            <div class="form-group">
+              <label class="control-label" for="confirmPassword">Confirmar senha</label>
+              <input id="confirmPassword" type="password" maxlength="25" class="form-control" [(ngModel)]="confirmPassword"
+                placeholder="Repita sua senha" [ngModelOptions]="{ standalone: true }"
+                style="background-color: #F5F5FA; border: none; padding: 20px;" />
+            </div>
+    
+            <div class="form-group text-center">
+              <button (click)="onSubmit()" id="signupSubmit" [disabled]="loader" type="submit" class="btn btn-primary">
+                Resetar senha
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

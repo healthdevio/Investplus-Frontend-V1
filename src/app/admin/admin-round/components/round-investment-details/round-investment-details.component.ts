@@ -600,6 +600,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             this.sendAutomaticService.sendInvestor(dataSend);
             toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
             this.router.navigate(["/admin/rounds/assets/list"]);
+            this.trackFacebookPixel();
           },
           error: (error) => {
             console.log(error)
@@ -632,6 +633,27 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         });
     }
   }  
+
+  private trackFacebookPixel(): void {
+    (function (f: any, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e); t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'));
+
+    (window as any).fbq('init', '604280021027802');
+    (window as any).fbq('track', 'Purchase', { value: this.quotaValue, currency: 'BRL' });
+  }
 
   public maskModality(sigla: string): string {
     return this.modalityService.getModality(sigla)?.description;

@@ -38,6 +38,24 @@
   width: 430px;
 }
 
+.login-mobile {
+  display: none;
+}
+
+.login-desktop {
+  display: flex;
+}
+
+@media (max-width: 450px) {
+  .login-desktop {
+    display: none;
+  }
+
+  .login-mobile {
+    display: flex;
+  }
+}
+
 @media (max-width: 768px) {
   .login-box,
   .register-box {
