@@ -210,7 +210,6 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     this.roundService
       .getRound(this.company, this.rounds)
       .subscribe((response) => {
-        console.log(response)
         this.roundInvestment = response || {};
         this.quotaValue = response.round?.quotaValue ?? 0;
         this.startedAt = this.dateMask.transform(response.round?.startedAt);
