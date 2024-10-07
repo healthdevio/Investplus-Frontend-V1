@@ -170,8 +170,8 @@ export class RoundCompanyPublishComponent implements OnInit {
             .uploadDocs(this.id, dataSend)
             .subscribe({
               next: (response: any) => {
-                this.form.get(fieldName).setValue(fileName);
-                this.form.get(fieldDoc).setValue(response.url);
+                this.updateForm.get(fieldName).setValue(fileName);
+                this.updateForm.get(fieldDoc).setValue(response.url);
               },
               error: (error: any) => {
                 toastr.error(error)
@@ -181,10 +181,6 @@ export class RoundCompanyPublishComponent implements OnInit {
         reader.readAsBinaryString(file);
       }
     }
-  }
-
-  consoleTeste() {
-    console.log(this.form.get('legalDoc').value)
   }
 
   initForm() {
@@ -294,7 +290,9 @@ export class RoundCompanyPublishComponent implements OnInit {
       docTypeLogo: [null],
       docTypeBanner: [null],
       docTypePresentationOffer: [null],
-      docTypePresentationInvestors: [null]
+      docTypePresentationInvestors: [null],
+      docInvestmentContract: [null],
+      investmentContract: [null],
     });
   }
 

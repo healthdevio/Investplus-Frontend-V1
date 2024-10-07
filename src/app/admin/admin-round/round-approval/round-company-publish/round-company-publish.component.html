@@ -1,7 +1,6 @@
 <app-loader [loader]="loader"></app-loader>
 <section 
 style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
-
   <div style="padding: 40px 20px;" *ngIf="!loader">
       <form [formGroup]="updateForm">
         <div *ngIf="isSingUpPublishModalOpen"
@@ -39,6 +38,16 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                     <option value="PUBLIC"> Pública </option>
                     <option value="EXCLUSIVE"> Exclusiva </option>
                   </select>
+                </app-form>
+              </div>
+
+              <div 
+              *ngIf="updateForm.get('type').value === 'EXCLUSIVE'"
+              style="margin-bottom: 15px;">
+                <p style="margin-top: 24px;">Token <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Token é obrigatório.'">
+                  <input type="text" formControlName="token" placeholder="Token"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" type="text">
                 </app-form>
               </div>
       
@@ -254,8 +263,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
             <div *ngIf="selectedUpdateSession === 'Documentos'">
               <p style="margin-bottom: 0; color: red;">*Tamanho máximo de 50Mb</p>
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Termos de investimentos e fatores de risco <span
-                    style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Termos de investimentos e fatores de risco</p>
                 <app-form [errorMessage]="'Logo é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -269,7 +277,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               </div>
       
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Apresentação <span style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Apresentação</p>
                 <app-form [errorMessage]="'Apresentação é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -284,7 +292,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               </div>
       
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Documentos jurídicos <span style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Documentos jurídicos</p>
                 <app-form [errorMessage]="'Documentos jurídicos é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -297,7 +305,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               </div>
 
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Documentos Financeiros <span style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Documentos Financeiros</p>
                 <app-form [errorMessage]="'Documentos Financeiros é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -310,7 +318,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
               </div>
 
               <div style="margin-bottom: 15px;">
-                <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional. <span style="color: red;">*</span></p>
+                <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional.</p>
                 <app-form [errorMessage]="'Dossiê reputacional. é obrigatório.'">
                   <div
                     style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
@@ -318,6 +326,19 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                     <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('reputationalDossier').value ?? 'Anexar Arquivo'}}</p>
                     <input type="file" #filevaluationDoc
                       (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')" style="display: none;" />
+                  </div>
+                </app-form>
+              </div>
+
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px; margin-bottom: 0;">Contrato de Investimento.</p>
+                <app-form [errorMessage]="'Contrato de Investimento. é obrigatório.'">
+                  <div
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                    (click)="fileInvestmentContract.click()">
+                    <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('investmentContract').value ?? 'Anexar Arquivo'}}</p>
+                    <input type="file" #fileInvestmentContract
+                      (change)="uploadFile($event, 'investmentContract', 'docInvestmentContract')" style="display: none;" />
                   </div>
                 </app-form>
               </div>

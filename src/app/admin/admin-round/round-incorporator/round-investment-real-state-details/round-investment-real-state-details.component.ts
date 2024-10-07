@@ -60,6 +60,7 @@ export class RoundInvestmentRealStateDetailsComponent implements OnInit {
   taxationDoc: string;
   legalDoc: string;
   roundDocUrl: string;
+  docInvestmentContract: string;
   builderDocUrl: string;
   propertyDocUrl: string;
   viabilityDocUrl: string;
@@ -131,6 +132,7 @@ export class RoundInvestmentRealStateDetailsComponent implements OnInit {
 
     this.roundService.getRound(this.rounds).subscribe((response) => {
       this.response = response;
+      console.log('respoonse', response);
       this.loader = false;
       this.investments = response.investments;
       this.property = response.property;
