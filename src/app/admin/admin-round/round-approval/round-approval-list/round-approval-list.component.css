@@ -56,6 +56,24 @@ tr {
   overflow-y: scroll;
 }
 
+.company-mobile {
+  display: none;
+}
+
+.company-desktop {
+  display: block;
+}
+
+@media (max-width: 450px) {
+  .company-desktop {
+    display: none;
+  }
+
+  .company-mobile {
+    display: block;
+  }
+}
+
 .box-header > .fa,
 .box-header > .glyphicon,
 .box-header > .ion,

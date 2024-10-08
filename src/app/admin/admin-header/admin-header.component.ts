@@ -41,10 +41,6 @@ export class AdminHeaderComponent implements OnInit {
       link: null,
       subCategory: [
         {
-          name: 'Cadastrar Empresa',
-          link: '/admin/rounds/approval/create',
-        },
-        {
           name: 'Atualizar Dados',
           link: '/admin/rounds/approval',
         },
