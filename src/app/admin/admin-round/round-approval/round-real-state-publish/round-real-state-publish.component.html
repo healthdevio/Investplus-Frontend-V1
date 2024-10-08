@@ -1,30 +1,35 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
-  <div *ngIf="!loader">
+  <div 
+  *ngIf="!loader">
       <h1 style="color: #1F1F1F;">Rodadas</h1>
       <p style="color: #505050;">Verifique aqui todas as rodadas para serem publicadas</p>
       
       <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
         <p style="margin-left: 16px; font-size: 16px;">Publicar Rodada</p>      
-        <table style="width: 100%; margin-top: 35px;">
-          <tr>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Retorno</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
-            <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
-          </tr>
-          <tr 
-          style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
-          *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.property + ' - ' + round.builder }}</td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;"> Imobiliário </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.returnTimeInMonths }} meses </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.duration }} dias</td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">R$ {{ round.quotas * round.quotaValue | moneyMask : true }}</td>
-            <td><button (click)="publishRound(round.id)" class="btn-upangel" style="margin-bottom: 5px;">Publicar</button></td>
-          </tr>
-        </table>
+        <div style="overflow-x: auto; width: 100%;">
+          <table style="width: 100%; margin-top: 35px;">
+            <tr>
+              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
+              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
+              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Retorno</th>
+              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
+              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
+            </tr>
+            <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
+              *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.property + ' - ' +
+                round.builder }}</td>
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;"> Imobiliário </td>
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.returnTimeInMonths }} meses
+              </td>
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.duration }} dias</td>
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">R$ {{ round.quotas * round.quotaValue
+                | moneyMask : true }}</td>
+              <td><button (click)="publishRound(round.id)" class="btn-upangel" style="margin-bottom: 5px;">Publicar</button></td>
+            </tr>
+          </table>
+        </div>
       
         <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
           <p (click)="changePage(currentPage - 1)" [ngClass]="{'disabled': currentPage === 1}"

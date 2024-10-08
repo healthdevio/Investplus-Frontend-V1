@@ -105,31 +105,14 @@ export class AdminHeaderComponent implements OnInit {
 
   importatedSubItens = [
     {
-      name: 'Aprovação',
-      link: null,
-      subCategory: [
-        {
-          name: 'Criar Rodada',
-          link: '/admin/rounds/incorporator/create',
-        },
-        {
-          name: 'Publicar Rodada',
-          link: '/admin/rounds/approval/incorporator/publish',
-        },
-      ],
+      name: 'Publicar Rodada',
+      link: '/admin/rounds/approval/incorporator/publish',
       isExpanded: false
     },
     {
-      name: 'Investimentos',
-      link: null,
-      subCategory: [
-        {
-          name: 'Investimentos Realizados',
-          link: '/admin/rounds/incorporator/investments',
-        },
-      ],
-      isExpanded: false
-    },
+      name: 'Atualizar Rodada',
+      link: '/admin/rounds/approval/company/publish',
+    }
   ];
 
   toggleMenu(): void {
