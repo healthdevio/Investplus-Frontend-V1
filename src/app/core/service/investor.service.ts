@@ -44,7 +44,7 @@ export class InvestorService {
   }
 
   getAllUsers(page: number, size: number): Observable<any> {
-    return this.http.get<any>(`${environment.url_api}/admin/investors?page=${page}&size=100`);
+    return this.http.get<any>(`${environment.url_api}/admin/investors?page=${page}&size=${size}`);
   }
 
   getInvestments(params?: any){

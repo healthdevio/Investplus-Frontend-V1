@@ -35,13 +35,24 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Administração / Base de Investidores';
     this.data.changeTitle(this.titleHeader);
+
     this.investorService.getAllUsers(0, 1000).subscribe(
       (response) => {
         this.investors = response.content;
         this.totalInvestors = response.totalElements;
         this.loader = false;
-      });
+      },
+      (error) => {
+        if (error.status === 500) {
+          window.location.reload();
+        } else {
+          this.loader = false;
+          console.error('An error occurred:', error);
+        }
+      }
+    );
   }
+
 
   unmaskInput(input) {
     if (input === undefined) {
