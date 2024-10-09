@@ -33,7 +33,7 @@ export class RoundRealStatePublishComponent implements OnInit {
     private roundService: RealStateService,
     private router: Router,
     private data: TitleService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
