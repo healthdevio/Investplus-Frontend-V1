@@ -20,6 +20,8 @@
                 <th>Telefone</th>
                 <th>CPF/CNPJ</th>
                 <th>RG</th>
+                <th>Possui Investimento</th>
+                <th>Cadastro</th>
               </tr>
               <tr *ngFor="let investor of investors | paginate: { itemsPerPage: 11, currentPage: p }">
                 <td>{{ investor.fullName }}</td>
@@ -27,6 +29,8 @@
                 <td>{{ investor.phone | phone }}</td>
                 <td>{{ investor.cpf | cpf }} {{ investor.cnpj | cnpj }}</td>
                 <td>{{ investor.rg }}</td>
+                <td>{{ investor.totalInvestedOthers > 0 ? 'S' : 'N' }}</td>
+                <td>{{ investor.created | date:'dd/MM/yyyy' }}</td>
               </tr>
             </table>
             <app-count [count]="!(investors?.length > 0)" [textContador]="textRegister"></app-count>

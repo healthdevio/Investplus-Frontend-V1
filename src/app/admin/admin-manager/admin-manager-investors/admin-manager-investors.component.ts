@@ -69,7 +69,19 @@ export class AdminManagerInvestorsComponent implements OnInit {
   }
 
   exportAsXLSX(): void {
-    this.excelService.exportAsExcelFile(this.investors, 'investors');
+    const formattedInvestors = this.investors.map(investor => ({
+      fullName: investor.fullName,
+      email: investor.email,
+      phone: investor.phone,
+      cpf: investor.cpf,
+      cnpj: investor.cnpj,
+      rg: investor.rg,
+      totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
+      created: new Date(investor.created).toLocaleDateString('pt-BR'),
+    }));
+
+    this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
   }
+
 
 }
