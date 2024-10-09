@@ -137,9 +137,22 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
+  private validateFullName(fullName: string): boolean {
+    return fullName.trim().split(' ').length >= 2;
+  }
+
   onSubmit() {
     this.loader = true;
     this.loaderService.load(this.loader);
+
+    const fullName = this.form.controls['fullName'].value;
+
+    if (fullName === null || !this.validateFullName(fullName)) {
+      toastr.error('O nome completo deve conter pelo menos dois nomes.');
+      this.loader = false;
+      this.loaderService.load(this.loader);
+      return;
+    }
 
     if (!this.form.value.termosGerais) {
       toastr.error('Você deve concordar com os termos de uso.');

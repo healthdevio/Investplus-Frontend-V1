@@ -1,3 +1,4 @@
+<app-loader [loader]="loader"></app-loader>
 <div
 (click)="toggleInvestmentModal()"
   *ngIf="!loader && !investmentModalOppened"
@@ -160,8 +161,8 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
     </form>
   </div>
 </div>
+
 <section class="content">
-  <app-loader [loader]="loader"></app-loader>
   <div 
   class="desktop-session"
   *ngIf="!loader">
@@ -661,35 +662,10 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                                           text-decoration-line: underline;
                   "> termo de ciência do risco</a>
                   <p style="margin-bottom: 0;">e</p>
-                  <a *ngIf="roundInvestment.id === 9; else checkRoundTen"
-                  href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS%20DE%20CONTRATO/ACORDO%20DE%20INVESTIMENTOS%20COM%20ANEXOS%20E%20VARIÁVEL.pdf"
-                  target="_blank"
-                  style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;">
-                  minuta de contrato</a>
-               
-               <ng-template #checkRoundTen>
-                 <a *ngIf="roundInvestment.id === 10; else checkRoundEleven"
-                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS+DE+CONTRATO/Acordo+de+Investimentos+IARIS.docx"
-                    target="_blank"
-                    style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;">
-                    minuta de contrato</a>
-               </ng-template>
-               
-               <ng-template #checkRoundEleven>
-                 <a *ngIf="roundInvestment.id === 11; else defaultLink"
-                    href="https://fcjimob-uploads-new.s3.us-east-2.amazonaws.com/MINUTAS+DE+CONTRATO/Acordo+Investimento+Last+Wish-Safe.docx"
-                    target="_blank"
-                    style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline; margin: 0; padding: 0;">
-                    minuta de contrato</a>
-               </ng-template>
-               
-               <ng-template #defaultLink>
-                 <a href="https://fcjimob-hml-uploads-new.s3.us-east-2.amazonaws.com/termo_de_adesao_parte_investidor.pdf"
-                    target="_blank"
-                    style="color: #035A7A;font-family: Poppins;font-size: 12px;font-style: normal;font-weight: 400;line-height: 150%;text-decoration-line: underline;">
-                    minuta de contrato</a>
-               </ng-template>               
-               
+                  <a [href]="roundInvestment.docInvestmentContract" target="_blank"
+                    style="color: #035A7A; font-family: Poppins; font-size: 12px; font-style: normal; font-weight: 400; line-height: 150%; text-decoration-line: underline; margin: 0; padding: 0;">
+                    minuta de contrato
+                  </a>
                 </div>
                 
               </div>
@@ -1439,24 +1415,26 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
           <div style="margin-bottom: 10px; display: flex; flex-direction: column; justify-content: center;"
             class="col-xs-12 col-md-9">
             <div class="row margin-t-30">
-              <div class="col-xs-12 col-md-6"
+              <div 
+                class="col-xs-12 col-md-6"
                 style="margin-top: 5%; display: flex; align-items: center; justify-content: space-between;">
-                <div>
+                <div style="width: 200px;">
                   <div style="display: flex; align-items: center; gap: 5px;">
-                    <p style="color: #035A7A; font-size: 32px; margin-bottom: 0;">º</p>
-                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Objetivo</p>
+                    <p style="color: #035A7A; font-size: 32px; margin-bottom: 0; margin-top: 5px;">º</p>
+                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; margin-bottom: 0;">Objetivo</p>
                   </div>
     
                   <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px;">{{
                     companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
                 </div>
+
                 <div>
                   <div style="display: flex; align-items: center; gap: 5px;">
                     <p style="color: #035A7A; font-size: 32px;">•</p>
-                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px;">Investidos / Reservados </p>
+                    <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; margin-bottom: 0;">Investidos / Reservados </p>
                   </div>
     
-                  <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px;">{{
+                  <p style="color: #121212; font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300px; margin-bottom: 15px;">{{
                     companyDataComplete?.round?.resume?.total | moneyMask:true }}</p>
                 </div>
               </div>

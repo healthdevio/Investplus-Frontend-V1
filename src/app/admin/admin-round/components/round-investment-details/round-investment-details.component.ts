@@ -17,6 +17,8 @@ import { TitleHeader } from "../../../../core/interface/title-header";
 import { CompanyCaptableService } from '../../../../core/service/company-captable.service';
 import { ModalityService } from '../../../../core/service/modality.service';
 import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
+import { InvestorService } from "./../../../../core/service/investor.service";
+import { Investor } from "./../../../../core/interface/investor";
 
 declare var $: any;
 declare var bootbox: any;
@@ -34,6 +36,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   form: FormGroup;
   companyData: any;
   titleHeader: TitleHeader;
+  investor: Investor;
   roundInvestment: any = {}; 
   companyInvestment: any;
   quotaValue = 0;
@@ -158,6 +161,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     private loaderService: LoaderService,
     private captableService: CompanyCaptableService,
     private modalityService: ModalityService,
+    private investorService: InvestorService,
   ) { }
 
   ngAfterViewInit() {
@@ -190,10 +194,11 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     }
 
     this.getCompanyIndicators(this.company);
-    this.getRound();
     this.initForm();
     this.getValuation();
     this.getCaptable();
+    this.getUser();
+    this.getRound();
 
     const $this = this;
     setTimeout(function () {
@@ -318,6 +323,13 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       investment: [null],
       publicAccess: [false],
       installments: ["1", [Validators.required]],
+    });
+  }
+
+  getUser() {
+    this.loader = true;
+    this.investorService.getUser().subscribe((response) => {
+      this.investor = response;
     });
   }
 
@@ -549,6 +561,23 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   
     const dataSend = this.form.value;
     dataSend.investment = undefined;
+    let data: any = {
+      quotas: dataSend.quotas,
+      investment: this.amountQuota * this.quotaValue,
+      publicAccess: dataSend.publicAccess,
+      installments: dataSend.installments,
+      cpf: this.investor.cpfResponsible,
+    }
+
+    if (this.investor.cpf) {
+      data = {
+        quotas: dataSend.quotas,
+        investment: this.amountQuota * this.quotaValue,
+        publicAccess: dataSend.publicAccess,
+        installments: dataSend.installments,
+        cpf: this.investor.cpfResponsible,
+      }
+    }
   
     if (this.form.controls["quotas"].value <= 0) {
       toastr.error("O número de cotas solicitado é inválido. Por favor, insira um valor maior que zero.", "Erro");
@@ -558,12 +587,11 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       this.loader = true;
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.investmentService.createInvestment(dataSend, this.company, this.rounds)
+      this.investmentService.createInvestment(data, this.company, this.rounds)
         .pipe(
           finalize(() => {
             this.loading = false;
             this.loaderService.load(false);
-            this.loader = false;
           })
         )
         .subscribe({
@@ -572,8 +600,12 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             this.sendAutomaticService.sendInvestor(dataSend);
             toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
             this.router.navigate(["/admin/rounds/assets/list"]);
+            this.trackFacebookPixel();
           },
           error: (error) => {
+            console.log(error)
+            console.log(error.status)
+            console.log(error.error.code)
             let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
             if (error.status === 400) {
               switch (error.error.code) {
@@ -601,6 +633,27 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         });
     }
   }  
+
+  private trackFacebookPixel(): void {
+    (function (f: any, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e); t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'));
+
+    (window as any).fbq('init', '604280021027802');
+    (window as any).fbq('track', 'Purchase', { value: this.quotaValue, currency: 'BRL' });
+  }
 
   public maskModality(sigla: string): string {
     return this.modalityService.getModality(sigla)?.description;

@@ -5,6 +5,7 @@ export interface Investor {
     nationality: string;
     gender: string;
     maritalStatus: string;
+    cpfResponsible?: string;
     rgEmitter: string;
     rg: string;
     phone: number;
