@@ -13,6 +13,7 @@ export class AdminManagerInvestorsComponent implements OnInit {
 
   titleHeader: TitleHeader;
   investors: any;
+  totalInvestors: number;
   status = 'PENDING_EVALUATION';
   loader: boolean;
   textRegister = 'Nenhum registro encontrado.';
@@ -37,6 +38,7 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.investorService.getAllUsers(0, 1000).subscribe(
       (response) => {
         this.investors = response.content;
+        this.totalInvestors = response.totalElements;
         this.loader = false;
       });
   }
