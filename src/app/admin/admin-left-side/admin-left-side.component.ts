@@ -42,7 +42,7 @@ export class AdminLeftSideComponent implements OnInit {
       isExpanded: false
     },
     {
-      name: 'Atualizar Rodada',
+      name: 'Criar Rodada',
       link: '/admin/rounds/approval/company/publish',
     }
   ];

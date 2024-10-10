@@ -3,8 +3,7 @@
   <div 
   *ngIf="!loader">
       <h1 style="color: #1F1F1F;">Rodadas</h1>
-      <p style="color: #505050;">Verifique aqui todas as rodadas para serem publicadas</p>
-      
+      <p style="color: #505050;">Verifique aqui todas as rodadas para serem publicadas.</p>
       <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
         <p style="margin-left: 16px; font-size: 16px;">Publicar Rodada</p>      
         <div style="overflow-x: auto; width: 100%;">
@@ -18,8 +17,7 @@
             </tr>
             <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
               *ngFor="let round of rounds | paginate: { itemsPerPage: 12, currentPage: p }">
-              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.property + ' - ' +
-                round.builder }}</td>
+              <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.property + ' - ' +  round.builder }}</td>
               <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;"> Imobiliário </td>
               <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round.returnTimeInMonths }} meses
               </td>
