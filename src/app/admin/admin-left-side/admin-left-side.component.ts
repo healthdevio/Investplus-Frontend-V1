@@ -37,11 +37,6 @@ export class AdminLeftSideComponent implements OnInit {
 
   importatedSubItens = [
     {
-      name: 'Publicar Rodada',
-      link: '/admin/rounds/approval/incorporator/publish',
-      isExpanded: false
-    },
-    {
       name: 'Criar Rodada',
       link: '/admin/rounds/approval/company/publish',
     }

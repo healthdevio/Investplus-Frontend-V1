@@ -29,6 +29,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   loadingRounds = false;
   updateForm: FormGroup;
   status = "IN_PROGRESS";
+  tabType = 'IN_PROGRESS';
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -127,6 +128,13 @@ export class RoundCompanyPublishComponent implements OnInit {
       status: [this.status]
     })
   }
+
+  changeTabType(tabType: string) {
+    this.tabType = tabType;
+    this.status = tabType;
+    this.getAllByStatus();
+  }
+
 
   toggleDropdown(index: number) {
     this.isDropdownVisible = this.isDropdownVisible === index ? null : index;
@@ -308,16 +316,19 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.responseError = false;
     this.loader = true;
     this.rounds = [];
-    this.roundService.getAllByStatus(this.formStatus.get('status').value).subscribe(
+    this.roundService.getAllByStatus(this.tabType).subscribe(
       (response) => {
         if (
           response.companiesRounds == null ||
           response.companiesRounds.length === 0
         ) {
           this.responseError = true;
+          this.rounds = response.companiesRounds
+          this.filteredCompanies = response.companiesRounds;
           this.loader = false;
           return;
         }
+        console.log(response)
         this.rounds = response.companiesRounds
         this.filteredCompanies = response.companiesRounds;
         this.loader = false;
