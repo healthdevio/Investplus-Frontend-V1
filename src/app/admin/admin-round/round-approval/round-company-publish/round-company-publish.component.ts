@@ -392,6 +392,20 @@ export class RoundCompanyPublishComponent implements OnInit {
     return aux;
   }
 
+  calculateEndDate(startedAt: string, duration: number): string {
+
+    if (!startedAt || !duration) return '';
+    const startedDate = new Date(startedAt); 
+    const endDate = new Date(startedDate);
+    endDate.setDate(startedDate.getDate() + duration);
+
+    const year = endDate.getFullYear();
+    const month = String(endDate.getMonth() + 1).padStart(2, '0');
+    const day = String(endDate.getDate()).padStart(2, '0');
+
+    return `${day}/${month}/${year}`;
+  }
+
   public onSubmit(): void {
     if (this.updateForm.valid) {
       const $this = this;
