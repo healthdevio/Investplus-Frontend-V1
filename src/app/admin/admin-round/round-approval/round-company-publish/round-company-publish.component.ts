@@ -30,6 +30,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   updateForm: FormGroup;
   status = "IN_PROGRESS";
   tabType = 'IN_PROGRESS';
+  companies = [];
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -99,8 +100,24 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.initStatus();
     this.getAllByStatus();
     this.initForm();
+    this.loadCompanies();
     this.initUpdateForm();
     this.getModalities();
+  }
+
+  loadCompanies() {
+    this.companies = [];
+    this.getAllCompaniesByStatus(true);
+  }
+
+  private getAllCompaniesByStatus(status: any): void {
+    this.companyService.getAllByActiveStatus(status).subscribe(
+      (response) => {
+        for (const company of response) {
+          this.companies.push(company);
+        }
+      },
+    );
   }
 
   getRoundInformation(id: number, roundId: number) {
@@ -312,12 +329,18 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.selectedUpdateSession = sessionName;
   }
 
+  onCompanyChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.id = Number(selectElement.value);
+  }
+
   getAllByStatus(){
     this.responseError = false;
     this.loader = true;
     this.rounds = [];
     this.roundService.getAllByStatus(this.tabType).subscribe(
       (response) => {
+        console.log(response.companiesRounds)
         if (
           response.companiesRounds == null ||
           response.companiesRounds.length === 0
@@ -328,7 +351,6 @@ export class RoundCompanyPublishComponent implements OnInit {
           this.loader = false;
           return;
         }
-        console.log(response)
         this.rounds = response.companiesRounds
         this.filteredCompanies = response.companiesRounds;
         this.loader = false;
@@ -520,6 +542,47 @@ export class RoundCompanyPublishComponent implements OnInit {
                 callback: function () {
                   $this.router.navigate(["/admin/rounds/incorporator/list"]);
                 },
+              },
+            },
+          });
+        },
+        (error) => {
+          const erro = "Ocorreu um erro, entre em contato com o administrador.";
+          toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: false,
+            progressBar: true,
+            positionClass: "toast-top-center",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "10000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+          };
+          toastr.error(erro, "Erro");
+        }
+      );
+  }
+
+  finishRound(company, round) {
+    const $this = this;
+    this.roundService
+      .updateStatus(company, round, { status: "FINISHED" })
+      .subscribe(
+        (response) => {
+          bootbox.dialog({
+            title: "",
+            message: "rodada finalizada com sucesso.",
+            buttons: {
+              success: {
+                label: "Entendi",
+                className: "bg-upangel",
               },
             },
           });

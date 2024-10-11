@@ -7,8 +7,8 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
   style="padding: 40px 20px;" >
       <form [formGroup]="updateForm">
         <div *ngIf="isSingUpPublishModalOpen"
-          style="width: 100%; height: 1100px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px;">
-          <div style="width: 95%; height: 90%; background-color: white; border-radius: 8px; padding: 24px 20px; overflow-x: auto;">
+          style="width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.309); position: fixed; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px; overflow: hidden;">
+          <div style="width: 95%; height: 95%; background-color: white; border-radius: 8px; padding: 24px 20px; overflow-x: auto;">
             <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
               <div style="display: flex; align-items: center; justify-content: space-between;">
                 <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Criar Rodada</p>
@@ -33,6 +33,21 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
             *ngIf="selectedUpdateSession === 'Geral'">
               <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
       
+              <div style="margin-bottom: 15px;">
+                <p style="margin-top: 24px;">Empresa da rodada <span style="color: red;">*</span></p>
+                <app-form [errorMessage]="'Empresa da rodada é obrigatório.'">
+                  <select style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
+                    (change)="onCompanyChange($event)"> <!-- Call method on change -->
+                    <option [ngValue]="null">Selecione uma empresa...</option>
+                    <option *ngFor="let company of companies" [value]="company.id"> <!-- Ensure value is company.id -->
+                      {{ company.name }}
+                    </option>
+                  </select>
+                </app-form>
+
+              </div>
+
+
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
@@ -362,8 +377,8 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
       <form [formGroup]="updateForm">
         <div *ngIf="isUpdatePublishModalOpen && loadingRounds">
-          <div  style="width: 100%; height: 1100px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px;">
-            <div style="width: 95%; height: 90%; background-color: white; border-radius: 8px; padding: 24px 20px; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.309); position: fixed; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px; overflow: hidden;">
+            <div style="width: 95%; height: 95%; background-color: white; border-radius: 8px; padding: 24px 20px; display: flex; align-items: center; justify-content: center;">
               <div class="spinner"></div>
             </div>
           </div>
@@ -371,7 +386,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
 
         <div 
         *ngIf="isUpdatePublishModalOpen && !loadingRounds"
-          style="width: 100%; height: 1100px; background-color: rgba(0, 0, 0, 0.309); position: absolute; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px;">
+          style="width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.309); position: fixed; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px; overflow: hidden;">
           <div style="width: 95%; height: 90%; background-color: white; border-radius: 8px; padding: 24px 20px;">
             <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
               <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -759,6 +774,7 @@ style="width: 100%; height: 100dvh; background-color: #FBFBFB;">
                   <p style="margin-bottom: 0px;">Atualizar</p>
                 </div>
                 <div
+                (click)="finishRound(round.id, round.round.id)"
                 class="hover-background" 
                 style="display: flex; gap: 5px; cursor: pointer; margin-top: 10px;">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
