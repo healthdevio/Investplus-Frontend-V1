@@ -378,15 +378,6 @@ export class RoundCompanyPublishComponent implements OnInit {
       const csvData = this.convertToCSV(roundsFilteres);
       const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
       saveAs(blob, 'rodadas.csv');
-
-      // Alternativa usando JavaScript puro (sem FileSaver.js)
-      // const url = window.URL.createObjectURL(blob);
-      // const a = document.createElement('a');
-      // a.setAttribute('href', url);
-      // a.setAttribute('download', 'empresas.csv');
-      // document.body.appendChild(a);
-      // a.click();
-      // document.body.removeChild(a);
     }
   }
 
