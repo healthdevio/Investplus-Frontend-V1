@@ -69,6 +69,19 @@ export class AdminManagerInvestorsComponent implements OnInit {
   }
 
   exportAsXLSX(): void {
+    const translateProfileStatement = (statement: string) => {
+      switch (statement) {
+        case 'UP_TO_100_THOUSAND':
+          return 'Até 100 mil';
+        case 'UP_TO_10_THOUSAND':
+          return 'Até 10 mil';
+        case 'ABOVE_MILLION':
+          return 'Mais de 1 Milhão';
+        default:
+          return statement;
+      }
+    };
+
     const formattedInvestors = this.investors.map(investor => ({
       fullName: investor.fullName,
       email: investor.email,
@@ -76,12 +89,16 @@ export class AdminManagerInvestorsComponent implements OnInit {
       cpf: investor.cpf,
       cnpj: investor.cnpj,
       rg: investor.rg,
+      investor_profile_statement: translateProfileStatement(investor.investorProfileStatement),
       totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
       created: new Date(investor.created).toLocaleDateString('pt-BR'),
+      city: investor?.address?.city ? investor.address.city : '',
+      uf: investor?.address?.uf ? investor.address.uf : '',
     }));
 
     this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
   }
+
 
 
 }
