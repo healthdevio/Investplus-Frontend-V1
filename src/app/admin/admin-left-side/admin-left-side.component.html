@@ -259,11 +259,10 @@ max-width: 17.4% !important;">
         </div>
       </div>
 
-      <li 
-      (click)="toggleSvgRotationImportated()"
+      <li
       *ngIf="scopes.ROLE_ADMIN" 
       class="treeview">
-        <a>
+        <a routerLink="./rounds/approval/company/publish">
           <i>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_1143_1711)">
@@ -282,23 +281,6 @@ max-width: 17.4% !important;">
               </svg>                     
           </i>
           <span class="header-menu">Rodadas</span>
-          <span>
-            <svg
-            *ngIf="!isSvgRotatedImportated"
-            style="transform: scaleX(-1); margin-left: 20px" width="6"
-              height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-
-            <svg
-            *ngIf="isSvgRotatedImportated"
-            style="transform: rotate(90deg); margin-left: 20px" width="6"
-              height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </span>
         </a>
       </li>
 

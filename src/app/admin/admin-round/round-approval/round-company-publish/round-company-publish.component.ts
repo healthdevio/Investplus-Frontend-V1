@@ -29,6 +29,8 @@ export class RoundCompanyPublishComponent implements OnInit {
   loadingRounds = false;
   updateForm: FormGroup;
   status = "IN_PROGRESS";
+  tabType = 'IN_PROGRESS';
+  companies = [];
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -98,8 +100,24 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.initStatus();
     this.getAllByStatus();
     this.initForm();
+    this.loadCompanies();
     this.initUpdateForm();
     this.getModalities();
+  }
+
+  loadCompanies() {
+    this.companies = [];
+    this.getAllCompaniesByStatus(true);
+  }
+
+  private getAllCompaniesByStatus(status: any): void {
+    this.companyService.getAllByActiveStatus(status).subscribe(
+      (response) => {
+        for (const company of response) {
+          this.companies.push(company);
+        }
+      },
+    );
   }
 
   getRoundInformation(id: number, roundId: number) {
@@ -127,6 +145,13 @@ export class RoundCompanyPublishComponent implements OnInit {
       status: [this.status]
     })
   }
+
+  changeTabType(tabType: string) {
+    this.tabType = tabType;
+    this.status = tabType;
+    this.getAllByStatus();
+  }
+
 
   toggleDropdown(index: number) {
     this.isDropdownVisible = this.isDropdownVisible === index ? null : index;
@@ -304,17 +329,25 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.selectedUpdateSession = sessionName;
   }
 
-  getAllByStatus() {
+  onCompanyChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.id = Number(selectElement.value);
+  }
+
+  getAllByStatus(){ 
     this.responseError = false;
     this.loader = true;
     this.rounds = [];
-    this.roundService.getAllByStatus(this.formStatus.get('status').value).subscribe(
+    this.roundService.getAllByStatus(this.tabType).subscribe(
       (response) => {
+        console.log(response.companiesRounds)
         if (
           response.companiesRounds == null ||
           response.companiesRounds.length === 0
         ) {
           this.responseError = true;
+          this.rounds = response.companiesRounds
+          this.filteredCompanies = response.companiesRounds;
           this.loader = false;
           return;
         }
@@ -345,15 +378,6 @@ export class RoundCompanyPublishComponent implements OnInit {
       const csvData = this.convertToCSV(roundsFilteres);
       const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
       saveAs(blob, 'rodadas.csv');
-
-      // Alternativa usando JavaScript puro (sem FileSaver.js)
-      // const url = window.URL.createObjectURL(blob);
-      // const a = document.createElement('a');
-      // a.setAttribute('href', url);
-      // a.setAttribute('download', 'empresas.csv');
-      // document.body.appendChild(a);
-      // a.click();
-      // document.body.removeChild(a);
     }
   }
 
@@ -379,6 +403,20 @@ export class RoundCompanyPublishComponent implements OnInit {
       return "";
     }
     return aux;
+  }
+
+  calculateEndDate(startedAt: string, duration: number): string {
+
+    if (!startedAt || !duration) return '';
+    const startedDate = new Date(startedAt); 
+    const endDate = new Date(startedDate);
+    endDate.setDate(startedDate.getDate() + duration);
+
+    const year = endDate.getFullYear();
+    const month = String(endDate.getMonth() + 1).padStart(2, '0');
+    const day = String(endDate.getDate()).padStart(2, '0');
+
+    return `${day}/${month}/${year}`;
   }
 
   public onSubmit(): void {
@@ -495,6 +533,47 @@ export class RoundCompanyPublishComponent implements OnInit {
                 callback: function () {
                   $this.router.navigate(["/admin/rounds/incorporator/list"]);
                 },
+              },
+            },
+          });
+        },
+        (error) => {
+          const erro = "Ocorreu um erro, entre em contato com o administrador.";
+          toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: false,
+            progressBar: true,
+            positionClass: "toast-top-center",
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "10000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+          };
+          toastr.error(erro, "Erro");
+        }
+      );
+  }
+
+  finishRound(company, round) {
+    const $this = this;
+    this.roundService
+      .updateStatus(company, round, { status: "FINISHED" })
+      .subscribe(
+        (response) => {
+          bootbox.dialog({
+            title: "",
+            message: "rodada finalizada com sucesso.",
+            buttons: {
+              success: {
+                label: "Entendi",
+                className: "bg-upangel",
               },
             },
           });
