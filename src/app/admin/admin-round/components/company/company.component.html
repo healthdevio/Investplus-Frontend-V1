@@ -48,7 +48,7 @@
               <span class="description-text">Valuation</span>
               <a class="newdetails pull-right">
                 <span *ngIf="company.round?.modality != 'SAFE'">R$ {{company?.valuation?.current | moneyMask}}</span>
-                <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">40% Desconto, Máx. 7,8 Milhões</span>
+                <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">40% Desconto</span>
               </a>
             </li>
             <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">

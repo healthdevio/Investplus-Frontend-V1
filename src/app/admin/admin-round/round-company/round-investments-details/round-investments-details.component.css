@@ -13,23 +13,6 @@ a {
   cursor: pointer;
 }
 
-.hover-svg:hover path {
-  fill: #035A7A;
-}
-
-.hover-background:hover {
-  background-color: #FBFBFB;
-}
-
-.spinner {
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #2e7e89;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
 hr {
   margin-top: 20px;
   margin-bottom: 20px;
