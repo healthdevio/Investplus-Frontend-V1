@@ -146,8 +146,8 @@
 				</div>
 			</div>
 
-			<li *ngIf="scopes.ROLE_ADMIN" class="treeview">
-				<a routerLink="./rounds/approval/company/publish">
+			<li (click)="toggleSvgRotationImportated()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
+				<a>
 					<i>
 						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_1143_1711)">
@@ -177,8 +177,42 @@
 						</svg>
 					</i>
 					<span class="header-menu">Rodadas</span>
+					<span>
+						<svg *ngIf="!isSvgRotatedImportated" style="transform: scaleX(-1); margin-left: 20px" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+			
+						<svg *ngIf="isSvgRotatedImportated" style="transform: rotate(90deg); margin-left: 20px" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</span>
 				</a>
 			</li>
+		
+			<div *ngIf="isSvgRotatedImportated">
+				<div *ngFor="let item of importatedSubItens">
+					<div style="display: flex; align-items: center;">
+						<p style="margin-left: 5%; cursor: pointer; margin-bottom: 6%;" class="menu-text" (click)="toggleSubItems(item)"
+							[routerLink]="item.link">{{ item.name }}</p>
+						<svg *ngIf="item.subCategory" (click)="toggleSubItems(item)"
+							style="transform: scaleX(-1); cursor: pointer; margin-left: 6%; margin-bottom: 8px" width="6" height="10"
+							viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.45834 1.5L4.95834 5L1.45834 8.5" stroke="white" stroke-width="1.3" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</div>
+			
+					<ul *ngIf="item.subCategory && item.isExpanded">
+						<li *ngFor="let subItem of item.subCategory" style="margin-bottom: 6%; margin-left: -13%; margin-top: -3%;">
+							<a [routerLink]="subItem.link">{{ subItem.name }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</ul>
 
 		<hr class="sidebar-divider" style="color: #353535; background-color: #353535;">

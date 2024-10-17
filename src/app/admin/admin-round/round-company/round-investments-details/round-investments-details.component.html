@@ -1,228 +1,92 @@
 <app-loader [loader]="loader"></app-loader>
 <section class="content">
-    <form [formGroup]="formStatus">
-
-      <div *ngIf="isSingUpPublishModalOpen && searchInvestmentLoading">
-        <div
-          style="width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.309); position: fixed; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px; overflow: hidden;">
-          <div
-            style="width: 95%; height: 95%; background-color: white; border-radius: 8px; padding: 24px 20px; display: flex; align-items: center; justify-content: center;">
-            <div class="spinner"></div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="isSingUpPublishModalOpen && !searchInvestmentLoading"
-        style="width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.309); position: fixed; top: 0; left: 0; z-index: 999999; display: flex; justify-content: center; padding: 10px; overflow: hidden;">
-        <div
-          style="width: 95%; height: 95%; background-color: white; border-radius: 8px; padding: 24px 20px; overflow-x: auto;">
-          <div style="width: 100%; border-bottom: 1px solid #E5E5E5;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <p style="margin-bottom: 0; font-size: 16px; font-weight: 600;">Editar Investimento</p>
-              <svg style="cursor: pointer;" (click)="isSingUpPublishModalOpen = false" width="10" height="10"
-                viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.59 0L5 3.59L1.41 0L0 1.41L3.59 5L0 8.59L1.41 10L5 6.41L8.59 10L10 8.59L6.41 5L10 1.41L8.59 0Z"
-                  fill="#C4C4C4" />
-              </svg>
-            </div>
-            <p style="color: #777777;">Altere os dados do investimento e publique-o.</p>
-          </div>
-
-    
-          <div>    
-            <div style="margin-bottom: 15px;">
-              <p style="margin-top: 24px;">Status do contrato <span style="color: red;">*</span></p>
-              <app-form [errorMessage]="'Status do contrato é obrigatório.'">
-                <select 
-                formControlName="contractStatus" 
-                style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
-                  <option [ngValue]="null">Selecione uma opção...</option>
-                  <option value="PENDING"> PENDENTE </option>
-                  <option value="CONTRACT_SIGNED"> ASSINADO </option>
-                  
-                </select>
-              </app-form>
-    
-            </div>
-    
-    
-            <div style="margin-bottom: 15px;">
-              <p style="margin-top: 24px;">Status do pagamento <span style="color: red;">*</span></p>
-              <app-form [errorMessage]="'Status do pagamento é obrigatório.'">
-                <select
-                  formControlName="status" 
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
-                  <option [ngValue]="null">Selecione uma opção...</option>
-                  <option value="PENDING"> PENDENTE </option>
-                  <option value="CONTRACT_SIGNED"> ASSINADO </option>
-                </select>
-              </app-form>
-            </div>
-          </div>
-    
-          <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
-            <div style="width: 100%; border-top: 1px solid #E5E5E5;">
-              <button (click)="publishInvestment()"
-                style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
-                <p style="margin-bottom: 0; color: white;">Editar Investimento</p>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  
-    <div
-    *ngIf="!loader" 
-    >
-      <h1 style="color: #1F1F1F;">Investimentos realizados</h1>
-      <p style="color: #505050;">Verifique aqui todas os investimentos realizados da plataforma.</p>
-
-      <div style="width: 100%; min-height: 600px; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
-        <p style="margin-left: 16px; font-size: 16px;">total de {{ investments.length }}  Investimentos</p>
-        
-        <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
-          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid #E5E5E5;">
-            <div
-              style="height: 2.5em; width: 40%; display: flex; align-items: center; border-radius: 4px; border: 1px solid #E5E5E5; background-color: #FAFAFA; gap: 5px; padding: 0 16px; margin-bottom: 10px;">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M6.12502 11.0837C8.86342 11.0837 11.0834 8.86373 11.0834 6.12533C11.0834 3.38693 8.86342 1.16699 6.12502 1.16699C3.38662 1.16699 1.16669 3.38693 1.16669 6.12533C1.16669 8.86373 3.38662 11.0837 6.12502 11.0837Z"
-                  stroke="#777777" stroke-width="1.5" stroke-linejoin="round" />
-                <path d="M9.68964 9.68945L12.1645 12.1643" stroke="#777777" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <input
-                style="background-color: transparent; border: 0; width: 100%; text-decoration: none; outline: none; margin-left: 5%;"
-                placeholder="Pesquisar investimentos"
-                (input)="filterInvestments($event.target.value)"
-                />
-            </div>
-
-            <button
-              style="width: 140px; height: 36px; border: 1px solid #035A7A; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; background-color: white;"
-              (click)="exportToCSV()">
-              <p style="margin-bottom: 0; color: #035A7A;">Exportar</p>
-
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 8.00277V14H14V8" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M11 7.66602L8 10.666L5 7.66602" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M7.99724 2V10.6667" stroke="#035A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
-          </div>
-          
-          <table style="width: 100%; margin-top: 35px;">
-            <tr>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Nome</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Perfil</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Vlr. Outras Plataformas</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Cotas</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Total</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Parc.</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">%</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Data</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Contrato</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Pagamento</th>
-              <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;"></th>
-            </tr>
-          
+  <div *ngIf="!loader" class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body no-padding">
+          <table class="table table-striped table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Perfil</th>
+                <th>Vlr. Outras Plataformas</th>
+                <th>Cotas</th>
+                <th>Total</th>
+                <th>Parc.</th>
+                <th>%</th>
+                <th>Data</th>
+                <th>Contrato</th>
+                <th>Pagamento</th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody>
-              <tr *ngFor="let investment of filteredInvestments; let i = index">
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.investor.fullName}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{maskPerfil(investment.investor.investorProfileStatement)}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.investor.totalInvestedOthers | moneyMask : true}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.quotas}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.value | moneyMask : true}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.installments}}x</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.roundPercent}}%</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
-                  {{investment.date | date}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
-                  <div style="display: flex; gap: 5px;">
-                    <ng-template #tooltipStatusContratoPorInvestidor>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>
-                              Investidor
-                            </th>
-                            <th>
-                              Contrato
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let contract of investment.contracts">
-                            <td>{{ contract.nameResponsible || 'Não identificado'}}</td>
-                            <td>&nbsp;{{contract.status | contractStatusPipe}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </ng-template>
-                    {{investment.contractStatus | contractStatusPipe}}
-                    <i class="fa fa-file-text-o" [tooltip]="tooltipStatusContratoPorInvestidor" contianer="body" placement="left"></i>
-                  </div>
+              <tr
+                *ngFor="let investment of investments | paginate: { itemsPerPage: 12, currentPage: p }">
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.investor.fullName}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{maskPerfil(investment.investor.investorProfileStatement)}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.investor.totalInvestedOthers | moneyMask : true}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.quotas}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.value | moneyMask : true}}</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.installments}}x</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.roundPercent}}%</td>
+                <td style="vertical-align: middle;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">{{investment.date | date}}</td>
+                <td style="vertical-align: middle;">
+                  <ng-template #tooltipStatusContratoPorInvestidor>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>
+                            Investidor
+                          </th>
+                          <th>
+                            Contrato
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let contract of investment.contracts">
+                          <td>{{ contract.nameResponsible || 'Não identificado'}}</td>
+                          <td>&nbsp;{{contract.status | contractStatusPipe}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-template>
+                  {{investment.contractStatus | contractStatusPipe}} &nbsp;
+                  <i class="fa fa-file-text-o" [tooltip]="tooltipStatusContratoPorInvestidor" contianer="body" placement="left"></i>
                 </td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{investment.status | contractStatusPipe}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;"><button class="btn" (click)="generateBillets(investment)"
-                    [disabled]="investment?.loading || investment.contractStatus != 'SIGNED'">Gerar boleto</button></td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; position: relative;">
-                  <svg class="hover-svg" style="cursor: pointer;" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                    xmlns="http://www.w3.org/2000/svg" (click)="toggleDropdown(i)">
-                    <path
-                      d="M10 16.6673C9.07953 16.6673 8.33334 15.9211 8.33334 15.0007C8.33334 14.0802 9.07953 13.334 10 13.334C10.9205 13.334 11.6667 14.0802 11.6667 15.0007C11.6667 15.9211 10.9205 16.6673 10 16.6673ZM10 11.6673C9.07953 11.6673 8.33334 10.9211 8.33334 10.0007C8.33334 9.08018 9.07953 8.33398 10 8.33398C10.9205 8.33398 11.6667 9.08018 11.6667 10.0007C11.6667 10.4427 11.4911 10.8666 11.1785 11.1792C10.866 11.4917 10.442 11.6673 10 11.6673ZM10 6.66732C9.07953 6.66732 8.33334 5.92113 8.33334 5.00065C8.33334 4.08018 9.07953 3.33398 10 3.33398C10.9205 3.33398 11.6667 4.08018 11.6667 5.00065C11.6667 5.44268 11.4911 5.8666 11.1785 6.17916C10.866 6.49172 10.442 6.66732 10 6.66732Z"
-                      fill="#909090" />
-                  </svg>
-                
-                  <div *ngIf="isDropdownVisible === i"
-                    style="position: absolute; top: 60px; right: 20px; width: 200px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
-                    <div (click)="getRoundInformation(round.id, round.round.id)" class="hover-background"
-                      style="display: flex; gap: 5px; align-items: center; cursor: pointer; border-bottom: 1px solid #E5E5E5; padding-bottom: 5px;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
-                        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      <p style="margin-bottom: 0px;">Visualizar</p>
-                    </div>
-                    <div (click)="finishRound(round.id, round.round.id)" class="hover-background"
-                      style="display: flex; gap: 5px; cursor: pointer; margin-top: 10px;">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
-                          stroke-linejoin="round" />
-                        <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                          d="M14 8C14 4.6863 11.3137 2 8 2C6.30483 2 4.77387 2.70299 3.6827 3.83333M2 8C2 11.3137 4.6863 14 8 14C9.61853 14 11.0874 13.3591 12.1667 12.3173"
-                          stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                      <p style="margin-bottom: 0;">Reenviar</p>
-                    </div>
-                    <div (click)="editInvestment(investment.id)" class="hover-background"
-                      style="display: flex; gap: 5px; cursor: pointer; margin-top: 10px;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-pen-line">
-                        <path d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2" />
-                        <path
-                          d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
-                        <path d="M8 18h1" />
-                      </svg>
-                      <p style="margin-bottom: 0;">Editar</p>
-                    </div>
-                  </div>
-                </td>
+                <td style="vertical-align: middle;">{{investment.status | contractStatusPipe}}</td>
+                <td style="vertical-align: middle;"><button class="btn" (click)="generateBillets(investment)" [disabled]="investment?.loading || investment.contractStatus != 'SIGNED'">Gerar boleto</button></td>
               </tr>
             </tbody>
           </table>
+          <app-count [count]="!(investments?.length > 0)" [textContador]="textRegister"></app-count>
+          <div class="pagination-footer">
+            <pagination-controls [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+              [responsive]="responsive" (pageChange)="p = $event"></pagination-controls>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </section>
+<!-- <ng-template #tooltipStatusContratoPorInvestidor>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Investidor
+        </th>
+        <th>
+          Contrato
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Raul Cardenas Mariano</td>
+        <td>Emitido</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template> -->

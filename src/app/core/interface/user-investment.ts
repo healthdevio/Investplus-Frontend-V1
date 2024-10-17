@@ -9,5 +9,4 @@ export interface UserInvestment {
      publicAccess: boolean;
      date: string;
      investor: Investor;
-     contractStatus: string;
 }
