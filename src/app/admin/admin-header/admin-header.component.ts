@@ -105,12 +105,7 @@ export class AdminHeaderComponent implements OnInit {
 
   importatedSubItens = [
     {
-      name: 'Publicar Rodada',
-      link: '/admin/rounds/approval/incorporator/publish',
-      isExpanded: false
-    },
-    {
-      name: 'Atualizar Rodada',
+      name: 'Criar Rodada',
       link: '/admin/rounds/approval/company/publish',
     }
   ];
@@ -139,7 +134,7 @@ export class AdminHeaderComponent implements OnInit {
     private data: TitleService,
     private renderer: Renderer2,
     private el: ElementRef
-  ) {}
+  ) { }
 
   base64textString = "";
 
@@ -192,7 +187,7 @@ export class AdminHeaderComponent implements OnInit {
     if (headerElement) {
       const marginLeft = this.sidebarExpanded ? '17.35%' : '6%';
       const width = this.sidebarExpanded ? 'calc(100% - 17.4%)' : 'calc(100% - 6%)';
-      
+
       this.renderer.setStyle(headerElement, 'margin-left', marginLeft);
       this.renderer.setStyle(headerElement, 'width', width);
     }

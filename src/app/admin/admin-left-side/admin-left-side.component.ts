@@ -37,12 +37,7 @@ export class AdminLeftSideComponent implements OnInit {
 
   importatedSubItens = [
     {
-      name: 'Publicar Rodada',
-      link: '/admin/rounds/approval/incorporator/publish',
-      isExpanded: false
-    },
-    {
-      name: 'Atualizar Rodada',
+      name: 'Criar Rodada',
       link: '/admin/rounds/approval/company/publish',
     }
   ];
@@ -82,7 +77,7 @@ export class AdminLeftSideComponent implements OnInit {
     const $this = this;
     const cognitoUser = this.cognitoUtil.getCurrentUser();
     if (cognitoUser != null) {
-      cognitoUser.getSession(function(err, session) {
+      cognitoUser.getSession(function (err, session) {
         if (session.isValid()) {
           const tokenId = session.getIdToken();
           const cognitoGroups = tokenId['payload']['cognito:groups'];
