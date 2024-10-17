@@ -26,8 +26,8 @@ export class InvestmentService {
     return this.http.get<UserInvestment>(`${environment.url_api}/rounds/${round}/investments?type=${type}`);
   }
 
-  updateStatus(investment: number, data: any): Observable<any> {
-    return this.http.patch<any>(`${environment.url_api}/${this.prefixService}/${investment}`, data);
+  updateStatus(investmentId: number, data: any): Observable<any> {
+    return this.http.patch<any>(`${environment.url_api}/investments-status/${investmentId}`, data);
   }
 
   getInvestment(investment: number): Observable<UserInvestment> {

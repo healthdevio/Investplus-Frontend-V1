@@ -28,6 +28,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
   searchInvestmentLoading: boolean = false;
   filteredInvestments: any;
   round = 0;
+  id = 0;
   textRegister = 'Nenhum registro encontrado.';
   loader: boolean;
   p = 1;
@@ -82,6 +83,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
   editInvestment(id: number) {
     this.getInvestment(id)
     this.isSingUpPublishModalOpen = true;
+    this.id = id;
   }
 
   private getInvestment(investment: number): void {
@@ -99,11 +101,10 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
       });
   }
 
-  publishInvestment(investmentId: number,) {
+  publishInvestment() {
     const $this = this;
-    console.log(this.formStatus.value.contractStatus)
     this.investmentService
-      .updateStatus(investmentId, { status: this.formStatus.value.contractStatus })
+      .updateStatus(this.id, this.formStatus.value.contractStatus)
       .subscribe(
         (response) => {
           bootbox.dialog({
@@ -114,7 +115,8 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
                 label: "Entendi",
                 className: "bg-upangel",
                 callback: function () {
-                  $this.router.navigate(["/admin/rounds/incorporator/list"]);
+                  this.isSingUpPublishModalOpen = false;
+                  $this.getUsersInvestments();
                 },
               },
             },
