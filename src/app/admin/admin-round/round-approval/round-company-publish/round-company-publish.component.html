@@ -42,6 +42,22 @@
               </app-form>
             </div>
 
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Contrato de Investimento. <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Contrato de Investimento. é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="fileInvestmentContract.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('investmentContract').value ??
+                    'Anexar Arquivo'}}</p>
+                  <input 
+                  formControlName="docInvestmentContract"
+                  type="file" #fileInvestmentContract
+                    (change)="uploadFile($event, 'investmentContract', 'docInvestmentContract')" style="display: none;" />
+                </div>
+              </app-form>
+            </div>
+
             <div *ngIf="updateForm.get('type').value === 'EXCLUSIVE'" style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Token <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Token é obrigatório.'">
@@ -339,21 +355,6 @@
                 </div>
               </app-form>
             </div>
-
-            <div style="margin-bottom: 15px;">
-              <p style="margin-top: 24px; margin-bottom: 0;">Contrato de Investimento.</p>
-              <app-form [errorMessage]="'Contrato de Investimento. é obrigatório.'">
-                <div
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
-                  (click)="fileInvestmentContract.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('investmentContract').value ??
-                    'Anexar Arquivo'}}</p>
-                  <input type="file" #fileInvestmentContract
-                    (change)="uploadFile($event, 'investmentContract', 'docInvestmentContract')"
-                    style="display: none;" />
-                </div>
-              </app-form>
-            </div>
           </div>
 
           <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
@@ -415,6 +416,22 @@
                   <option value="PUBLIC"> Pública </option>
                   <option value="EXCLUSIVE"> Exclusiva </option>
                 </select>
+              </app-form>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Contrato de Investimento. <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Contrato de Investimento. é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="fileInvestmentContract.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('investmentContract').value ??
+                    'Anexar Arquivo'}}</p>
+                  <input 
+                  formControlName="docInvestmentContract"
+                  type="file" #fileInvestmentContract
+                    (change)="uploadFile($event, 'investmentContract', 'docInvestmentContract')" style="display: none;" />
+                </div>
               </app-form>
             </div>
 

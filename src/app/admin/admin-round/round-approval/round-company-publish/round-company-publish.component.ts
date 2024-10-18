@@ -114,6 +114,8 @@ export class RoundCompanyPublishComponent implements OnInit {
           const dataForm = response.round as any;
           this.updateForm.patchValue(dataForm);
           this.adjustDurationDate();
+          this.updateForm.patchValue({ docInvestmentContract: response.docInvestmentContract });
+          this.updateForm.patchValue({ investmentContract: response.docInvestmentContract });
           this.loadingRounds = false;
         }
       })
@@ -299,8 +301,8 @@ export class RoundCompanyPublishComponent implements OnInit {
       docTypeBanner: [null],
       docTypePresentationOffer: [null],
       docTypePresentationInvestors: [null],
-      docInvestmentContract: [null],
-      investmentContract: [null],
+      docInvestmentContract: [null, [Validators.required]],
+      investmentContract: [null, [Validators.required]],
     });
   }
 
