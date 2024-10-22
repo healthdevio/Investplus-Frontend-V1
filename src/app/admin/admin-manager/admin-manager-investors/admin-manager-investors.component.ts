@@ -16,8 +16,10 @@ export class AdminManagerInvestorsComponent implements OnInit {
   totalInvestors: number;
   status = 'PENDING_EVALUATION';
   loader: boolean;
+  totalPages: number;
   textRegister = 'Nenhum registro encontrado.';
   p = 1;
+  currentPage = 1;
   responsive = true;
   labels: any = {
       previousLabel: 'Anterior',
@@ -30,14 +32,50 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.getAllInvestors();
   }
 
+  changePage(page: number) {
+    this.loader = true;
+    this.investorService.getAllUsers(page, 10).subscribe(
+      (response) => {
+        this.investors = response.content;
+        this.currentPage = page;
+        this.loader = false;
+      },
+    );
+  }
+
+  getPaginationRange(totalPages: number): (number | string)[] {
+    const pages: (number | string)[] = [];
+    const maxVisiblePages = 3;
+
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      for (let i = 2; i <= maxVisiblePages; i++) {
+        pages.push(i);
+      }
+      if (totalPages > maxVisiblePages + 1) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  }
+
+
+
   getAllInvestors() {
     this.loader = true;
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Administração / Base de Investidores';
     this.data.changeTitle(this.titleHeader);
 
-    this.investorService.getAllUsers(0, 1000).subscribe(
+    this.investorService.getAllUsers(1, 10).subscribe(
       (response) => {
+        this.totalPages = response.totalPages;
         this.investors = response.content;
         this.totalInvestors = response.totalElements;
         this.loader = false;
