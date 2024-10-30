@@ -168,6 +168,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.initMask();
   }
 
+  getFormValue(controlName: string) {
+    return this.form.get(controlName)?.value || '';
+  }  
+
   initForm() {
     this.form = this.formBuilder.group({
       nameResponsible: [null],
@@ -185,10 +189,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       zipCode: [null, [Validators.required]],
       street: [null, [Validators.required]],
       number: [null, [Validators.required]],
-      complement: [null],
-      accountBank: [null],
-      accountAgency: [null],
-      accountNumber: [null],
       neighborhood: [null, [Validators.required]],
       city: [null, [Validators.required]],
       uf: [null, [Validators.required]],
@@ -205,7 +205,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
       addressId: [null], 
-      admins: this.formBuilder.array([])
+      admins: this.formBuilder.array([]) 
     });
   }
 
@@ -369,7 +369,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             gender: [admin.gender, Validators.required],
             maritalStatus: [admin.maritalStatus, Validators.required],
             phone: [admin.phone, Validators.required],
-            email: [admin.email, [Validators.required, Validators.email]], // Novo campo de email
+            email: [admin.email, [Validators.required, Validators.email]],
           }));
         });
       } else {
@@ -508,7 +508,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.form.setControl('admins', this.formBuilder.array(
       nonEmptyAdmins.map(admin => ({
         ...admin.value,
-        cpfCnpj: admin.value.cpf, 
+        cpfCnpj: admin.value.cpfCnpj, 
         address: admin.value.address, 
         dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
       }))
