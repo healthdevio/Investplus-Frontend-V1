@@ -504,8 +504,12 @@
         <div *ngIf="activeTab === 1">
           <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
             <div style="width: 30%;">
-              <h3 style="font-weight: 600; margin-bottom: 12px;">Detalhes</h3>
-              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes do endereço</p>
+              <h3 style="font-weight: 600; margin-bottom: 12px;">
+                {{ isPJ ? 'Endereço do Sócio Proprietário' : 'Detalhes' }}
+              </h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                {{ isPJ ? 'Endereço do sócio proprietário' : 'Detalhes do endereço' }}
+              </p>
             </div>
     
             <app-form [label]="'CEP'" [errorMessage]="'CEP é um campo obrigatório.'">

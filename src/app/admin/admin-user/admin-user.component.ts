@@ -39,6 +39,7 @@ declare var toastr: any;
 })
 export class AdminUserComponent implements OnInit, AfterViewInit {
   form: FormGroup;
+  isPJ: boolean;
   titleHeader: TitleHeader;
   totalInvestedUpangel: any;
   totalInvested: any;
@@ -354,6 +355,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         }
       }
   
+      this.isPJ = this.investor?.cnpj ? true : false;
+    
       if (this.investor?.admins?.length > 0) {
         this.investor.admins.forEach((admin) => {
           this.admins.push(this.formBuilder.group({
