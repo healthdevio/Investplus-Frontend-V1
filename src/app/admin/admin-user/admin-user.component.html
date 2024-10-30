@@ -8,8 +8,17 @@
           <div style="display: flex; align-items: center;">
           <input type="file" id="fileInput" style="display: none;" (change)="onUploadChange($event)" accept="image/*">
 
-          <img width="88px" height="88px" style="border-radius: 50%; cursor: pointer;" src="{{ base64textString }}"
-              (click)="triggerFileInput()" title="Selecione uma imagem com altura e largura iguais." id="img" />
+          <img width="88px" height="88px" 
+          style="border-radius: 50%; cursor: pointer; 
+                 border: 2px solid #035A7A; /* Borda colorida */
+                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); /* Sombra */
+                 transition: transform 0.2s; /* Efeito de destaque no hover */
+                " 
+          src="{{ base64textString }}" 
+          (click)="triggerFileInput()" 
+          title="Selecione uma imagem com altura e largura iguais." 
+          id="img" 
+          />     
 
     
             <div style="margin-left: 32px;">

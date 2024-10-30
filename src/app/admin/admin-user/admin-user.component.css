@@ -316,3 +316,7 @@ input-group-addon,
 .btn-editar-rg:hover * {
   text-decoration: underline;
 }
+
+#img:hover {
+  transform: scale(1.05);
+}
