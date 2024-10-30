@@ -76,14 +76,19 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     zipCode: "CEP é obrigatório.",
     street: "Rua é obrigatória.",
     number: "Número do endereço é obrigatório.",
-    neighborhood: "Bairro é obrigatório.",
+    neighborhood: "Bairro é obrigatória.",
     city: "Cidade é obrigatória.",
-    uf: "UF é obrigatório.",
+    uf: "UF é obrigatória.",
     investorProfileStatement: "Escolha uma declaração de perfil de investidor.",
     totalInvestedOthers: "Valor total investido é obrigatório e deve ser válido.",
     publicFigure: "Informe se você é uma figura pública.",
     publicProfile: "Informe se o perfil é público.",
     aboutUpangel: "Escolha uma opção de como conheceu a UpAngel.",
+    adminFullName: "Nome do administrador é obrigatório.",
+    adminCpf: "CPF do administrador é obrigatório.",
+    adminRg: "RG do administrador é obrigatório.",
+    adminDateOfBirth: "Data de nascimento do administrador é obrigatória.",
+    adminPhone: "Telefone do administrador é obrigatório."
   };
 
   publicFigures: RadioOption[] = [
@@ -142,13 +147,20 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.clearFiles()
+    this.clearFiles();
     this.data.currentMessage.subscribe((titles) => (this.titleHeader = titles));
     this.titleHeader.title = "Meu Perfil / Meus Dados";
     this.data.changeTitle(this.titleHeader);
     this.initForm();
     this.getUser();
     this.getBanks();
+    this.addEmptyAdminIfNeeded();
+  }
+  
+  addEmptyAdminIfNeeded() {
+    if (this.admins.length === 0) {
+      this.addAdmin();
+    }
   }
 
   ngAfterViewInit() {
@@ -161,9 +173,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       nickname: [null],
       fullName: [null],
       cpfResponsible: [null],
-      profession: [null, [Validators.required]],
-      nationality: [null, [Validators.required]],
-      gender: [null, [Validators.required]],
+      profession: [null],
+      nationality: [null],
+      gender: [null],
       maritalStatus: [null, [Validators.required]],
       rgEmitter: [null, [Validators.required]],
       rg: [null, [Validators.required, Validators.maxLength(13)]],
@@ -173,14 +185,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       street: [null, [Validators.required]],
       number: [null, [Validators.required]],
       complement: [null],
+      accountBank: [null, Validators.required],
+      accountAgency: [null, Validators.required],
+      accountNumber: [null, Validators.required],
       neighborhood: [null, [Validators.required]],
       city: [null, [Validators.required]],
       uf: [null, [Validators.required]],
       investorProfileStatement: ["UP_TO_10_THOUSAND", [Validators.required]],
-      totalInvestedOthers: [
-        "0,00",
-        [Validators.required, Validators.minLength(3)],
-      ],
+      totalInvestedOthers: ["0,00", [Validators.required, Validators.minLength(3)]],
       publicFigure: [false, [Validators.required]],
       publicProfile: [false, [Validators.required]],
       personalWebsite: [null],
@@ -192,7 +204,28 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
       addressId: [null], 
+      admins: this.formBuilder.array([])
     });
+  }
+
+  get admins(): FormArray {
+    return this.form.get('admins') as FormArray;
+  }  
+
+  addAdmin() {
+    this.admins.push(this.formBuilder.group({
+      fullName: [null, Validators.required],
+      cpf: [null, Validators.required],
+      rg: [null, Validators.required],
+      dateOfBirth: [null, Validators.required],
+      gender: [null, Validators.required],
+      maritalStatus: [null, Validators.required],
+      phone: [null, Validators.required],
+    }));
+  }
+  
+  removeAdmin(index: number) {
+    this.admins.removeAt(index);
   }  
 
   formatDate() {
@@ -265,10 +298,78 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getUser() {
+  applyInvestorTypeValidations() {
+    if (this.investor?.cnpj) {
+      this.toggleValidatorsForInvestorType(); 
+      this.toggleAdminValidatorsForPJ();      
+    }
+  }
+  
+  toggleValidatorsForInvestorType() {
+    if (this.investor?.cnpj) {
+      this.form.get('profession')?.clearValidators();
+      this.form.get('nationality')?.clearValidators();
+      this.form.get('gender')?.clearValidators();
+    } else {
+      this.form.get('profession')?.setValidators([Validators.required]);
+      this.form.get('nationality')?.setValidators([Validators.required]);
+      this.form.get('gender')?.setValidators([Validators.required]);
+    }
+  
+    this.form.get('profession')?.updateValueAndValidity();
+    this.form.get('nationality')?.updateValueAndValidity();
+    this.form.get('gender')?.updateValueAndValidity();
+  }
+  
+  toggleAdminValidatorsForPJ() {
+    if (this.investor?.cnpj) {
+      this.admins.controls.forEach(adminGroup => {
+        adminGroup.get('fullName')?.setValidators([Validators.required]);
+        adminGroup.get('cpf')?.setValidators([Validators.required]);
+        adminGroup.get('rg')?.setValidators([Validators.required]);
+        adminGroup.get('dateOfBirth')?.setValidators([Validators.required]);
+        adminGroup.get('phone')?.setValidators([Validators.required]);
+  
+        adminGroup.get('fullName')?.updateValueAndValidity();
+        adminGroup.get('cpf')?.updateValueAndValidity();
+        adminGroup.get('rg')?.updateValueAndValidity();
+        adminGroup.get('dateOfBirth')?.updateValueAndValidity();
+        adminGroup.get('phone')?.updateValueAndValidity();
+      });
+    }
+  }
+
+  getUser(): void {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
+  
+      this.applyInvestorTypeValidations();
+  
+      this.totalTabs = this.investor?.cnpj ? 5 : 4;
+  
+      if (this.investor.cnpj) {
+        if (!this.tabs.includes("Administradores")) {
+          this.tabs.push("Administradores");
+          this.tabContents.push("Adicione os administradores da empresa");
+        }
+      }
+  
+      if (this.investor?.admins?.length > 0) {
+        this.investor.admins.forEach((admin) => {
+          this.admins.push(this.formBuilder.group({
+            fullName: [admin.fullName, Validators.required],
+            cpf: [admin.cpf, Validators.required],
+            rg: [admin.rg, Validators.required],
+            dateOfBirth: [admin.dateOfBirth, Validators.required],
+            gender: [admin.gender, Validators.required],
+            maritalStatus: [admin.maritalStatus, Validators.required],
+            phone: [admin.phone, Validators.required],
+          }));
+        });
+      } else {
+        this.addEmptyAdminIfNeeded();
+      }
   
       if (response.address !== undefined) {
         this.setFormValue("nickname", response.nickname);
@@ -330,13 +431,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   
       if (response.rgDocument) {
         this.fileNameRG = "RG_FRENTE.png";  
-        this.fileSizeRG = ((response.rgDocument.length * (3/4)) / (1024 * 1024)).toFixed(2);  
+        this.fileSizeRG = ((response.rgDocument.length * (3 / 4)) / (1024 * 1024)).toFixed(2);  
         this.base64RG = "data:image/png;base64," + response.rgDocument;
       }
   
       if (response.rgDocumentVerse) {
         this.fileNameRGVerse = "RG_VERSO.png"; 
-        this.fileSizeRGVerse = ((response.rgDocumentVerse.length * (3/4)) / (1024 * 1024)).toFixed(2); 
+        this.fileSizeRGVerse = ((response.rgDocumentVerse.length * (3 / 4)) / (1024 * 1024)).toFixed(2); 
         this.base64RG = "data:image/png;base64," + response.rgDocumentVerse;
       }
   
@@ -349,7 +450,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
   
   
-
+  
   private setFormValue(controlName: string, value: any) {
     if (this.form.controls[controlName]) {
       this.form.controls[controlName].setValue(value);
@@ -395,6 +496,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
+    const nonEmptyAdmins = this.admins.controls.filter(admin => {
+      return admin.value.fullName || admin.value.cpf || admin.value.rg || admin.value.dateOfBirth || admin.value.phone;
+    });
+  
+    this.form.setControl('admins', this.formBuilder.array(nonEmptyAdmins.map(admin => admin)));
+  
     if (!this.form.get('nickname')?.value) {
       this.setFormValue('nickname', this.investor.nickname);
     }
@@ -403,23 +510,23 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   
     if (this.form.valid) {
-      const dataSend = this.form.value;
-      dataSend.zipCode = this.unmaskInput(dataSend.zipCode);
-      dataSend.phone = this.unmaskInput(dataSend.phone);
+      const dataSend: any = { ...this.form.value }; 
+      dataSend.phone = Number(this.unmaskInput(dataSend.phone));
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
-      dataSend.investedUpangel = this.unmaskMoney(dataSend.investedUpangel).replace(",", ".");
-      dataSend.totalInvested = this.unmaskMoney(dataSend.totalInvested).replace(",", ".");
-      dataSend.totalInvestedOthers = this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", ".");
+      dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
+      dataSend.totalInvestedOthers = parseFloat(this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", "."));
+  
       if (this.investor.cnpj !== undefined) {
-        dataSend.nameResponsible = dataSend.nameResponsible;
+        dataSend.cnpj = this.investor.cnpj;
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
-        console.log(dataSend.nameResponsible)
-        console.log(dataSend.cpfResponsible)
+        dataSend.admins = this.admins.value; 
+      } else {
+        dataSend.cpf = this.investor.cpf;
       }
-      
-      const address = {
+  
+      dataSend.address = {
         id: dataSend.addressId,
-        zipCode: dataSend.zipCode,
+        zipCode: this.unmaskInput(dataSend.zipCode),
         street: dataSend.street,
         number: dataSend.number,
         complement: dataSend.complement,
@@ -427,8 +534,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         city: dataSend.city,
         uf: dataSend.uf
       };
-      
-      dataSend.address = address;
   
       this.loading = true;
       this.loaderService.load(this.loading);
@@ -453,13 +558,40 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           }
         });
     } else {
-      this.validateAllFields(this.form);
       this.loading = false;
       this.loaderService.load(this.loading);
-      toastr.error("Formulário preenchido incorretamente. Por favor revise seus dados.");
+  
+      const errorMessages = this.generateErrorMessage(this.form);
+      toastr.error(`Formulário preenchido incorretamente. Por favor, revise os seguintes campos: ${errorMessages}`);
     }
   }
-
+  
+  generateErrorMessage(formGroup: FormGroup): string {
+    let messages: string[] = [];
+  
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+  
+      if (control instanceof FormGroup) {
+        const nestedMessages = this.generateErrorMessage(control);
+        if (nestedMessages) messages.push(`${key}: ${nestedMessages}`);
+      } else if (control instanceof FormArray) {
+        control.controls.forEach((group, index) => {
+          if (group instanceof FormGroup) {
+            const arrayMessages = this.generateErrorMessage(group);
+            if (arrayMessages) messages.push(`Administrador ${index + 1}: ${arrayMessages}`);
+          }
+        });
+      } else if (control && control.invalid && control.errors) {
+        const errorMessage = this.validationMessages[key] || `Campo ${key} está incorreto`;
+        messages.push(errorMessage);
+      }
+    });
+  
+    return messages.join("; ");
+  }
+  
+  
   onDevelopmentToast() {
     toastr.options = {
       closeButton: true,
@@ -483,6 +615,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários'];
+  totalTabs: number;
+
 
   tabContents: string[] = [
     'Dados gerais da conta',
@@ -490,13 +624,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     'Detalhes do perfil',
     'Links sociais',
     'Informações bancárias',
-    'Configurações de segurança'
   ];
   activeTab: number = 0;
 
   setActiveTab(index: number): void {
     this.activeTab = index;
-  }
+  }  
 
   redirectTo(uri: string) {
     this.router
@@ -833,4 +966,44 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.fileNameRGVerse = null;
     this.fileSizeRGVerse = null;
   }
+
+  applyCpfMask(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value
+      .replace(/\D/g, '')
+      .slice(0, 11)
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); 
+  }
+  
+  applyRgMask(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value
+      .replace(/\D/g, '')
+      .slice(0, 9)
+      .replace(/(\d{2})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1})$/, '$1-$2'); 
+  }
+  
+  applyDateMask(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value
+      .replace(/\D/g, '')
+      .slice(0, 8) 
+      .replace(/(\d{2})(\d)/, '$1/$2')
+      .replace(/(\d{2})(\d)/, '$1/$2'); 
+  }
+  
+  applyPhoneMask(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value
+      .replace(/\D/g, '')
+      .slice(0, 11) 
+      .replace(/(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); 
+  }
+  
+  
 }

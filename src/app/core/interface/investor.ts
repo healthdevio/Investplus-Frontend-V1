@@ -1,5 +1,15 @@
 import { Address } from './address';
 
+export interface Admin {
+    fullName: string;
+    cpf: string;
+    rg: string;
+    dateOfBirth: string;
+    gender: string;
+    maritalStatus: string;
+    phone: string;
+}
+
 export interface Investor {
     profession: string;
     nationality: string;
@@ -27,4 +37,5 @@ export interface Investor {
     fullName?: string;
     id?: number;
     nickname?: string;
+    admins?: Admin[];
 }
