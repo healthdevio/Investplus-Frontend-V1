@@ -154,7 +154,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.initForm();
     this.getUser();
     this.getBanks();
-    this.addEmptyAdminIfNeeded();
   }
   
   addEmptyAdminIfNeeded() {
@@ -215,14 +214,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   addAdmin() {
     this.admins.push(this.formBuilder.group({
       fullName: [null, Validators.required],
-      cpf: [null, Validators.required],
+      cpfCnpj: [null, Validators.required],
       rg: [null, Validators.required],
       dateOfBirth: [null, Validators.required],
       gender: [null, Validators.required],
       maritalStatus: [null, Validators.required],
       phone: [null, Validators.required],
     }));
-  }
+  }  
   
   removeAdmin(index: number) {
     this.admins.removeAt(index);
@@ -359,9 +358,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.investor.admins.forEach((admin) => {
           this.admins.push(this.formBuilder.group({
             fullName: [admin.fullName, Validators.required],
-            cpf: [admin.cpf, Validators.required],
+            cpfCnpj: [admin.cpfCnpj, Validators.required], 
             rg: [admin.rg, Validators.required],
-            dateOfBirth: [admin.dateOfBirth, Validators.required],
+            dateOfBirth: [moment(admin.dateOfBirth).format('DD/MM/YYYY'), Validators.required],
             gender: [admin.gender, Validators.required],
             maritalStatus: [admin.maritalStatus, Validators.required],
             phone: [admin.phone, Validators.required],
@@ -500,7 +499,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       return admin.value.fullName || admin.value.cpf || admin.value.rg || admin.value.dateOfBirth || admin.value.phone;
     });
   
-    this.form.setControl('admins', this.formBuilder.array(nonEmptyAdmins.map(admin => admin)));
+    this.form.setControl('admins', this.formBuilder.array(
+      nonEmptyAdmins.map(admin => ({
+        ...admin.value,
+        cpfCnpj: admin.value.cpf, 
+        address: admin.value.address, 
+        dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      }))
+    ));
   
     if (!this.form.get('nickname')?.value) {
       this.setFormValue('nickname', this.investor.nickname);
@@ -519,14 +525,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (this.investor.cnpj !== undefined) {
         dataSend.cnpj = this.investor.cnpj;
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
-        dataSend.admins = this.admins.value.map(admin => ({
-          ...admin,
-          dateOfBirth: moment(admin.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
-        }));
+        dataSend.admins = this.form.get('admins')?.value;
       } else {
         dataSend.cpf = this.investor.cpf;
       }
-
+  
       if (dataSend.dateOfBirth) {
         dataSend.dateOfBirth = moment(dataSend.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
       }
@@ -572,6 +575,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       toastr.error(`Formulário preenchido incorretamente. Por favor, revise os seguintes campos: ${errorMessages}`);
     }
   }
+  
   
   generateErrorMessage(formGroup: FormGroup): string {
     let messages: string[] = [];

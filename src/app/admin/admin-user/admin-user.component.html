@@ -799,8 +799,8 @@
             </app-form>
         
             <app-form [label]="'CPF'" [errorMessage]="'CPF é obrigatório.'">
-              <input formControlName="cpf" placeholder="CPF" 
-                (input)="applyCpfMask($event)" maxlength="14" 
+              <input formControlName="cpfCnpj" placeholder="CPF"
+                (input)="applyCpfMask($event)" maxlength="14"
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
         
@@ -856,8 +856,7 @@
             </div>
           </div>
         </div>
-        
-        
+    
         <div *ngIf="activeTab !== totalTabs"
             style="display: flex; align-items: center; justify-content: end; gap: 10px; margin-top: 20px;">
           <div *ngIf="activeTab > 0" (click)="setActiveTab(activeTab - 1)" [disabled]="loading"

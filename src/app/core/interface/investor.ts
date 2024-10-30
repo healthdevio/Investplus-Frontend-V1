@@ -2,7 +2,7 @@ import { Address } from './address';
 
 export interface Admin {
     fullName: string;
-    cpf: string;
+    cpfCnpj: string;
     rg: string;
     dateOfBirth: string;
     gender: string;
