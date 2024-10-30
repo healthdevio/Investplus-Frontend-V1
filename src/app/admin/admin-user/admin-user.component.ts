@@ -519,9 +519,16 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (this.investor.cnpj !== undefined) {
         dataSend.cnpj = this.investor.cnpj;
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
-        dataSend.admins = this.admins.value; 
+        dataSend.admins = this.admins.value.map(admin => ({
+          ...admin,
+          dateOfBirth: moment(admin.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        }));
       } else {
         dataSend.cpf = this.investor.cpf;
+      }
+
+      if (dataSend.dateOfBirth) {
+        dataSend.dateOfBirth = moment(dataSend.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
       }
   
       dataSend.address = {

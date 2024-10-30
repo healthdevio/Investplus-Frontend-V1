@@ -788,42 +788,61 @@
         </div>
 
         <div *ngIf="activeTab === 5" formArrayName="admins" style="margin-bottom: 80px;">
-
           <div *ngFor="let admin of admins.controls; let i = index" [formGroupName]="i" style="margin-top: 16px; padding: 16px; border: 1px solid #E5E5E5; border-radius: 4px;">
-          
             <h3 style="font-weight: 600; font-size: 18px; margin-bottom: 12px;">
               Administrador {{ i + 1 }}{{ admin.get('fullName').value ? ' - ' + admin.get('fullName').value : '' }}
             </h3>            
-          
+        
             <app-form [label]="'Nome Completo'" [errorMessage]="'Nome Completo é obrigatório.'">
               <input formControlName="fullName" placeholder="Nome Completo" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
-          
+        
             <app-form [label]="'CPF'" [errorMessage]="'CPF é obrigatório.'">
               <input formControlName="cpf" placeholder="CPF" 
                 (input)="applyCpfMask($event)" maxlength="14" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
-          
+        
             <app-form [label]="'RG'" [errorMessage]="'RG é obrigatório.'">
               <input formControlName="rg" placeholder="RG" 
                 (input)="applyRgMask($event)" maxlength="12" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
-          
+        
             <app-form [label]="'Data de Nascimento'" [errorMessage]="'Data de Nascimento é obrigatória.'">
               <input formControlName="dateOfBirth" placeholder="Data de Nascimento" 
                 (input)="applyDateMask($event)" maxlength="10" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
-          
+        
             <app-form [label]="'Telefone'" [errorMessage]="'Telefone é obrigatório.'">
               <input formControlName="phone" placeholder="Telefone" 
                 (input)="applyPhoneMask($event)" maxlength="15" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
-          
+        
+            <app-form [label]="'Gênero'" [errorMessage]="'Gênero é obrigatório.'">
+              <select formControlName="gender" 
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;">
+                <option [ngValue]="null" disabled>Selecione o Gênero</option>
+                <option value="MALE">Masculino</option>
+                <option value="FEMALE">Feminino</option>
+                <option value="OTHER">Outro</option>
+              </select>
+            </app-form>
+        
+            <app-form [label]="'Estado Civil'" [errorMessage]="'Estado Civil é obrigatório.'">
+              <select formControlName="maritalStatus" 
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;">
+                <option [ngValue]="null" disabled>Selecione o Estado Civil</option>
+                <option value="SINGLE">Solteiro(a)</option>
+                <option value="MARRIED">Casado(a)</option>
+                <option value="DIVORCED">Divorciado(a)</option>
+                <option value="WIDOWED">Viúvo(a)</option>
+              </select>
+            </app-form>
+        
             <div style="display: flex; justify-content: space-between; margin-top: 16px;">
               <button *ngIf="i > 0" (click)="removeAdmin(i)" 
                 style="height: 50px; background-color: #d9534f; color: white; border: none; border-radius: 4px; padding: 0 16px;">
@@ -837,6 +856,7 @@
             </div>
           </div>
         </div>
+        
         
         <div *ngIf="activeTab !== totalTabs"
             style="display: flex; align-items: center; justify-content: end; gap: 10px; margin-top: 20px;">
