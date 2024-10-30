@@ -101,7 +101,53 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.initForm();
     this.initUpdateForm();
     this.getModalities();
+
+    this.applyMonetaryMask('minimumValuation');
+    this.applyMonetaryMask('maximumValuation');
+    this.applyMonetaryMask('quotaValue');
+    this.applyMonetaryMask('upangelCost');
   }
+
+  applyMonetaryMask(controlName: string) {
+    const control = this.updateForm.get(controlName);
+    if (control) {
+      control.valueChanges.subscribe(value => {
+        const maskedValue = this.formatCurrency(value);
+        if (maskedValue !== value) {
+          control.setValue(maskedValue, { emitEvent: false });
+        }
+      });
+    }
+  }
+
+  formatCurrency(value: string): string {
+    if (!value) return '';
+    
+    const onlyNumbers = value.toString().replace(/[^0-9]/g, '');
+    
+    if (!onlyNumbers) return 'R$ 0,00';
+  
+    const intPart = onlyNumbers.slice(0, -2) || '0';
+    const decimalPart = onlyNumbers.slice(-2).padEnd(2, '0');
+  
+    const formattedIntPart = parseInt(intPart, 10).toLocaleString('pt-BR');
+  
+    return `R$ ${formattedIntPart},${decimalPart}`;
+  }
+  
+  public prepareSubmitData(): any {
+    const formData = { ...this.updateForm.value };
+    const monetaryFields = ['minimumValuation', 'maximumValuation', 'quotaValue', 'upangelCost'];
+    
+    monetaryFields.forEach(field => {
+      if (formData[field]) {
+        formData[field] = formData[field].replace(/[R$\.\,]/g, '');
+        formData[field] = parseFloat(formData[field]) / 100;
+      }
+    });
+  
+    return formData;
+  }  
 
   getRoundInformation(id: number, roundId: number) {
     this.isUpdatePublishModalOpen = true
@@ -164,9 +210,10 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   uploadFile(evt: any, fieldName: string, fieldDoc: string) {
     const file = evt.target.files[0];
-    const fileName = file.name;
     if (file) {
-      if (file.size > 52428800) {
+      const fileName = file.name;
+  
+      if (file.size > 52428800) { 
         toastr.error("O tamanho máximo permitido é 50MB.");
       } else {
         const reader = new FileReader();
@@ -175,23 +222,21 @@ export class RoundCompanyPublishComponent implements OnInit {
             file: btoa(e.target.result),
             name: fileName
           };
-
-          this.companyService
-            .uploadDocs(this.id, dataSend)
-            .subscribe({
-              next: (response: any) => {
-                this.updateForm.get(fieldName).setValue(fileName);
-                this.updateForm.get(fieldDoc).setValue(response.url);
-              },
-              error: (error: any) => {
-                toastr.error(error)
-              }
-            })
-        }
+  
+          this.companyService.uploadDocs(this.id, dataSend).subscribe({
+            next: (response: any) => {
+              this.updateForm.get(fieldName)?.setValue(fileName);  
+              this.updateForm.get(fieldDoc)?.setValue(response.url);
+            },
+            error: (error: any) => {
+              toastr.error("Erro ao fazer o upload do arquivo.");
+            }
+          });
+        };
         reader.readAsBinaryString(file);
       }
     }
-  }
+  }  
 
   initForm() {
     this.form = this.formBuilder.group({
@@ -483,13 +528,59 @@ export class RoundCompanyPublishComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({
-          onlySelf: true
-        });
+        control.markAsTouched({ onlySelf: true });
+        if (control.invalid) {
+          const errorMessage = this.getErrorMessage(field, control.errors);
+          if (errorMessage) {
+            toastr.error(errorMessage, "Erro no campo");
+          }
+        }
       } else if (control instanceof FormGroup) {
         this.validateAllFields(control);
       }
     });
+  }  
+
+  getErrorMessage(field: string, errors: any): string {
+    const fieldNames = {
+      property: 'Propriedade',
+      builder: 'Construtor',
+      offerVideo: 'Vídeo da Oferta',
+      annualMinProfitability: 'Rentabilidade Mínima Anual',
+      annualMaxProfitability: 'Rentabilidade Máxima Anual',
+      minimalProfitability: 'Rentabilidade Mínima',
+      minimumCaptation: 'Captação Mínima',
+      maximumCaptation: 'Captação Máxima',
+      projectedMinProfitability: 'Rentabilidade Mínima Projetada',
+      projectedMaxProfitability: 'Rentabilidade Máxima Projetada',
+      returnTimeInMonths: 'Tempo de Retorno em Meses',
+      quotaValue: 'Valor da Cota',
+      quotas: 'Quotas',
+      duration: 'Duração',
+      location: 'Localização',
+      locationLink: 'Link de Localização',
+      riskiness: 'Risco',
+      description: 'Descrição',
+      business: 'Negócio',
+      achievements: 'Conquistas',
+    };
+  
+    let errorMessage = `${fieldNames[field] || field}: `;
+  
+    if (errors.required) {
+      errorMessage += 'Este campo é obrigatório.';
+    }
+    if (errors.maxlength) {
+      errorMessage += `Máximo de ${errors.maxlength.requiredLength} caracteres permitidos.`;
+    }
+    if (errors.minlength) {
+      errorMessage += `Mínimo de ${errors.minlength.requiredLength} caracteres exigidos.`;
+    }
+    if (errors.pattern) {
+      errorMessage += 'Formato inválido.';
+    }
+  
+    return errorMessage;
   }
 
   publishRound(company, round) {

@@ -813,6 +813,12 @@
               <input formControlName="fullName" placeholder="Nome Completo" 
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
             </app-form>
+
+            <app-form [label]="'Email'" [errorMessage]="'Email é obrigatório.'">
+              <input formControlName="email" placeholder="Email" 
+                type="email"
+                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
+            </app-form>            
         
             <app-form [label]="'CPF'" [errorMessage]="'CPF é obrigatório.'">
               <input formControlName="cpfCnpj" placeholder="CPF"

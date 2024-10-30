@@ -87,14 +87,11 @@
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Logo <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Logo é obrigatório.'">
-                <div
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                <div style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;" 
                   (click)="fileInput.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('logo').value ?? 'Anexar arquivo'}}
-                  </p>
-                  <input formControlName="logo" type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')"
-                    style="display: none;" />
-                </div>
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ fileNameToShow }}</p>
+                  <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')" style="display: none;" />
+                </div>            
               </app-form>
             </div>
 
@@ -284,74 +281,63 @@
 
           <div *ngIf="selectedUpdateSession === 'Documentos'">
             <p style="margin-bottom: 0; color: red;">*Tamanho máximo de 50Mb</p>
+            
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Termos de investimentos e fatores de risco</p>
               <app-form [errorMessage]="'Logo é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
                   (click)="fileInput.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('presentationOffer').value ?? 'Anexar
-                    Arquivo'}}</p>
-                  <input type="file" #fileInput
-                    (change)="uploadFile($event, 'presentationOffer', 'docPresentationOffer')" style="display: none;" />
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('presentationOffer').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #fileInput (change)="uploadFile($event, 'presentationOffer', 'docPresentationOffer')" style="display: none;" />
                 </div>
               </app-form>
             </div>
-
+          
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Apresentação</p>
               <app-form [errorMessage]="'Apresentação é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
                   (click)="filepresentationInvestors.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('presentationInvestors').value ??
-                    'AnexarArquivo'}}</p>
-                  <input type="file" #filepresentationInvestors
-                    (change)="uploadFile($event, 'presentationInvestors', 'docPresentationInvestors')"
-                    style="display: none;" />
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('presentationInvestors').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #filepresentationInvestors (change)="uploadFile($event, 'presentationInvestors', 'docPresentationInvestors')" style="display: none;" />
                 </div>
               </app-form>
             </div>
-
+          
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Documentos jurídicos</p>
               <app-form [errorMessage]="'Documentos jurídicos é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
                   (click)="filelegalDocuments.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('legalDocuments').value ?? 'Anexar
-                    Arquivo'}}</p>
-                  <input type="file" #filelegalDocuments
-                    (change)="uploadFile($event, 'legalDocuments', 'docLegalDocuments')" style="display: none;" />
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('legalDocuments').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #filelegalDocuments (change)="uploadFile($event, 'legalDocuments', 'docLegalDocuments')" style="display: none;" />
                 </div>
               </app-form>
             </div>
-
+          
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Documentos Financeiros</p>
               <app-form [errorMessage]="'Documentos Financeiros é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
                   (click)="filevaluationDoc.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('valuationDoc').value ?? 'Anexar
-                    Arquivo'}}</p>
-                  <input type="file" #filevaluationDoc (change)="uploadFile($event, 'valuationDoc', 'docValuation')"
-                    style="display: none;" />
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('valuationDoc').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #filevaluationDoc (change)="uploadFile($event, 'valuationDoc', 'docValuation')" style="display: none;" />
                 </div>
               </app-form>
             </div>
-
+          
             <div style="margin-bottom: 15px;">
-              <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional.</p>
-              <app-form [errorMessage]="'Dossiê reputacional. é obrigatório.'">
+              <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional</p>
+              <app-form [errorMessage]="'Dossiê reputacional é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
-                  (click)="filevaluationDoc.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('reputationalDossier').value ??
-                    'Anexar Arquivo'}}</p>
-                  <input type="file" #filevaluationDoc
-                    (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')"
-                    style="display: none;" />
+                  (click)="fileReputationalDossier.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('reputationalDossier').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #fileReputationalDossier (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')" style="display: none;" />
                 </div>
               </app-form>
             </div>
@@ -455,13 +441,10 @@
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px; margin-bottom: 0;">Logo <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Logo é obrigatório.'">
-                <div
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
-                  (click)="fileInput.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('logo').value ?? 'Anexar arquivo'}}
-                  </p>
-                  <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')"
-                    style="display: none;" />
+                <div style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;" 
+                    (click)="fileInput.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ fileNameToShow }}</p>
+                  <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')" style="display: none;" />
                 </div>
               </app-form>
             </div>
@@ -1284,14 +1267,12 @@
               <app-form [errorMessage]="'Logo é obrigatório.'">
                 <div
                   style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
-                  (click)="fileInput.click()">
-                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('logo').value ?? 'Anexar arquivo'}}
-                  </p>
-                  <input type="file" #fileInput (change)="uploadFile($event, 'logo', 'docLogo')"
-                    style="display: none;" />
+                  (click)="logoInput.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('logo').value || 'Anexar arquivo' }}</p>
+                  <input type="file" #logoInput (change)="uploadFile($event, 'logo', 'docLogo')" style="display: none;" />
                 </div>
               </app-form>
-            </div>
+            </div>            
 
 
             <div style="margin-bottom: 15px;">

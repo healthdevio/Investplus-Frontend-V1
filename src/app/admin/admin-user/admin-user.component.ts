@@ -89,7 +89,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     adminCpf: "CPF do administrador é obrigatório.",
     adminRg: "RG do administrador é obrigatório.",
     adminDateOfBirth: "Data de nascimento do administrador é obrigatória.",
-    adminPhone: "Telefone do administrador é obrigatório."
+    adminPhone: "Telefone do administrador é obrigatório.",
+    email: "Email do administrador é obrigatório e deve ser válido.",
   };
 
   publicFigures: RadioOption[] = [
@@ -221,6 +222,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       gender: [null, Validators.required],
       maritalStatus: [null, Validators.required],
       phone: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
     }));
   }  
   
@@ -367,6 +369,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             gender: [admin.gender, Validators.required],
             maritalStatus: [admin.maritalStatus, Validators.required],
             phone: [admin.phone, Validators.required],
+            email: [admin.email, [Validators.required, Validators.email]], // Novo campo de email
           }));
         });
       } else {
