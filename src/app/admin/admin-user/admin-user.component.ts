@@ -178,6 +178,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       nickname: [null],
       fullName: [null],
       cpfResponsible: [null],
+      complement: [null],
+      accountBank: [null],
+      accountAgency: [null],
+      accountNumber: [null],
       profession: [null],
       nationality: [null],
       gender: [null],
@@ -204,9 +208,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
-      accountBank: [null, Validators.required],
-      accountAgency: [null, Validators.required],
-      accountNumber: [null, Validators.required],
       addressId: [null], 
       admins: this.formBuilder.array([]) 
     });
