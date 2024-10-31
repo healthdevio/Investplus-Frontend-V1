@@ -9,6 +9,7 @@ export interface Admin {
     maritalStatus: string;
     phone: string;
     email: string;
+    address?: Address;
 }
 
 export interface Investor {

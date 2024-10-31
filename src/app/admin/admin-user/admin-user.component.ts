@@ -204,6 +204,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       aboutUpangel: ["OUTRO", [Validators.required]],
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
+      accountBank: [null, Validators.required],
+      accountAgency: [null, Validators.required],
+      accountNumber: [null, Validators.required],
       addressId: [null], 
       admins: this.formBuilder.array([]) 
     });
@@ -223,6 +226,15 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       maritalStatus: [null, Validators.required],
       phone: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
+      address: this.formBuilder.group({
+        street: [null, Validators.required],
+        city: [null, Validators.required],
+        uf: [null, Validators.required],
+        zipCode: [null, Validators.required],
+        neighborhood: [null, Validators.required],
+        number: [null, Validators.required],
+        complement: [null]
+      })
     }));
   }  
   
@@ -242,6 +254,42 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       }
       this.form.get('dateOfBirth')?.setValue(date, { emitEvent: false });
     }
+  }
+
+  applyCepMaskForAdmin(event: Event, adminIndex: number): void {
+    const input = event.target as HTMLInputElement;
+    let cepValue = input.value.replace(/\D/g, '').slice(0, 8);
+  
+    if (cepValue.length >= 5) {
+      cepValue = cepValue.replace(/(\d{5})(\d{1,3})/, '$1-$2');
+    }
+    input.value = cepValue;
+  
+    if (cepValue.replace('-', '').length === 8) {
+      this.getAdminAddressByCep(cepValue, adminIndex);
+    }
+  }
+
+  getAdminAddressByCep(cep: string, adminIndex: number) {
+    const cleanCep = cep.replace(/\D/g, '');
+  
+    this.http.get(`https://viacep.com.br/ws/${cleanCep}/json/`).subscribe((data: any) => {
+      if (!data.erro) {
+        const adminFormGroup = this.admins.at(adminIndex) as FormGroup;
+        adminFormGroup.patchValue({
+          address: {
+            street: data.logradouro,
+            neighborhood: data.bairro,
+            city: data.localidade,
+            uf: data.uf
+          }
+        });
+      } else {
+        toastr.error("CEP não encontrado.");
+      }
+    }, error => {
+      toastr.error("Erro ao buscar o CEP.");
+    });
   }
 
   formatPhone() {
@@ -508,8 +556,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.form.setControl('admins', this.formBuilder.array(
       nonEmptyAdmins.map(admin => ({
         ...admin.value,
-        cpfCnpj: admin.value.cpfCnpj, 
-        address: admin.value.address, 
+        cpfCnpj: admin.value.cpfCnpj,
+        address: {
+          ...admin.value.address, 
+          zipCode: this.unmaskInput(admin.value.address.zipCode)
+        },
         dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
       }))
     ));
@@ -522,7 +573,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   
     if (this.form.valid) {
-      const dataSend: any = { ...this.form.value }; 
+      const dataSend = {
+        ...this.form.value,
+        admins: this.admins.controls.map((adminControl: FormGroup) => ({
+          ...adminControl.value,
+          address: adminControl.get('address')?.value
+        }))
+      }; 
       dataSend.phone = Number(this.unmaskInput(dataSend.phone));
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
       dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
@@ -555,24 +612,24 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       this.loaderService.load(this.loading);
   
       this.investorService.updateInvestor(dataSend)
-        .pipe(finalize(() => {
-          this.loading = false;
-          this.loaderService.load(this.loading);
-        }))
-        .subscribe({
-          next: () => {
-            toastr.success("Dados atualizados.");
-            this.router.navigate(["/admin/rounds/incorporator/list"]);
-          },
-          error: (error) => {
-            if (error.error.code === "DUPLICATE_RG") {
-              this.form.controls["rg"].setValue("");
-              toastr.error("O RG informado já se encontra cadastrado.");
-            } else {
-              toastr.error("Ocorreu um erro, contate o administrador.");
-            }
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      }))
+      .subscribe({
+        next: () => {
+          toastr.success("Dados atualizados.");
+          this.router.navigate(["/admin/rounds/incorporator/list"]);
+        },
+        error: (error) => {
+          if (error.error.code === "DUPLICATE_RG") {
+            this.form.controls["rg"].setValue("");
+            toastr.error("O RG informado já se encontra cadastrado.");
+          } else {
+            toastr.error("Ocorreu um erro, contate o administrador.");
           }
-        });
+        }
+      });
     } else {
       this.loading = false;
       this.loaderService.load(this.loading);
