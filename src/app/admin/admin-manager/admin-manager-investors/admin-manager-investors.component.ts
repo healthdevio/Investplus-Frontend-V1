@@ -107,19 +107,42 @@ export class AdminManagerInvestorsComponent implements OnInit {
   }
 
   exportAsXLSX(): void {
-    const formattedInvestors = this.investors.map(investor => ({
-      fullName: investor.fullName,
-      email: investor.email,
-      phone: investor.phone,
-      cpf: investor.cpf,
-      cnpj: investor.cnpj,
-      rg: investor.rg,
-      totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
-      created: new Date(investor.created).toLocaleDateString('pt-BR'),
-    }));
-
-    this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
+    this.loader = true;
+    const allInvestors = [];
+  
+    const fetchAllInvestors = (page: number) => {
+      this.investorService.getAllUsers(page, 100).subscribe(
+        (response) => {
+          allInvestors.push(...response.content);
+  
+          if (page < response.totalPages) {
+            fetchAllInvestors(page + 1);
+          } else {
+            const formattedInvestors = allInvestors.map(investor => ({
+              fullName: investor.fullName,
+              email: investor.email,
+              phone: investor.phone,
+              cpf: investor.cpf,
+              cnpj: investor.cnpj,
+              rg: investor.rg,
+              totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
+              created: new Date(investor.created).toLocaleDateString('pt-BR'),
+            }));
+  
+            this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
+            this.loader = false;
+          }
+        },
+        (error) => {
+          this.loader = false;
+          console.error("An error occurred while fetching all investors:", error);
+        }
+      );
+    };
+  
+    fetchAllInvestors(1);
   }
+  
 
 
 }
