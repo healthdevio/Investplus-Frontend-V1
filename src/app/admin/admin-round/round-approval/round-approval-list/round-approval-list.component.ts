@@ -35,6 +35,7 @@ export class RoundApprovalListComponent implements OnInit {
   expenseForm: FormGroup;
   valuationForm: FormGroup;
   captableForm: FormGroup;
+  totalCompanies: number = 0; 
   partnerForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   companies = [];
@@ -687,6 +688,7 @@ export class RoundApprovalListComponent implements OnInit {
         for (const company of response) {
           this.companies.push(company);
           this.filteredCompanies.push(company);
+          this.totalCompanies = this.filteredCompanies.length; 
         }
         this.calculateTotalPages();
         this.loader = false;
