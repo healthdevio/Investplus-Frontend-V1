@@ -118,16 +118,30 @@ export class AdminManagerInvestorsComponent implements OnInit {
           if (page < response.totalPages) {
             fetchAllInvestors(page + 1);
           } else {
-            const formattedInvestors = allInvestors.map(investor => ({
-              fullName: investor.fullName,
-              email: investor.email,
-              phone: investor.phone,
-              cpf: investor.cpf,
-              cnpj: investor.cnpj,
-              rg: investor.rg,
-              totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
-              created: new Date(investor.created).toLocaleDateString('pt-BR'),
-            }));
+            const totalInvestors = allInvestors.length;
+            
+            const formattedInvestors = [
+              {
+                fullName: `Total de investidores: ${totalInvestors}`, 
+                email: '',
+                phone: '',
+                cpf: '',
+                cnpj: '',
+                rg: '',
+                totalInvestedOthers: '',
+                created: ''
+              },
+              ...allInvestors.map(investor => ({
+                fullName: investor.fullName,
+                email: investor.email,
+                phone: investor.phone,
+                cpf: investor.cpf,
+                cnpj: investor.cnpj,
+                rg: investor.rg,
+                totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
+                created: new Date(investor.created).toLocaleDateString('pt-BR'),
+              }))
+            ];
   
             this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
             this.loader = false;
@@ -142,7 +156,5 @@ export class AdminManagerInvestorsComponent implements OnInit {
   
     fetchAllInvestors(1);
   }
-  
-
 
 }
