@@ -109,20 +109,20 @@ export class AdminManagerInvestorsComponent implements OnInit {
   exportAsXLSX(): void {
     this.loader = true;
     const allInvestors = [];
-  
+    
     const fetchAllInvestors = (page: number) => {
       this.investorService.getAllUsers(page, 100).subscribe(
         (response) => {
           allInvestors.push(...response.content);
+          
+          const totalElements = response.totalElements;
   
-          if (page < response.totalPages) {
+          if (allInvestors.length < totalElements) {
             fetchAllInvestors(page + 1);
           } else {
-            const totalInvestors = allInvestors.length;
-            
             const formattedInvestors = [
               {
-                fullName: `Total de investidores: ${totalInvestors}`, 
+                fullName: `Total de investidores: ${totalElements}`, 
                 email: '',
                 phone: '',
                 cpf: '',
