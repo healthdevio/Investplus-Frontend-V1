@@ -110,51 +110,63 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.loader = true;
     const allInvestors = [];
     
-    const fetchAllInvestors = (page: number) => {
-      this.investorService.getAllUsers(page, 100).subscribe(
-        (response) => {
-          allInvestors.push(...response.content);
-          
-          const totalElements = response.totalElements;
-  
-          if (allInvestors.length < totalElements) {
-            fetchAllInvestors(page + 1);
-          } else {
-            const formattedInvestors = [
-              {
-                fullName: `Total de investidores: ${totalElements}`, 
-                email: '',
-                phone: '',
-                cpf: '',
-                cnpj: '',
-                rg: '',
-                totalInvestedOthers: '',
-                created: ''
-              },
-              ...allInvestors.map(investor => ({
-                fullName: investor.fullName,
-                email: investor.email,
-                phone: investor.phone,
-                cpf: investor.cpf,
-                cnpj: investor.cnpj,
-                rg: investor.rg,
-                totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
-                created: new Date(investor.created).toLocaleDateString('pt-BR'),
-              }))
-            ];
-  
-            this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
-            this.loader = false;
-          }
-        },
-        (error) => {
-          this.loader = false;
-          console.error("An error occurred while fetching all investors:", error);
+    this.investorService.getAllUsers(1, 100).subscribe(
+      (response) => {
+        const totalPages = response.totalPages;
+        const totalElements = response.totalElements;
+        allInvestors.push(...response.content);
+    
+        const requests = [];
+        for (let page = 1; page <= totalPages; page++) {
+          requests.push(this.investorService.getAllUsers(page, 100).toPromise());
         }
-      );
-    };
+    
+        Promise.all(requests)
+          .then((responses) => {
+            responses.forEach((res) => {
+              allInvestors.push(...res.content);
+            });
   
-    fetchAllInvestors(1);
-  }
+            if (allInvestors.length === totalElements) {
+              const formattedInvestors = [
+                {
+                  fullName: `Total de investidores: ${totalElements}`, 
+                  email: '',
+                  phone: '',
+                  cpf: '',
+                  cnpj: '',
+                  rg: '',
+                  totalInvestedOthers: '',
+                  created: ''
+                },
+                ...allInvestors.map(investor => ({
+                  fullName: investor.fullName,
+                  email: investor.email,
+                  phone: investor.phone,
+                  cpf: investor.cpf,
+                  cnpj: investor.cnpj,
+                  rg: investor.rg,
+                  totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
+                  created: new Date(investor.created).toLocaleDateString('pt-BR'),
+                }))
+              ];
+  
+              this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
+            } else {
+              console.error("Mismatch in total investors loaded. Expected:", totalElements, "but got:", allInvestors.length);
+            }
+            this.loader = false;
+          })
+          .catch((error) => {
+            console.error("An error occurred while fetching all investors:", error);
+            this.loader = false;
+          });
+      },
+      (error) => {
+        console.error("An error occurred while fetching the first page of investors:", error);
+        this.loader = false;
+      }
+    );
+  }  
 
 }
