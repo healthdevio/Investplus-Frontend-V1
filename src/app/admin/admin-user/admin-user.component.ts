@@ -228,14 +228,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       phone: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       address: this.formBuilder.group({
-        street: [null, Validators.required],
-        city: [null, Validators.required],
-        uf: [null, Validators.required],
-        zipCode: [null, Validators.required],
-        neighborhood: [null, Validators.required],
-        number: [null, Validators.required],
-        complement: [null]
-      })
+      street: [null, Validators.required],
+      city: [null, Validators.required],
+      uf: [null, Validators.required],
+      zipCode: [null, Validators.required],
+      number: [null, Validators.required],
+      neighborhood: [null, Validators.required],      
+    })
     }));
   }  
   
@@ -280,9 +279,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         adminFormGroup.patchValue({
           address: {
             street: data.logradouro,
-            neighborhood: data.bairro,
             city: data.localidade,
-            uf: data.uf
+            uf: data.uf, 
+            neighborhood: data.bairro
           }
         });
       } else {
@@ -419,6 +418,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             maritalStatus: [admin.maritalStatus, Validators.required],
             phone: [admin.phone, Validators.required],
             email: [admin.email, [Validators.required, Validators.email]],
+            address: this.formBuilder.group({
+              street: [null, Validators.required],
+              city: [null, Validators.required],
+              uf: [null, Validators.required],
+              zipCode: [null, Validators.required],
+              number: [null, Validators.required],
+              neighborhood: [null, Validators.required],      
+            })
           }));
         });
       } else {
@@ -560,7 +567,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         cpfCnpj: admin.value.cpfCnpj,
         address: {
           ...admin.value.address, 
-          zipCode: this.unmaskInput(admin.value.address.zipCode)
+          zipCode: this.unmaskInput(admin.value.address.zipCode),
         },
         dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
       }))

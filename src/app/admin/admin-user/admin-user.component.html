@@ -866,8 +866,24 @@
             </app-form>
 
             <div formGroupName="address">
+              <app-form [label]="'CEP'" [errorMessage]="'CEP é obrigatório.'">
+                <input formControlName="zipCode" placeholder="CEP"
+                  (input)="applyCepMaskForAdmin($event, i)"
+                  style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
+              </app-form>
+
+              <app-form [label]="'Endereço - Bairro'" [errorMessage]="'Bairro é obrigatória.'">
+                <input formControlName="neighborhood" placeholder="Bairro" 
+                  style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
+              </app-form>
+
               <app-form [label]="'Endereço - Rua'" [errorMessage]="'Rua é obrigatória.'">
                 <input formControlName="street" placeholder="Rua" 
+                  style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
+              </app-form>
+
+              <app-form [label]="'Número'" [errorMessage]="'Número é obrigatório.'">
+                <input formControlName="number" placeholder="Número" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
               
@@ -881,11 +897,6 @@
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
               
-              <app-form [label]="'CEP'" [errorMessage]="'CEP é obrigatório.'">
-                <input formControlName="zipCode" placeholder="CEP"
-                  (input)="applyCepMaskForAdmin($event, i)"
-                  style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
-              </app-form>            
             </div>          
         
             <div style="display: flex; justify-content: space-between; margin-top: 16px;">
