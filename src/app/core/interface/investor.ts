@@ -1,6 +1,12 @@
 import { Address } from './address';
 
 export interface Admin {
+    ufAdmin: string;
+    zipCodeAdmin: string;
+    neighborhoodAdmin: string;
+    streetAdmin: string;
+    cityAdmin: string;
+    numberAdmin: string;
     fullName: string;
     cpfCnpj: string;
     rg: string;
@@ -9,7 +15,6 @@ export interface Admin {
     maritalStatus: string;
     phone: string;
     email: string;
-    address?: Address;
 }
 
 export interface Investor {

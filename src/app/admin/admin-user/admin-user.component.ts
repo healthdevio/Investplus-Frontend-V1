@@ -226,15 +226,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       gender: [null, Validators.required],
       maritalStatus: [null, Validators.required],
       phone: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
-      address: this.formBuilder.group({
-      street: [null, Validators.required],
-      city: [null, Validators.required],
-      uf: [null, Validators.required],
-      zipCode: [null, Validators.required],
-      number: [null, Validators.required],
-      neighborhood: [null, Validators.required],      
-    })
+      email: [null, [Validators.required, Validators.email]], 
+      streetAdmin: [null, Validators.required],
+      cityAdmin: [null, Validators.required],
+      ufAdmin: [null, Validators.required],
+      zipCodeAdmin: [null, Validators.required],
+      numberAdmin: [null, Validators.required],
+      neighborhoodAdmin: [null, Validators.required],   
     }));
   }  
   
@@ -277,12 +275,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (!data.erro) {
         const adminFormGroup = this.admins.at(adminIndex) as FormGroup;
         adminFormGroup.patchValue({
-          address: {
-            street: data.logradouro,
-            city: data.localidade,
-            uf: data.uf, 
-            neighborhood: data.bairro
-          }
+            streetAdmin: data.logradouro,
+            cityAdmin: data.localidade,
+            ufAdmin: data.uf, 
+            neighborhoodAdmin: data.bairro
         });
       } else {
         toastr.error("CEP não encontrado.");
@@ -418,14 +414,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
             maritalStatus: [admin.maritalStatus, Validators.required],
             phone: [admin.phone, Validators.required],
             email: [admin.email, [Validators.required, Validators.email]],
-            address: this.formBuilder.group({
-              street: [null, Validators.required],
-              city: [null, Validators.required],
-              uf: [null, Validators.required],
-              zipCode: [null, Validators.required],
-              number: [null, Validators.required],
-              neighborhood: [null, Validators.required],      
-            })
+            streetAdmin: [admin.streetAdmin, Validators.required],
+            cityAdmin: [admin.cityAdmin, Validators.required],
+            ufAdmin: [admin.ufAdmin, Validators.required],
+            zipCodeAdmin: [admin.zipCodeAdmin, Validators.required],
+            numberAdmin: [admin.numberAdmin, Validators.required],
+            neighborhoodAdmin: [admin.neighborhoodAdmin, Validators.required],      
           }));
         });
       } else {
@@ -565,10 +559,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       nonEmptyAdmins.map(admin => ({
         ...admin.value,
         cpfCnpj: admin.value.cpfCnpj,
-        address: {
-          ...admin.value.address, 
-          zipCode: this.unmaskInput(admin.value.address.zipCode),
-        },
+        ...admin.value.address, 
+        zipCodeAdmin: this.unmaskInput(admin.value.zipCodeAdmin),
         dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
       }))
     ));

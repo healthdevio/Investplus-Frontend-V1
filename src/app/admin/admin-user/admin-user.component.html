@@ -865,40 +865,37 @@
               </select>
             </app-form>
 
-            <div formGroupName="address">
               <app-form [label]="'CEP'" [errorMessage]="'CEP é obrigatório.'">
-                <input formControlName="zipCode" placeholder="CEP"
+                <input formControlName="zipCodeAdmin" placeholder="CEP"
                   (input)="applyCepMaskForAdmin($event, i)"
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
 
               <app-form [label]="'Endereço - Bairro'" [errorMessage]="'Bairro é obrigatória.'">
-                <input formControlName="neighborhood" placeholder="Bairro" 
+                <input formControlName="neighborhoodAdmin" placeholder="Bairro" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
 
               <app-form [label]="'Endereço - Rua'" [errorMessage]="'Rua é obrigatória.'">
-                <input formControlName="street" placeholder="Rua" 
+                <input formControlName="streetAdmin" placeholder="Rua" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
 
               <app-form [label]="'Número'" [errorMessage]="'Número é obrigatório.'">
-                <input formControlName="number" placeholder="Número" 
+                <input formControlName="numberAdmin" placeholder="Número" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
               
               <app-form [label]="'Cidade'" [errorMessage]="'Cidade é obrigatória.'">
-                <input formControlName="city" placeholder="Cidade" 
+                <input formControlName="cityAdmin" placeholder="Cidade" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
               
               <app-form [label]="'UF'" [errorMessage]="'UF é obrigatória.'">
-                <input formControlName="uf" placeholder="UF" 
+                <input formControlName="ufAdmin" placeholder="UF" 
                   style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;" />
               </app-form>
               
-            </div>          
-        
             <div style="display: flex; justify-content: space-between; margin-top: 16px;">
               <button *ngIf="i > 0" (click)="removeAdmin(i)" 
                 style="height: 50px; background-color: #d9534f; color: white; border: none; border-radius: 4px; padding: 0 16px;">
