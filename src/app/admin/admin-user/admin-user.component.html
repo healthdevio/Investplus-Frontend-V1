@@ -397,18 +397,7 @@
                   <option value="FEMALE">Feminino</option>
                 </select>
               </app-form>
-        
-              <app-form *ngIf="!investor?.cnpj" [label]="'Estado civil'" [errorMessage]="'Estado civil é um campo obrigatório.'">
-                <select formControlName="maritalStatus"
-                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
-                  <option [ngValue]="null">Selecione uma opção...</option>
-                  <option value="SINGLE">Solteiro</option>
-                  <option value="MARRIED">Casado</option>
-                  <option value="SEPARATED">Separado</option>
-                  <option value="DIVORCED">Divorciado</option>
-                  <option value="WIDOWED">Viúvo</option>
-                </select>
-              </app-form>
+            
             </div>
           </div>
     
@@ -497,6 +486,22 @@
                   style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                   placeholder="CPF do sócio administrador" />
               </app-form>
+
+              <app-form 
+              [label]="investor?.cnpj ? 'Estado civil do sócio administrador' : 'Estado civil'" 
+              [errorMessage]="'Estado civil é um campo obrigatório.'">
+              
+              <select formControlName="maritalStatus"
+                style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                <option [ngValue]="null">Selecione uma opção...</option>
+                <option value="SINGLE">Solteiro</option>
+                <option value="MARRIED">Casado</option>
+                <option value="SEPARATED">Separado</option>
+                <option value="DIVORCED">Divorciado</option>
+                <option value="WIDOWED">Viúvo</option>
+              </select>
+              </app-form>
+
             </div>
           </div>
         </div>        
