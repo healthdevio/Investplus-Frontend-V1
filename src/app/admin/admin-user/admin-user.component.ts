@@ -573,7 +573,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         }))
       };
       dataSend.phone = Number(this.unmaskInput(dataSend.phone));
-      dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
+      dataSend.dateOfBirth = moment(this.form.get('dateOfBirth').value, 'DD/MM/YYYY').format('YYYY-MM-DD');
       dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
       dataSend.totalInvestedOthers = parseFloat(this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", "."));
   
@@ -582,10 +582,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
       } else {
         dataSend.cpf = this.investor.cpf;
-      }
-  
-      if (dataSend.dateOfBirth) {
-        dataSend.dateOfBirth = moment(dataSend.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
       }
   
       dataSend.address = {
