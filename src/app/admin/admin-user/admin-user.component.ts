@@ -552,18 +552,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     const nonEmptyAdmins = this.admins.controls.filter(admin => {
-      return admin.value.fullName || admin.value.cpf || admin.value.rg || admin.value.dateOfBirth || admin.value.phone;
+      const val = admin.value;
+      return val.fullName || val.cpfCnpj || val.rg || val.dateOfBirth || val.phone;
     });
-  
-    this.form.setControl('admins', this.formBuilder.array(
-      nonEmptyAdmins.map(admin => ({
-        ...admin.value,
-        cpfCnpj: admin.value.cpfCnpj,
-        ...admin.value.address, 
-        zipCodeAdmin: this.unmaskInput(admin.value.zipCodeAdmin),
-        dateOfBirth: moment(admin.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD')
-      }))
-    ));
   
     if (!this.form.get('nickname')?.value) {
       this.setFormValue('nickname', this.investor.nickname);
@@ -575,11 +566,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     if (this.form.valid) {
       const dataSend = {
         ...this.form.value,
-        admins: this.admins.controls.map((adminControl: FormGroup) => ({
+        admins: nonEmptyAdmins.map(adminControl => ({
           ...adminControl.value,
-          address: adminControl.get('address')?.value
+          zipCodeAdmin: this.unmaskInput(adminControl.value.zipCodeAdmin),
+          dateOfBirth: moment(adminControl.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'),
         }))
-      }; 
+      };
       dataSend.phone = Number(this.unmaskInput(dataSend.phone));
       dataSend.dateOfBirth = this.dateMask.transform(dataSend.dateOfBirth, 'AMERICAN');
       dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
@@ -588,7 +580,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (this.investor.cnpj !== undefined) {
         dataSend.cnpj = this.investor.cnpj;
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
-        dataSend.admins = this.form.get('admins')?.value;
       } else {
         dataSend.cpf = this.investor.cpf;
       }
@@ -612,24 +603,24 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       this.loaderService.load(this.loading);
   
       this.investorService.updateInvestor(dataSend)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.loaderService.load(this.loading);
-      }))
-      .subscribe({
-        next: () => {
-          toastr.success("Dados atualizados.");
-          this.router.navigate(["/admin/rounds/incorporator/list"]);
-        },
-        error: (error) => {
-          if (error.error.code === "DUPLICATE_RG") {
-            this.form.controls["rg"].setValue("");
-            toastr.error("O RG informado já se encontra cadastrado.");
-          } else {
-            toastr.error("Ocorreu um erro, contate o administrador.");
+        .pipe(finalize(() => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        }))
+        .subscribe({
+          next: () => {
+            toastr.success("Dados atualizados.");
+            this.router.navigate(["/admin/rounds/incorporator/list"]);
+          },
+          error: (error) => {
+            if (error.error.code === "DUPLICATE_RG") {
+              this.form.controls["rg"].setValue("");
+              toastr.error("O RG informado já se encontra cadastrado.");
+            } else {
+              toastr.error("Ocorreu um erro, contate o administrador.");
+            }
           }
-        }
-      });
+        });
     } else {
       this.loading = false;
       this.loaderService.load(this.loading);
@@ -638,7 +629,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       toastr.error(`Formulário preenchido incorretamente. Por favor, revise os seguintes campos: ${errorMessages}`);
     }
   }
-  
   
   generateErrorMessage(formGroup: FormGroup): string {
     let messages: string[] = [];
