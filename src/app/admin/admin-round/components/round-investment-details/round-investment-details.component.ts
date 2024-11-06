@@ -561,22 +561,17 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   
     const dataSend = this.form.value;
     dataSend.investment = undefined;
+  
     let data: any = {
       quotas: dataSend.quotas,
       investment: this.amountQuota * this.quotaValue,
       publicAccess: dataSend.publicAccess,
       installments: dataSend.installments,
       cpf: this.investor.cpfResponsible,
-    }
-
+    };
+  
     if (this.investor.cpf) {
-      data = {
-        quotas: dataSend.quotas,
-        investment: this.amountQuota * this.quotaValue,
-        publicAccess: dataSend.publicAccess,
-        installments: dataSend.installments,
-        cpf: this.investor.cpfResponsible,
-      }
+      data.cpf = this.investor.cpfResponsible;
     }
   
     if (this.form.controls["quotas"].value <= 0) {
@@ -603,36 +598,46 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             this.trackFacebookPixel();
           },
           error: (error) => {
-            console.log(error)
-            console.log(error.status)
-            console.log(error.error.code)
+            console.error(error); 
             let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
-            if (error.status === 400) {
-              switch (error.error.code) {
-                case "ILLEGAL_ARGUMENT":
-                  erroMsg = "Erro na solicitação: um ou mais argumentos fornecidos são inválidos.";
-                  break;
-                case "INVESTOR_PROFILE_VIOLATED":
-                  erroMsg = "O valor do investimento excede o valor permitido no seu perfil. Por favor, revise os limites de investimento.";
-                  break;
-                case "INCOMPLETE_INVESTOR_PROFILE":
-                  erroMsg = "Seu cadastro de investidor está incompleto. Complete todas as informações necessárias antes de prosseguir.";
-                  break;
-                case "INSUFFICIENT_FUNDS":
-                  erroMsg = "Você não possui fundos suficientes para realizar este investimento. Verifique seu saldo e tente novamente.";
-                  break;
-                case "QUOTA_EXCEEDED":
-                  erroMsg = "O número de cotas solicitado é maior do que o disponível. Reduza a quantidade e tente novamente.";
-                  break;
-                default:
-                  erroMsg = `Erro inesperado: ${error.error.message || "Verifique os dados e tente novamente."}`;
+  
+            if (error.status === 400 || error.status === 500) {
+              if (error.error && error.error.message) {
+                erroMsg = error.error.message;
+              } else if (error.error && error.error.code) {
+                switch (error.error.code) {
+                  case "ILLEGAL_ARGUMENT":
+                    erroMsg = "Erro na solicitação: um ou mais argumentos fornecidos são inválidos.";
+                    break;
+                  case "INVESTOR_PROFILE_VIOLATED":
+                    erroMsg = "O valor do investimento excede o valor permitido no seu perfil. Por favor, revise os limites de investimento.";
+                    break;
+                  case "INCOMPLETE_INVESTOR_PROFILE":
+                    erroMsg = "Seu cadastro de investidor está incompleto. Complete todas as informações necessárias antes de prosseguir.";
+                    break;
+                  case "INSUFFICIENT_FUNDS":
+                    erroMsg = "Você não possui fundos suficientes para realizar este investimento. Verifique seu saldo e tente novamente.";
+                    break;
+                  case "QUOTA_EXCEEDED":
+                    erroMsg = "O número de cotas solicitado é maior do que o disponível. Reduza a quantidade e tente novamente.";
+                    break;
+                  case "PJ_INVESTMENT_NOT_ALLOWED":
+                    erroMsg = "Essa rodada de investimento não aceita investimento PJ.";
+                    break;
+                  default:
+                    erroMsg = `Erro inesperado: ${error.error.message || "Verifique os dados e tente novamente."}`;
+                }
+              } else {
+                erroMsg = `Erro inesperado: ${error.message || "Verifique os dados e tente novamente."}`;
               }
             }
-            toastr.error(erroMsg);
+  
+            toastr.error(erroMsg, "Erro");
           }
         });
     }
-  }  
+  }
+  
 
   private trackFacebookPixel(): void {
     (function (f: any, b, e, v, n, t, s) {
