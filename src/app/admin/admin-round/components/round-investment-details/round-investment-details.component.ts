@@ -576,8 +576,10 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   
     if (this.form.controls["quotas"].value <= 0) {
       toastr.error("O número de cotas solicitado é inválido. Por favor, insira um valor maior que zero.", "Erro");
+      this.router.navigate(["/admin/rounds/assets/list"]);
     } else if (this.form.controls["quotas"].value > this.quotas - this.quotasSold) {
       toastr.error("O número de cotas solicitado excede o disponível. Por favor, revise e tente novamente.", "Erro");
+      this.router.navigate(["/admin/rounds/assets/list"]);
     } else {
       this.loader = true;
       this.loading = true;
@@ -633,12 +635,13 @@ export class RoundInvestmentDetailsComponent implements OnInit {
             }
   
             toastr.error(erroMsg, "Erro");
+            this.router.navigate(["/admin/rounds/assets/list"]); // Redireciona após o erro
           }
         });
     }
   }
   
-
+  
   private trackFacebookPixel(): void {
     (function (f: any, b, e, v, n, t, s) {
       if (f.fbq) return;
