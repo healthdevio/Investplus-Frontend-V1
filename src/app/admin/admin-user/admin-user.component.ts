@@ -91,6 +91,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     adminDateOfBirth: "Data de nascimento do administrador é obrigatória.",
     adminPhone: "Telefone do administrador é obrigatório.",
     email: "Email do administrador é obrigatório e deve ser válido.",
+    streetpj: "Rua da empresa é obrigatória.",
+    numberpj: "Número da empresa é obrigatório.",
+    neighborhoodpj: "Bairro da empresa é obrigatório.",
+    citypj: "Cidade da empresa é obrigatória.",
+    ufpj: "UF da empresa é obrigatória.",
+    zipcodepj: "CEP da empresa é obrigatório.",
   };
 
   publicFigures: RadioOption[] = [
@@ -209,6 +215,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       investedUpangel: ["0,00"],
       totalInvested: ["0,00"],
       addressId: [null], 
+      streetpj: [null, Validators.required],
+      numberpj: [null, Validators.required],
+      neighborhoodpj: [null, Validators.required],
+      citypj: [null, Validators.required],
+      ufpj: [null, Validators.required],
+      zipcodepj: [null, Validators.required],
       admins: this.formBuilder.array([]) 
     });
   }
@@ -322,6 +334,25 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getCepAddressPJ() {
+    const cep = this.form.get('zipCode')?.value.replace(/\D/g, '');
+    if (cep && cep.length === 8) {
+      this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe((data: any) => {
+        if (data) {
+          this.form.patchValue({
+            streetpj: data.logradouro,
+            neighborhoodpj: data.bairro,
+            citypj: data.localidade,
+            ufpj: data.uf,
+            numberpj: null,
+          });
+        }
+      }, error => {
+        console.error('Erro ao buscar CEP:', error);
+      });
+    }
+  }
+
   formatCep() {
     let cep = this.form.get('zipCode')?.value;
     if (cep) {
@@ -340,6 +371,17 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (cep.length === 8) {
         this.formatCep();
         this.getCepAddress();
+      }
+    }
+  }
+
+  onCepInputPJ() {
+    let cep = this.form.get('zipCode')?.value;
+    if (cep) {
+      cep = cep.replace(/\D/g, '');
+      if (cep.length === 8) {
+        this.formatCep();
+        this.getCepAddressPJ();
       }
     }
   }
@@ -432,6 +474,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.setFormValue("addressId", response.address.id);
         this.setFormValue("profession", response.profession);
         this.setFormValue("nationality", response.nationality);
+        this.setFormValue("streetpj", response.streetpj);
+        this.setFormValue("numberpj", response.numberpj);
+        this.setFormValue("neighborhoodpj", response.neighborhoodpj);
+        this.setFormValue("citypj", response.citypj);
+        this.setFormValue("ufpj", response.ufpj);
+        this.setFormValue("zipcodepj", response.zipcodepj);
         this.setFormValue("gender", response.gender);
         this.setFormValue("maritalStatus", response.maritalStatus);
         this.setFormValue("rgEmitter", response.rgEmitter);
@@ -566,6 +614,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     if (this.form.valid) {
       const dataSend = {
         ...this.form.value,
+        streetpj: this.form.get('streetpj')?.value,
+        numberpj: this.form.get('numberpj')?.value,
+        neighborhoodpj: this.form.get('neighborhoodpj')?.value,
+        citypj: this.form.get('citypj')?.value,
+        ufpj: this.form.get('ufpj')?.value,
+        zipcodepj: this.unmaskInput(this.form.get('zipcodepj')?.value),
         admins: nonEmptyAdmins.map(adminControl => ({
           ...adminControl.value,
           zipCodeAdmin: this.unmaskInput(adminControl.value.zipCodeAdmin),
