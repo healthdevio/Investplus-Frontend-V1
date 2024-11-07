@@ -130,22 +130,28 @@ export class AdminManagerInvestorsComponent implements OnInit {
             if (allInvestors.length === totalElements) {
               const formattedInvestors = [
                 {
-                  fullName: `Total de investidores: ${totalElements}`, 
+                  Nome : `Total de investidores: ${totalElements}`, 
                   email: '',
                   phone: '',
                   cpf: '',
                   cnpj: '',
                   rg: '',
+                  investor_profile_statement: '',
+                  uf: '',
+                  city: '',
                   totalInvestedOthers: '',
                   created: ''
                 },
                 ...allInvestors.map(investor => ({
-                  fullName: investor.fullName,
+                  Nome: investor.fullName,
                   email: investor.email,
                   phone: investor.phone,
                   cpf: investor.cpf,
                   cnpj: investor.cnpj,
                   rg: investor.rg,
+                  investor_profile_statement: investor.investorProfileStatement,
+                  uf: investor.address?.uf || '',
+                  city: investor.address?.city || '',
                   totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
                   created: new Date(investor.created).toLocaleDateString('pt-BR'),
                 }))
