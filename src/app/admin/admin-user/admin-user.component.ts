@@ -354,8 +354,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   toggleValidatorsForInvestorType() {
     if (this.investor?.cnpj) {
       this.form.get('profession')?.clearValidators();
-      this.form.get('nationality')?.clearValidators();
-      this.form.get('gender')?.clearValidators();
+      this.form.get('nationality')?.setValidators([Validators.required]);
+      this.form.get('gender')?.setValidators([Validators.required]);
     } else {
       this.form.get('profession')?.setValidators([Validators.required]);
       this.form.get('nationality')?.setValidators([Validators.required]);

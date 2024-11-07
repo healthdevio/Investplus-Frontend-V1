@@ -271,7 +271,7 @@
                   [placeholder]="investor?.cnpj ? 'Data de Fundação' : 'Data de nascimento'" />
               </app-form>
         
-              <app-form *ngIf="!investor?.cnpj" [label]="'Nacionalidade'" [errorMessage]="'Nacionalidade é um campo obrigatório.'">
+              <app-form [label]="investor?.cnpj ? 'País de Fundação da empresa' : 'Nacionalidade'" [errorMessage]="'Nacionalidade é um campo obrigatório.'">
                 <select formControlName="nationality"
                   style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
                   <option [ngValue]="null">Selecione uma opção...</option>
@@ -388,15 +388,6 @@
                   <option value="IEMENITA">Iemenita</option>
                 </select>
               </app-form>
-        
-              <app-form *ngIf="!investor?.cnpj" [label]="'Sexo'" [errorMessage]="'Sexo é um campo obrigatório.'">
-                <select formControlName="gender"
-                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
-                  <option [ngValue]="null">Selecione uma opção...</option>
-                  <option value="MALE">Masculino</option>
-                  <option value="FEMALE">Feminino</option>
-                </select>
-              </app-form>
             
             </div>
           </div>
@@ -404,14 +395,14 @@
           <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
             <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
               <h3 style="font-weight: 600; margin-bottom: 12px;">RG</h3>
-              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ investor?.cnpj ? 'Detalhes do RG do Sócio Administrador' : 'Detalhes do RG' }}</p>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ investor?.cnpj ? 'Detalhes do RG do Sócio Representante' : 'Detalhes do RG' }}</p>
             </div>
     
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <app-form [label]="investor?.cnpj ? 'Número do RG do Sócio Administrador' : 'Número do RG'" [errorMessage]="'Número do RG é um campo obrigatório.'">
+              <app-form [label]="investor?.cnpj ? 'Número do RG do Sócio Representante' : 'Número do RG'" [errorMessage]="'Número do RG é um campo obrigatório.'">
                 <input type="text" formControlName="rg"
                   style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                  maxlength="13" [placeholder]="investor?.cnpj ? 'Número do RG do Sócio Administrador' : 'Número do RG'" />
+                  maxlength="13" [placeholder]="investor?.cnpj ? 'Número do RG do Sócio Representante' : 'Número do RG'" />
               </app-form>
     
               <app-form style="margin-left: -1%;" [label]="'Orgão emissor'" [errorMessage]="'Orgão emissor é um campo obrigatório.'">
@@ -456,10 +447,10 @@
                 </select>
               </app-form>
         
-              <app-form [label]="investor?.cnpj ? 'Telefone do Sócio Administrador' : 'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
+              <app-form [label]="investor?.cnpj ? 'Telefone do Sócio Representante' : 'Telefone'" [errorMessage]="'Telefone é um campo obrigatório.'">
                 <input type="text" (input)="formatPhone()" formControlName="phone"
                   style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                  [placeholder]="investor?.cnpj ? 'Telefone do Sócio Administrador' : 'Telefone'" />
+                  [placeholder]="investor?.cnpj ? 'Telefone do Sócio Representante' : 'Telefone'" />
               </app-form>
             </div>
           </div>
@@ -468,27 +459,27 @@
             *ngIf="investor?.cnpj !== undefined"
             style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
             <div style="width: 30%;">
-              <h3 style="font-weight: 600; margin-bottom: 12px;">Sócio administrador</h3>
-              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações do sócio administrador</p>
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Sócio Representante</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações do sócio Representante</p>
             </div>
           
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <app-form [label]="'Nome do sócio administrador'"
-                [errorMessage]="'Nome do sócio administrador é um campo obrigatório.'">
+              <app-form [label]="'Nome do sócio Representante'"
+                [errorMessage]="'Nome do sócio Representante é um campo obrigatório.'">
                 <input type="text" formControlName="nameResponsible"
                   style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                  placeholder="Nome do sócio administrador" />
+                  placeholder="Nome do sócio Representante" />
               </app-form>
           
-              <app-form [label]="'CPF do sócio administrador'"
-                [errorMessage]="'CPF do sócio administrador é um campo obrigatório.'">
+              <app-form [label]="'CPF do sócio Representante'"
+                [errorMessage]="'CPF do sócio Representante é um campo obrigatório.'">
                 <input type="text" formControlName="cpfResponsible"
                   style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                  placeholder="CPF do sócio administrador" />
+                  placeholder="CPF do sócio Representante" />
               </app-form>
 
               <app-form 
-              [label]="investor?.cnpj ? 'Estado civil do sócio administrador' : 'Estado civil'" 
+              [label]="investor?.cnpj ? 'Estado civil do sócio Representante' : 'Estado civil'" 
               [errorMessage]="'Estado civil é um campo obrigatório.'">
               
               <select formControlName="maritalStatus"
@@ -502,6 +493,15 @@
               </select>
               </app-form>
 
+              <app-form [label]="investor?.cnpj ? 'Sexo do Sócio Representante' : 'Sexo'"  [errorMessage]="'Sexo é um campo obrigatório.'">
+                <select formControlName="gender"
+                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                  <option [ngValue]="null">Selecione uma opção...</option>
+                  <option value="MALE">Masculino</option>
+                  <option value="FEMALE">Feminino</option>
+                </select>
+              </app-form>
+
             </div>
           </div>
         </div>        
@@ -510,10 +510,10 @@
           <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
             <div style="width: 30%;">
               <h3 style="font-weight: 600; margin-bottom: 12px;">
-                {{ isPJ ? 'Endereço do Sócio Proprietário' : 'Detalhes' }}
+                {{ isPJ ? 'Endereço do Sócio Representante' : 'Detalhes' }}
               </h3>
               <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
-                {{ isPJ ? 'Endereço do sócio proprietário' : 'Detalhes do endereço' }}
+                {{ isPJ ? 'Endereço do sócio Representante' : 'Detalhes do endereço' }}
               </p>
             </div>
     
@@ -1378,7 +1378,7 @@
     
         <div>
           <app-form [label]="investor?.cnpj !== undefined
-                      ? 'Número do RG do sócio administrador'
+                      ? 'Número do RG do sócio Representante'
                       : 'Número do RG'" [errorMessage]="'Número do RG é um campo obrigatório.'">
             <input type="text" formControlName="rg"
               style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
@@ -1514,24 +1514,24 @@
 
       <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; align-items: center; width: 100%;">
         <div style="width: 30%;">
-          <h3 style="font-weight: 600; margin-bottom: 12px;">Sócio administrador</h3>
-          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações do sócio administrador
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Sócio Representante</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Informações do sócio Representante
           </p>
         </div>
       
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <app-form [label]="'Nome do sócio administrador'"
-            [errorMessage]="'Nome do sócio administrador é um campo obrigatório.'">
+          <app-form [label]="'Nome do sócio Representante'"
+            [errorMessage]="'Nome do sócio Representante é um campo obrigatório.'">
             <input type="text" formControlName="nameResponsible"
               style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-              placeholder="Nome do sócio administrador" />
+              placeholder="Nome do sócio Representante" />
           </app-form>
       
-          <app-form [label]="'CPF do sócio administrador'"
-            [errorMessage]="'CPF do sócio administrador é um campo obrigatório.'">
+          <app-form [label]="'CPF do sócio Representante'"
+            [errorMessage]="'CPF do sócio Representante é um campo obrigatório.'">
             <input type="text" formControlName="cpfResponsible"
               style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-              placeholder="CPF do sócio administrador" />
+              placeholder="CPF do sócio Representante" />
           </app-form>
         </div>
       </div>
