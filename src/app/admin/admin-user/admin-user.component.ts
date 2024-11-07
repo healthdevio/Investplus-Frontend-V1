@@ -335,7 +335,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   getCepAddressPJ() {
-    const cep = this.form.get('zipCode')?.value.replace(/\D/g, '');
+    const cep = this.form.get('zipcodepj')?.value.replace(/\D/g, '');
     if (cep && cep.length === 8) {
       this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe((data: any) => {
         if (data) {
@@ -364,6 +364,17 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   }
 
+  formatCepPJ() {
+    let cep = this.form.get('zipcodepj')?.value;
+    if (cep) {
+      cep = cep.replace(/\D/g, '');
+      if (cep.length === 8) {
+        cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+        this.form.get('zipcodepj')?.setValue(cep, { emitEvent: false });
+      }
+    }
+  }
+
   onCepInput() {
     let cep = this.form.get('zipCode')?.value;
     if (cep) {
@@ -376,11 +387,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onCepInputPJ() {
-    let cep = this.form.get('zipCode')?.value;
+    let cep = this.form.get('zipcodepj')?.value;
     if (cep) {
       cep = cep.replace(/\D/g, '');
       if (cep.length === 8) {
-        this.formatCep();
+        this.formatCepPJ();
         this.getCepAddressPJ();
       }
     }
