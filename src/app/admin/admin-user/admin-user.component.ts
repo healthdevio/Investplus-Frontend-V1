@@ -164,11 +164,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.getBanks();
   }
   
-  addEmptyAdminIfNeeded() {
-    if (this.admins.length === 0) {
-      this.addAdmin();
-    }
-  }
+  // addEmptyAdminIfNeeded() {
+  //   if (this.admins.length === 0) {
+  //     this.addAdmin();
+  //   }
+  // }
 
   ngAfterViewInit() {
     this.initMask();
@@ -476,7 +476,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
           }));
         });
       } else {
-        this.addEmptyAdminIfNeeded();
+        // this.addEmptyAdminIfNeeded();
       }
   
       if (response.address !== undefined) {
