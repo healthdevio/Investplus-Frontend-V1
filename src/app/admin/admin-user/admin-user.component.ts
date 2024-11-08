@@ -231,20 +231,20 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
   addAdmin() {
     this.admins.push(this.formBuilder.group({
-      fullName: [null, Validators.required],
-      cpfCnpj: [null, Validators.required],
-      rg: [null, Validators.required],
-      dateOfBirth: [null, Validators.required],
-      gender: [null, Validators.required],
-      maritalStatus: [null, Validators.required],
-      phone: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]], 
-      streetAdmin: [null, Validators.required],
-      cityAdmin: [null, Validators.required],
-      ufAdmin: [null, Validators.required],
-      zipCodeAdmin: [null, Validators.required],
-      numberAdmin: [null, Validators.required],
-      neighborhoodAdmin: [null, Validators.required],   
+      fullName: [null],
+      cpfCnpj: [null],
+      rg: [null],
+      dateOfBirth: [null],
+      gender: [null],
+      maritalStatus: [null],
+      phone: [null],
+      email: [null],
+      streetAdmin: [null],
+      cityAdmin: [null],
+      ufAdmin: [null],
+      zipCodeAdmin: [null],
+      numberAdmin: [null],
+      neighborhoodAdmin: [null]
     }));
   }  
   
@@ -400,7 +400,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   applyInvestorTypeValidations() {
     if (this.investor?.cnpj) {
       this.toggleValidatorsForInvestorType(); 
-      this.toggleAdminValidatorsForPJ();      
+      // this.toggleAdminValidatorsForPJ();      
     }
   }
   
@@ -420,23 +420,23 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.form.get('gender')?.updateValueAndValidity();
   }
   
-  toggleAdminValidatorsForPJ() {
-    if (this.investor?.cnpj) {
-      this.admins.controls.forEach(adminGroup => {
-        adminGroup.get('fullName')?.setValidators([Validators.required]);
-        adminGroup.get('cpf')?.setValidators([Validators.required]);
-        adminGroup.get('rg')?.setValidators([Validators.required]);
-        adminGroup.get('dateOfBirth')?.setValidators([Validators.required]);
-        adminGroup.get('phone')?.setValidators([Validators.required]);
+  // toggleAdminValidatorsForPJ() {
+  //   if (this.investor?.cnpj) {
+  //     this.admins.controls.forEach(adminGroup => {
+  //       // adminGroup.get('fullName')?.setValidators([Validators.required]);
+  //       // adminGroup.get('cpf')?.setValidators([Validators.required]);
+  //       // adminGroup.get('rg')?.setValidators([Validators.required]);
+  //       // adminGroup.get('dateOfBirth')?.setValidators([Validators.required]);
+  //       // adminGroup.get('phone')?.setValidators([Validators.required]);
   
-        adminGroup.get('fullName')?.updateValueAndValidity();
-        adminGroup.get('cpf')?.updateValueAndValidity();
-        adminGroup.get('rg')?.updateValueAndValidity();
-        adminGroup.get('dateOfBirth')?.updateValueAndValidity();
-        adminGroup.get('phone')?.updateValueAndValidity();
-      });
-    }
-  }
+  //       // adminGroup.get('fullName')?.updateValueAndValidity();
+  //       // adminGroup.get('cpf')?.updateValueAndValidity();
+  //       // adminGroup.get('rg')?.updateValueAndValidity();
+  //       // adminGroup.get('dateOfBirth')?.updateValueAndValidity();
+  //       // adminGroup.get('phone')?.updateValueAndValidity();
+  //     });
+  //   }
+  // }
 
   getUser(): void {
     this.loader = true;
@@ -459,20 +459,20 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (this.investor?.admins?.length > 0) {
         this.investor.admins.forEach((admin) => {
           this.admins.push(this.formBuilder.group({
-            fullName: [admin.fullName, Validators.required],
-            cpfCnpj: [admin.cpfCnpj, Validators.required], 
-            rg: [admin.rg, Validators.required],
-            dateOfBirth: [moment(admin.dateOfBirth).format('DD/MM/YYYY'), Validators.required],
-            gender: [admin.gender, Validators.required],
-            maritalStatus: [admin.maritalStatus, Validators.required],
-            phone: [admin.phone, Validators.required],
-            email: [admin.email, [Validators.required, Validators.email]],
-            streetAdmin: [admin.streetAdmin, Validators.required],
-            cityAdmin: [admin.cityAdmin, Validators.required],
-            ufAdmin: [admin.ufAdmin, Validators.required],
-            zipCodeAdmin: [admin.zipCodeAdmin, Validators.required],
-            numberAdmin: [admin.numberAdmin, Validators.required],
-            neighborhoodAdmin: [admin.neighborhoodAdmin, Validators.required],      
+            fullName: [admin.fullName],
+            cpfCnpj: [admin.cpfCnpj], 
+            rg: [admin.rg],
+            dateOfBirth: [moment(admin.dateOfBirth).format('DD/MM/YYYY')],
+            gender: [admin.gender],
+            maritalStatus: [admin.maritalStatus],
+            phone: [admin.phone],
+            email: [admin.email],
+            streetAdmin: [admin.streetAdmin],
+            cityAdmin: [admin.cityAdmin],
+            ufAdmin: [admin.ufAdmin],
+            zipCodeAdmin: [admin.zipCodeAdmin],
+            numberAdmin: [admin.numberAdmin],
+            neighborhoodAdmin: [admin.neighborhoodAdmin],      
           }));
         });
       } else {
@@ -620,7 +620,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
     if (!this.form.get('fullName')?.value) {
       this.setFormValue('fullName', this.investor.fullName);
-    }
+    }  
   
     if (this.form.valid) {
       const dataSend = {
@@ -631,11 +631,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         citypj: this.form.get('citypj')?.value,
         ufpj: this.form.get('ufpj')?.value,
         zipcodepj: this.unmaskInput(this.form.get('zipcodepj')?.value),
-        admins: nonEmptyAdmins.map(adminControl => ({
+        admins: nonEmptyAdmins.length > 0 ? nonEmptyAdmins.map(adminControl => ({
           ...adminControl.value,
           zipCodeAdmin: this.unmaskInput(adminControl.value.zipCodeAdmin),
-          dateOfBirth: moment(adminControl.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'),
-        }))
+          dateOfBirth: adminControl.value.dateOfBirth ? moment(adminControl.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD') : null
+        })) : null
       };
       dataSend.phone = Number(this.unmaskInput(dataSend.phone));
       dataSend.dateOfBirth = moment(this.form.get('dateOfBirth').value, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -700,13 +700,6 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       if (control instanceof FormGroup) {
         const nestedMessages = this.generateErrorMessage(control);
         if (nestedMessages) messages.push(`${key}: ${nestedMessages}`);
-      } else if (control instanceof FormArray) {
-        control.controls.forEach((group, index) => {
-          if (group instanceof FormGroup) {
-            const arrayMessages = this.generateErrorMessage(group);
-            if (arrayMessages) messages.push(`Administrador ${index + 1}: ${arrayMessages}`);
-          }
-        });
       } else if (control && control.invalid && control.errors) {
         const errorMessage = this.validationMessages[key] || `Campo ${key} está incorreto`;
         messages.push(errorMessage);
