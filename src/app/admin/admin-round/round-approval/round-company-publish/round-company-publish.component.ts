@@ -263,6 +263,7 @@ export class RoundCompanyPublishComponent implements OnInit {
 
       logo: [null, [Validators.required]],
       logoDocUrl: [null, [Validators.required]],
+      
       banner: [null],
       bannerDocUrl: [null],
 
