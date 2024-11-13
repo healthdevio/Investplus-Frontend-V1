@@ -105,7 +105,6 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.applyMonetaryMask('minimumValuation');
     this.applyMonetaryMask('maximumValuation');
     this.applyMonetaryMask('quotaValue');
-    this.applyMonetaryMask('upangelCost');
   }
 
   applyMonetaryMask(controlName: string) {
@@ -442,42 +441,55 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.updateForm.valid) {
-      const $this = this;
-      const dataForm = this.updateForm.value;
+      const dataForm = { ...this.updateForm.value };
+      const monetaryFields = ['quotaValue', 'maximumValuation', 'minimumValuation'];
+  
+      monetaryFields.forEach(field => {
+        if (dataForm[field]) {
+          dataForm[field] = +dataForm[field].replace(/[R$\.\,]/g, '').replace(',', '.');
+        }
+      });
+  
+      if (dataForm['upangelCost']) {
+        dataForm['upangelCost'] = parseFloat(dataForm['upangelCost']);
+      }
+  
       const startedAt = new Date(dataForm.startedAt);
       const duration = new Date(dataForm.duration);
       const timeDifference = duration.getTime() - startedAt.getTime();
       const daysDifference = timeDifference / (1000 * 3600 * 24);
       dataForm.duration = daysDifference;
-      this.roundService.createRound(this.id, dataForm).subscribe((response) => {
-        bootbox.dialog({
-          title: '',
-          message: 'Rodada atualizada com sucesso.',
-          buttons: {
-            'success': {
-              label: 'Entendi',
-              className: 'bg-upangel',
+  
+      this.roundService.createRound(this.id, dataForm).subscribe(
+        (response) => {
+          bootbox.dialog({
+            title: '',
+            message: 'Rodada atualizada com sucesso.',
+            buttons: {
+              'success': {
+                label: 'Entendi',
+                className: 'bg-upangel',
+              }
             }
-          }
-        });
-
-        this.isSingUpPublishModalOpen = false;
-        this.isUpdatePublishModalOpen = false;
-        this.updateForm.reset();
-        this.initForm();
-        this.getAllByStatus();
-      }, (error) => {
-        toastr.error('Ocorreu um erro, entre em contato com o administrador', 'Erro');
-      }, () => {
-        // this.loading = true;
-        // this.loaderService.load(this.loading);
-      });
+          });
+  
+          this.isSingUpPublishModalOpen = false;
+          this.isUpdatePublishModalOpen = false;
+          this.updateForm.reset();
+          this.initForm();
+          this.getAllByStatus();
+        },
+        (error) => {
+          toastr.error('Ocorreu um erro, entre em contato com o administrador', 'Erro');
+        }
+      );
     } else {
       this.validateAllFields(this.updateForm);
       this.initMask();
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
   }
+  
 
   public initMask(): void {
     const SPMaskBehavior = function (val: string) {
