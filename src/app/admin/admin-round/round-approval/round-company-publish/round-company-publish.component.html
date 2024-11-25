@@ -31,6 +31,19 @@
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
 
             <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
+
+            <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
                 <select formControlName="type"
@@ -397,6 +410,19 @@
 
           <div *ngIf="selectedUpdateSession === 'Geral'">
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
 
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
@@ -873,6 +899,19 @@
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
 
             <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
+
+            <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
                 <select formControlName="type"
@@ -1252,6 +1291,19 @@
 
           <div *ngIf="selectedUpdateSession === 'Geral'">
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
 
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>

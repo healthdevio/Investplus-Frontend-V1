@@ -28,7 +28,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   formStatus: FormGroup;
   loadingRounds = false;
   updateForm: FormGroup;
-  status = "IN_PROGRESS";
+  status = "PENDING"; 
   tabType = 'IN_PROGRESS';
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
@@ -77,6 +77,18 @@ export class RoundCompanyPublishComponent implements OnInit {
     },
   ]
 
+  companies = [
+    { id: 8, name: 'INVESTPLUS' },
+    { id: 6, name: 'Avulta' },
+    { id: 7, name: 'Pet in Time' },
+    { id: 1, name: 'MTCorp Soluções Tecnologicas' },
+    { id: 4, name: 'CARGA ONLINE' },
+    { id: 9, name: 'FCJ VENTURE BUILDER' },
+    { id: 10, name: 'IARIS VENTURES' },
+    { id: 5, name: 'asdasdsa' },
+    { id: 11, name: 'LAST WISH' }
+  ];
+  
   selectedSession = "Geral";
   selectedUpdateSession = "Geral";
 
@@ -239,6 +251,8 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
+      id: [null, [Validators.required]],
+      status: [this.status],
       property: [null, [Validators.required]],
       builder: [null, [Validators.required]],
       offerVideo: [null, [Validators.required]],
@@ -292,8 +306,8 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   initUpdateForm() {
     this.updateForm = this.formBuilder.group({
-      id: [null],
-      status: [null],
+      id: [null, [Validators.required]],
+      status: [this.status],
       type: [null, [Validators.required]],
       token: [null],
       offerVideo: [null, [Validators.required]],
@@ -460,7 +474,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       const daysDifference = timeDifference / (1000 * 3600 * 24);
       dataForm.duration = daysDifference;
   
-      this.roundService.createRound(this.id, dataForm).subscribe(
+      this.roundService.createRound(dataForm.id, dataForm).subscribe(
         (response) => {
           bootbox.dialog({
             title: '',
@@ -534,9 +548,6 @@ export class RoundCompanyPublishComponent implements OnInit {
     return phone;
   }
 
-
-
-
   validateAllFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -596,8 +607,26 @@ export class RoundCompanyPublishComponent implements OnInit {
     return errorMessage;
   }
 
+  pauseRound(company, round) {
+    this.form.get('status')?.setValue("PENDING");
+    this.updateStatus(company, round);
+  }
+
+  private updateStatus(company, round) {
+    const statusData = this.form.value;
+    this.roundService.updateStatus(company, round, this.statusApproved).subscribe(
+      (response) => {
+        toastr.success("Status atualizado com sucesso.");
+      },
+      (error) => {
+        toastr.error("Erro ao atualizar o status. Contate o administrador.");
+      }
+    );
+  }
+
   publishRound(company, round) {
     const $this = this;
+    this.form.get('status')?.setValue("IN_PROGRESS");
     this.roundService
       .updateStatus(company, round, this.statusApproved)
       .subscribe(
