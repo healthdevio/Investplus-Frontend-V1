@@ -47,6 +47,18 @@ export class RoundCompanyPublishComponent implements OnInit {
   };
   filteredCompanies: []
 
+  companies = [
+    { id: 8, name: 'INVESTPLUS' },
+    { id: 6, name: 'Avulta' },
+    { id: 7, name: 'Pet in Time' },
+    { id: 1, name: 'MTCorp Soluções Tecnologicas' },
+    { id: 4, name: 'CARGA ONLINE' },
+    { id: 9, name: 'FCJ VENTURE BUILDER' },
+    { id: 10, name: 'IARIS VENTURES' },
+    { id: 5, name: 'asdasdsa' },
+    { id: 11, name: 'LAST WISH' }
+  ];
+
   singUpPublishSessions = [
     {
       name: "Geral"
@@ -239,6 +251,8 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   initForm() {
     this.form = this.formBuilder.group({
+      id: [null, [Validators.required]],
+      status: [this.status],
       property: [null, [Validators.required]],
       builder: [null, [Validators.required]],
       offerVideo: [null, [Validators.required]],
@@ -292,7 +306,7 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   initUpdateForm() {
     this.updateForm = this.formBuilder.group({
-      id: [null],
+      id: [null, [Validators.required]],
       status: [null],
       type: [null, [Validators.required]],
       token: [null],
@@ -460,7 +474,11 @@ export class RoundCompanyPublishComponent implements OnInit {
       const daysDifference = timeDifference / (1000 * 3600 * 24);
       dataForm.duration = daysDifference;
   
-      this.roundService.createRound(this.id, dataForm).subscribe(
+      if (!dataForm.status) {
+        dataForm.status = this.updateForm.get('status')?.value || 'IN_PROGRESS';
+      }
+  
+      this.roundService.createRound(dataForm.id, dataForm).subscribe(
         (response) => {
           bootbox.dialog({
             title: '',
@@ -488,8 +506,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       this.initMask();
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
-  }
-  
+  }  
 
   public initMask(): void {
     const SPMaskBehavior = function (val: string) {
