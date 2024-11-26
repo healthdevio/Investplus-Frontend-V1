@@ -178,6 +178,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   
 
   ngOnInit() {
+    this.initializeGTM(); 
     this.activedRouter.params.subscribe((params) => {
       this.company = params["id"];
       this.rounds = Number(params["id2"]);
@@ -304,6 +305,59 @@ export class RoundInvestmentDetailsComponent implements OnInit {
       });
   }
 
+  private initializeGTM(): void {
+    if (!window || !(window as any).dataLayer) {
+      (window as any).dataLayer = [];
+      (window as any).dataLayer.push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js',
+      });
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtm.js?id=GTM-PN5ZFSQM`;
+      document.head.appendChild(script);
+      console.log('Google Tag Manager initialized.');
+    }
+  }
+
+  private trackInvestmentInitiated(): void {
+    console.log("Tracking investment initiation via GTM.");
+    const value = parseFloat((this.amountQuota * this.quotaValue).toFixed(2));
+    
+    if (window && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'conversion_event_purchase',
+        event_category: 'Investment',
+        event_action: 'Initiated',
+        event_label: this.roundInvestment?.name ?? 'Unknown',
+        value: value,
+        currency: 'BRL',
+      });
+      console.log('Event sent to GTM: Investment Initiated', { value, label: this.roundInvestment?.name });
+    } else {
+      console.warn("dataLayer not initialized for GTM.");
+    }
+  }
+  
+  private trackInvestmentCompleted(): void {
+    console.log("Tracking investment completion via GTM.");
+    const value = parseFloat((this.amountQuota * this.quotaValue).toFixed(2));
+    
+    if (window && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'conversion_event_purchase',
+        event_category: 'Investment',
+        event_action: 'Completed',
+        event_label: this.roundInvestment?.name ?? 'Unknown',
+        value: value,
+        currency: 'BRL',
+      });
+      console.log('Event sent to GTM: Investment Completed', { value, label: this.roundInvestment?.name });
+    } else {
+      console.warn("dataLayer not initialized for GTM.");
+    }
+  }
+
   getEmbeddedVideoUrl(url: SafeResourceUrl): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
     return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
@@ -373,6 +427,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         },
         callback: function (result) {
           if (result === true) {
+            $this.trackInvestmentInitiated();
             $this.makeInvestment();
           }
         },
@@ -562,7 +617,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     const dataSend = this.form.value;
     dataSend.investment = undefined;
   
-    let data: any = {
+    const data: any = {
       quotas: dataSend.quotas,
       investment: this.amountQuota * this.quotaValue,
       publicAccess: dataSend.publicAccess,
@@ -577,69 +632,73 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     if (this.form.controls["quotas"].value <= 0) {
       toastr.error("O número de cotas solicitado é inválido. Por favor, insira um valor maior que zero.", "Erro");
       this.router.navigate(["/admin/rounds/assets/list"]);
+      return;
     } else if (this.form.controls["quotas"].value > this.quotas - this.quotasSold) {
       toastr.error("O número de cotas solicitado excede o disponível. Por favor, revise e tente novamente.", "Erro");
       this.router.navigate(["/admin/rounds/assets/list"]);
-    } else {
-      this.loader = true;
-      this.loading = true;
-      this.loaderService.load(this.loading);
-      this.investmentService.createInvestment(data, this.company, this.rounds)
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.loaderService.load(false);
-          })
-        )
-        .subscribe({
-          next: (response) => {
-            this.form.reset();
-            this.sendAutomaticService.sendInvestor(dataSend);
-            toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
-            this.router.navigate(["/admin/rounds/assets/list"]);
-            this.trackFacebookPixel();
-          },
-          error: (error) => {
-            console.error(error); 
-            let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
-  
-            if (error.status === 400 || error.status === 500) {
-              if (error.error && error.error.message) {
-                erroMsg = error.error.message;
-              } else if (error.error && error.error.code) {
-                switch (error.error.code) {
-                  case "ILLEGAL_ARGUMENT":
-                    erroMsg = "Erro na solicitação: um ou mais argumentos fornecidos são inválidos.";
-                    break;
-                  case "INVESTOR_PROFILE_VIOLATED":
-                    erroMsg = "O valor do investimento excede o valor permitido no seu perfil. Por favor, revise os limites de investimento.";
-                    break;
-                  case "INCOMPLETE_INVESTOR_PROFILE":
-                    erroMsg = "Seu cadastro de investidor está incompleto. Complete todas as informações necessárias antes de prosseguir.";
-                    break;
-                  case "INSUFFICIENT_FUNDS":
-                    erroMsg = "Você não possui fundos suficientes para realizar este investimento. Verifique seu saldo e tente novamente.";
-                    break;
-                  case "QUOTA_EXCEEDED":
-                    erroMsg = "O número de cotas solicitado é maior do que o disponível. Reduza a quantidade e tente novamente.";
-                    break;
-                  case "PJ_INVESTMENT_NOT_ALLOWED":
-                    erroMsg = "Essa rodada de investimento não aceita investimento PJ.";
-                    break;
-                  default:
-                    erroMsg = `Erro inesperado: ${error.error.message || "Verifique os dados e tente novamente."}`;
-                }
-              } else {
-                erroMsg = `Erro inesperado: ${error.message || "Verifique os dados e tente novamente."}`;
-              }
-            }
-  
-            toastr.error(erroMsg, "Erro");
-            this.router.navigate(["/admin/rounds/assets/list"]); // Redireciona após o erro
-          }
-        });
+      return;
     }
-  }
+  
+    this.loader = true;
+    this.loading = true;
+    this.loaderService.load(this.loading);
+  
+    this.investmentService.createInvestment(data, this.company, this.rounds)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.loaderService.load(false);
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.form.reset();
+          this.sendAutomaticService.sendInvestor(dataSend);
+          toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
+          this.router.navigate(["/admin/rounds/assets/list"]);
+          this.trackFacebookPixel();
+          this.trackInvestmentCompleted();
+        },
+        error: (error) => {
+          console.error(error);
+          let erroMsg = "Ocorreu um erro desconhecido. Por favor, tente novamente.";
+  
+          if (error.status === 400 || error.status === 500) {
+            if (error.error && error.error.message) {
+              erroMsg = error.error.message;
+            } else if (error.error && error.error.code) {
+              switch (error.error.code) {
+                case "ILLEGAL_ARGUMENT":
+                  erroMsg = "Erro na solicitação: um ou mais argumentos fornecidos são inválidos.";
+                  break;
+                case "INVESTOR_PROFILE_VIOLATED":
+                  erroMsg = "O valor do investimento excede o valor permitido no seu perfil. Por favor, revise os limites de investimento.";
+                  break;
+                case "INCOMPLETE_INVESTOR_PROFILE":
+                  erroMsg = "Seu cadastro de investidor está incompleto. Complete todas as informações necessárias antes de prosseguir.";
+                  break;
+                case "INSUFFICIENT_FUNDS":
+                  erroMsg = "Você não possui fundos suficientes para realizar este investimento. Verifique seu saldo e tente novamente.";
+                  break;
+                case "QUOTA_EXCEEDED":
+                  erroMsg = "O número de cotas solicitado é maior do que o disponível. Reduza a quantidade e tente novamente.";
+                  break;
+                case "PJ_INVESTMENT_NOT_ALLOWED":
+                  erroMsg = "Essa rodada de investimento não aceita investimento PJ.";
+                  break;
+                default:
+                  erroMsg = `Erro inesperado: ${error.error.message || "Verifique os dados e tente novamente."}`;
+              }
+            } else {
+              erroMsg = `Erro inesperado: ${error.message || "Verifique os dados e tente novamente."}`;
+            }
+          }
+  
+          toastr.error(erroMsg, "Erro");
+          this.router.navigate(["/admin/rounds/assets/list"]);
+        }
+      });
+  }  
   
   
   private trackFacebookPixel(): void {
