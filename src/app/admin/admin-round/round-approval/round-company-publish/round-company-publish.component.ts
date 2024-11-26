@@ -160,6 +160,32 @@ export class RoundCompanyPublishComponent implements OnInit {
     return formData;
   }  
 
+  toggleRoundStatus(roundId: number, companyId: number, currentStatus: string) {
+    const newStatus = currentStatus === 'IN_PROGRESS' ? 'PENDING' : 'IN_PROGRESS';
+  
+    const updatedData = {
+      ...this.prepareSubmitData(),
+      status: newStatus,
+    };
+  
+    this.roundService.updateStatus(companyId, roundId, { status: newStatus }).subscribe(
+      () => {
+        toastr.success(
+          `A rodada foi ${newStatus === 'IN_PROGRESS' ? 'ativada' : 'pausada'} com sucesso.`,
+          'Sucesso'
+        );
+        this.getAllByStatus();
+      },
+      () => {
+        toastr.error('Erro ao alterar o status da rodada. Por favor, tente novamente.', 'Erro');
+      }
+    );
+  }
+
+  getButtonLabel(status: string): string {
+    return status === 'IN_PROGRESS' ? 'Pausar Rodada' : 'Publicar Rodada';
+  }
+
   getRoundInformation(id: number, roundId: number) {
     this.isUpdatePublishModalOpen = true
     this.loadingRounds = true;
