@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.initializeGTM();
     const $this = this;
     setTimeout(function () {
       $this.initMask();
@@ -141,38 +142,56 @@ export class RegisterComponent implements OnInit {
     return fullName.trim().split(' ').length >= 2;
   }
 
+  private initializeGTM(): void {
+    if (!window || !(window as any).dataLayer) {
+      (window as any).dataLayer = [];
+      (window as any).dataLayer.push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js',
+      });
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PN5ZFSQM';
+      document.head.appendChild(script);
+      console.log('Google Tag Manager initialized.');
+    }
+  }
+
   onSubmit() {
     this.loader = true;
     this.loaderService.load(this.loader);
-
+  
     const fullName = this.form.controls['fullName'].value;
-
+  
     if (fullName === null || !this.validateFullName(fullName)) {
       toastr.error('O nome completo deve conter pelo menos dois nomes.');
       this.loader = false;
       this.loaderService.load(this.loader);
       return;
     }
-
+  
     if (!this.form.value.termosGerais) {
       toastr.error('Você deve concordar com os termos de uso.');
       this.loader = false;
       this.loaderService.load(this.loader);
       return;
     }
-
+  
     if (this.form.valid && this.form.value.typeDocument !== null) {
       const dataSend = this.form.value;
       dataSend.termosGerais = undefined;
       dataSend.typeDocument = undefined;
       dataSend.document = undefined;
       dataSend.email = this.form.controls['email'].value.toLowerCase();
+      
       if (this.form.controls['typeDocument'].value === 'cpf') {
         dataSend.cpf = this.unmaskInput(this.form.controls['document'].value);
       }
+      
       if (this.form.controls['typeDocument'].value === 'cnpj') {
         dataSend.cnpj = this.unmaskInput(this.form.controls['document'].value);
       }
+  
       if (dataSend.nickname.length < 3) {
         this.loader = false;
         this.loaderService.load(this.loader);
@@ -182,6 +201,12 @@ export class RegisterComponent implements OnInit {
         this.loaderService.load(this.loader);
         toastr.error('O campo Nome Completo deve ter no mínimo 6 caracteres.');
       } else {
+        const typeDocument = this.form.controls['typeDocument'].value;
+        const documentValue = this.unmaskInput(this.form.controls['document'].value);
+        const currentDate = new Date().toLocaleString();
+  
+        this.trackRegistration(typeDocument, documentValue, fullName, currentDate);
+  
         this.authService.register(dataSend).subscribe(
           (response) => {
             this.loader = false;
@@ -222,7 +247,6 @@ export class RegisterComponent implements OnInit {
             this.loaderService.load(this.loader);
           }
         );
-
       }
     } else {
       this.loader = false;
@@ -230,6 +254,29 @@ export class RegisterComponent implements OnInit {
       toastr.error('Todos os campos devem ser preenchidos.');
     }
   }
+  
+  private trackRegistration(typeDocument: string, documentValue: string, fullName: string, currentDate: string): void {
+    if (window && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'register',
+        event_category: 'User Registration',
+        event_action: 'New Registration',
+        event_label: typeDocument.toUpperCase(),
+        document: documentValue,
+        fullName: fullName,
+        date: currentDate,
+      });
+      console.log('Event sent to GTM: Register', {
+        typeDocument,
+        documentValue,
+        fullName,
+        currentDate
+      });
+    } else {
+      console.warn("dataLayer not initialized for GTM.");
+    }
+  }
+  
 
   selectType(type: string): void {
     if (this.form.value.typeDocument === type) {
