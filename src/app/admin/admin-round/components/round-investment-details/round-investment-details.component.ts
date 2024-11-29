@@ -306,18 +306,23 @@ export class RoundInvestmentDetailsComponent implements OnInit {
   }
 
   private initializeGTM(): void {
-    if (!window || !(window as any).dataLayer) {
-      (window as any).dataLayer = [];
+    if (window && (window as any).dataLayer) {
+      const value = parseFloat((this.amountQuota * this.quotaValue).toFixed(2));
       (window as any).dataLayer.push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js',
+        event: 'conversion_event_purchase',
+        event_category: 'Investment',
+        event_action: 'Completed',
+        event_label: this.roundInvestment?.name ?? 'Desconhecido',
+        investment_details: {
+          investor_name: this.investor?.fullName ?? 'Desconhecido',
+          investment_value: value,
+          investment_date: new Date().toISOString(),
+          invested_company: this.companyDataComplete?.name ?? 'Unknown'
+        },
+        currency: 'BRL',
       });
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtm.js?id=GTM-PN5ZFSQM`;
-      document.head.appendChild(script);
-      console.log('Google Tag Manager initialized.');
     }
+    
   }
 
   private trackInvestmentInitiated(): void {
