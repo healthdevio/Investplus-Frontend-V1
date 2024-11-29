@@ -1083,6 +1083,29 @@ export class RoundApprovalListComponent implements OnInit {
   
     input.value = value;
   }  
-  
 
+  onCNPJInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    value = value.substring(0, 14);
+  
+    if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    }
+    if (value.length > 5) {
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    }
+    if (value.length > 8) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
+    }
+    if (value.length > 12) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
+    }
+  
+    input.value = value;
+  }
+  
 }
