@@ -1027,12 +1027,16 @@ export class RoundApprovalListComponent implements OnInit {
   
     value = value.replace(/\D/g, '');
   
-    if (value.length > 11) {
-      value = value.substring(0, 11);
-    }
+    value = value.substring(0, 10);
   
-    if (value.length > 10) {
-      value = value.replace(/^(\d{10})(\d{1})/, '$1-$2');
+    if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    }
+    if (value.length > 6) {
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    }
+    if (value.length > 9) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
     }
   
     input.value = value;
