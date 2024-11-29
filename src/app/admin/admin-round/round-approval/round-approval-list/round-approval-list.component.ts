@@ -206,10 +206,6 @@ export class RoundApprovalListComponent implements OnInit {
     this.initExpenseForm();
     this.initValuationForm();
     this.initCaptableForm();
-    this.applyCepMask();
-    this.applyRgMask();
-    this.applyCpfMask(); 
-    this.applyPhoneMask();
 
     const $this = this;
     setTimeout(function () {
@@ -998,19 +994,6 @@ export class RoundApprovalListComponent implements OnInit {
     }
   }
 
-  private applyCepMask() {
-    console.log("teste cep")
-
-    const cepControl = this.form.get('address.zipCode') as FormControl;
-    cepControl.valueChanges.subscribe(value => {
-      const numericValue = value?.replace(/\D/g, ''); 
-      if (numericValue) {
-        const formattedCep = numericValue.replace(/(\d{5})(\d{3})/, '$1-$2');
-        cepControl.setValue(formattedCep, { emitEvent: false });
-      }
-    });
-  }
-
   onZipCodeInput(event: any): void {
     const input = event.target as HTMLInputElement;
     let value = input.value;
@@ -1038,62 +1021,64 @@ export class RoundApprovalListComponent implements OnInit {
     }
   }
 
-  private applyRgMask(): void {
-    const rgControl = this.form.get('responsible.rg') as FormControl;
-    console.log("teste rg",rgControl)
-    rgControl.valueChanges.subscribe(value => {
-      if (value) {
-        let numericValue = value.replace(/\D/g, '');
-        
-        if (numericValue.length > 9) {
-          numericValue = numericValue.replace(/^(\d{9})(\d{1})/, '$1-$2');
-        }
+  onRGInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
   
-        rgControl.setValue(numericValue, { emitEvent: false });
-      }
-    });
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    if (value.length > 10) {
+      value = value.replace(/^(\d{10})(\d{1})/, '$1-$2');
+    }
+  
+    input.value = value;
   }  
 
-  private applyCpfMask(): void {
-    console.log("teste CPF")
-
-    const cpfControl = this.form.get('responsible.cpf') as FormControl;
-    cpfControl.valueChanges.subscribe(value => {
-      if (value) {
-        let numericValue = value.replace(/\D/g, '');
+  onCPFInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
   
-        if (numericValue.length > 9) {
-          numericValue = numericValue.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
-        } else if (numericValue.length > 6) {
-          numericValue = numericValue.replace(/^(\d{3})(\d{3})(\d{0,3})$/, '$1.$2.$3');
-        } else if (numericValue.length > 3) {
-          numericValue = numericValue.replace(/^(\d{3})(\d{0,3})$/, '$1.$2');
-        }
+    value = value.replace(/\D/g, '');
   
-        cpfControl.setValue(numericValue, { emitEvent: true });
-      }
-    });
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    if (value.length > 9) {
+      value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    } else if (value.length > 6) {
+      value = value.replace(/^(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    } else if (value.length > 3) {
+      value = value.replace(/^(\d{3})(\d{1,3})/, '$1.$2');
+    }
+  
+    input.value = value;
   }
 
-  private applyPhoneMask(): void {
-    console.log("teste fone")
-
-    const phoneControl = this.form.get('responsible.phone') as FormControl;
-    phoneControl.valueChanges.subscribe(value => {
-      if (value) {
-        let numericValue = value.replace(/\D/g, '');
+  onPhoneInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
   
-        if (numericValue.length > 10) {
-          numericValue = numericValue.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
-        } else if (numericValue.length > 6) {
-          numericValue = numericValue.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
-        } else if (numericValue.length > 2) {
-          numericValue = numericValue.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
-        }
+    value = value.replace(/\D/g, '');
   
-        phoneControl.setValue(numericValue, { emitEvent: true }); 
-      }
-    });
-  }
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    if (value.length > 6) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{1,4})/, '($1) $2-$3');
+    } else if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d{1,4})/, '($1) $2');
+    } else if (value.length > 0) {
+      value = value.replace(/^(\d{1,2})/, '($1');
+    }
+  
+    input.value = value;
+  }  
+  
 
 }

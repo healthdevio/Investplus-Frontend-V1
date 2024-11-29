@@ -127,20 +127,27 @@ class="content">
               <div style="width: 100%;">
                 <p style="margin-top: 24px;">CPF <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'CPF do responsável é obrigatório.'">
-                  <input type="text" formControlName="cpf" placeholder="000.000.000-00"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                  <input 
+                    type="text" 
+                    formControlName="cpf" 
+                    placeholder="000.000.000-00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onCPFInput($event)">
                 </app-form>
-              </div>
+              </div>              
       
               <div style="width: 100%;">
                 <p style="margin-top: 24px;">RG <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'RG do responsável da empresa é obrigatório.'">
-                  <input type="text" formControlName="rg" placeholder="0000000000-0"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                  <input 
+                    type="text" 
+                    formControlName="rg" 
+                    placeholder="0000000000-0"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onRGInput($event)">
                 </app-form>
               </div>
+              
             </div>
       
             <p style="margin-bottom: 0; color: #777777;">Contato</p>
@@ -157,11 +164,14 @@ class="content">
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Telefone <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Telefone do responsável da empresa é obrigatório.'">
-                <input type="text" formControlName="phone" placeholder="(00) 00000-0000"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                  type="text">
+                <input 
+                  type="text" 
+                  formControlName="phone" 
+                  placeholder="(00) 00000-0000"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                  (input)="onPhoneInput($event)">
               </app-form>
-            </div>
+            </div>            
           </div>
       
           <div formGroupName="address" *ngIf="selectedSession === 'Endereço'">
@@ -424,21 +434,28 @@ class="content">
             <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
               <div style="width: 100%;">
                 <p style="margin-top: 24px;">CPF <span style="color: red;">*</span></p>
-                <app-form [errorMessage]="'CPF do responsável da empresa é obrigatório.'">
-                  <input type="text" formControlName="cpf" placeholder="000.000.000-00"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                <app-form [errorMessage]="'CPF do responsável é obrigatório.'">
+                  <input 
+                    type="text" 
+                    formControlName="cpf" 
+                    placeholder="000.000.000-00"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onCPFInput($event)">
                 </app-form>
-              </div>
+              </div>              
     
               <div style="width: 100%;">
                 <p style="margin-top: 24px;">RG <span style="color: red;">*</span></p>
                 <app-form [errorMessage]="'RG do responsável da empresa é obrigatório.'">
-                  <input type="text" formControlName="rg" placeholder="0000000000-0"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                  <input 
+                    type="text" 
+                    formControlName="rg" 
+                    placeholder="0000000000-0"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onRGInput($event)">
                 </app-form>
               </div>
+              
             </div>
     
             <p style="margin-bottom: 0; color: #777777;">Contato</p>
@@ -455,11 +472,14 @@ class="content">
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Telefone <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Telefone do responsável da empresa é obrigatório.'">
-                <input type="text" formControlName="phone" placeholder="(00) 00000-0000"
-                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                  type="text">
+                <input 
+                  type="text" 
+                  formControlName="phone" 
+                  placeholder="(00) 00000-0000"
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                  (input)="onPhoneInput($event)">
               </app-form>
-            </div>
+            </div>            
           </div>
     
           <div formGroupName="address" *ngIf="selectedSession === 'Endereço'">
@@ -1228,21 +1248,28 @@ class="content">
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
                 <div style="width: 100%;">
                   <p style="margin-top: 24px;">CPF <span style="color: red;">*</span></p>
-                  <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                    <input type="text" formControlName="cpf" placeholder="000.000.000-00"
-                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                      type="text">
+                  <app-form [errorMessage]="'CPF do responsável é obrigatório.'">
+                    <input 
+                      type="text" 
+                      formControlName="cpf" 
+                      placeholder="000.000.000-00"
+                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                      (input)="onCPFInput($event)">
                   </app-form>
-                </div>
+                </div>                
     
                 <div style="width: 100%;">
                   <p style="margin-top: 24px;">RG <span style="color: red;">*</span></p>
-                  <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                    <input type="text" formControlName="rg" placeholder="0000000000-0"
-                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                      type="text">
+                  <app-form [errorMessage]="'RG do responsável da empresa é obrigatório.'">
+                    <input 
+                      type="text" 
+                      formControlName="rg" 
+                      placeholder="0000000000-0"
+                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                      (input)="onRGInput($event)">
                   </app-form>
                 </div>
+
               </div>
     
               <p style="margin-bottom: 0; color: #777777;">Contato</p>
@@ -1258,12 +1285,15 @@ class="content">
     
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Telefone <span style="color: red;">*</span></p>
-                <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-                  <input type="text" formControlName="phone" placeholder="(00) 00000-0000"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                <app-form [errorMessage]="'Telefone do responsável da empresa é obrigatório.'">
+                  <input 
+                    type="text" 
+                    formControlName="phone" 
+                    placeholder="(00) 00000-0000"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onPhoneInput($event)">
                 </app-form>
-              </div>
+              </div>              
             </div>
     
             <div formGroupName="address" *ngIf="selectedSession === 'Endereço'">
@@ -1521,24 +1551,31 @@ class="content">
               <div style="margin-bottom: 15px; display: flex; gap: 10px; width: 100%;">
                 <div style="width: 100%;">
                   <p style="margin-top: 24px;">CPF <span style="color: red;">*</span></p>
-                  <app-form [errorMessage]="'Site da empresa é obrigatório.'">
-                    <input type="text" formControlName="cpf" placeholder="000.000.000-00"
-                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                      type="text">
+                  <app-form [errorMessage]="'CPF do responsável é obrigatório.'">
+                    <input 
+                      type="text" 
+                      formControlName="cpf" 
+                      placeholder="000.000.000-00"
+                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                      (input)="onCPFInput($event)">
                   </app-form>
-                </div>
+                </div>                
     
                 <div style="width: 100%;">
                   <p style="margin-top: 24px;">RG <span style="color: red;">*</span></p>
-                  <app-form [errorMessage]="'CNPJ da empresa é obrigatório.'">
-                    <input type="text" formControlName="rg" placeholder="0000000000-0"
-                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                      type="text">
+                  <app-form [errorMessage]="'RG do responsável da empresa é obrigatório.'">
+                    <input 
+                      type="text" 
+                      formControlName="rg" 
+                      placeholder="0000000000-0"
+                      style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                      (input)="onRGInput($event)">
                   </app-form>
                 </div>
+                
               </div>
     
-              <p style="margin-bottom: 0; color: #777777;">Contato</p>
+              <p style="margin-bottom: 0; color: #1d1c1c;">Contato</p>
     
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">E-mail <span style="color: red;">*</span></p>
@@ -1551,12 +1588,15 @@ class="content">
     
               <div style="margin-bottom: 15px;">
                 <p style="margin-top: 24px;">Telefone <span style="color: red;">*</span></p>
-                <app-form [errorMessage]="'Razão Social da empresa é obrigatório.'">
-                  <input type="text" formControlName="phone" placeholder="(00) 00000-0000"
-                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;"
-                    type="text">
+                <app-form [errorMessage]="'Telefone do responsável da empresa é obrigatório.'">
+                  <input 
+                    type="text" 
+                    formControlName="phone" 
+                    placeholder="(00) 00000-0000"
+                    style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;" 
+                    (input)="onPhoneInput($event)">
                 </app-form>
-              </div>
+              </div>              
             </div>
     
             <div formGroupName="address" *ngIf="selectedSession === 'Endereço'">
