@@ -668,6 +668,76 @@ export class RoundApprovalListComponent implements OnInit {
     }
   }
 
+  public onSubmitCadastro(): void {
+    this.loading = true;
+    this.loaderService.load(this.loading);
+  
+    console.log(this.form.value);
+    if (this.form.valid) {
+      const data = this.form.value;
+  
+      data.cnpj = this.unmaskCnpj(data.cnpj);
+  
+      data.cac = this.unmaskCurrency(data.cac);
+      data.ltv = this.unmaskCurrency(data.ltv);
+      data.cmv = this.unmaskCurrency(data.cmv);
+  
+      data.address.zipCode = this.unmaskInput(data.address.zipCode);
+  
+      const rawDate = data.responsible.dateOfBirth;
+  
+      if (rawDate) {
+        data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
+      } else {
+        console.error("Data de nascimento inválida ou não preenchida.");
+        toastr.error("Preencha a data de nascimento corretamente.");
+        return;
+      }
+  
+      data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
+      data.responsible.phone = this.unmaskInput(data.responsible.phone);
+      data.responsible.rg = this.unmaskInput(data.responsible.rg);
+  
+      data.type = "SIMPLE";
+      data.category = "TRACTION";
+        
+      this.companyService.createCompany(data).subscribe(
+        (response) => {
+          toastr.success('Dados atualizados.');
+        },
+        (error) => {
+          const errorMessage = this.getDetailedErrorMessage(error);
+          toastr.error(errorMessage, 'Erro');
+          toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
+        },
+        () => {
+          this.loading = false;
+          this.isSingUpCompanyModalOpen = false;
+          this.loaderService.load(this.loading);
+        }
+      );
+    } else {
+      this.loading = false;
+      this.loaderService.load(this.loading);
+      this.validateAllFields(this.form);
+    }
+  }
+  
+  private formatDateToISO(date: string): string {
+    try {
+      const [day, month, year] = date.split('/');
+      if (!day || !month || !year) {
+        throw new Error("Formato de data inválido.");
+      }
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    } catch (error) {
+      console.error("Erro ao formatar a data:", error);
+      return "";
+    }
+  }
+  
+  
+
   loadCompanies() {
     this.companies = [];
     this.filteredCompanies = [];
