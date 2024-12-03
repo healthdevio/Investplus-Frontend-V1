@@ -629,44 +629,74 @@ export class RoundApprovalListComponent implements OnInit {
   public onSubmit(): void {
     this.loading = true;
     this.loaderService.load(this.loading);
+  
+    this.validateRelevantFields(this.form);
+  
+    console.log("Iniciando atualização de dados");
+    const data = this.form.value;
+  
+    data.cnpj = this.unmaskCnpj(data.cnpj);
+    data.cac = this.unmaskCurrency(data.cac);
+    data.ltv = this.unmaskCurrency(data.ltv);
+    data.cmv = this.unmaskCurrency(data.cmv);
+  
+    data.address.zipCode = this.unmaskInput(data.address.zipCode);
+  
+    const rawDate = data.responsible.dateOfBirth;
+  
+    if (rawDate) {
+      data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
+    } else {
+      toastr.error("Data de nascimento não preenchida ou inválida.");
+      this.loading = false;
+      this.loaderService.load(this.loading);
+      return;
+    }
+  
+    data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
+    data.responsible.phone = this.unmaskInput(data.responsible.phone);
+    data.responsible.rg = this.unmaskInput(data.responsible.rg);
+  
+    delete data.partners;
+    delete data.totalExpenditure;
+    delete data.averageTicket;
+    delete data.ltvCac;
+    delete data.cashburnIndicator;
+    delete data.sharePriceIndicator;
+    delete data.accountAgency;
+    delete data.accountBank;
+    delete data.accountNumber;
+    delete data.cnae;
+    delete data.benchmarks;
+    delete data.competitors;
+    delete data.facebook;
+    delete data.generalInfo;
+    delete data.grossRevenue;
+    delete data.incubation;
+    delete data.legalType;
+    delete data.volutiId;
+    delete data.video;
+    delete data.twitter;
+    delete data.providers;
+    delete data.nire;
 
-    console.log(this.form.value)
-    if (this.form.valid) {
-      const data = this.form.value;
-      data.cnpj = this.unmaskCnpj(data.cnpj);
-      data.totalExpenditure = this.unmaskCurrency(data.totalExpenditure);
-      data.cac = this.unmaskCurrency(data.cac);
-      data.averageTicket = this.unmaskCurrency(data.averageTicket);
-      data.ltv = this.unmaskCurrency(data.ltv);
-      data.cmv = this.unmaskCurrency(data.cmv);
-      data.ltvCac = this.unmaskCurrency(data.ltvCac);
-      data.cashburnIndicator = this.unmaskCurrency(data.cashburnIndicator);
-      data.valuation = this.maskValuation(data.valuation);
-      data.sharePriceIndicator = this.unmaskCurrency(data.sharePriceIndicator);
-
-      data.address.zipCode = this.unmaskInput(data.address.zipCode);
-
-      data.responsible.dateOfBirth = this.dateMask.transform(data.responsible.dateOfBirth, 'AMERICAN');
-      data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
-      data.responsible.phone = this.unmaskInput(data.responsible.phone);
-
-      this.companyService.updateCompany(this.id, data).subscribe((response) => {
-        toastr.success('Dados atualizados.');
-      }, (error) => {
+  
+    this.companyService.updateCompany(this.id, data).subscribe(
+      (response) => {
+        toastr.success('Dados atualizados com sucesso.');
+      },
+      (error) => {
         const errorMessage = this.getDetailedErrorMessage(error);
         toastr.error(errorMessage, 'Erro');
         toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
-      }, () => {
+      },
+      () => {
         this.loading = false;
         this.isSingUpCompanyModalOpen = false;
         this.loaderService.load(this.loading);
-      });
-    } else {
-      this.loading = false;
-      this.loaderService.load(this.loading);
-      this.validateAllFields(this.form);
-    }
-  }
+      }
+    );
+  }  
 
   public onSubmitCadastro(): void {
     this.loading = true;
@@ -830,7 +860,8 @@ export class RoundApprovalListComponent implements OnInit {
     );
   }
 
-  public getCompany(id): void {
+  public getCompany(id: number): void {
+    this.id = id;
     this.companyService.getCompany(id).subscribe((response) => {
       this.form.get('address').setValue({
         city: response.address.city,
