@@ -680,10 +680,10 @@ export class RoundApprovalListComponent implements OnInit {
     delete data.providers;
     delete data.nire;
 
-  
     this.companyService.updateCompany(this.id, data).subscribe(
       (response) => {
         toastr.success('Dados atualizados com sucesso.');
+        this.loadCompanies(); 
       },
       (error) => {
         const errorMessage = this.getDetailedErrorMessage(error);
@@ -692,11 +692,11 @@ export class RoundApprovalListComponent implements OnInit {
       },
       () => {
         this.loading = false;
-        this.isSingUpCompanyModalOpen = false;
         this.loaderService.load(this.loading);
+        this.isEditCompanyModalOpen = false;
       }
     );
-  }  
+  }   
 
   public onSubmitCadastro(): void {
     this.loading = true;
