@@ -474,42 +474,42 @@ export class RoundApprovalListComponent implements OnInit {
         profession: [null, [Validators.required]],
         rg: [null, [Validators.required]],
       }),
-      // category: [null, [Validators.required]],
-      // type: [null, [Validators.required]],
+      category: [null, [Validators.required]],
+      type: [null, [Validators.required]],
       cnpj: [null, [Validators.required, Validators.minLength(14)]],
-      // nire: [null, [Validators.required]],
-      // cnae: [null, [Validators.required]],
-      // legalType: [null, [Validators.required]],
-      // yearOfIncorporation: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      // generalInfo: [null, [Validators.required, Validators.maxLength(500)]],
-      // revenueModel: [null, [Validators.required, Validators.maxLength(500)]],
-      // customersDescription: [null, [Validators.required, Validators.maxLength(500)]],
-      // competitors: [null, [Validators.required, Validators.maxLength(500)]],
-      // benchmarks: [null, [Validators.required, Validators.maxLength(500)]],
-      // numberOfCustomers: [null, [Validators.required]],
-      // payingCustomers: [null, [Validators.required]],
-      // grossRevenue: [null, [Validators.required, Validators.maxLength(500)]],
-      // operations: [null, [Validators.required, Validators.maxLength(500)]],
-      // partners: this.formBuilder.array([]),
-      // totalExpenditure: [null, [Validators.required]],
-      // investments: [null, [Validators.required, Validators.maxLength(500)]],
-      // investmentsDeposited: [null, [Validators.required, Validators.maxLength(500)]],
-      // incubation: [null, [Validators.required, Validators.maxLength(500)]],
-      // valuation: [null, [Validators.required, Validators.maxLength(500)]],
-      // roundValue: [null, [Validators.required, Validators.maxLength(500)]],
-      // providers: [null, [Validators.required, Validators.maxLength(500)]],
+      nire: [null, [Validators.required]],
+      cnae: [null, [Validators.required]],
+      legalType: [null, [Validators.required]],
+      yearOfIncorporation: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      generalInfo: [null, [Validators.required, Validators.maxLength(500)]],
+      revenueModel: [null, [Validators.required, Validators.maxLength(500)]],
+      customersDescription: [null, [Validators.required, Validators.maxLength(500)]],
+      competitors: [null, [Validators.required, Validators.maxLength(500)]],
+      benchmarks: [null, [Validators.required, Validators.maxLength(500)]],
+      numberOfCustomers: [null, [Validators.required]],
+      payingCustomers: [null, [Validators.required]],
+      grossRevenue: [null, [Validators.required, Validators.maxLength(500)]],
+      operations: [null, [Validators.required, Validators.maxLength(500)]],
+      partners: this.formBuilder.array([]),
+      totalExpenditure: [null, [Validators.required]],
+      investments: [null, [Validators.required, Validators.maxLength(500)]],
+      investmentsDeposited: [null, [Validators.required, Validators.maxLength(500)]],
+      incubation: [null, [Validators.required, Validators.maxLength(500)]],
+      valuation: [null, [Validators.required, Validators.maxLength(500)]],
+      roundValue: [null, [Validators.required, Validators.maxLength(500)]],
+      providers: [null, [Validators.required, Validators.maxLength(500)]],
       description: [null, [Validators.maxLength(500)]],
-      // contractModel: [null, [Validators.required]],
-      // hasDividends: [null, [Validators.required]],
-      // model: [null, [Validators.required]],
-      // video: [null, [Validators.required]],
-      // pitch: [null, [Validators.required]],
+      contractModel: [null, [Validators.required]],
+      hasDividends: [null, [Validators.required]],
+      model: [null, [Validators.required]],
+      video: [null, [Validators.required]],
+      pitch: [null, [Validators.required]],
       businessName: [null, [Validators.required]],
       name: [null, [Validators.required, Validators.minLength(2)]],
       website: [null, [Validators.minLength(4)]],
-      // facebook: [null],
-      // linkedin: [null],
-      // twitter: [null],
+      facebook: [null],
+      linkedin: [null],
+      twitter: [null],
       upgestao: [null],
       bank: [null],
       payment: [null],
@@ -522,14 +522,14 @@ export class RoundApprovalListComponent implements OnInit {
       processIndicator: [null],
       resourceIndicator: [null],
       cac: [null],
-      // averageTicket: [null, [Validators.required]],
+      averageTicket: [null, [Validators.required]],
       ltv: [null],
       activeCustomers: [null, [Validators.required]],
       cmv: [null],
       score: [null],
-      // ltvCac: [null],
-      // cashburnIndicator: [null],
-      // sharePriceIndicator: [null],
+      ltvCac: [null],
+      cashburnIndicator: [null],
+      sharePriceIndicator: [null],
       accountAgency: [null],
       accountBank: [null],
       accountNumber: [null],
@@ -633,15 +633,15 @@ export class RoundApprovalListComponent implements OnInit {
     if (this.form.valid) {
       const data = this.form.value;
       data.cnpj = this.unmaskCnpj(data.cnpj);
-      // data.totalExpenditure = this.unmaskCurrency(data.totalExpenditure);
+      data.totalExpenditure = this.unmaskCurrency(data.totalExpenditure);
       data.cac = this.unmaskCurrency(data.cac);
-      // data.averageTicket = this.unmaskCurrency(data.averageTicket);
+      data.averageTicket = this.unmaskCurrency(data.averageTicket);
       data.ltv = this.unmaskCurrency(data.ltv);
       data.cmv = this.unmaskCurrency(data.cmv);
-      // data.ltvCac = this.unmaskCurrency(data.ltvCac);
-      // data.cashburnIndicator = this.unmaskCurrency(data.cashburnIndicator);
-      // data.valuation = this.maskValuation(data.valuation);
-      // data.sharePriceIndicator = this.unmaskCurrency(data.sharePriceIndicator);
+      data.ltvCac = this.unmaskCurrency(data.ltvCac);
+      data.cashburnIndicator = this.unmaskCurrency(data.cashburnIndicator);
+      data.valuation = this.maskValuation(data.valuation);
+      data.sharePriceIndicator = this.unmaskCurrency(data.sharePriceIndicator);
 
       data.address.zipCode = this.unmaskInput(data.address.zipCode);
 
@@ -664,7 +664,6 @@ export class RoundApprovalListComponent implements OnInit {
       this.loading = false;
       this.loaderService.load(this.loading);
       this.validateAllFields(this.form);
-      this.validateAllFields(this.form); 
     }
   }
 
@@ -672,54 +671,110 @@ export class RoundApprovalListComponent implements OnInit {
     this.loading = true;
     this.loaderService.load(this.loading);
   
-    console.log(this.form.value);
-    if (this.form.valid) {
-      const data = this.form.value;
+    this.validateRelevantFields(this.form);
   
-      data.cnpj = this.unmaskCnpj(data.cnpj);
-      data.cac = this.unmaskCurrency(data.cac);
-      data.ltv = this.unmaskCurrency(data.ltv);
-      data.cmv = this.unmaskCurrency(data.cmv);
+    console.log("entrou de fato entrou");
+    const data = this.form.value;
   
-      data.address.zipCode = this.unmaskInput(data.address.zipCode);
+    data.cnpj = this.unmaskCnpj(data.cnpj);
+    data.cac = this.unmaskCurrency(data.cac);
+    data.ltv = this.unmaskCurrency(data.ltv);
+    data.cmv = this.unmaskCurrency(data.cmv);
   
-      const rawDate = data.responsible.dateOfBirth;
+    data.address.zipCode = this.unmaskInput(data.address.zipCode);
   
-      if (rawDate) {
-        data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
-      } else {
-        toastr.error("Data de nascimento não preenchida ou inválida.");
-        return;
-      }      
+    const rawDate = data.responsible.dateOfBirth;
   
-      data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
-      data.responsible.phone = this.unmaskInput(data.responsible.phone);
-      data.responsible.rg = this.unmaskInput(data.responsible.rg);
-  
-      data.type = "SIMPLE";
-      data.category = "TRACTION";
-  
-      this.companyService.createCompany(data).subscribe(
-        (response) => {
-          toastr.success('Dados atualizados.');
-          this.loadCompanies();
-        },
-        (error) => {
-          const errorMessage = this.getDetailedErrorMessage(error);
-          toastr.error(errorMessage, 'Erro');
-          toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
-        },
-        () => {
-          this.loading = false;
-          this.isSingUpCompanyModalOpen = false;
-          this.loaderService.load(this.loading);
-        }
-      );
+    if (rawDate) {
+      data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
     } else {
+      toastr.error("Data de nascimento não preenchida ou inválida.");
       this.loading = false;
       this.loaderService.load(this.loading);
-      this.validateAllFields(this.form);
+      return;
     }
+  
+    data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
+    data.responsible.phone = this.unmaskInput(data.responsible.phone);
+    data.responsible.rg = this.unmaskInput(data.responsible.rg);
+  
+    data.type = "SIMPLE";
+    data.category = "TRACTION";
+  
+    delete data.partners;
+  
+    this.companyService.createCompany(data).subscribe(
+      (response) => {
+        toastr.success('Dados enviados com sucesso.');
+        this.loadCompanies();
+      },
+      (error) => {
+        const errorMessage = this.getDetailedErrorMessage(error);
+        toastr.error(errorMessage, 'Erro');
+        toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
+      },
+      () => {
+        this.loading = false;
+        this.isSingUpCompanyModalOpen = false;
+        this.loaderService.load(this.loading);
+      }
+    );
+  }
+  
+  private validateRelevantFields(formGroup: FormGroup): void {
+    const ignoredFields = [
+      'category',
+      'type',
+      'nire',
+      'cnae',
+      'legalType',
+      'yearOfIncorporation',
+      'generalInfo',
+      'revenueModel',
+      'customersDescription',
+      'competitors',
+      'benchmarks',
+      'numberOfCustomers',
+      'payingCustomers',
+      'grossRevenue',
+      'operations',
+      'partners',
+      'totalExpenditure',
+      'investments',
+      'investmentsDeposited',
+      'incubation',
+      'valuation',
+      'roundValue',
+      'providers',
+      'contractModel',
+      'hasDividends',
+      'video',
+      'pitch',
+      'facebook',
+      'linkedin',
+      'twitter',
+      'averageTicket',
+      'ltvCac',
+      'cashburnIndicator',
+      'sharePriceIndicator'
+    ];
+  
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        if (!ignoredFields.includes(field) && control.invalid) {
+          control.markAsTouched({ onlySelf: true });
+        }
+      } else if (control instanceof FormGroup) {
+        this.validateRelevantFields(control); 
+      } else if (control instanceof FormArray) {
+        control.controls.forEach((group) => {
+          if (group instanceof FormGroup) {
+            this.validateRelevantFields(group);
+          }
+        });
+      }
+    });
   }
   
   
@@ -797,31 +852,31 @@ export class RoundApprovalListComponent implements OnInit {
       this.form.get('businessName').setValue(response.businessName);
       this.form.get('cnpj').setValue(this.cnpjMask.transform(response.cnpj));
       this.form.get('website').setValue(response.website);
-      // this.form.get('facebook').setValue(response.facebook);
-      // this.form.get('linkedin').setValue(response.linkedin);
-      // this.form.get('twitter').setValue(response.twitter);
-      // this.form.get('category').setValue(response.category);
-      // this.form.get('type').setValue(response.type);
-      // this.form.get('yearOfIncorporation').setValue(response.yearOfIncorporation);
-      // this.form.get('generalInfo').setValue(response.generalInfo);
-      // this.form.get('revenueModel').setValue(response.revenueModel);
-      // this.form.get('customersDescription').setValue(response.customersDescription);
-      // this.form.get('competitors').setValue(response.competitors);
-      // this.form.get('benchmarks').setValue(response.benchmarks);
-      // this.form.get('numberOfCustomers').setValue(response.numberOfCustomers);
-      // this.form.get('payingCustomers').setValue(response.payingCustomers);
-      // this.form.get('grossRevenue').setValue(response.grossRevenue);
-      // this.form.get('operations').setValue(response.operations);
-      // this.form.get('totalExpenditure').setValue(this.moneyMask.transform(response.totalExpenditure));
-      // this.form.get('investments').setValue(response.investments);
-      // this.form.get('investmentsDeposited').setValue(response.investmentsDeposited);
-      // this.form.get('incubation').setValue(response.incubation);
-      // this.form.get('valuation').setValue(response.valuation);
-      // this.form.get('roundValue').setValue(response.roundValue);
-      // this.form.get('providers').setValue(response.providers);
+      this.form.get('facebook').setValue(response.facebook);
+      this.form.get('linkedin').setValue(response.linkedin);
+      this.form.get('twitter').setValue(response.twitter);
+      this.form.get('category').setValue(response.category);
+      this.form.get('type').setValue(response.type);
+      this.form.get('yearOfIncorporation').setValue(response.yearOfIncorporation);
+      this.form.get('generalInfo').setValue(response.generalInfo);
+      this.form.get('revenueModel').setValue(response.revenueModel);
+      this.form.get('customersDescription').setValue(response.customersDescription);
+      this.form.get('competitors').setValue(response.competitors);
+      this.form.get('benchmarks').setValue(response.benchmarks);
+      this.form.get('numberOfCustomers').setValue(response.numberOfCustomers);
+      this.form.get('payingCustomers').setValue(response.payingCustomers);
+      this.form.get('grossRevenue').setValue(response.grossRevenue);
+      this.form.get('operations').setValue(response.operations);
+      this.form.get('totalExpenditure').setValue(this.moneyMask.transform(response.totalExpenditure));
+      this.form.get('investments').setValue(response.investments);
+      this.form.get('investmentsDeposited').setValue(response.investmentsDeposited);
+      this.form.get('incubation').setValue(response.incubation);
+      this.form.get('valuation').setValue(response.valuation);
+      this.form.get('roundValue').setValue(response.roundValue);
+      this.form.get('providers').setValue(response.providers);
       this.form.get('description').setValue(response.description);
       this.form.get('contractModel').setValue(response.contractModel);
-      // this.form.get('hasDividends').setValue(response.hasDividends);
+      this.form.get('hasDividends').setValue(response.hasDividends);
       this.form.get('model').setValue(response.model);
       this.form.get('video').setValue(response.video);
       this.form.get('pitch').setValue(response.pitch);
@@ -843,15 +898,15 @@ export class RoundApprovalListComponent implements OnInit {
       this.form.get('activeCustomers').setValue(response.activeCustomers);
       this.form.get('cmv').setValue(this.moneyMask.transform(response.cmv));
       this.form.get('score').setValue(response.score);
-      // this.form.get('cnae').setValue(response.cnae);
-      // this.form.get('nire').setValue(response.nire);
-      // this.form.get('legalType').setValue(response.legalType);
+      this.form.get('cnae').setValue(response.cnae);
+      this.form.get('nire').setValue(response.nire);
+      this.form.get('legalType').setValue(response.legalType);
       this.form.get('accountAgency').setValue(response.accountAgency);
       this.form.get('accountBank').setValue(response.accountBank);
       this.form.get('accountNumber').setValue(response.accountNumber);
       this.form.get('volutiId').setValue(response.volutiId);
-      // this.form.get('ltvCac').setValue(this.moneyMask.transform(response.ltvCac));
-      // this.form.get('cashburnIndicator').setValue(this.moneyMask.transform(response.cashburnIndicator));
+      this.form.get('ltvCac').setValue(this.moneyMask.transform(response.ltvCac));
+      this.form.get('cashburnIndicator').setValue(this.moneyMask.transform(response.cashburnIndicator));
       this.form.get('sharePriceIndicator').setValue(this.moneyMask.transform(response.sharePriceIndicator));
       this.initMask();
     });
@@ -931,9 +986,9 @@ export class RoundApprovalListComponent implements OnInit {
     $('.money').mask('#.##0,00', {
       reverse: true
     });
-    // $('.yearOfIncorporation').mask('0000', {
-    //   reverse: true
-    // });
+    $('.yearOfIncorporation').mask('0000', {
+      reverse: true
+    });
     $('.cnpj').mask('00.000.000/0000-00', {
       reverse: true
     });

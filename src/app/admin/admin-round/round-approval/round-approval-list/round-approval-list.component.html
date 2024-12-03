@@ -76,19 +76,31 @@ class="content">
       
             <div style="margin-bottom: 15px; width: 100%;">
               <p style="margin-top: 24px;">Modelo <span style="color: red;">*</span></p>
-      
+            
               <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
                 <div style="display: flex; gap: 10px;">
-                  <input type="checkbox" style="border-radius: 100px;" />
-                  <p style="color: #707070; margin-bottom: 0;">Startup</p>
+                  <input 
+                    type="radio" 
+                    id="startup" 
+                    formControlName="model" 
+                    value="STARTUP" 
+                    style="border-radius: 100px;" 
+                  />
+                  <label for="startup" style="color: #707070; margin-bottom: 0;">Startup</label>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                  <input type="checkbox" style="border-radius: 100px;" />
-                  <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+                  <input 
+                    type="radio" 
+                    id="empresaTradicional" 
+                    formControlName="model" 
+                    value="TRADITIONAL" 
+                    style="border-radius: 100px;" 
+                  />
+                  <label for="empresaTradicional" style="color: #707070; margin-bottom: 0;">Empresa tradicional</label>
                 </div>
               </div>
             </div>
-      
+            
       
           </div>
       
@@ -387,20 +399,31 @@ class="content">
     
             <div style="margin-bottom: 15px; width: 100%;">
               <p style="margin-top: 24px;">Modelo <span style="color: red;">*</span></p>
-    
+            
               <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
                 <div style="display: flex; gap: 10px;">
-                  <input type="checkbox" style="border-radius: 100px;" />
-                  <p style="color: #707070; margin-bottom: 0;">Startup</p>
+                  <input 
+                    type="radio" 
+                    id="startup" 
+                    formControlName="model" 
+                    value="STARTUP" 
+                    style="border-radius: 100px;" 
+                  />
+                  <label for="startup" style="color: #707070; margin-bottom: 0;">Startup</label>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                  <input type="checkbox" style="border-radius: 100px;" />
-                  <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+                  <input 
+                    type="radio" 
+                    id="empresaTradicional" 
+                    formControlName="model" 
+                    value="TRADITIONAL" 
+                    style="border-radius: 100px;" 
+                  />
+                  <label for="empresaTradicional" style="color: #707070; margin-bottom: 0;">Empresa tradicional</label>
                 </div>
               </div>
             </div>
-    
-    
+            
           </div>
     
           <div formGroupName="responsible" *ngIf="selectedSession === 'Responsável'">
@@ -1209,20 +1232,31 @@ class="content">
     
               <div style="margin-bottom: 15px; width: 100%;">
                 <p style="margin-top: 24px;">Modelo <span style="color: red;">*</span></p>
-    
+              
                 <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
                   <div style="display: flex; gap: 10px;">
-                    <input type="checkbox" style="border-radius: 100px;" />
-                    <p style="color: #707070; margin-bottom: 0;">Startup</p>
+                    <input 
+                      type="radio" 
+                      id="startup" 
+                      formControlName="model" 
+                      value="STARTUP" 
+                      style="border-radius: 100px;" 
+                    />
+                    <label for="startup" style="color: #707070; margin-bottom: 0;">Startup</label>
                   </div>
                   <div style="display: flex; gap: 10px;">
-                    <input type="checkbox" style="border-radius: 100px;" />
-                    <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+                    <input 
+                      type="radio" 
+                      id="empresaTradicional" 
+                      formControlName="model" 
+                      value="TRADITIONAL" 
+                      style="border-radius: 100px;" 
+                    />
+                    <label for="empresaTradicional" style="color: #707070; margin-bottom: 0;">Empresa tradicional</label>
                   </div>
                 </div>
               </div>
-    
-    
+              
             </div>
     
             <div formGroupName="responsible" *ngIf="selectedSession === 'Responsável'">
@@ -1516,20 +1550,31 @@ class="content">
     
               <div style="margin-bottom: 15px; width: 100%;">
                 <p style="margin-top: 24px;">Modelo <span style="color: red;">*</span></p>
-    
+              
                 <div style="width: 100%; display: flex; align-items: center; gap: 10px;">
                   <div style="display: flex; gap: 10px;">
-                    <input type="checkbox" style="border-radius: 100px;" />
-                    <p style="color: #707070; margin-bottom: 0;">Startup</p>
+                    <input 
+                      type="radio" 
+                      id="startup" 
+                      formControlName="model" 
+                      value="STARTUP" 
+                      style="border-radius: 100px;" 
+                    />
+                    <label for="startup" style="color: #707070; margin-bottom: 0;">Startup</label>
                   </div>
                   <div style="display: flex; gap: 10px;">
-                    <input type="checkbox" style="border-radius: 100px;" />
-                    <p style="color: #707070; margin-bottom: 0;">Empresa tradicional</p>
+                    <input 
+                      type="radio" 
+                      id="empresaTradicional" 
+                      formControlName="model" 
+                      value="TRADITIONAL" 
+                      style="border-radius: 100px;" 
+                    />
+                    <label for="empresaTradicional" style="color: #707070; margin-bottom: 0;">Empresa tradicional</label>
                   </div>
                 </div>
               </div>
-    
-    
+              
             </div>
     
             <div formGroupName="responsible" *ngIf="selectedSession === 'Responsável'">
