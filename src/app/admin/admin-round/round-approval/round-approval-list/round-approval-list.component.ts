@@ -677,7 +677,6 @@ export class RoundApprovalListComponent implements OnInit {
       const data = this.form.value;
   
       data.cnpj = this.unmaskCnpj(data.cnpj);
-  
       data.cac = this.unmaskCurrency(data.cac);
       data.ltv = this.unmaskCurrency(data.ltv);
       data.cmv = this.unmaskCurrency(data.cmv);
@@ -689,10 +688,9 @@ export class RoundApprovalListComponent implements OnInit {
       if (rawDate) {
         data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
       } else {
-        console.error("Data de nascimento inválida ou não preenchida.");
-        toastr.error("Preencha a data de nascimento corretamente.");
+        toastr.error("Data de nascimento não preenchida ou inválida.");
         return;
-      }
+      }      
   
       data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
       data.responsible.phone = this.unmaskInput(data.responsible.phone);
@@ -700,10 +698,11 @@ export class RoundApprovalListComponent implements OnInit {
   
       data.type = "SIMPLE";
       data.category = "TRACTION";
-        
+  
       this.companyService.createCompany(data).subscribe(
         (response) => {
           toastr.success('Dados atualizados.');
+          this.loadCompanies();
         },
         (error) => {
           const errorMessage = this.getDetailedErrorMessage(error);
@@ -723,19 +722,32 @@ export class RoundApprovalListComponent implements OnInit {
     }
   }
   
+  
   private formatDateToISO(date: string): string {
     try {
-      const [day, month, year] = date.split('/');
-      if (!day || !month || !year) {
-        throw new Error("Formato de data inválido.");
+      const cleanedDate = date.trim();
+  
+      const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (isoDateRegex.test(cleanedDate)) {
+        return cleanedDate;
       }
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  
+      const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!dateRegex.test(cleanedDate)) {
+        throw new Error("Formato de data inválido. Use dd/MM/yyyy.");
+      }
+  
+      const [day, month, year] = cleanedDate.split('/').map(Number);
+      if (!day || !month || !year) {
+        throw new Error("Data incompleta.");
+      }
+  
+      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     } catch (error) {
       console.error("Erro ao formatar a data:", error);
       return "";
     }
   }
-  
   
 
   loadCompanies() {
