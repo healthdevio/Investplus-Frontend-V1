@@ -206,6 +206,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.initExpenseForm();
     this.initValuationForm();
     this.initCaptableForm();
+    this.initForm();
 
     const $this = this;
     setTimeout(function () {
