@@ -1189,5 +1189,18 @@ export class RoundApprovalListComponent implements OnInit {
   
     input.value = value;
   }
+
+  onCurrencyInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    const numericValue = (Number(value) / 100).toFixed(2);
+    const parts = numericValue.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    input.value = `R$ ${parts.join(',')}`; 
+  }
   
 }
