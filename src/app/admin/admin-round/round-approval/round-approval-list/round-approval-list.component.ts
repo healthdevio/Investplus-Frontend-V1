@@ -313,9 +313,36 @@ export class RoundApprovalListComponent implements OnInit {
     });
   }
 
+  private validateSpecificFields(fields: string[]): void {
+    const invalidFields: string[] = [];
+  
+    fields.forEach((field) => {
+      const control = this.form.get(field);
+      if (control instanceof FormControl) {
+        if (control.invalid) {
+          invalidFields.push(this.getFieldLabel(field));
+        }
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
+  
+    if (invalidFields.length > 0) {
+      toastr.error(`Os seguintes campos estão inválidos: ${invalidFields.join(', ')}`);
+    }
+  }
+  
+
   onValuationSubmit() {
-    if (this.form.valid) {
-      const dataSend = this.form.value;
+    this.validateSpecificFields(['current', 'shortTerm', 'longTerm']);
+  
+    const currentControl = this.valuationForm.get('current');
+    const shortTermControl = this.valuationForm.get('shortTerm');
+    const longTermControl = this.valuationForm.get('longTerm');
+
+    console.log(currentControl, shortTermControl, longTermControl)
+  
+    if (currentControl.valid && shortTermControl.valid && longTermControl.valid) {
+      const dataSend = this.valuationForm.value;
       dataSend.date = moment(new Date()).format('DD/MM/YYYY hh:mm:ss');
       dataSend.current = this.unmaskMoney(dataSend.current);
       dataSend.shortTerm = this.unmaskMoney(dataSend.shortTerm);
@@ -323,10 +350,10 @@ export class RoundApprovalListComponent implements OnInit {
   
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.companyService.createValuation(this.companyId, dataSend).subscribe({
+      this.companyService.createValuation(this.id, dataSend).subscribe({
         next: (response) => {
           toastr.success('Dados atualizados.');
-          this.getValuation(this.companyId);
+          this.getValuation(this.id);
         },
         error: (error) => {
           const errorMessage = this.getDetailedErrorMessage(error);
@@ -338,8 +365,7 @@ export class RoundApprovalListComponent implements OnInit {
         }
       });
     } else {
-      this.validateAllFields(this.form);
-      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+      toastr.error('Os campos obrigatórios estão preenchidos incorretamente. Por favor revise seus dados.');
     }
   }
 
@@ -360,27 +386,38 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   getValuation(idCompany: number) {
-    this.companyService.getValuation(idCompany).subscribe((response) => {
-      this.valuation = response;
-
-      this.valuationForm.controls['current'].setValue(this.moneyMask.transform(response.current));
-      this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(response.shortTerm));
-      this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(response.longTerm));
-
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
-
-      this.loader = false;
-    }, (error) => {
-      this.loader = false;
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
-    });
+    this.companyService.getValuation(idCompany).subscribe(
+      (response) => {
+        const currentValue = response?.current || 0;
+        const shortTermValue = response?.shortTerm || 0;
+        const longTermValue = response?.longTerm || 0;
+  
+        this.valuationForm.controls['current'].setValue(this.moneyMask.transform(currentValue));
+        this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(shortTermValue));
+        this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(longTermValue));
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      },
+      (error) => {
+        this.valuationForm.controls['current'].setValue(this.moneyMask.transform(0));
+        this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(0));
+        this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(0));
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      }
+    );
   }
+  
 
   public initExpenseForm(): void {
     this.expenseForm = this.formBuilder.group({
