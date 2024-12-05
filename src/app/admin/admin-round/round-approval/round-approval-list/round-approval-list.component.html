@@ -1126,6 +1126,11 @@ class="content">
           </td>
         </tr>
 
+        <div *ngIf="filteredCompanies.length === 0" 
+        style="width: 100%; text-align: center; margin-top: 35px; margin-left: 40%; color: #909090; font-family: Poppins, sans-serif; font-weight: 400;">
+        Nenhuma empresa encontrada nessa categoria.
+        </div>
+
       </table>
 
       <div
@@ -2192,6 +2197,7 @@ class="content">
         </div>
     
         <div style="overflow-x: auto;">
+
           <table style="margin-top: 35px;">
             <tr>
               <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Empresa</th>
@@ -2200,6 +2206,11 @@ class="content">
               <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Modelo</th>
             </tr>
           
+            <div *ngIf="filteredCompanies.length === 0" 
+            style="width: 100%; text-align: center; margin-top: 35px; margin-left: 40%; color: #909090; font-family: Poppins, sans-serif; font-weight: 400;">
+            Nenhuma empresa encontrada nessa categoria.
+            </div>
+
             <tr [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
               style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
               *ngFor="let company of filteredCompanies | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
