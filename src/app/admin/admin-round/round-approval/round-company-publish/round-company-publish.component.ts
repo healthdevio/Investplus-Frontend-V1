@@ -12,6 +12,7 @@ import { finalize } from 'rxjs/operators';
 import { RealStateService } from '../../../../core/service/real-state.service';
 import { saveAs } from 'file-saver';
 import { Modality, ModalityService } from '../../../../core/service/modality.service';
+import { forkJoin } from "rxjs";
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -113,10 +114,30 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.initForm();
     this.initUpdateForm();
     this.getModalities();
+    this.fetchCompanies();
 
     this.applyMonetaryMask('minimumValuation');
     this.applyMonetaryMask('maximumValuation');
     this.applyMonetaryMask('quotaValue');
+  }
+
+  fetchCompanies(): void {
+    this.loader = true;
+    
+    const approved$ = this.companyService.getAllByStatus("APPROVED");
+    const reproved$ = this.companyService.getAllByStatus("REPROVED");
+    const pending_evaluation$ = this.companyService.getAllByStatus("PENDING_EVALUATION");
+  
+    forkJoin([approved$, reproved$, pending_evaluation$]).subscribe(
+      ([approved, reproved, pending_evaluation]) => {
+        this.companies = [...(approved || []), ...(reproved || []), ...(pending_evaluation || [])];
+        this.loader = false;
+      },
+      (error) => {
+        toastr.error('Erro ao carregar a lista de empresas.', 'Erro');
+        this.loader = false;
+      }
+    );
   }
 
   applyMonetaryMask(controlName: string) {
