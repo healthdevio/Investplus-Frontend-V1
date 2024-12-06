@@ -643,6 +643,9 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   public unmaskCurrency(number: any): any {
+    if (number === null || number === undefined) {
+        return null;
+    }
     return (Number(number.replace(/[^\d]+/g, '')) / 100).toFixed(2);
   }
 
