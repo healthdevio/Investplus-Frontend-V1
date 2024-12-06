@@ -31,6 +31,19 @@
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
 
             <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>              
+
+            <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
                 <select formControlName="type"
@@ -399,6 +412,19 @@
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
 
             <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
+
+            <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
                 <select formControlName="type"
@@ -683,6 +709,30 @@
                 </div>
               </app-form>
             </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Documentos Financeiros</p>
+              <app-form [errorMessage]="'Documentos Financeiros é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="filevaluationDoc.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('valuationDoc').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #filevaluationDoc (change)="uploadFile($event, 'valuationDoc', 'docValuation')" style="display: none;" />
+                </div>
+              </app-form>
+            </div>
+          
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional</p>
+              <app-form [errorMessage]="'Dossiê reputacional é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="fileReputationalDossier.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('reputationalDossier').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #fileReputationalDossier (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')" style="display: none;" />
+                </div>
+              </app-form>
+            </div>
           </div>
 
           <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
@@ -764,45 +814,62 @@
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
           <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
         </tr>
-
-        <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
-          *ngFor="let round of filteredCompanies; let i = index">
-          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name ||
-            round?.property }}
+      
+        <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;" 
+            *ngFor="let round of filteredCompanies; let i = index">
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
+            {{ round?.name || round?.property }}
           </td>
-          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.model }}
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">
+            {{ round?.model }}
           </td>
-          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{
-            (round?.round?.partnerParticipation | number: '1.0-3') }}%</td>
+          <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">
+            {{ (round?.round?.partnerParticipation | number: '1.0-3') }}%
+          </td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
             <span>{{ round?.round?.maximumValuation | moneyMask : true }}</span>
           </td>
           <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; position: relative;">
-            <svg class="hover-svg" style="cursor: pointer;" width="20" height="20" viewBox="0 0 20 20" fill="none"
-              xmlns="http://www.w3.org/2000/svg" (click)="toggleDropdown(i)">
+            <svg class="hover-svg" style="cursor: pointer;" width="20" height="20" viewBox="0 0 20 20" fill="none" 
+                xmlns="http://www.w3.org/2000/svg" (click)="toggleDropdown(i)">
               <path
                 d="M10 16.6673C9.07953 16.6673 8.33334 15.9211 8.33334 15.0007C8.33334 14.0802 9.07953 13.334 10 13.334C10.9205 13.334 11.6667 14.0802 11.6667 15.0007C11.6667 15.9211 10.9205 16.6673 10 16.6673ZM10 11.6673C9.07953 11.6673 8.33334 10.9211 8.33334 10.0007C8.33334 9.08018 9.07953 8.33398 10 8.33398C10.9205 8.33398 11.6667 9.08018 11.6667 10.0007C11.6667 10.4427 11.4911 10.8666 11.1785 11.1792C10.866 11.4917 10.442 11.6673 10 11.6673ZM10 6.66732C9.07953 6.66732 8.33334 5.92113 8.33334 5.00065C8.33334 4.08018 9.07953 3.33398 10 3.33398C10.9205 3.33398 11.6667 4.08018 11.6667 5.00065C11.6667 5.44268 11.4911 5.8666 11.1785 6.17916C10.866 6.49172 10.442 6.66732 10 6.66732Z"
                 fill="#909090" />
             </svg>
-
-            <div (click)="getRoundInformation(round.id, round.round.id)" *ngIf="isDropdownVisible === i"
-              style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
-              <div class="hover-background" style="display: flex; gap: 16px; align-items: center; cursor: pointer;">
+      
+            <div *ngIf="isDropdownVisible === i"
+                style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
+              <div class="hover-background" style="display: flex; gap: 16px; align-items: center; cursor: pointer;" 
+                  (click)="getRoundInformation(round.id, round.round.id)">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                  <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round"
-                    stroke-linejoin="round" />
+                  <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" 
+                      stroke-linejoin="round" />
+                  <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" 
+                      stroke-linejoin="round" />
                   <path
                     d="M14 8C14 4.6863 11.3137 2 8 2C6.30483 2 4.77387 2.70299 3.6827 3.83333M2 8C2 11.3137 4.6863 14 8 14C9.61853 14 11.0874 13.3591 12.1667 12.3173"
                     stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <p style="margin-bottom: 0;">Atualizar</p>
               </div>
+               <div 
+                class="hover-background" 
+                style="display: flex; gap: 16px; align-items: center; cursor: pointer; margin-top: 12px;"
+                (click)="toggleRoundStatus(round.id, round.round.id, round.round.status)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="3" width="3" height="10" fill="#505050" />
+                  <rect x="9" y="3" width="3" height="10" fill="#505050" />
+                </svg>
+                <p 
+                  style="margin-bottom: 0; margin-top: 2%; white-space: nowrap; max-width: 3%;">
+                  {{ getButtonLabel(round.round.status) }}
+                </p>
+              </div>            
             </div>
           </td>
         </tr>
-      </table>
+      </table>      
 
       <div style="width: 100%; display: flex; justify-content: center; align-items: center; margin-top: 30px;"
         *ngIf="filteredCompanies.length === 0">
@@ -871,6 +938,19 @@
 
           <div *ngIf="selectedUpdateSession === 'Geral'">
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
 
             <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
@@ -1254,6 +1334,19 @@
             <p style="margin-bottom: 0; color: #777777;">Dados gerais</p>
 
             <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px;">Empresa <span style="color: red;">*</span></p>
+              <app-form [errorMessage]="'Empresa é obrigatória.'">
+                <select formControlName="id" required
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px solid #E5E5E5; padding: 0 15px;">
+                  <option [ngValue]="null">Selecione uma empresa...</option>
+                  <option *ngFor="let company of companies" [value]="company.id">
+                    {{ company.name.toUpperCase() }}
+                  </option>
+                </select>
+              </app-form>
+            </div>   
+
+            <div style="margin-bottom: 15px;">
               <p style="margin-top: 24px;">Tipo da rodada <span style="color: red;">*</span></p>
               <app-form [errorMessage]="'Tipo da rodada é obrigatório.'">
                 <select formControlName="type"
@@ -1521,6 +1614,30 @@
                 </div>
               </app-form>
             </div>
+
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Documentos Financeiros</p>
+              <app-form [errorMessage]="'Documentos Financeiros é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="filevaluationDoc.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('valuationDoc').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #filevaluationDoc (change)="uploadFile($event, 'valuationDoc', 'docValuation')" style="display: none;" />
+                </div>
+              </app-form>
+            </div>
+          
+            <div style="margin-bottom: 15px;">
+              <p style="margin-top: 24px; margin-bottom: 0;">Dossiê reputacional</p>
+              <app-form [errorMessage]="'Dossiê reputacional é obrigatório.'">
+                <div
+                  style="width: 100%; height: 50px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                  (click)="fileReputationalDossier.click()">
+                  <p style="margin-bottom: 0px; color: #035A7A;">{{ updateForm.get('reputationalDossier').value ?? 'Anexar Arquivo'}}</p>
+                  <input type="file" #fileReputationalDossier (change)="uploadFile($event, 'reputationalDossier', 'docReputationalDossier')" style="display: none;" />
+                </div>
+              </app-form>
+            </div>
           </div>
 
           <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
@@ -1592,18 +1709,13 @@
             <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Prazo</th>
             <th style="padding-left: 16px; font-family: Poppins, sans-serif; font-weight: 400;">Objetivo</th>
           </tr>
-
+        
           <tr style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1; cursor: auto;"
             *ngFor="let round of filteredCompanies; let i = index">
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name ||
-              round?.property
-              }}
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">{{ round?.name || round?.property }}
             </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.model }}
-            </td>
-            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{
-              round?.round?.partnerParticipation
-              }}%</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.model }}</td>
+            <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400;">{{ round?.round?.partnerParticipation }}%</td>
             <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 400; color: #035A7A;">
               <span>{{ round?.round?.maximumValuation | moneyMask : true }}</span>
             </td>
@@ -1614,7 +1726,7 @@
                   d="M10 16.6673C9.07953 16.6673 8.33334 15.9211 8.33334 15.0007C8.33334 14.0802 9.07953 13.334 10 13.334C10.9205 13.334 11.6667 14.0802 11.6667 15.0007C11.6667 15.9211 10.9205 16.6673 10 16.6673ZM10 11.6673C9.07953 11.6673 8.33334 10.9211 8.33334 10.0007C8.33334 9.08018 9.07953 8.33398 10 8.33398C10.9205 8.33398 11.6667 9.08018 11.6667 10.0007C11.6667 10.4427 11.4911 10.8666 11.1785 11.1792C10.866 11.4917 10.442 11.6673 10 11.6673ZM10 6.66732C9.07953 6.66732 8.33334 5.92113 8.33334 5.00065C8.33334 4.08018 9.07953 3.33398 10 3.33398C10.9205 3.33398 11.6667 4.08018 11.6667 5.00065C11.6667 5.44268 11.4911 5.8666 11.1785 6.17916C10.866 6.49172 10.442 6.66732 10 6.66732Z"
                   fill="#909090" />
               </svg>
-
+        
               <div (click)="getRoundInformation(round.id, round.round.id)" *ngIf="isDropdownVisible === i"
                 style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
                 <div class="hover-background" style="display: flex; gap: 16px; align-items: center; cursor: pointer;">
@@ -1632,7 +1744,6 @@
               </div>
             </td>
           </tr>
-
         </table>
       </div>
 

@@ -21,6 +21,9 @@ import { CompanyPartner } from '../../../../core/interface/company-partners';
 import { finalize } from 'rxjs/operators';
 import { CompanyPartnersService } from '../../../../core/service/company-partners.service';
 
+
+
+declare var bootbox: any;
 declare var toastr: any;
 declare var moment: any;
 @Component({
@@ -203,11 +206,16 @@ export class RoundApprovalListComponent implements OnInit {
     this.initExpenseForm();
     this.initValuationForm();
     this.initCaptableForm();
+    this.initForm();
 
     const $this = this;
     setTimeout(function () {
       $this.initMask();
     }, 1000);
+  }
+
+  ngAfterViewInit() {
+    this.initMask();
   }
 
   public initAdminForm(): void {
@@ -253,21 +261,49 @@ export class RoundApprovalListComponent implements OnInit {
       dataSend.ventureBuilder3 = this.unmaskMoney(dataSend.ventureBuilder3);
       dataSend.investmentFund1 = this.unmaskMoney(dataSend.investmentFund1);
       dataSend.investmentFund2 = this.unmaskMoney(dataSend.investmentFund2);
+  
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.captableService.createCaptable(this.id, dataSend).subscribe((response) => {
-        toastr.success('Dados enviados.');
-      }, (error) => {
-        toastr.error('Ocorreu um erro, contate o administrador.');
-      }, () => {
-        this.loading = false;
-        this.loaderService.load(this.loading);
+  
+      this.captableService.createCaptable(this.id, dataSend).subscribe({
+        next: (response) => {
+          toastr.success('Dados enviados.');
+        },
+        error: (error) => {
+          const errorMessage = this.getDetailedErrorMessage(error);
+          toastr.error(errorMessage, 'Erro');
+        },
+        complete: () => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        }
       });
     } else {
-      this.validateAllFields(this.form);
+      this.validateAllFields(this.captableForm);
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
   }
+  
+  private getDetailedErrorMessage(error: any): string {
+    let message = 'Ocorreu um erro inesperado.';
+  
+    if (error?.error) {
+      if (typeof error.error === 'string') {
+        message = error.error; 
+      } else if (typeof error.error === 'object') {
+        const errorDetails = error.error.errors || error.error;
+        const errorFields = Object.keys(errorDetails).map(
+          (field) => `${field}: ${errorDetails[field]}`
+        );
+        message = `Erro nos campos: ${errorFields.join(', ')}`;
+      }
+    } else if (error?.message) {
+      message = error.message;
+    }
+  
+    return message;
+  }
+  
 
   public initValuationForm(): void {
     this.valuationForm = this.formBuilder.group({
@@ -277,28 +313,59 @@ export class RoundApprovalListComponent implements OnInit {
     });
   }
 
+  private validateSpecificFields(fields: string[]): void {
+    const invalidFields: string[] = [];
+  
+    fields.forEach((field) => {
+      const control = this.form.get(field);
+      if (control instanceof FormControl) {
+        if (control.invalid) {
+          invalidFields.push(this.getFieldLabel(field));
+        }
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
+  
+    if (invalidFields.length > 0) {
+      toastr.error(`Os seguintes campos estão inválidos: ${invalidFields.join(', ')}`);
+    }
+  }
+  
+
   onValuationSubmit() {
-    if (this.form.valid) {
-      const dataSend = this.form.value;
+    this.validateSpecificFields(['current', 'shortTerm', 'longTerm']);
+  
+    const currentControl = this.valuationForm.get('current');
+    const shortTermControl = this.valuationForm.get('shortTerm');
+    const longTermControl = this.valuationForm.get('longTerm');
+
+    console.log(currentControl, shortTermControl, longTermControl)
+  
+    if (currentControl.valid && shortTermControl.valid && longTermControl.valid) {
+      const dataSend = this.valuationForm.value;
       dataSend.date = moment(new Date()).format('DD/MM/YYYY hh:mm:ss');
       dataSend.current = this.unmaskMoney(dataSend.current);
       dataSend.shortTerm = this.unmaskMoney(dataSend.shortTerm);
       dataSend.longTerm = this.unmaskMoney(dataSend.longTerm);
-
+  
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.companyService.createValuation(this.companyId, dataSend).subscribe((response) => {
-        toastr.success('Dados atualizados.');
-        this.getValuation(this.companyId);
-      }, (error) => {
-        toastr.error('Ocorreu um erro, contate o administrador.');
-      }, () => {
-        this.loading = true;
-        this.loaderService.load(this.loading);
+      this.companyService.createValuation(this.id, dataSend).subscribe({
+        next: (response) => {
+          toastr.success('Dados atualizados.');
+          this.getValuation(this.id);
+        },
+        error: (error) => {
+          const errorMessage = this.getDetailedErrorMessage(error);
+          toastr.error(errorMessage, 'Erro');
+        },
+        complete: () => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        }
       });
     } else {
-      this.validateAllFields(this.form);
-      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+      toastr.error('Os campos obrigatórios estão preenchidos incorretamente. Por favor revise seus dados.');
     }
   }
 
@@ -319,27 +386,38 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   getValuation(idCompany: number) {
-    this.companyService.getValuation(idCompany).subscribe((response) => {
-      this.valuation = response;
-
-      this.valuationForm.controls['current'].setValue(this.moneyMask.transform(response.current));
-      this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(response.shortTerm));
-      this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(response.longTerm));
-
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
-
-      this.loader = false;
-    }, (error) => {
-      this.loader = false;
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
-    });
+    this.companyService.getValuation(idCompany).subscribe(
+      (response) => {
+        const currentValue = response?.current || 0;
+        const shortTermValue = response?.shortTerm || 0;
+        const longTermValue = response?.longTerm || 0;
+  
+        this.valuationForm.controls['current'].setValue(this.moneyMask.transform(currentValue));
+        this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(shortTermValue));
+        this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(longTermValue));
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      },
+      (error) => {
+        this.valuationForm.controls['current'].setValue(this.moneyMask.transform(0));
+        this.valuationForm.controls['shortTerm'].setValue(this.moneyMask.transform(0));
+        this.valuationForm.controls['longTerm'].setValue(this.moneyMask.transform(0));
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      }
+    );
   }
+  
 
   public initExpenseForm(): void {
     this.expenseForm = this.formBuilder.group({
@@ -402,6 +480,8 @@ export class RoundApprovalListComponent implements OnInit {
         this.adminForm.reset();
       }, (error) => {
         toastr.error('Ocorreu um erro, contate o administrador.');
+        const errorMessage = this.getDetailedErrorMessage(error);
+        toastr.error(errorMessage, 'Erro');
       }, () => {
         this.loading = false;
         this.loaderService.load(this.loading);
@@ -448,7 +528,7 @@ export class RoundApprovalListComponent implements OnInit {
       payingCustomers: [null, [Validators.required]],
       grossRevenue: [null, [Validators.required, Validators.maxLength(500)]],
       operations: [null, [Validators.required, Validators.maxLength(500)]],
-      //partners: this.formBuilder.array([]),
+      partners: this.formBuilder.array([]),
       totalExpenditure: [null, [Validators.required]],
       investments: [null, [Validators.required, Validators.maxLength(500)]],
       investmentsDeposited: [null, [Validators.required, Validators.maxLength(500)]],
@@ -495,17 +575,67 @@ export class RoundApprovalListComponent implements OnInit {
     });
   }
 
+  private getFieldLabel(field: string): string {
+    const fieldLabels: { [key: string]: string } = {
+      userName: 'Nome de Usuário',
+      founders: 'Fundadores',
+      coFounders: 'Cofundadores',
+      vesting: 'Vesting',
+      accelerator: 'Aceleradora',
+      crowdfunding: 'Crowdfunding',
+      angel: 'Anjo',
+      venture1: 'Venture 1',
+      venture2: 'Venture 2',
+      venture3: 'Venture 3',
+      ventureBuilder1: 'Venture Builder 1',
+      ventureBuilder2: 'Venture Builder 2',
+      ventureBuilder3: 'Venture Builder 3',
+      investmentFund1: 'Fundo de Investimento 1',
+      investmentFund2: 'Fundo de Investimento 2',
+      email: 'E-mail',
+      cpf: 'CPF',
+      phone: 'Telefone',
+      name: 'Nome',
+      street: 'Rua',
+      neighborhood: 'Bairro',
+      city: 'Cidade',
+      uf: 'Estado',
+      zipCode: 'CEP',
+    };
+  
+    return fieldLabels[field] || field;
+  }
+
   public validateAllFields(formGroup: FormGroup): void {
+    const invalidFields: string[] = [];
+  
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
+        if (control.invalid) {
+          invalidFields.push(this.getFieldLabel(field));
+        }
         control.markAsTouched({
           onlySelf: true
         });
       } else if (control instanceof FormGroup) {
         this.validateAllFields(control);
+      } else if (control instanceof FormArray) {
+        (control as FormArray).controls.forEach((group, index) => {
+          if (group instanceof FormGroup) {
+            Object.keys(group.controls).forEach(subField => {
+              if (group.get(subField).invalid) {
+                invalidFields.push(`${this.getFieldLabel(subField)} no item ${index + 1}`);
+              }
+            });
+          }
+        });
       }
     });
+  
+    if (invalidFields.length > 0) {
+      toastr.error(`Os seguintes campos estão inválidos: ${invalidFields.join(', ')}`);
+    }
   }
 
   public unmaskCnpj(cnpj: any): string {
@@ -536,43 +666,212 @@ export class RoundApprovalListComponent implements OnInit {
   public onSubmit(): void {
     this.loading = true;
     this.loaderService.load(this.loading);
+  
+    this.validateRelevantFields(this.form);
+  
+    console.log("Iniciando atualização de dados");
+    const data = this.form.value;
+  
+    data.cnpj = this.unmaskCnpj(data.cnpj);
+    data.cac = this.unmaskCurrency(data.cac);
+    data.ltv = this.unmaskCurrency(data.ltv);
+    data.cmv = this.unmaskCurrency(data.cmv);
+  
+    data.address.zipCode = this.unmaskInput(data.address.zipCode);
+  
+    const rawDate = data.responsible.dateOfBirth;
+  
+    if (rawDate) {
+      data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
+    } else {
+      toastr.error("Data de nascimento não preenchida ou inválida.");
+      this.loading = false;
+      this.loaderService.load(this.loading);
+      return;
+    }
+  
+    data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
+    data.responsible.phone = this.unmaskInput(data.responsible.phone);
+    data.responsible.rg = this.unmaskInput(data.responsible.rg);
+  
+    delete data.partners;
+    delete data.totalExpenditure;
+    delete data.averageTicket;
+    delete data.ltvCac;
+    delete data.cashburnIndicator;
+    delete data.sharePriceIndicator;
+    delete data.accountAgency;
+    delete data.accountBank;
+    delete data.accountNumber;
+    delete data.cnae;
+    delete data.benchmarks;
+    delete data.competitors;
+    delete data.facebook;
+    delete data.generalInfo;
+    delete data.grossRevenue;
+    delete data.incubation;
+    delete data.legalType;
+    delete data.volutiId;
+    delete data.video;
+    delete data.twitter;
+    delete data.providers;
+    delete data.nire;
 
-    console.log(this.form.value)
-    if (this.form.valid) {
-      const data = this.form.value;
-      data.cnpj = this.unmaskCnpj(data.cnpj);
-      data.totalExpenditure = this.unmaskCurrency(data.totalExpenditure);
-      data.cac = this.unmaskCurrency(data.cac);
-      data.averageTicket = this.unmaskCurrency(data.averageTicket);
-      data.ltv = this.unmaskCurrency(data.ltv);
-      data.cmv = this.unmaskCurrency(data.cmv);
-      data.ltvCac = this.unmaskCurrency(data.ltvCac);
-      data.cashburnIndicator = this.unmaskCurrency(data.cashburnIndicator);
-      data.valuation = this.maskValuation(data.valuation);
-      data.sharePriceIndicator = this.unmaskCurrency(data.sharePriceIndicator);
-
-      data.address.zipCode = this.unmaskInput(data.address.zipCode);
-
-      data.responsible.dateOfBirth = this.dateMask.transform(data.responsible.dateOfBirth, 'AMERICAN');
-      data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
-      data.responsible.phone = this.unmaskInput(data.responsible.phone);
-
-      this.companyService.updateCompany(this.id, data).subscribe((response) => {
-        toastr.success('Dados atualizados.');
-      }, (error) => {
+    this.companyService.updateCompany(this.id, data).subscribe(
+      (response) => {
+        toastr.success('Dados atualizados com sucesso.');
+        this.loadCompanies(); 
+      },
+      (error) => {
+        const errorMessage = this.getDetailedErrorMessage(error);
+        toastr.error(errorMessage, 'Erro');
         toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
-      }, () => {
+      },
+      () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+        this.isEditCompanyModalOpen = false;
+      }
+    );
+  }   
+
+  public onSubmitCadastro(): void {
+    this.loading = true;
+    this.loaderService.load(this.loading);
+  
+    this.validateRelevantFields(this.form);
+  
+    console.log("entrou de fato entrou");
+    const data = this.form.value;
+  
+    data.cnpj = this.unmaskCnpj(data.cnpj);
+    data.cac = this.unmaskCurrency(data.cac);
+    data.ltv = this.unmaskCurrency(data.ltv);
+    data.cmv = this.unmaskCurrency(data.cmv);
+  
+    data.address.zipCode = this.unmaskInput(data.address.zipCode);
+  
+    const rawDate = data.responsible.dateOfBirth;
+  
+    if (rawDate) {
+      data.responsible.dateOfBirth = this.formatDateToISO(rawDate);
+    } else {
+      toastr.error("Data de nascimento não preenchida ou inválida.");
+      this.loading = false;
+      this.loaderService.load(this.loading);
+      return;
+    }
+  
+    data.responsible.cpf = this.unmaskInput(data.responsible.cpf);
+    data.responsible.phone = this.unmaskInput(data.responsible.phone);
+    data.responsible.rg = this.unmaskInput(data.responsible.rg);
+  
+    data.type = "SIMPLE";
+    data.category = "TRACTION";
+  
+    delete data.partners;
+  
+    this.companyService.createCompany(data).subscribe(
+      (response) => {
+        toastr.success('Dados enviados com sucesso.');
+        this.loadCompanies();
+      },
+      (error) => {
+        const errorMessage = this.getDetailedErrorMessage(error);
+        toastr.error(errorMessage, 'Erro');
+        toastr.error('Ocorreu um erro, entre em contato com o administrador.', 'Erro');
+      },
+      () => {
         this.loading = false;
         this.isSingUpCompanyModalOpen = false;
         this.loaderService.load(this.loading);
-      });
-    } else {
-      this.loading = false;
-      this.loaderService.load(this.loading);
-      this.validateAllFields(this.form);
-      toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
+      }
+    );
+  }
+  
+  private validateRelevantFields(formGroup: FormGroup): void {
+    const ignoredFields = [
+      'category',
+      'type',
+      'nire',
+      'cnae',
+      'legalType',
+      'yearOfIncorporation',
+      'generalInfo',
+      'revenueModel',
+      'customersDescription',
+      'competitors',
+      'benchmarks',
+      'numberOfCustomers',
+      'payingCustomers',
+      'grossRevenue',
+      'operations',
+      'partners',
+      'totalExpenditure',
+      'investments',
+      'investmentsDeposited',
+      'incubation',
+      'valuation',
+      'roundValue',
+      'providers',
+      'contractModel',
+      'hasDividends',
+      'video',
+      'pitch',
+      'facebook',
+      'linkedin',
+      'twitter',
+      'averageTicket',
+      'ltvCac',
+      'cashburnIndicator',
+      'sharePriceIndicator'
+    ];
+  
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        if (!ignoredFields.includes(field) && control.invalid) {
+          control.markAsTouched({ onlySelf: true });
+        }
+      } else if (control instanceof FormGroup) {
+        this.validateRelevantFields(control); 
+      } else if (control instanceof FormArray) {
+        control.controls.forEach((group) => {
+          if (group instanceof FormGroup) {
+            this.validateRelevantFields(group);
+          }
+        });
+      }
+    });
+  }
+  
+  
+  private formatDateToISO(date: string): string {
+    try {
+      const cleanedDate = date.trim();
+  
+      const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (isoDateRegex.test(cleanedDate)) {
+        return cleanedDate;
+      }
+  
+      const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!dateRegex.test(cleanedDate)) {
+        throw new Error("Formato de data inválido. Use dd/MM/yyyy.");
+      }
+  
+      const [day, month, year] = cleanedDate.split('/').map(Number);
+      if (!day || !month || !year) {
+        throw new Error("Data incompleta.");
+      }
+  
+      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    } catch (error) {
+      console.error("Erro ao formatar a data:", error);
+      return "";
     }
   }
+  
 
   loadCompanies() {
     this.companies = [];
@@ -598,7 +897,8 @@ export class RoundApprovalListComponent implements OnInit {
     );
   }
 
-  public getCompany(id): void {
+  public getCompany(id: number): void {
+    this.id = id;
     this.companyService.getCompany(id).subscribe((response) => {
       this.form.get('address').setValue({
         city: response.address.city,
@@ -751,7 +1051,7 @@ export class RoundApprovalListComponent implements OnInit {
 
     $('.phone').mask(SPMaskBehavior, spOptions);
     $('.zipCode').mask('00000-000');
-    $('.dateOfBirth').mask('00/00/0000');
+    $(".dateOfBirth").mask("00/00/0000");
     $('.money').mask('#.##0,00', {
       reverse: true
     });
@@ -800,4 +1100,231 @@ export class RoundApprovalListComponent implements OnInit {
     return csvContent;
   }
 
+  formatDate() {
+    const control = this.form.get('responsible.dateOfBirth');
+    let date = control?.value;
+  
+    if (date) {
+      date = date.replace(/\D/g, '');
+
+      if (date.length > 2) {
+        date = date.substring(0, 2) + '/' + date.substring(2);
+      }
+      if (date.length > 5) {
+        date = date.substring(0, 5) + '/' + date.substring(5, 9);
+      }
+  
+      control?.setValue(date, { emitEvent: false });
+    }
+  }
+
+  validateDate() {
+    const dateControl = this.form.controls["responsible.dateOfBirth"];
+    const date = dateControl?.value;
+  
+    if (!date) {
+      this.showErrorDialog("Insira uma data de nascimento válida.");
+      return false;
+    }
+  
+    const ExpReg = new RegExp(
+      "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/([12][0-9]{3})$"
+    );
+  
+    if (!ExpReg.test(date)) {
+      this.showErrorDialog("Insira uma data de nascimento válida no formato dd/mm/yyyy.");
+      dateControl.setValue("");
+      return false;
+    }
+  
+    const [day, month, year] = date.split("/").map(Number);
+  
+    if (
+      (month === 4 || month === 6 || month === 9 || month === 11) && day > 30 || 
+      (month === 2 && ((day > 28 && year % 4 !== 0) || day > 29)) ||
+      day > 31 
+    ) {
+      this.showErrorDialog("Insira uma data de nascimento válida.");
+      dateControl.setValue("");
+      return false;
+    }
+  
+    return true;
+  }
+  
+  private showErrorDialog(message: string) {
+    bootbox.dialog({
+      title: "Campo incorreto",
+      message: message,
+      buttons: {
+        ok: {
+          label: "Fechar",
+          className: "bg-upangel",
+          callback: function () { },
+        },
+      },
+    });
+  }
+  
+  async fetchAddressByCEP(cep: string): Promise<void> {
+    const numericCep = cep.replace(/\D/g, '');
+  
+    if (!numericCep || numericCep.length !== 8) {
+      toastr.error('Insira um CEP válido.');
+      return;
+    }
+  
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${numericCep}/json/`);
+      const data = await response.json();
+  
+      if (data.erro) {
+        toastr.error('CEP não encontrado.');
+        return;
+      }
+  
+      this.form.patchValue({
+        address: {
+          street: data.logradouro || '',
+          neighborhood: data.bairro || '',
+          city: data.localidade || '',
+          uf: data.uf || '',
+          complemento: data.complemento || ''
+        }
+      });
+  
+      toastr.success('Endereço encontrado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao buscar o endereço:', error);
+      toastr.error('Erro ao buscar o endereço. Tente novamente.');
+    }
+  }
+
+  onZipCodeInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 5) {
+      value = value.replace(/^(\d{5})(\d{1,3})/, '$1-$2');
+    }
+  
+    input.value = value; 
+  
+    if (value.length === 9) {
+      this.fetchAddressByCEP(value.replace('-', ''));
+    }
+  }
+
+  validateZipCode(zipCode: string): void {
+    const isValid = /^\d{8}$/.test(zipCode);
+
+    if (isValid) {
+      toastr.success('CEP válido!', 'Sucesso');
+    } else {
+      toastr.error('CEP inválido. Tente novamente.', 'Erro');
+    }
+  }
+
+  onRGInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    value = value.substring(0, 10);
+  
+    if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    }
+    if (value.length > 6) {
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    }
+    if (value.length > 9) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+    }
+  
+    input.value = value;
+  }  
+
+  onCPFInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    if (value.length > 9) {
+      value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    } else if (value.length > 6) {
+      value = value.replace(/^(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    } else if (value.length > 3) {
+      value = value.replace(/^(\d{3})(\d{1,3})/, '$1.$2');
+    }
+  
+    input.value = value;
+  }
+
+  onPhoneInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+  
+    if (value.length > 6) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{1,4})/, '($1) $2-$3');
+    } else if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d{1,4})/, '($1) $2');
+    } else if (value.length > 0) {
+      value = value.replace(/^(\d{1,2})/, '($1');
+    }
+  
+    input.value = value;
+  }  
+
+  onCNPJInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    value = value.substring(0, 14);
+  
+    if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    }
+    if (value.length > 5) {
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    }
+    if (value.length > 8) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
+    }
+    if (value.length > 12) {
+      value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
+    }
+  
+    input.value = value;
+  }
+
+  onCurrencyInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    const numericValue = (Number(value) / 100).toFixed(2);
+    const parts = numericValue.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    input.value = `R$ ${parts.join(',')}`; 
+  }
+  
 }
