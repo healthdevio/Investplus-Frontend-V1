@@ -408,38 +408,37 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   toggleValidatorsForInvestorType() {
     const isPJ = this.form.get('cpfResponsible')?.value === null;
   
-    if (isPJ) {
-      this.form.get('streetpj')?.setValidators([Validators.required]);
-      this.form.get('numberpj')?.setValidators([Validators.required]);
-      this.form.get('neighborhoodpj')?.setValidators([Validators.required]);
-      this.form.get('citypj')?.setValidators([Validators.required]);
-      this.form.get('ufpj')?.setValidators([Validators.required]);
-      this.form.get('zipcodepj')?.setValidators([Validators.required]);
-      this.admins.controls.forEach((adminGroup) => {
-        adminGroup.get('fullName')?.setValidators([Validators.required]);
-        adminGroup.get('cpfCnpj')?.setValidators([Validators.required]);
-      });
-    } else {
-      this.form.get('streetpj')?.clearValidators();
-      this.form.get('numberpj')?.clearValidators();
-      this.form.get('neighborhoodpj')?.clearValidators();
-      this.form.get('citypj')?.clearValidators();
-      this.form.get('ufpj')?.clearValidators();
-      this.form.get('zipcodepj')?.clearValidators();
-      this.admins.controls.forEach((adminGroup) => {
-        adminGroup.get('fullName')?.clearValidators();
-        adminGroup.get('cpfCnpj')?.clearValidators();
-      });
-    }
+    const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj'];
   
-    this.form.get('streetpj')?.updateValueAndValidity();
-    this.form.get('numberpj')?.updateValueAndValidity();
-    this.form.get('neighborhoodpj')?.updateValueAndValidity();
-    this.form.get('citypj')?.updateValueAndValidity();
-    this.form.get('ufpj')?.updateValueAndValidity();
-    this.form.get('zipcodepj')?.updateValueAndValidity();
-  }  
+    pjFields.forEach((field) => {
+      const control = this.form.get(field);
+      if (isPJ) {
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.clearValidators();
+        control?.setValue(null);
+      }
+      control?.updateValueAndValidity();
+    });
   
+    this.admins.controls.forEach((adminGroup) => {
+      const fullName = adminGroup.get('fullName');
+      const cpfCnpj = adminGroup.get('cpfCnpj');
+      if (isPJ) {
+        fullName?.setValidators([Validators.required]);
+        cpfCnpj?.setValidators([Validators.required]);
+      } else {
+        fullName?.clearValidators();
+        cpfCnpj?.clearValidators();
+        fullName?.setValue(null);
+        cpfCnpj?.setValue(null);
+      }
+      fullName?.updateValueAndValidity();
+      cpfCnpj?.updateValueAndValidity();
+    });
+  }
+  
+
   // toggleAdminValidatorsForPJ() {
   //   if (this.investor?.cnpj) {
   //     this.admins.controls.forEach(adminGroup => {
@@ -630,17 +629,27 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    const nonEmptyAdmins = this.admins.controls.filter(admin => {
-      const val = admin.value;
-      return val.fullName || val.cpfCnpj || val.rg || val.dateOfBirth || val.phone;
-    });
+    const isPJ = this.form.get('cpfResponsible')?.value === null;
+  
+    if (!isPJ) {
+      const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj', 'admins'];
+      pjFields.forEach((field) => this.form.removeControl(field));
+    }
+  
+    let nonEmptyAdmins = [];
+    if (isPJ) {
+      nonEmptyAdmins = this.admins.controls.filter(admin => {
+        const val = admin.value;
+        return val.fullName || val.cpfCnpj || val.rg || val.dateOfBirth || val.phone;
+      });
+    }
   
     if (!this.form.get('nickname')?.value) {
       this.setFormValue('nickname', this.investor.nickname);
     }
     if (!this.form.get('fullName')?.value) {
       this.setFormValue('fullName', this.investor.fullName);
-    }  
+    }
   
     if (this.form.valid) {
       const dataSend = {
@@ -651,14 +660,15 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         citypj: this.form.get('citypj')?.value,
         ufpj: this.form.get('ufpj')?.value,
         zipcodepj: this.unmaskInput(this.form.get('zipcodepj')?.value),
-        admins: nonEmptyAdmins.length > 0 ? nonEmptyAdmins.map(adminControl => ({
+        admins: isPJ && nonEmptyAdmins.length > 0 ? nonEmptyAdmins.map(adminControl => ({
           ...adminControl.value,
           zipCodeAdmin: this.unmaskInput(adminControl.value.zipCodeAdmin),
           dateOfBirth: adminControl.value.dateOfBirth ? moment(adminControl.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD') : null
         })) : null
       };
+  
       dataSend.phone = Number(this.unmaskInput(dataSend.phone));
-      dataSend.dateOfBirth = moment(this.form.get('dateOfBirth').value, 'DD/MM/YYYY').format('YYYY-MM-DD');
+      dataSend.dateOfBirth = moment(this.form.get('dateOfBirth')?.value, 'DD/MM/YYYY').format('YYYY-MM-DD');
       dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
       dataSend.totalInvestedOthers = parseFloat(this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", "."));
   
@@ -712,23 +722,29 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
   
   generateErrorMessage(formGroup: FormGroup): string {
+    const isPJ = this.form.get('cpfResponsible')?.value === null;
+    const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj'];
+  
     let messages: string[] = [];
   
     Object.keys(formGroup.controls).forEach((key) => {
+      if (!isPJ && pjFields.includes(key)) {
+        return;
+      }
+  
       const control = formGroup.get(key);
   
       if (control instanceof FormGroup) {
         const nestedMessages = this.generateErrorMessage(control);
         if (nestedMessages) messages.push(`${key}: ${nestedMessages}`);
       } else if (control && control.invalid && control.errors) {
-        const errorMessage = this.validationMessages[key] || `Campo ${key} está incorreto`;
+        const errorMessage = this.validationMessages[key] || `Campo ${key} está incorreto.`;
         messages.push(errorMessage);
       }
     });
   
     return messages.join("; ");
   }
-  
   
   onDevelopmentToast() {
     toastr.options = {
