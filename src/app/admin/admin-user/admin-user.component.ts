@@ -406,13 +406,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
   
   toggleValidatorsForInvestorType() {
-    const isPJ = this.form.get('cpfResponsible')?.value === null;
-  
     const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj'];
   
     pjFields.forEach((field) => {
       const control = this.form.get(field);
-      if (isPJ) {
+      if (this.isPJ) {
         control?.setValidators([Validators.required]);
       } else {
         control?.clearValidators();
@@ -424,7 +422,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.admins.controls.forEach((adminGroup) => {
       const fullName = adminGroup.get('fullName');
       const cpfCnpj = adminGroup.get('cpfCnpj');
-      if (isPJ) {
+      if (this.isPJ) {
         fullName?.setValidators([Validators.required]);
         cpfCnpj?.setValidators([Validators.required]);
       } else {
@@ -436,8 +434,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       fullName?.updateValueAndValidity();
       cpfCnpj?.updateValueAndValidity();
     });
-  }
-  
+  }  
 
   // toggleAdminValidatorsForPJ() {
   //   if (this.investor?.cnpj) {
@@ -461,10 +458,12 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.loader = true;
     this.investorService.getUser().subscribe((response) => {
       this.investor = response;
+
+      this.isPJ = !this.investor?.cpf; 
   
       this.applyInvestorTypeValidations();
   
-      this.totalTabs = this.investor?.cnpj ? 5 : 4;
+      this.totalTabs = this.isPJ ? 5 : 4;
   
       if (this.investor.cnpj) {
         if (!this.tabs.includes("Administradores")) {
@@ -629,15 +628,13 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    const isPJ = this.form.get('cpfResponsible')?.value === null;
-  
-    if (!isPJ) {
+    if (!this.isPJ) {
       const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj', 'admins'];
       pjFields.forEach((field) => this.form.removeControl(field));
     }
   
     let nonEmptyAdmins = [];
-    if (isPJ) {
+    if (this.isPJ) {
       nonEmptyAdmins = this.admins.controls.filter(admin => {
         const val = admin.value;
         return val.fullName || val.cpfCnpj || val.rg || val.dateOfBirth || val.phone;
@@ -660,7 +657,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         citypj: this.form.get('citypj')?.value,
         ufpj: this.form.get('ufpj')?.value,
         zipcodepj: this.unmaskInput(this.form.get('zipcodepj')?.value),
-        admins: isPJ && nonEmptyAdmins.length > 0 ? nonEmptyAdmins.map(adminControl => ({
+        admins: this.isPJ && nonEmptyAdmins.length > 0 ? nonEmptyAdmins.map(adminControl => ({
           ...adminControl.value,
           zipCodeAdmin: this.unmaskInput(adminControl.value.zipCodeAdmin),
           dateOfBirth: adminControl.value.dateOfBirth ? moment(adminControl.value.dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD') : null
@@ -672,7 +669,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       dataSend.investedUpangel = parseFloat(this.unmaskMoney(dataSend.investedUpangel).replace(",", "."));
       dataSend.totalInvestedOthers = parseFloat(this.unmaskMoney(dataSend.totalInvestedOthers).replace(",", "."));
   
-      if (this.investor.cnpj !== undefined) {
+      if (this.isPJ) {
         dataSend.cnpj = this.investor.cnpj;
         dataSend.cpfResponsible = this.unmaskInput(dataSend.cpfResponsible);
       } else {
@@ -719,7 +716,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       const errorMessages = this.generateErrorMessage(this.form);
       toastr.error(`Formulário preenchido incorretamente. Por favor, revise os seguintes campos: ${errorMessages}`);
     }
-  }
+  }  
   
   generateErrorMessage(formGroup: FormGroup): string {
     const isPJ = this.form.get('cpfResponsible')?.value === null;
