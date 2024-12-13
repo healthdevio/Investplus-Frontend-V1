@@ -434,7 +434,8 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       fullName?.updateValueAndValidity();
       cpfCnpj?.updateValueAndValidity();
     });
-  }  
+  }
+  
 
   // toggleAdminValidatorsForPJ() {
   //   if (this.investor?.cnpj) {
@@ -791,7 +792,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   }
 
   validateAllFields(formGroup: FormGroup) {
-    const isPJ = this.form.get('cpfResponsible')?.value === null; 
+    const isPJ = this.investor?.cnpj ? true : false;
     const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj', 'admins'];
   
     Object.keys(formGroup.controls).forEach((field) => {
