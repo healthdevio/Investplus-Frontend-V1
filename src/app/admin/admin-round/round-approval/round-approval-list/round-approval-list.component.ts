@@ -449,26 +449,36 @@ export class RoundApprovalListComponent implements OnInit {
   onExpenseSubmit() {
     if (this.expenseForm.valid) {
       const dataSend = this.expenseForm.value;
-      dataSend.date = this.dateMask.transform(dataSend.date, 'AMERICAN');
+  
+      const inputDate = new Date(dataSend.date);
+      const formattedDate = inputDate.toISOString().split('T')[0]; 
+      dataSend.date = formattedDate;
+  
       dataSend.revenueAmount = this.unmaskMoney(dataSend.revenueAmount);
       dataSend.expenseAmount = this.unmaskMoney(dataSend.expenseAmount);
-
+  
       this.loading = true;
       this.loaderService.load(this.loading);
-      this.financialService.createFinancial(this.companyId, dataSend).subscribe((response) => {
-        toastr.success('Dados enviados.');
-        this.expenseForm.reset();
-      }, (error) => {
-        toastr.error('Ocorreu um erro, contate o administrador.');
-      }, () => {
-        this.loading = false;
-        this.loaderService.load(this.loading);
-      });
+  
+      this.financialService.createFinancial(this.id, dataSend).subscribe(
+        (response) => {
+          toastr.success('Dados enviados.');
+          this.expenseForm.reset();
+        },
+        (error) => {
+          toastr.error('Ocorreu um erro, contate o administrador.');
+        },
+        () => {
+          this.loading = false;
+          this.loaderService.load(this.loading);
+        }
+      );
     } else {
       this.validateAllFields(this.expenseForm);
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
   }
+  
 
   onSubmitAdmin() {
     if (this.adminForm.valid) {
