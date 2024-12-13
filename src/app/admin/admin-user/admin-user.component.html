@@ -453,11 +453,11 @@
                   [placeholder]="investor?.cnpj ? 'Telefone do Sócio Representante' : 'Telefone'" />
               </app-form>
 
-              <app-form *ngIf="investor?.cnpj == undefined" [label]="'CPF do sócio Representante'"
-              [errorMessage]="'CPF do sócio Representante é um campo obrigatório.'">
+              <app-form *ngIf="investor?.cnpj == undefined" [label]="'CPF do investidor'"
+              [errorMessage]="'CPF do investidor é um campo obrigatório.'">
               <input type="text" formControlName="cpfResponsible"
                 style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                placeholder="CPF do sócio Representante" />
+                placeholder="CPF do investidor" />
               </app-form>
 
               <app-form *ngIf="investor?.cnpj == undefined" [label]="investor?.cnpj ? 'Estado civil do sócio Representante' : 'Estado civil'" [errorMessage]="'Estado civil é um campo obrigatório.'">
