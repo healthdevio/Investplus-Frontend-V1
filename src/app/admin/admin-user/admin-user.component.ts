@@ -630,7 +630,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (!this.isPJ) {
-      const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj', 'admins', 'maritalStatus'];
+      const pjFields = ['streetpj', 'numberpj', 'neighborhoodpj', 'citypj', 'ufpj', 'zipcodepj', 'admins'];
       pjFields.forEach((field) => this.form.removeControl(field));
     }
   

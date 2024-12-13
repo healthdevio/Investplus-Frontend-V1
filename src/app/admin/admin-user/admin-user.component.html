@@ -394,8 +394,8 @@
     
           <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
             <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
-              <h3 style="font-weight: 600; margin-bottom: 12px;">RG</h3>
-              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ investor?.cnpj ? 'Detalhes do RG do Sócio Representante' : 'Detalhes do RG' }}</p>
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Identificação</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">{{ investor?.cnpj ? 'Detalhes de Identificação do Sócio Representante' : 'Detalhes de Identificação' }}</p>
             </div>
     
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -452,6 +452,35 @@
                   style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
                   [placeholder]="investor?.cnpj ? 'Telefone do Sócio Representante' : 'Telefone'" />
               </app-form>
+
+              <app-form *ngIf="investor?.cnpj == undefined" [label]="'CPF do sócio Representante'"
+              [errorMessage]="'CPF do sócio Representante é um campo obrigatório.'">
+              <input type="text" formControlName="cpfResponsible"
+                style="height: 50px; width: 245px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+                placeholder="CPF do sócio Representante" />
+              </app-form>
+
+              <app-form *ngIf="investor?.cnpj == undefined" [label]="investor?.cnpj ? 'Estado civil do sócio Representante' : 'Estado civil'" [errorMessage]="'Estado civil é um campo obrigatório.'">
+                <select formControlName="maritalStatus"
+                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                  <option [ngValue]="null">Selecione uma opção...</option>
+                  <option value="SINGLE">Solteiro</option>
+                  <option value="MARRIED">Casado</option>
+                  <option value="SEPARATED">Separado</option>
+                  <option value="DIVORCED">Divorciado</option>
+                  <option value="WIDOWED">Viúvo</option>
+                </select>
+              </app-form>
+
+              <app-form *ngIf="investor?.cnpj == undefined" [label]="investor?.cnpj ? 'Sexo do Sócio Representante' : 'Sexo'"  [errorMessage]="'Sexo é um campo obrigatório.'">
+                <select formControlName="gender"
+                  style="height: 50px; width: 240px; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;">
+                  <option [ngValue]="null">Selecione uma opção...</option>
+                  <option value="MALE">Masculino</option>
+                  <option value="FEMALE">Feminino</option>
+                </select>
+              </app-form>
+
             </div>
           </div>
         
@@ -955,7 +984,7 @@
             </app-form>
         
             <app-form [label]="'Estado Civil'" [errorMessage]="'Estado Civil é obrigatório.'">
-              <select formControlName="maritalStatus" 
+              <select formControlName="maritalStatus"
                 style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; padding: 0 16px; margin-bottom: 8px;">
                 <option [ngValue]="null" disabled>Selecione o Estado Civil</option>
                 <option value="SINGLE">Solteiro(a)</option>
@@ -1467,8 +1496,8 @@
     
       <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
         <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
-          <h3 style="font-weight: 600; margin-bottom: 12px;">RG</h3>
-          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes do RG</p>
+          <h3 style="font-weight: 600; margin-bottom: 12px;">Identificação</h3>
+          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes de Identificação</p>
         </div>
     
         <div>
