@@ -659,7 +659,20 @@ export class RoundInvestmentDetailsComponent implements OnInit {
         next: (response) => {
           this.form.reset();
           this.sendAutomaticService.sendInvestor(dataSend);
-          toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
+  
+          const maxQuotas = this.quotas;
+          const allowedQuotas = maxQuotas * 1.25;
+          const currentQuotas = this.quotasSold + data.quotas;
+  
+          if (currentQuotas > maxQuotas && currentQuotas <= allowedQuotas) {
+            toastr.success(
+              "Investimento realizado com sucesso! Porém, o número de cotas ultrapassou o limite original. É permitido exceder até 25%.",
+              "Sucesso com Aviso"
+            );
+          } else {
+            toastr.success("Investimento realizado com sucesso! Obrigado por investir.", "Sucesso");
+          }
+  
           this.router.navigate(["/admin/rounds/assets/list"]);
           this.trackFacebookPixel();
           this.trackInvestmentCompleted();
@@ -703,8 +716,7 @@ export class RoundInvestmentDetailsComponent implements OnInit {
           this.router.navigate(["/admin/rounds/assets/list"]);
         }
       });
-  }  
-  
+  }
   
   private trackFacebookPixel(): void {
     (function (f: any, b, e, v, n, t, s) {
