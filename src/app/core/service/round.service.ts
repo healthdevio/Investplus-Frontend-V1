@@ -16,6 +16,13 @@ export class RoundService {
   prefixRound = "rounds";
   prefixCompany = "companies";
 
+  closeRound(roundId: number): Observable<any> {
+    return this.http.patch<any>(
+      `${environment.url_api}/rounds/${roundId}/finish`,
+      {}
+    );
+  }
+
   createRound(id: number, data: Round): Observable<Round> {
     return this.http.post<any>(
       `${environment.url_api}/${this.prefixCompany}/${id}/${this.prefixRound}`,

@@ -703,4 +703,21 @@ export class RoundCompanyPublishComponent implements OnInit {
         }
       );
   }
+
+  closeRound(roundId: number) {
+    this.roundService.closeRound(roundId).subscribe(
+      () => {
+        toastr.success(
+          `A rodada foi encerrada com sucesso.`,
+          'Sucesso'
+        );
+        this.getAllByStatus();
+      },
+      (error) => {
+        console.error("Error closing round", error);
+        toastr.error('Erro ao encerrar rodada. Por favor, tente novamente.', 'Erro');
+      }
+    );
+  }
+
 }
