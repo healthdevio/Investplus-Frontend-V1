@@ -779,6 +779,50 @@
     
             </app-radio>
           </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Experiência em Investimentos</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">(Perícia do investidor no mundo dos investimentos)</p>
+            </div>
+    
+    
+            <app-radio [options]="investorLevelOption" formControlName="investorLevel">
+            </app-radio>
+          </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Horizonte de Investimento</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">(Tempo planejado para manter o dinheiro investido antes de resgatar.)</p>
+            </div>
+    
+            
+            <app-radio [options]="horizonInvestmentOption" formControlName="horizonInvestment">
+            </app-radio>
+          </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Tolerância ao Risco</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">(Nível de aceitação de riscos no investimento, de conservador a agressivo.)</p>
+            </div>
+    
+            
+            <app-radio [options]="riskToleranceOption" formControlName="riskTolerance">
+            </app-radio>
+          </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Interesse em Participação</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">(Grau de envolvimento desejado no investimento, desde aporte financeiro até mentoria.)</p>
+            </div>
+    
+            
+            <app-radio [options]="interestParticipationOption" formControlName="interestParticipation">
+            </app-radio>
+          </div>
         </div>
     
         <div *ngIf="activeTab === 3">

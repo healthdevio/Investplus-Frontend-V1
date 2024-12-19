@@ -97,6 +97,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     citypj: "Cidade da empresa é obrigatória.",
     ufpj: "UF da empresa é obrigatória.",
     zipcodepj: "CEP da empresa é obrigatório.",
+    investorLevel: "Nível do Investidor é obrigatório.",
+    horizonInvestment: "Horizonte de investimento é obrigatório.",
+    riskTolerance:"Tolerância ao Risco é obrigatório.",
+    interestParticipation:"Interesse em Participação é obrigatório."
+
   };
 
   publicFigures: RadioOption[] = [
@@ -132,6 +137,102 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       value: "UP_TO_10_THOUSAND",
       span:
         "Não investirei, no ano-calendário por meio de plataformas eletrônicas de investimento participativo, mais de R$ 20.000,00 (vinte mil reais).",
+    },
+  ];
+
+  investorLevelOption: RadioOption[] = [
+    {
+      label:
+        "Investidor Iniciante",
+      value: "INICIANTE",
+      span:
+        "Está começando no mercado, aprendendo conceitos básicos como renda fixa e variável. Geralmente busca segurança e baixos riscos.",
+    },
+    {
+      label:
+        "Investidor Intermediário",
+      value: "INTERMEDIARIO",
+      span:
+        "Já entende estratégias, diversifica investimentos e equilibra riscos, explorando mais renda variável e fundos.",
+    },
+    {
+      label:
+        "Investidor Avançado",
+      value: "AVANCADO",
+      span:
+        "Domina o mercado, utiliza análises complexas, investe em ativos de alto risco e retorno, como startups e mercados internacionais.",
+    },
+  ];
+
+  horizonInvestmentOption: RadioOption[] = [
+    {
+      label:
+        "Curto Prazo",
+      value: "CURTO_PRAZO",
+      span:
+        "Tempo planejado de resgate (1-2 anos).",
+    },
+    {
+      label:
+        "Médio Prazo",
+      value: "MEDIO_PRAZO",
+      span:
+        "Tempo planejado de resgate (3-5 anos).",
+    },
+    {
+      label:
+        "longo Prazo",
+      value: "LONGO_PRAZO",
+      span:
+        "Tempo planejado de resgate (5+ anos).",
+    },
+  ];
+
+  riskToleranceOption: RadioOption[] = [
+    {
+      label:
+        "Conservador",
+      value: "CONSERVADOR",
+      span:
+        "(baixa exposição ao risco)",
+    },
+    {
+      label:
+        "Moderado",
+      value: "MODERADO",
+      span:
+        "(aceita riscos calculados)",
+    },
+    {
+      label:
+        "Agressivo",
+      value: "AGRESSIVO",
+      span:
+        "(disposto a arriscar mais por maiores retornos)",
+    },
+  ];
+
+  interestParticipationOption: RadioOption[] = [
+    {
+      label:
+        "Apenas como investidor",
+      value: "INVESTIDOR",
+      span:
+        "Participa apenas com aporte financeiro.",
+    },
+    {
+      label:
+        "Co-investidor ou mentor",
+      value: "MENTOR",
+      span:
+        "Atua acompanhando o desempenho e decisões estratégicas das startups.",
+    },
+    {
+      label:
+        "longo Prazo",
+      value: "LONGO_PRAZO",
+      span:
+        "Investe e oferece mentoria ou parceria estratégica.",
     },
   ];
 
@@ -222,9 +323,26 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       citypj: [null, Validators.required],
       ufpj: [null, Validators.required],
       zipcodepj: [null, Validators.required],
-      admins: this.formBuilder.array([]) 
+      admins: this.formBuilder.array([]),
+      // objectiveInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      investorLevel: [null, [this.defaultOptionValidator, Validators.required]],
+      // interestSectors: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      horizonInvestment: [null, [this.defaultOptionValidator, Validators.required]],
+      riskTolerance: [null, [this.defaultOptionValidator, Validators.required]],
+      interestParticipation: [null, [this.defaultOptionValidator, Validators.required]],
+      // motivationInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      // favoriteChannel: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
     });
   }
+
+  defaultOptionValidator(control: FormControl) {
+    const invalidOptions = ['SELECIONE', []];
+    if (invalidOptions.includes(control.value)) {
+      return { defaultSelected: true };
+    }
+    return null;
+  }
+  
 
   get admins(): FormArray {
     return this.form.get('admins') as FormArray;
@@ -545,6 +663,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
         this.setFormValue("accountAgency", response.accountAgency);
         this.setFormValue("accountBank", response.accountBank);
         this.setFormValue("accountNumber", response.accountNumber);
+        this.setFormValue("investorLevel", response.investorLevel)
+        this.setFormValue("horizonInvestment", response.horizonInvestment)
+        this.setFormValue("riskTolerance", response.riskTolerance)
+        this.setFormValue("interestParticipation", response.interestParticipation)
+
   
         this.descriptionCity = response.address.city;
         this.descriptionSite = response.personalWebsite;
