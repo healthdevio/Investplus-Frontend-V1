@@ -222,18 +222,18 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     },
     {
       label:
-        "Co-investidor ou mentor",
-      value: "MENTOR",
+        "Acompanhamento ativo das startups investidas",
+      value: "INVESTIDOR_ORDINÁRIO",
       span:
         "Atua acompanhando o desempenho e decisões estratégicas das startups.",
     },
     {
       label:
-        "longo Prazo",
-      value: "LONGO_PRAZO",
+        "Co-investidor ou mentor",
+      value: "MENTOR",
       span:
         "Investe e oferece mentoria ou parceria estratégica.",
-    },
+    }
   ];
 
   banks: Bank[] = [];
