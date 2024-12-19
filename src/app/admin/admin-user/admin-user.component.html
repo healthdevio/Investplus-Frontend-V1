@@ -779,6 +779,143 @@
     
             </app-radio>
           </div>
+          
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Tipo de Investidor</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Detalhes sobre o tipo de investidor</p>
+            </div>
+    
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Objetivo com os Investimentos</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Marque os objetivos que você tem com seus investimentos.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <app-checkbox formControlName="objectiveInvestment" [options]="[
+                    { label: 'Selecione um objetivo de investimento...', value: 'SELECIONE' },
+                    { label: 'Crescimento patrimonial', value: 'GROWTH' },
+                    { label: 'Renda passiva', value: 'PASSIVE_INCOME' },
+                    { label: 'Diversificação do portfólio', value: 'DIVERSIFICATION' },
+                    { label: 'Apoio a startups e inovação', value: 'STARTUP_SUPPORT' },
+                    { label: 'Planejamento de longo prazo', value: 'LONG_TERM_PLANNING' }
+                  ]"></app-checkbox>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Nível de Experiência em Investimentos</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Selecione o seu nível de experiência.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                  <app-radio formControlName="investorLevel" [options]="[
+                    { label: 'Selecione um nível de investidor...', value: 'SELECIONE' },
+                    { label: 'Iniciante', value: 'BEGINNER' },
+                    { label: 'Intermediário', value: 'INTERMEDIATE' },
+                    { label: 'Avançado', value: 'ADVANCED' }
+                  ]"></app-radio>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Interesse em Setores</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Selecione os setores do seu interesse.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <app-checkbox formControlName="interestSectors" [options]="[
+                    { label: 'Selecione o setor de investimento pelo qual você se interessa...', value: 'SELECIONE' },
+                    { label: 'Tecnologia', value: 'TECHNOLOGY' },
+                    { label: 'Saúde', value: 'HEALTHCARE' },
+                    { label: 'Educação', value: 'EDUCATION' },
+                    { label: 'Sustentabilidade', value: 'SUSTAINABILITY' },
+                    { label: 'Outros', value: 'OTHERS', additionalField: true }
+                  ]"></app-checkbox>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Horizonte de Investimento</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Escolha o horizonte de tempo para seus investimentos.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                  <app-radio formControlName="horizonInvestment" [options]="[
+                    { label: 'Selecione o horizonte de investimento compatível com seu plano financeiro...', value: 'SELECIONE' },
+                    { label: 'Curto prazo (1-2 anos)', value: 'SHORT' },
+                    { label: 'Médio prazo (3-5 anos)', value: 'MEDIUM' },
+                    { label: 'Longo prazo (5+ anos)', value: 'LONG' }
+                  ]"></app-radio>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Tolerância ao Risco</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Indique o nível de risco que você está disposto a assumir.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                  <app-radio formControlName="riskTolerance" [options]="[
+                    { label: 'Selecione a Tolerância de risco de investimento mais compatível com seu perfil...', value: 'SELECIONE' },
+                    { label: 'Conservador (baixa exposição ao risco)', value: 'CONSERVATIVE' },
+                    { label: 'Moderado (aceita riscos calculados)', value: 'MODERATE' },
+                    { label: 'Agressivo (disposto a arriscar mais por maiores retornos)', value: 'AGGRESSIVE' }
+                  ]"></app-radio>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Interesse em Participação</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Escolha como deseja participar das startups.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                  <app-radio formControlName="interestParticipation" [options]="[
+                    { label: 'Selecione seu interesse der participação nos investimentos...', value: 'SELECIONE' },
+                    { label: 'Apenas como investidor', value: 'INVESTOR' },
+                    { label: 'Acompanhamento ativo das startups investidas', value: 'ACTIVE_INVOLVEMENT' },
+                    { label: 'Co-investidor ou mentor', value: 'MENTOR' }
+                  ]"></app-radio>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Motivação para Investir</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Selecione as suas motivações para investir.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <app-checkbox formControlName="motivationInvestment" [options]="[
+                    { label: 'Selecione a motivação para seus investimentos...', value: 'SELECIONE' },
+                    { label: 'Impacto social', value: 'SOCIAL_IMPACT' },
+                    { label: 'Retorno financeiro', value: 'FINANCIAL_RETURN' },
+                    { label: 'Interesse no setor específico', value: 'SECTOR_INTEREST' },
+                    { label: 'Outros', value: 'OTHERS', additionalField: true }
+                  ]"></app-checkbox>
+                </div>
+              </div>
+              
+              <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+                <div style="width: 30%; display: flex; flex-direction: column; align-items: start;">
+                  <h3 style="font-weight: 600; margin-bottom: 12px;">Canal Preferido de Comunicação</h3>
+                  <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Escolha os canais que você prefere para comunicação.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <app-checkbox formControlName="favoriteChannel" [options]="[
+                    { label: 'Selecione seu canal de comunicação favorito...', value: 'SELECIONE' },
+                    { label: 'WhatsApp', value: 'WHATSAPP' },
+                    { label: 'E-mail', value: 'EMAIL' },
+                    { label: 'Plataforma da InvestPlus', value: 'PLATFORM' }
+                  ]"></app-checkbox>
+                </div>
+              </div>
+              
+
+            </div>
+          </div>
+
         </div>
     
         <div *ngIf="activeTab === 3">
@@ -1824,6 +1961,7 @@
         <app-radio style="display: flex; gap: 16px;" [options]="publicFigures" formControlName="publicFigure">
     
         </app-radio>
+        
       </div>
     </div>
 

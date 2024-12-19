@@ -39,6 +39,60 @@ declare var toastr: any;
 })
 export class AdminUserComponent implements OnInit, AfterViewInit {
   form: FormGroup;
+
+  objectiveInvestmentOptions = [
+    { label: 'Crescimento patrimonial', value: 'GROWTH' },
+    { label: 'Renda passiva', value: 'PASSIVE_INCOME' },
+    { label: 'Diversificação do portfólio', value: 'DIVERSIFICATION' },
+    { label: 'Apoio a startups e inovação', value: 'STARTUP_SUPPORT' },
+    { label: 'Planejamento de longo prazo', value: 'LONG_TERM_PLANNING' }
+  ];
+  
+  investorLevelOptions = [
+    { label: 'Iniciante', value: 'BEGINNER' },
+    { label: 'Intermediário', value: 'INTERMEDIATE' },
+    { label: 'Avançado', value: 'ADVANCED' }
+  ];
+  
+  interestSectorsOptions = [
+    { label: 'Tecnologia', value: 'TECHNOLOGY' },
+    { label: 'Saúde', value: 'HEALTHCARE' },
+    { label: 'Educação', value: 'EDUCATION' },
+    { label: 'Sustentabilidade', value: 'SUSTAINABILITY' },
+    { label: 'Outros', value: 'OTHERS', additionalField: true }
+  ];
+  
+  horizonInvestmentOptions = [
+    { label: 'Curto prazo (1-2 anos)', value: 'SHORT' },
+    { label: 'Médio prazo (3-5 anos)', value: 'MEDIUM' },
+    { label: 'Longo prazo (5+ anos)', value: 'LONG' }
+  ];
+  
+  riskToleranceOptions = [
+    { label: 'Conservador (baixa exposição ao risco)', value: 'CONSERVATIVE' },
+    { label: 'Moderado (aceita riscos calculados)', value: 'MODERATE' },
+    { label: 'Agressivo (disposto a arriscar mais por maiores retornos)', value: 'AGGRESSIVE' }
+  ];
+  
+  interestParticipationOptions = [
+    { label: 'Apenas como investidor', value: 'INVESTOR' },
+    { label: 'Acompanhamento ativo das startups investidas', value: 'ACTIVE_INVOLVEMENT' },
+    { label: 'Co-investidor ou mentor', value: 'MENTOR' }
+  ];
+  
+  motivationInvestmentOptions = [
+    { label: 'Impacto social', value: 'SOCIAL_IMPACT' },
+    { label: 'Retorno financeiro', value: 'FINANCIAL_RETURN' },
+    { label: 'Interesse no setor específico', value: 'SECTOR_INTEREST' },
+    { label: 'Outros', value: 'OTHERS', additionalField: true }
+  ];
+  
+  favoriteChannelOptions = [
+    { label: 'WhatsApp', value: 'WHATSAPP' },
+    { label: 'E-mail', value: 'EMAIL' },
+    { label: 'Plataforma da InvestPlus', value: 'PLATFORM' }
+  ];
+  
   isPJ: boolean;
   titleHeader: TitleHeader;
   totalInvestedUpangel: any;
@@ -154,6 +208,14 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     private http: HttpClient
   ) { }
 
+  defaultOptionValidator(control: FormControl) {
+    const invalidOptions = ['SELECIONE', []];
+    if (invalidOptions.includes(control.value)) {
+      return { defaultSelected: true };
+    }
+    return null;
+  }
+  
   ngOnInit() {
     this.initForm();
     this.clearFiles();
@@ -222,7 +284,15 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       citypj: [null, Validators.required],
       ufpj: [null, Validators.required],
       zipcodepj: [null, Validators.required],
-      admins: this.formBuilder.array([]) 
+      admins: this.formBuilder.array([]),
+      objectiveInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      investorLevel: ['SELECIONE', [this.defaultOptionValidator, Validators.required]],
+      interestSectors: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      horizonInvestment: ['SELECIONE', [this.defaultOptionValidator, Validators.required]],
+      riskTolerance: ['SELECIONE', [this.defaultOptionValidator, Validators.required]],
+      interestParticipation: ['SELECIONE', [this.defaultOptionValidator, Validators.required]],
+      motivationInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      favoriteChannel: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
     });
   }
 
