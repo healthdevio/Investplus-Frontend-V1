@@ -31,6 +31,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   updateForm: FormGroup;
   status = "IN_PROGRESS";
   tabType = 'IN_PROGRESS';
+  isViewMode = false;
   modalities: Modality[] = [];
   isSingUpPublishModalOpen = false;
   isUpdatePublishModalOpen = false;
@@ -214,9 +215,10 @@ export class RoundCompanyPublishComponent implements OnInit {
   }
 
   getRoundInformation(id: number, roundId: number, isViewOnly: boolean = false) {
-    this.isUpdatePublishModalOpen = true
+    this.isUpdatePublishModalOpen = true;
     this.loadingRounds = true;
     this.id = id;
+    this.isViewMode = isViewOnly;
     this.roundService
       .getRound(id, roundId)
       .subscribe({
@@ -231,8 +233,9 @@ export class RoundCompanyPublishComponent implements OnInit {
           this.updateForm.patchValue({ investmentContract: response.docInvestmentContract });
           this.loadingRounds = false;
         }
-      })
+      });
   }
+  
 
   getModalities() {
     this.modalities = this.modalityService.getModalities();
