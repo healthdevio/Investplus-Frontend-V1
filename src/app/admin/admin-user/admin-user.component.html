@@ -1750,82 +1750,109 @@
     <div 
     style="margin-bottom: 80px;"
     *ngIf="activeTab === 2">
-      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
-        <div style="width: 30%;">
-          <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
-          <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Conforme exigido pela Instrução
-            CVM 588/2017.</p>
-        </div>
     
-        <app-radio [options]="investorProfileStatements" formControlName="investorProfileStatement">
-        </app-radio>
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <div style="width: 30%;">
+        <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
+        <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+          Conforme exigido pela Instrução CVM 588/2017.
+        </p>
       </div>
-    
-      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
-        <div style="width: 100%; justify-content: space-between; align-items: center; gap: 10px;">
-          <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração dos Valores Investidos no Ano-Calendário *
-          </h3>
-          <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
-            Conforme exigido pela Instrução CVM 588/2017.
-            Somente incluir o montante já investido no ano-
-            calendário em ofertas dispensadas de registro nos
-            termos da Instrução CVM 588/2017 por meio de
-            plataformas eletrônicas de investimento participativo.
-          </p>
-        </div>
-    
-        <div style="width: 100%;">
-          <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
-            <div 
-            style="width: 100%;"
-            class="input-group">
-              <input type="text" formControlName="investedUpangel"
-                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                disabled placeholder="Na plataforma da InvestPlus" />
-            </div>
-          </app-form>
-    
-          <app-form [label]="'Outras plataformas'" [errorMessage]="'Outras plataformas é um campo obrigatório.'">
-            <div 
-            style="width: 100%;"
-            class="input-group">
-              <input (keyup)="calculateInvestment(form.value.totalInvestedOthers)" type="text"
-                formControlName="totalInvestedOthers"
-                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                maxlength="13" placeholder="Outras plataformas" />
-            </div>
-          </app-form>
-    
-          <app-form [label]="'Total'" [errorMessage]="'Total é um campo obrigatório.'">
-            <div 
-            style="width: 100%;"
-            class="input-group">
-              <input [(ngModel)]="investmentValue" type="text" formControlName="totalInvested"
-                style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
-                disabled placeholder="Total" />
-            </div>
-          </app-form>
-        </div>
+      <app-radio [options]="investorProfileStatements" formControlName="investorProfileStatement"></app-radio>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <div style="width: 100%; justify-content: space-between; align-items: center; gap: 10px;">
+        <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração dos Valores Investidos no Ano-Calendário *</h3>
+        <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
+          Conforme exigido pela Instrução CVM 588/2017.
+          Somente incluir o montante já investido no ano-calendário em ofertas dispensadas de registro nos
+          termos da Instrução CVM 588/2017 por meio de plataformas eletrônicas de investimento participativo.
+        </p>
       </div>
-    
-      <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%; margin-bottom: 20px;">
-        <div style="width: 100%;">
-          <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração pessoa politicamente exposta</h3>
-          <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
-            Considera-se aquela que desempenha ou tenha
-            desempenhado, nos últimos 5 (cinco) anos, cargos,
-            empregos ou funções públicas relevantes, no Brasil ou em
-            outros países, territórios e dependências estrangeiras,
-            assim como seus representantes, familiares e outras
-            pessoas de seu relacionamento próximo.
-          </p>
-        </div>
-    
-        <app-radio style="display: flex; gap: 16px;" [options]="publicFigures" formControlName="publicFigure">
-    
-        </app-radio>
+  
+      <div style="width: 100%;">
+        <app-form [label]="'Na plataforma da InvestPlus'" [errorMessage]="'Plataforma é um campo obrigatório.'">
+          <div style="width: 100%;" class="input-group">
+            <input type="text" formControlName="investedUpangel"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              disabled placeholder="Na plataforma da InvestPlus" />
+          </div>
+        </app-form>
+  
+        <app-form [label]="'Outras plataformas'" [errorMessage]="'Outras plataformas é um campo obrigatório.'">
+          <div style="width: 100%;" class="input-group">
+            <input (keyup)="calculateInvestment(form.value.totalInvestedOthers)" type="text"
+              formControlName="totalInvestedOthers"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              maxlength="13" placeholder="Outras plataformas" />
+          </div>
+        </app-form>
+  
+        <app-form [label]="'Total'" [errorMessage]="'Total é um campo obrigatório.'">
+          <div style="width: 100%;" class="input-group">
+            <input [(ngModel)]="investmentValue" type="text" formControlName="totalInvested"
+              style="height: 50px; width: 100%; background-color: #FBFBFB; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 16px;"
+              disabled placeholder="Total" />
+          </div>
+        </app-form>
       </div>
     </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%; margin-bottom: 20px;">
+      <div style="width: 100%;">
+        <h3 style="font-weight: 600; margin-bottom: 9px;">Declaração pessoa politicamente exposta</h3>
+        <p style="margin-bottom: 12px; color: #505050; font-size: 12px; padding: 0;">
+          Considera-se aquela que desempenha ou tenha desempenhado, nos últimos 5 (cinco) anos, cargos,
+          empregos ou funções públicas relevantes, no Brasil ou em outros países, territórios e dependências
+          estrangeiras, assim como seus representantes, familiares e outras pessoas de seu relacionamento próximo.
+        </p>
+      </div>
+      <app-radio style="display: flex; gap: 16px;" [options]="publicFigures" formControlName="publicFigure"></app-radio>
+    </div>
+  
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Objetivo com os Investimentos</h3>
+      <app-checkbox [options]="objectiveInvestmentOptions" formControlName="objectiveInvestment"></app-checkbox>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Nível de Experiência em Investimentos</h3>
+      <app-radio [options]="investorLevelOptions" formControlName="investorLevel"></app-radio>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Interesse em Setores</h3>
+      <app-checkbox [options]="interestSectorsOptions" formControlName="interestSectors"></app-checkbox>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Horizonte de Investimento</h3>
+      <app-radio [options]="horizonInvestmentOptions" formControlName="horizonInvestment"></app-radio>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Tolerância ao Risco</h3>
+      <app-radio [options]="riskToleranceOptions" formControlName="riskTolerance"></app-radio>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Interesse em Participação</h3>
+      <app-radio [options]="interestParticipationOptions" formControlName="interestParticipation"></app-radio>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Motivação para Investir</h3>
+      <app-checkbox [options]="motivationInvestmentOptions" formControlName="motivationInvestment"></app-checkbox>
+    </div>
+  
+    <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; width: 100%;">
+      <h3 style="font-weight: 600; margin-bottom: 12px;">Canal Preferido de Comunicação</h3>
+      <app-checkbox [options]="favoriteChannelOptions" formControlName="favoriteChannel"></app-checkbox>
+    </div>
+    </div>
+  
 
     <div 
     style="margin-bottom: 80px;"
