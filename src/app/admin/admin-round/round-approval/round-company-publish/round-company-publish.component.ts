@@ -207,7 +207,13 @@ export class RoundCompanyPublishComponent implements OnInit {
     return status === 'IN_PROGRESS' ? 'Pausar Rodada' : 'Publicar Rodada';
   }
 
-  getRoundInformation(id: number, roundId: number) {
+  makeFormReadOnly() {
+    Object.keys(this.updateForm.controls).forEach(key => {
+      this.updateForm.get(key)?.disable();
+    });
+  }
+
+  getRoundInformation(id: number, roundId: number, isViewOnly: boolean = false) {
     this.isUpdatePublishModalOpen = true
     this.loadingRounds = true;
     this.id = id;
@@ -218,6 +224,9 @@ export class RoundCompanyPublishComponent implements OnInit {
           const dataForm = response.round as any;
           this.updateForm.patchValue(dataForm);
           this.adjustDurationDate();
+          if (isViewOnly) {
+            this.makeFormReadOnly();
+          }
           this.updateForm.patchValue({ docInvestmentContract: response.docInvestmentContract });
           this.updateForm.patchValue({ investmentContract: response.docInvestmentContract });
           this.loadingRounds = false;

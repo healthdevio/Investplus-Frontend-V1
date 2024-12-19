@@ -736,12 +736,22 @@
           </div>
 
           <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
-            <div style="width: 100%; border-top: 1px solid #E5E5E5;">
-              <button (click)="onSubmit()"
-                style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
-                <p style="margin-bottom: 0; color: white;">Atualizar Rodada</p>
-              </button>
-            </div>
+            <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
+              <div style="width: 100%; border-top: 1px solid #E5E5E5;">
+                <button
+                  *ngIf="!isViewMode"
+                  (click)="onSubmit()"
+                  style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
+                  <p style="margin-bottom: 0; color: white;">Atualizar Rodada</p>
+                </button>
+                <button
+                  *ngIf="isViewMode"
+                  (click)="closeModal()"
+                  style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
+                  <p style="margin-bottom: 0; color: white;">Fechar Visualização</p>
+                </button>
+              </div>
+            </div>            
           </div>
         </div>
       </div>
@@ -754,7 +764,7 @@
     <div style="width: 100%; border-radius: 4px; background-color: white; margin-top: 40px; padding: 20px 0">
       <p style="margin-left: 16px; font-size: 16px;">Rodadas</p>
 
-      <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5;">
+      <div style="width: 100%; margin-top: 35px; border-bottom: 1px solid #E5E5E5; margin-left: -3%;">
         <div style="width: 100%;  display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <p (click)="changeTabType('IN_PROGRESS')"
@@ -764,6 +774,11 @@
             <p (click)="changeTabType('PENDING')" [ngStyle]="{'color': tabType === 'PENDING' ? '#035A7A' : '#000000'}"
               style="text-align:center; cursor: pointer;">
               Rodadas pendentes
+            </p>
+            <p (click)="changeTabType('FINISHED')"
+              [ngStyle]="{'color': tabType === 'FINISHED' ? '#035A7A' : '#000000'}" 
+              style="text-align:center; cursor: pointer;">
+              Rodadas Finalizadas
             </p>
           </div>
           <div
@@ -840,8 +855,23 @@
             <div *ngIf="isDropdownVisible === i"
               style="position: absolute; top: 40px; right: 40px; width: 175px; background-color: white; border-radius: 4px; 
               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
+
+            <div 
+              *ngIf="tabType === 'FINISHED' && round.round.status === 'FINISHED'" 
+              class="hover-background" 
+              style="display: flex; gap: 16px; align-items: center; cursor: pointer;" 
+              (click)="getRoundInformation(round.id, round.round.id, true)">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 8V13.3333" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M14 8C14 4.6863 11.3137 2 8 2C6.30483 2 4.77387 2.70299 3.6827 3.83333M2 8C2 11.3137 4.6863 14 8 14C9.61853 14 11.0874 13.3591 12.1667 12.3173"
+                  stroke="#505050" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <p style="margin-bottom: 0;">Visualizar</p>
+            </div>
             
-            <div class="hover-background" style="display: flex; gap: 16px; align-items: center; cursor: pointer;" 
+            <div  *ngIf="round.round.status !== 'FINISHED'"  class="hover-background" style="display: flex; gap: 16px; align-items: center; cursor: pointer;" 
                 (click)="getRoundInformation(round.id, round.round.id)">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14 2.66602V7.99935" stroke="#505050" stroke-width="1.66667" stroke-linecap="round" 
@@ -856,6 +886,7 @@
             </div>
             
             <div 
+              *ngIf="round.round.status !== 'FINISHED'" 
               class="hover-background" 
               style="display: flex; gap: 16px; align-items: center; cursor: pointer; margin-top: 12px;"
               (click)="toggleRoundStatus(round.id, round.round.id, round.round.status)">
@@ -869,6 +900,7 @@
             </div>
           
             <div 
+              *ngIf="round.round.status !== 'FINISHED'" 
               class="hover-background" 
               style="display: flex; gap: 16px; align-items: center; cursor: pointer; margin-top: 12px;" 
               (click)="closeRound(round.id, round.round.id)">
