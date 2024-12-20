@@ -105,7 +105,10 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     objectiveInvestment:"No campo objetivos de investimento pelo menos uma opção deve ser escolhida.",
     interestSectors:"No campo setores de interesse pelo menos uma opção deve ser escolhida.",
     motivationInvestment:"No campo motivação para investir pelo menos uma opção deve ser escolhida.",
-    favoriteChannel:"No campo canais favoritos de comunicação pelo menos uma opção deve ser escolhida."
+    favoriteChannel:"No campo canais favoritos de comunicação pelo menos uma opção deve ser escolhida.",
+    areasInterestLearning:"No campo Áreas de Interesse para Aprendizado pelo menos uma opção deve ser escolhida.",
+    skillsDevelop:"No campo Habilidades que Desejam Desenvolver pelo menos uma opção deve ser escolhida.",
+    preferredContentFormat:"No campo Formato Preferido de Conteúdo pelo menos uma opção deve ser escolhida."
   };
 
   publicFigures: RadioOption[] = [
@@ -269,6 +272,28 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     { label: "Plataforma da InvestPlus", value: "PLATAFORMA_INVESTPLUS", span: "Acompanhar tudo diretamente na plataforma InvestPlus." }
   ];  
 
+  areasInterestLearningOption = [
+    { label: "Avaliação de startups (valuation, cap table)", value: "AVALIACAO_STARTUPS", span: "Aprenda a avaliar startups, incluindo valuation e estrutura de cap table." },
+    { label: "Modelos de negócios inovadores (SaaS, marketplaces, etc.)", value: "MODELOS_NEGOCIOS", span: "Explore modelos de negócios como SaaS, marketplaces e outras inovações." },
+    { label: "Finanças pessoais e gestão de portfólio", value: "FINANCAS_PESSOAIS", span: "Entenda como gerenciar finanças pessoais e diversificar seu portfólio." },
+    { label: "ESG e impacto social", value: "ESG_IMPACTO", span: "Descubra como integrar práticas de ESG e gerar impacto social positivo." },
+    { label: "Venture Capital e Private Equity", value: "VENTURE_PRIVATE", span: "Aprofunde-se no mundo do Venture Capital e do Private Equity." }
+  ];  
+
+  skillsDevelopOption = [
+    { label: "Análise de risco", value: "ANALISE_RISCO", span: "Desenvolver habilidades para identificar e avaliar riscos nos investimentos." },
+    { label: "Diversificação inteligente", value: "DIVERSIFICACAO_INTELIGENTE", span: "Aprender estratégias para diversificar portfólios de forma eficiente." },
+    { label: "Networking e co-investimentos", value: "NETWORKING_CO_INVESTIMENTOS", span: "Expandir a rede de contatos e explorar oportunidades de co-investimentos." },
+    { label: "Mentoria para startups investidas", value: "MENTORIA_STARTUPS", span: "Aprimorar habilidades para orientar e apoiar startups investidas." }
+  ];  
+
+  preferredContentFormatOption = [
+    { label: "Vídeos curtos e dinâmicos", value: "VIDEOS_CURTOS", span: "Conteúdo visual e direto para aprendizado rápido e engajante." },
+    { label: "Webinars ao vivo com especialistas", value: "WEBINARS_AO_VIVO", span: "Participe de discussões ao vivo com especialistas do setor." },
+    { label: "Artigos e e-books", value: "ARTIGOS_EBOOKS", span: "Materiais detalhados para estudo aprofundado e consulta futura." },
+    { label: "Comunidades de discussão online", value: "COMUNIDADES_ONLINE", span: "Troque ideias e experiências em grupos dedicados ao aprendizado." }
+  ];  
+
   banks: Bank[] = [];
   $banks!: Subscription;
 
@@ -367,6 +392,9 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       motivationInvestment: [[], [this.defaultOptionValidator, Validators.required]],
       otherMotivation: [null],
       favoriteChannel: [[], [this.defaultOptionValidator, Validators.required]],
+      areasInterestLearning: [[], [this.defaultOptionValidator, Validators.required]],
+      skillsDevelop: [[], [this.defaultOptionValidator, Validators.required]],
+      preferredContentFormat: [[], [this.defaultOptionValidator, Validators.required]]
     });
   }
 
@@ -404,6 +432,39 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   
   removeAdmin(index: number) {
     this.admins.removeAt(index);
+  }  
+
+  onSkillsDevelopChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('skillsDevelop')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('skillsDevelop')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('skillsDevelop')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
+  }  
+
+  onAreasInterestLearningChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('areasInterestLearning')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('areasInterestLearning')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('areasInterestLearning')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
+  }  
+
+  onPreferredContentFormatChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('preferredContentFormat')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('preferredContentFormat')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('preferredContentFormat')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
   }  
 
   onFavoriteChannelCheckboxChange(event: Event, value: string): void {
@@ -676,7 +737,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   
       this.applyInvestorTypeValidations();
   
-      this.totalTabs = this.isPJ ? 5 : 4;
+      this.totalTabs = this.isPJ ? 6 : 5;
 
       if (Array.isArray(response.objectiveInvestment)) {
           this.objectiveInvestment = response.objectiveInvestment;
@@ -701,6 +762,18 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
 
       if (Array.isArray(response.favoriteChannel)) {
         this.form.get('favoriteChannel')?.setValue(response.favoriteChannel);
+      }
+
+      if (Array.isArray(response.areasInterestLearning)) {
+        this.form.get('areasInterestLearning')?.setValue(response.areasInterestLearning);
+      }
+
+      if (Array.isArray(response.skillsDevelop)) {
+        this.form.get('skillsDevelop')?.setValue(response.skillsDevelop);
+      }
+
+      if (Array.isArray(response.preferredContentFormat)) {
+        this.form.get('preferredContentFormat')?.setValue(response.preferredContentFormat);
       }
 
       if (this.investor.cnpj) {
@@ -1009,7 +1082,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     toastr.error('Em desenvolvimento');
   }
 
-  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários'];
+  tabs: string[] = ['Geral', 'Endereço', 'Perfil', 'Social', 'Dados bancários', 'Aprendizado'];
   totalTabs: number;
 
 

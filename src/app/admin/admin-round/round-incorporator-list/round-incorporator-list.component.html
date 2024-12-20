@@ -14,14 +14,8 @@
         <form [formGroup]="form">
           <div class="col-xs-12 col-md-6 pull-right">
             <div class="input-group">
-              <!-- <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span> -->
               <app-form [label]="''" [errorMessage]="'Erro'">
                 <div class="d-flex">
-                  <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
-                    <option value="">Todas oportunidades</option>
-                    <option value="IN_PROGRESS">Andamento</option>
-                    <option value="FINISHED">Concluídas</option>
-                  </select>
                   <select formControlName="typeFilter" class="form-control" [(ngModel)]="filterInvestment">
                     <option value="">Todas oportunidades</option>
                     <option value="IN_PROGRESS">Andamento</option>
@@ -51,12 +45,8 @@
       </div>
     </div>
     <div class="row">
-      <div *ngIf="rounds?.length > 0">
-        <div *ngFor="
-            let round of rounds
-              | filter: filterInvestment
-              | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel' }
-          ">
+      <div *ngIf="filteredRounds?.length > 0">
+        <div *ngFor="let round of filteredRounds | paginate: { itemsPerPage: 3, currentPage: p, id: 'upangel' }">
           <div class="col-md-4">
             <admin-round-incorporator [incorporator]="round"></admin-round-incorporator>
           </div>

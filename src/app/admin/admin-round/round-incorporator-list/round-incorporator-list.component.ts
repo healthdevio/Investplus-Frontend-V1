@@ -20,6 +20,7 @@ export class RoundIncorporatorListComponent implements OnInit {
   filterInvestment = '';
   rounds: any;
   realStates: any;
+  filteredRounds: any;
   description = '';
   response: any;
   loader: boolean;
@@ -44,21 +45,20 @@ export class RoundIncorporatorListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Investimentos / Rodadas de Investimento';
     this.data.changeTitle(this.titleHeader);
-
+  
     this.initForm();
-
+  
     this.loader = true;
     this.responseError = false;
     this.roundService.getAllShortUser().subscribe(
       (response) => {
         this.response = response;
-        this.rounds = response.realStateRounds;
-        this.realStates = response.realStateRounds;
-        console.log(this.rounds);
+        this.rounds = this.removeDuplicateCompaniesById(response.companiesRounds);
+        this.realStates = [...this.rounds]; 
+        this.updateFilteredRounds();
         this.loader = false;
       }, (_error) => {
         this.loader = false;
@@ -71,6 +71,30 @@ export class RoundIncorporatorListComponent implements OnInit {
   initForm() {
     this.form = this.formBuilder.group({
       typeFilter: ['']
+    });
+
+    this.form.get('typeFilter')?.valueChanges.subscribe(() => {
+      this.updateFilteredRounds();
+    });
+  }
+
+  updateFilteredRounds() {
+    const filter = this.form.get('typeFilter')?.value;
+    if (filter) {
+      this.filteredRounds = this.rounds.filter((round: any) => round.round.status === filter);
+    } else {
+      this.filteredRounds = [...this.rounds];
+    }
+  }
+
+  removeDuplicateCompaniesById(companiesRounds: any[]): any[] {
+    const uniqueCompanies = new Map();
+    return companiesRounds.filter((company: any) => {
+      if (uniqueCompanies.has(company.id)) {
+        return false;
+      }
+      uniqueCompanies.set(company.id, company);
+      return true; 
     });
   }
 

@@ -713,7 +713,7 @@
             <div style="width: 30%;">
               <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
               <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Conforme exigido pela Instrução
-                CVM 588/2017.</p>
+                CVM 88 / 2022.</p>
             </div>
     
     
@@ -1110,6 +1110,100 @@
         </div>
 
         <div *ngIf="activeTab === 5" formArrayName="admins" style="margin-bottom: 80px;">
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Áreas de Interesse para Aprendizado</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (As áreas e nichos do mundo de investimentos que estão no seu radar.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of areasInterestLearningOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onAreasInterestLearningChange($event, option.value)" 
+                  [checked]="form.get('areasInterestLearning')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('areasInterestLearning')?.invalid && form.get('areasInterestLearning')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos uma área de interesse para aprendizado.
+              </div>
+            </div>
+          </div>   
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Habilidades que Desejam Desenvolver</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Quais habilidades técnicas que você como investidor deseja desenvolver para se tornar mais qualificado no mundo dos investimentos.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of skillsDevelopOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onSkillsDevelopChange($event, option.value)" 
+                  [checked]="form.get('skillsDevelop')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('skillsDevelop')?.invalid && form.get('skillsDevelop')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos uma habilidade que deseja desenvolver.
+              </div>
+            </div>
+          </div>  
+          
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Formato Preferido de Conteúdo</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Quais formatos de conteúdo mas te agradam para receber conteúdos qualificados de investimento.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of preferredContentFormatOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onPreferredContentFormatChange($event, option.value)" 
+                  [checked]="form.get('preferredContentFormat')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('preferredContentFormat')?.invalid && form.get('preferredContentFormat')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos um formato de conteúdo que mais te agrade.
+              </div>
+            </div>
+          </div>  
+
+        </div>
+
+        <div *ngIf="activeTab === 6" formArrayName="admins" style="margin-bottom: 80px;">
 
           <div *ngIf="admins.controls.length === 0" style="text-align: center; color: #999; margin: 16px 0;">
             Nenhum administrador adicionado. Clique em "Adicionar Administrador" para começar.
@@ -1941,7 +2035,7 @@
         <div style="width: 30%;">
           <h3 style="font-weight: 600; margin-bottom: 12px;">Investimentos</h3>
           <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">Conforme exigido pela Instrução
-            CVM 588/2017.</p>
+            CVM 88 / 2022.</p>
         </div>
     
         <app-radio [options]="investorProfileStatements" formControlName="investorProfileStatement">
