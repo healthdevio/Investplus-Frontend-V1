@@ -8,6 +8,8 @@ import { Investor } from "../../core/interface/investor";
 import { TitleService } from "../../core/service/title.service";
 import { TitleHeader } from "../../core/interface/title-header";
 
+declare var toastr: any;
+
 @Component({
   selector: "app-admin-header",
   templateUrl: "./admin-header.component.html",
@@ -172,9 +174,59 @@ export class AdminHeaderComponent implements OnInit {
             ? "./../../../assets/img/default-profile_01.png"
             : "data:image/png;base64," + response.data.avatar;
         this.getFirtLetter = response.data.nickname.charAt(0);
+  
+        const {
+          areasInterestLearning,
+          favoriteChannel,
+          interestSectors,
+          motivationInvestment,
+          objectiveInvestment,
+          otherMotivation,
+          otherSector,
+          skillsDevelop,
+          email,
+          fullName,
+          phone,
+          nickname,
+          rg
+        } = response.data;
+  
+        const arraysEmpty =
+          !areasInterestLearning.length &&
+          !favoriteChannel.length &&
+          !interestSectors.length &&
+          !motivationInvestment.length &&
+          !objectiveInvestment.length &&
+          !otherMotivation.length &&
+          !otherSector.length &&
+          !skillsDevelop.length;
+  
+        const requiredFieldsFilled =
+          email &&
+          fullName &&
+          phone &&
+          nickname &&
+          rg;
+  
+        if (arraysEmpty && requiredFieldsFilled && !document.querySelector('.toast-warning')) {
+          toastr.options = {
+            closeButton: true,
+            timeOut: 10000,   
+            extendedTimeOut: 5000, 
+            progressBar: true, 
+            positionClass: "toast-top-right",
+          };
+  
+          toastr.warning(
+            "Na Aba de preenchimento de seu perfil foram adicionadas perguntas de qualificação de investidor e a seção de aprendizado. Por favor, preencha essas perguntas o mais breve possível.",
+            "Atenção"
+          );
+        }
       }
     });
   }
+  
+  
 
   adjustHeaderWidth(sidebarExpanded: boolean) {
     console.log("header componente", sidebarExpanded)
