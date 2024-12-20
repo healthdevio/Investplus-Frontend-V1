@@ -50,6 +50,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
   investor: Investor;
   investmentValue = "";
   loader: boolean;
+  objectiveInvestment: string[] = [];
   loading: boolean = false;
   base64textString = "./../../../assets/img/default-profile_01.png";
   base64RG: string | null = null;
@@ -100,8 +101,11 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     investorLevel: "Nível do Investidor é obrigatório.",
     horizonInvestment: "Horizonte de investimento é obrigatório.",
     riskTolerance:"Tolerância ao Risco é obrigatório.",
-    interestParticipation:"Interesse em Participação é obrigatório."
-
+    interestParticipation:"Interesse em Participação é obrigatório.",
+    objectiveInvestment:"No campo objetivos de investimento pelo menos uma opção deve ser escolhida.",
+    interestSectors:"No campo setores de interesse pelo menos uma opção deve ser escolhida.",
+    motivationInvestment:"No campo motivação para investir pelo menos uma opção deve ser escolhida.",
+    favoriteChannel:"No campo canais favoritos de comunicação pelo menos uma opção deve ser escolhida."
   };
 
   publicFigures: RadioOption[] = [
@@ -236,6 +240,35 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     }
   ];
 
+  objectiveInvestmentOption = [
+    { label: "Crescimento patrimonial", value: "CRESCIMENTO_PATRIMONIAL", span: "Foco em aumentar o valor investido ao longo do tempo." },
+    { label: "Renda passiva", value: "RENDA_PASSIVA", span: "Busca retornos regulares com acompanhamento estratégico." },
+    { label: "Diversificação do portfólio", value: "DIVERSIFICACAO_DE_PORTFOLIO", span: "Objetivo de minimizar riscos diversificando os investimentos." },
+    { label: "Apoio a startups e inovação", value: "APOIO_INOVACAO_STARTUPS", span: "Apoio direto ao desenvolvimento de ideias inovadoras." },
+    { label: "Planejamento de longo prazo", value: "LONGO_PRAZO", span: "Foco em retornos sustentáveis e consistentes no futuro." }
+  ];
+
+  interestSectorsOption = [
+    { label: "Tecnologia", value: "TECNOLOGIA", span: "Investimento em inovação e desenvolvimento tecnológico." },
+    { label: "Saúde", value: "SAUDE", span: "Foco em áreas relacionadas à saúde e bem-estar." },
+    { label: "Educação", value: "EDUCACAO", span: "Apoio a projetos e startups no setor educacional." },
+    { label: "Sustentabilidade", value: "SUSTENTABILIDADE", span: "Investimentos voltados à preservação ambiental e práticas sustentáveis." },
+    { label: "Outros", value: "OUTROS", span: "Selecione esta opção para especificar outro setor." }
+  ];  
+
+  motivationInvestmentOption = [
+    { label: "Impacto social", value: "IMPACTO_SOCIAL", span: "Investimentos focados em gerar benefícios para a sociedade." },
+    { label: "Retorno financeiro", value: "RETORNO_FINANCEIRO", span: "Busca maximizar ganhos financeiros através dos investimentos." },
+    { label: "Interesse no setor específico", value: "INTERESSE_SETOR_ESPECIFICO", span: "Investimento direcionado a áreas de interesse pessoal ou estratégico." },
+    { label: "Outros", value: "OUTROS", span: "Selecione esta opção para especificar outra motivação." }
+  ];  
+
+  favoriteChannelOption = [
+    { label: "WhatsApp", value: "WHATSAPP", span: "Comunicação rápida e direta via WhatsApp." },
+    { label: "E-mail", value: "EMAIL", span: "Envio de informações e notificações via e-mail." },
+    { label: "Plataforma da InvestPlus", value: "PLATAFORMA_INVESTPLUS", span: "Acompanhar tudo diretamente na plataforma InvestPlus." }
+  ];  
+
   banks: Bank[] = [];
   $banks!: Subscription;
 
@@ -324,14 +357,16 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       ufpj: [null, Validators.required],
       zipcodepj: [null, Validators.required],
       admins: this.formBuilder.array([]),
-      // objectiveInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      otherSector: [null],
+      objectiveInvestment: [[], [this.defaultOptionValidator, Validators.required]],
       investorLevel: [null, [this.defaultOptionValidator, Validators.required]],
-      // interestSectors: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      interestSectors: [[], [this.defaultOptionValidator, Validators.required]],
       horizonInvestment: [null, [this.defaultOptionValidator, Validators.required]],
       riskTolerance: [null, [this.defaultOptionValidator, Validators.required]],
       interestParticipation: [null, [this.defaultOptionValidator, Validators.required]],
-      // motivationInvestment: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
-      // favoriteChannel: [['SELECIONE'], [this.defaultOptionValidator, Validators.required]],
+      motivationInvestment: [[], [this.defaultOptionValidator, Validators.required]],
+      otherMotivation: [null],
+      favoriteChannel: [[], [this.defaultOptionValidator, Validators.required]],
     });
   }
 
@@ -371,6 +406,48 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
     this.admins.removeAt(index);
   }  
 
+  onFavoriteChannelCheckboxChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('favoriteChannel')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('favoriteChannel')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('favoriteChannel')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
+  }  
+
+  onInterestCheckboxChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('interestSectors')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('interestSectors')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('interestSectors')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
+  
+    if (value === 'OUTROS' && !checkbox.checked) {
+      this.form.get('otherSector')?.setValue(null);
+    }
+  }
+  
+  onMotivationCheckboxChange(event: Event, value: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const currentValues = this.form.get('motivationInvestment')?.value || [];
+  
+    if (checkbox.checked) {
+      this.form.get('motivationInvestment')?.setValue([...currentValues, value]);
+    } else {
+      this.form.get('motivationInvestment')?.setValue(currentValues.filter((v: string) => v !== value));
+    }
+  
+    if (value === 'OUTROS' && !checkbox.checked) {
+      this.form.get('otherMotivation')?.setValue(null);
+    }
+  }
+  
+
   formatDate() {
     let date = this.form.get('dateOfBirth')?.value;
     if (date) {
@@ -383,6 +460,23 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       }
       this.form.get('dateOfBirth')?.setValue(date, { emitEvent: false });
     }
+  }
+
+  onCheckboxChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    const value = checkbox.value;
+
+    if (checkbox.checked) {
+      this.objectiveInvestment.push(value); 
+    } else {
+      const index = this.objectiveInvestment.indexOf(value);
+      if (index > -1) {
+        this.objectiveInvestment.splice(index, 1);
+      }
+    }
+
+    this.form.get('objectiveInvestment')?.setValue(this.objectiveInvestment); 
+    console.log("Selected Objectives:", this.objectiveInvestment);
   }
 
   applyCepMaskForAdmin(event: Event, adminIndex: number): void {
@@ -583,7 +677,32 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       this.applyInvestorTypeValidations();
   
       this.totalTabs = this.isPJ ? 5 : 4;
-  
+
+      if (Array.isArray(response.objectiveInvestment)) {
+          this.objectiveInvestment = response.objectiveInvestment;
+          this.form.get('objectiveInvestment')?.setValue(this.objectiveInvestment);
+      }
+
+      if (Array.isArray(response.motivationInvestment)) {
+          this.form.get('motivationInvestment')?.setValue(response.motivationInvestment);
+      }
+
+      if (response.otherMotivation) {
+          this.form.get('otherMotivation')?.setValue(response.otherMotivation);
+      }
+
+      if (Array.isArray(response.interestSectors)) {
+          this.form.get('interestSectors')?.setValue(response.interestSectors);
+      }
+
+      if (response.otherSector) {
+          this.form.get('otherSector')?.setValue(response.otherSector);
+      }
+
+      if (Array.isArray(response.favoriteChannel)) {
+        this.form.get('favoriteChannel')?.setValue(response.favoriteChannel);
+      }
+
       if (this.investor.cnpj) {
         if (!this.tabs.includes("Administradores")) {
           this.tabs.push("Administradores");
@@ -776,6 +895,7 @@ export class AdminUserComponent implements OnInit, AfterViewInit {
       const dataSend = {
         ...this.form.value,
         streetpj: this.form.get('streetpj')?.value,
+        objectiveInvestment: this.objectiveInvestment,
         numberpj: this.form.get('numberpj')?.value,
         neighborhoodpj: this.form.get('neighborhoodpj')?.value,
         citypj: this.form.get('citypj')?.value,

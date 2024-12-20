@@ -823,6 +823,149 @@
             <app-radio [options]="interestParticipationOption" formControlName="interestParticipation">
             </app-radio>
           </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Objetivo com os Investimentos</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Definir metas e resultados esperados com o apoio financeiro ou estratégico no projeto.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of objectiveInvestmentOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onCheckboxChange($event)" 
+                  [checked]="objectiveInvestment.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('objectiveInvestment')?.invalid && form.get('objectiveInvestment')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos um objetivo com os investimentos.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Setores de Interesse</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Definir áreas prioritárias que despertam interesse em apoiar ou investir.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of interestSectorsOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onInterestCheckboxChange($event, option.value)" 
+                  [checked]="form.get('interestSectors')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('interestSectors')?.value.includes('OUTROS')" style="margin-top: 8px; margin-bottom: 2%;">
+                <label for="otherSector" style="font-weight: 800; color: black;">Especifique:</label>
+                <input 
+                  id="otherSector" 
+                  type="text" 
+                  formControlName="otherSector" 
+                  style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; margin-top: 4px;" 
+                  placeholder="Digite o setor de interesse"
+                />
+              </div>
+          
+              <div *ngIf="form.get('interestSectors')?.invalid && form.get('interestSectors')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos um setor de interesse.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Motivação para Investir</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Definir o que impulsiona o interesse em apoiar financeiramente projetos ou setores específicos.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of motivationInvestmentOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onMotivationCheckboxChange($event, option.value)" 
+                  [checked]="form.get('motivationInvestment')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('motivationInvestment')?.value.includes('OUTROS')" style="margin-top: 8px; margin-bottom: 2%;">
+                <label for="otherMotivation" style="font-weight: 800; color: black;">Especifique:</label>
+                <input 
+                  id="otherMotivation" 
+                  type="text" 
+                  formControlName="otherMotivation" 
+                  style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; margin-top: 4px;" 
+                  placeholder="Digite sua motivação"
+                />
+              </div>
+          
+              <div *ngIf="form.get('motivationInvestment')?.invalid && form.get('motivationInvestment')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos uma motivação para investir.
+              </div>
+            </div>
+          </div>   
+          
+          <div style="margin-top: 24px; border-bottom: 1px solid #E5E5E5; display: flex; width: 100%;">
+            <div style="width: 30%;">
+              <h3 style="font-weight: 600; margin-bottom: 12px;">Canal Preferido de Comunicação</h3>
+              <p style="margin-bottom: 12px; color: #505050; font-size: 14px; padding: 0;">
+                (Escolha os canais preferidos para receber informações e notificações.)
+              </p>
+            </div>
+          
+            <div style="width: 70%;">
+              <div *ngFor="let option of favoriteChannelOption" style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                <input 
+                  type="checkbox" 
+                  [value]="option.value" 
+                  (change)="onFavoriteChannelCheckboxChange($event, option.value)" 
+                  [checked]="form.get('favoriteChannel')?.value.includes(option.value)" 
+                  style="margin-right: 8px; margin-top: 3px;"
+                />
+                <div>
+                  <span style="font-weight: 800; color: black;">{{ option.label }}</span>
+                  <br />
+                  <span style="font-size: 12px; color: #707070;">{{ option.span }}</span>
+                </div>
+              </div>
+          
+              <div *ngIf="form.get('favoriteChannel')?.invalid && form.get('favoriteChannel')?.touched" style="color: red; font-size: 12px; margin-top: 8px;">
+                É necessário selecionar pelo menos um canal preferido de comunicação.
+              </div>
+            </div>
+          </div>          
+          
         </div>
     
         <div *ngIf="activeTab === 3">
