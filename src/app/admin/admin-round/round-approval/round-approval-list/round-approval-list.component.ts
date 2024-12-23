@@ -88,9 +88,9 @@ export class RoundApprovalListComponent implements OnInit {
     {
       name: "Receita e despesa"
     },
-    {
-      name: "Administradores"
-    },
+    // {
+    //   name: "Administradores"
+    // },
     {
       name: "Equipe Executiva"
     },
