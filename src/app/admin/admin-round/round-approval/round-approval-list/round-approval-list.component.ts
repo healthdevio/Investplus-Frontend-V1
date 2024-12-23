@@ -128,6 +128,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.id = id;
     this.isUpdateCompanyModalOpen = true;
     this.getValuation(id);
+    this.getCaptable(id);
     this.getTeam();
     this.getPartners();
   }
@@ -417,8 +418,57 @@ export class RoundApprovalListComponent implements OnInit {
       }
     );
   }
-  
 
+  getCaptable(idCompany: number) {
+    this.captableService.getCaptable(idCompany).subscribe(
+      (response) => {
+        this.captableForm.patchValue({
+          id: response.id || null,
+          founders: this.formatToCurrency(response.founders),
+          coFounders: this.formatToCurrency(response.coFounders),
+          vesting: this.formatToCurrency(response.vesting),
+          accelerator: this.formatToCurrency(response.accelerator),
+          crowdfunding: this.formatToCurrency(response.crowdfunding),
+          angel: this.formatToCurrency(response.angel),
+          venture1: this.formatToCurrency(response.venture1),
+          venture2: this.formatToCurrency(response.venture2),
+          venture3: this.formatToCurrency(response.venture3),
+          ventureBuilder1: this.formatToCurrency(response.ventureBuilder1),
+          ventureBuilder2: this.formatToCurrency(response.ventureBuilder2),
+          ventureBuilder3: this.formatToCurrency(response.ventureBuilder3),
+          investmentFund1: this.formatToCurrency(response.investmentFund1),
+          investmentFund2: this.formatToCurrency(response.investmentFund2),
+        });
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      },
+      (error) => {
+        console.error('Erro ao buscar dados do captable:', error);
+  
+        const $this = this;
+        setTimeout(function () {
+          $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      }
+    );
+  }
+  
+  private formatToCurrency(value: number | null): string {
+    if (value === null || value === undefined) {
+      return '0,00';
+    }
+    
+    return value.toFixed(2).replace('.', ',');
+  }
+  
+  
   public initExpenseForm(): void {
     this.expenseForm = this.formBuilder.group({
       date: [null, [Validators.required]],
@@ -1339,5 +1389,24 @@ export class RoundApprovalListComponent implements OnInit {
   
     input.value = `R$ ${parts.join(',')}`; 
   }
+
+  onCaptableInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+  
+    value = value.replace(/\D/g, '');
+  
+    const numericValue = (Number(value) / 100).toFixed(2);
+  
+    const parts = numericValue.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    input.value = parts.join(',');
+  
+    const controlName = input.getAttribute('formControlName');
+    if (controlName) {
+      this.captableForm.get(controlName).setValue(input.value, { emitEvent: false });
+    }
+  }
+  
   
 }
