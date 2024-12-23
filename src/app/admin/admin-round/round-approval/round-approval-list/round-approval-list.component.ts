@@ -128,6 +128,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.id = id;
     this.isUpdateCompanyModalOpen = true;
     this.getValuation(id);
+    this.getFinancial(id);
     this.getCaptable(id);
     this.getTeam();
     this.getPartners();
@@ -412,6 +413,42 @@ export class RoundApprovalListComponent implements OnInit {
         const $this = this;
         setTimeout(function () {
           $this.initMask();
+        }, 1000);
+  
+        this.loader = false;
+      }
+    );
+  }
+
+  getFinancial(idCompany: number) {
+    this.financialService.getFinancial(idCompany).subscribe(
+      (response) => {
+
+        const financialResponse = response as unknown as any[];
+  
+        if (financialResponse && financialResponse.length > 0) {
+          const financialData = financialResponse[0];
+          
+          this.expenseForm.patchValue({
+            date: financialData.date || null,
+            revenueAmount: this.formatToCurrency(financialData.revenueAmount),
+            expenseAmount: this.formatToCurrency(financialData.expenseAmount)
+          });
+  
+          setTimeout(() => {
+            this.initMask();
+          }, 1000);
+        } else {
+          console.warn('Nenhum dado financeiro encontrado.');
+        }
+  
+        this.loader = false;
+      },
+      (error) => {
+        console.error('Erro ao buscar dados de receita e despesa:', error);
+  
+        setTimeout(() => {
+          this.initMask();
         }, 1000);
   
         this.loader = false;
