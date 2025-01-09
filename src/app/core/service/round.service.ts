@@ -23,12 +23,16 @@ export class RoundService {
     );
   }
 
-  createRound(id: number, data: Round): Observable<Round> {
+  createRound(id: number, data: Round, action: string): Observable<Round> {
+    if (action !== "create" && action !== "edit") {
+      throw new Error("ação inválida. Deve ser 'criar' ou 'editar'");
+    }
+  
     return this.http.post<any>(
-      `${environment.url_api}/${this.prefixCompany}/${id}/${this.prefixRound}`,
+      `${environment.url_api}/${this.prefixCompany}/${id}/${this.prefixRound}?action=${action}`,
       data
     );
-  }
+  }  
 
   getRound(company: number, round: number): Observable<RoundPrototype> {
     return this.http.get<any>(

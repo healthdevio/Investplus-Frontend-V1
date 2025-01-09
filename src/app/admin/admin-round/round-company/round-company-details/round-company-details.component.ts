@@ -188,37 +188,44 @@ export class RoundCompanyDetailsComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.form.valid) {
-      const $this = this;
       const dataForm = this.form.value;
       const durationDate = new Date(dataForm.duration);
       const currentDate = new Date();
       const durationInDays = Math.ceil((durationDate.getTime() - currentDate.getTime()) / (1000 * 3600 * 24) + 1);
       dataForm.duration = durationInDays;
-
+  
+      const currentUrl = this.router.url;
+      const action = currentUrl.includes('update') ? 'edit' : 'create';
+  
       this.loading = true;
-      this.roundService.createRound(this.id, dataForm).subscribe((response) => {
-        bootbox.dialog({
-          title: '',
-          message: 'Rodada atualizada com sucesso.',
-          buttons: {
-            'success': {
-              label: 'Entendi',
-              className: 'bg-upangel',
+  
+      this.roundService.createRound(this.id, dataForm, action).subscribe(
+        (response) => {
+          bootbox.dialog({
+            title: '',
+            message: 'Rodada cadastrada com sucesso.',
+            buttons: {
+              'success': {
+                label: 'Entendi',
+                className: 'bg-upangel',
+              }
             }
-          }
-        });
-      }, (error) => {
-        toastr.error('Ocorreu um erro, entre em contato com o administrador', 'Erro');
-      }, () => {
-        // this.loading = true;
-        // this.loaderService.load(this.loading);
-      });
+          });
+        },
+        (error) => {
+          toastr.error('Ocorreu um erro, entre em contato com o administrador', 'Erro');
+        },
+        () => {
+          this.loading = false;
+        }
+      );
     } else {
       this.validateAllFields(this.form);
       this.initMask();
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
   }
+  
 
   public validateAllFields(formGroup: FormGroup): any {
     Object.keys(formGroup.controls).forEach(field => {

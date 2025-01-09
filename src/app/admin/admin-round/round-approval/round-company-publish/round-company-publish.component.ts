@@ -512,7 +512,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     return aux;
   }
 
-  public onSubmit(): void {
+  public onSubmit(action: string): void {
     if (this.updateForm.valid) {
       const dataForm = { ...this.updateForm.value };
       const monetaryFields = ['quotaValue', 'maximumValuation', 'minimumValuation'];
@@ -537,7 +537,7 @@ export class RoundCompanyPublishComponent implements OnInit {
         dataForm.status = this.updateForm.get('status')?.value || 'IN_PROGRESS';
       }
   
-      this.roundService.createRound(dataForm.id, dataForm).subscribe(
+      this.roundService.createRound(dataForm.id, dataForm, action).subscribe(
         (response) => {
           bootbox.dialog({
             title: '',
