@@ -74,6 +74,9 @@ export class RoundCompanyPublishComponent implements OnInit {
     {
       name: "Documentos"
     },
+    {
+      name: "Contratos"
+    }
   ]
 
   upDatePublishSessions = [
@@ -89,6 +92,9 @@ export class RoundCompanyPublishComponent implements OnInit {
     {
       name: "Documentos"
     },
+    {
+      name: "Contratos"
+    }
   ]
 
   selectedSession = "Geral";
@@ -331,6 +337,8 @@ export class RoundCompanyPublishComponent implements OnInit {
       riskiness: [null, [Validators.required, Validators.maxLength(4000)]],
       description: [null, [Validators.required, Validators.maxLength(4000)]],
       business: [null, [Validators.required, Validators.maxLength(4000)]],
+      legalEntityContract: [null],
+      individualContract: [null],
       achievements: [null, [Validators.required, Validators.maxLength(4000)]],
 
       logo: [null, [Validators.required]],
@@ -380,6 +388,8 @@ export class RoundCompanyPublishComponent implements OnInit {
       deadline: [null, [Validators.required]],
       partnerParticipation: [null, [Validators.required]],
       business: [null, [Validators.required, Validators.maxLength(4000)]],
+      legalEntityContract: [null],
+      individualContract: [null],
       achievements: [null, [Validators.required, Validators.maxLength(4000)]],
       potentialMarket: [null, [Validators.required, Validators.maxLength(4000)]],
       targets: [null, [Validators.required, Validators.maxLength(4000)]],
@@ -651,6 +661,8 @@ export class RoundCompanyPublishComponent implements OnInit {
       riskiness: 'Risco',
       description: 'Descrição',
       business: 'Negócio',
+      // legalEntityContract: 'Contrato Pessoa Jurídica',
+      // individualContract: 'Contrato Pessoa Física',
       achievements: 'Conquistas',
     };
   
