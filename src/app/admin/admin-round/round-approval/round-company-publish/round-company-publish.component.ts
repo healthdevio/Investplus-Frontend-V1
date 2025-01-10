@@ -237,6 +237,8 @@ export class RoundCompanyPublishComponent implements OnInit {
           }
           this.updateForm.patchValue({ docInvestmentContract: response.docInvestmentContract });
           this.updateForm.patchValue({ investmentContract: response.docInvestmentContract });
+          this.updateForm.patchValue({ legalEntityContract: response.legalEntityContract})
+          this.updateForm.patchValue({ individualContract: response.individualContract})
           this.loadingRounds = false;
         }
       });
