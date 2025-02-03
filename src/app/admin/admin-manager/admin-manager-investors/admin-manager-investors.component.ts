@@ -14,6 +14,7 @@ export class AdminManagerInvestorsComponent implements OnInit {
   titleHeader: TitleHeader;
   investors: any;
   totalInvestors: number;
+  actualTotalInvestors: number = 0;
   status = 'PENDING_EVALUATION';
   loader: boolean;
   totalPages: number;
@@ -22,11 +23,15 @@ export class AdminManagerInvestorsComponent implements OnInit {
   currentPage = 1;
   responsive = true;
   labels: any = {
-      previousLabel: 'Anterior',
-      nextLabel: 'Próximo'
+    previousLabel: 'Anterior',
+    nextLabel: 'Próximo'
   };
 
-  constructor(private investorService: InvestorService, private excelService: ExcelService, private data: TitleService) { }
+  constructor(
+    private investorService: InvestorService, 
+    private excelService: ExcelService, 
+    private data: TitleService
+  ) {}
 
   ngOnInit() {
     this.getAllInvestors();
@@ -39,7 +44,7 @@ export class AdminManagerInvestorsComponent implements OnInit {
         this.investors = response.content;
         this.currentPage = page;
         this.loader = false;
-      },
+      }
     );
   }
 
@@ -65,32 +70,49 @@ export class AdminManagerInvestorsComponent implements OnInit {
     return pages;
   }
 
-
-
   getAllInvestors() {
     this.loader = true;
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);
     this.titleHeader.title = 'Administração / Base de Investidores';
     this.data.changeTitle(this.titleHeader);
 
-    this.investorService.getAllUsers(1, 10).subscribe(
+    this.investorService.getAllUsers(0, 100).subscribe(
       (response) => {
         this.totalPages = response.totalPages;
-        this.investors = response.content;
         this.totalInvestors = response.totalElements;
-        this.loader = false;
+        this.investors = response.content;
+
+        const allInvestors = [...response.content];
+        const requests = [];
+
+        for (let page = 1; page < this.totalPages; page++) {
+          requests.push(this.investorService.getAllUsers(page, 100).toPromise());
+        }
+
+        Promise.all(requests)
+          .then((responses) => {
+            responses.forEach((res) => {
+              allInvestors.push(...res.content);
+            });
+
+            this.actualTotalInvestors = allInvestors.length;
+            this.loader = false;
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar todas as páginas de investidores:", error);
+            this.loader = false;
+          });
       },
       (error) => {
         if (error.status === 500) {
           window.location.reload();
         } else {
           this.loader = false;
-          console.error('An error occurred:', error);
+          console.error('Erro ao buscar investidores:', error);
         }
       }
     );
   }
-
 
   unmaskInput(input) {
     if (input === undefined) {
@@ -110,69 +132,62 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.loader = true;
     const allInvestors = [];
     
-    this.investorService.getAllUsers(1, 100).subscribe(
+    this.investorService.getAllUsers(0, 100).subscribe(
       (response) => {
-        const totalPages = response.totalPages;
-        const totalElements = response.totalElements;
         allInvestors.push(...response.content);
-    
+  
         const requests = [];
-        for (let page = 1; page <= totalPages; page++) {
+        for (let page = 1; page < this.totalPages; page++) {
           requests.push(this.investorService.getAllUsers(page, 100).toPromise());
         }
-    
+  
         Promise.all(requests)
           .then((responses) => {
             responses.forEach((res) => {
               allInvestors.push(...res.content);
             });
-  
-            if (allInvestors.length === totalElements) {
-              const formattedInvestors = [
-                {
-                  Nome : `Total de investidores: ${totalElements}`, 
-                  email: '',
-                  phone: '',
-                  cpf: '',
-                  cnpj: '',
-                  rg: '',
-                  investor_profile_statement: '',
-                  uf: '',
-                  city: '',
-                  totalInvestedOthers: '',
-                  created: ''
-                },
-                ...allInvestors.map(investor => ({
-                  Nome: investor.fullName,
-                  email: investor.email,
-                  phone: investor.phone,
-                  cpf: investor.cpf,
-                  cnpj: investor.cnpj,
-                  rg: investor.rg,
-                  investor_profile_statement: investor.investorProfileStatement,
-                  uf: investor.address?.uf || '',
-                  city: investor.address?.city || '',
-                  totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
-                  created: new Date(investor.created).toLocaleDateString('pt-BR'),
-                }))
-              ];
-  
-              this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
-            } else {
-              console.error("Mismatch in total investors loaded. Expected:", totalElements, "but got:", allInvestors.length);
-            }
+
+            const formattedInvestors = [
+              {
+                Nome: `Total de investidores: ${this.actualTotalInvestors}`, 
+                email: '',
+                phone: '',
+                cpf: '',
+                cnpj: '',
+                rg: '',
+                investor_profile_statement: '',
+                uf: '',
+                city: '',
+                totalInvestedOthers: '',
+                created: ''
+              },
+              ...allInvestors.map(investor => ({
+                Nome: investor.fullName,
+                email: investor.email,
+                phone: investor.phone,
+                cpf: investor.cpf,
+                cnpj: investor.cnpj,
+                rg: investor.rg,
+                investor_profile_statement: investor.investorProfileStatement,
+                uf: investor.address?.uf || '',
+                city: investor.address?.city || '',
+                totalInvestedOthers: investor.totalInvestedOthers > 0 ? 'S' : 'N',
+                created: new Date(investor.created).toLocaleDateString('pt-BR'),
+              }))
+            ];
+
+            this.excelService.exportAsExcelFile(formattedInvestors, 'investors');
             this.loader = false;
           })
           .catch((error) => {
-            console.error("An error occurred while fetching all investors:", error);
+            console.error("Erro ao buscar todos os investidores:", error);
             this.loader = false;
           });
       },
       (error) => {
-        console.error("An error occurred while fetching the first page of investors:", error);
+        console.error("Erro ao buscar a primeira página de investidores:", error);
         this.loader = false;
       }
     );
-  }  
-
+  }
 }
