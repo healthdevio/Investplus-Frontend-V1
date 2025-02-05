@@ -12,6 +12,7 @@ import { finalize } from 'rxjs/operators';
 import { RealStateService } from '../../../../core/service/real-state.service';
 import { saveAs } from 'file-saver';
 import { Modality, ModalityService } from '../../../../core/service/modality.service';
+import { ChangeDetectorRef } from "@angular/core";
 import { forkJoin } from "rxjs";
 
 declare var toastr: any;
@@ -110,6 +111,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     private companyService: CompanyService,
     private loaderService: LoaderService,
     private modalityService: ModalityService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -126,6 +128,19 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.applyMonetaryMask('minimumValuation');
     this.applyMonetaryMask('maximumValuation');
     this.applyMonetaryMask('quotaValue');
+
+    this.updateForm.get('type')?.valueChanges.subscribe((value) => {
+      if (value === 'EXCLUSIVE') {
+        this.updateForm.get('token')?.setValidators([Validators.required]);
+        this.updateForm.get('token')?.enable();
+      } else {
+        this.updateForm.get('token')?.clearValidators();
+        this.updateForm.get('token')?.setValue(null);
+        this.updateForm.get('token')?.disable();
+      }
+      this.updateForm.get('token')?.updateValueAndValidity();
+      this.cdRef.detectChanges();
+    });    
   }
 
   fetchCompanies(): void {
