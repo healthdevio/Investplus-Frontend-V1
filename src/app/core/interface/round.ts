@@ -6,6 +6,8 @@ import {
 } from './forum';
 
 export interface Round {
+  name: any;
+  company: Round;
   id?: number;
   duration: number;
   type?: string;

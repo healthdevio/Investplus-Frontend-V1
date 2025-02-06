@@ -145,14 +145,18 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   fetchCompanies(): void {
     this.loader = true;
-    
+  
     const approved$ = this.companyService.getAllByStatus("APPROVED");
     const reproved$ = this.companyService.getAllByStatus("REPROVED");
     const pending_evaluation$ = this.companyService.getAllByStatus("PENDING_EVALUATION");
   
     forkJoin([approved$, reproved$, pending_evaluation$]).subscribe(
       ([approved, reproved, pending_evaluation]) => {
-        this.companies = [...(approved || []), ...(reproved || []), ...(pending_evaluation || [])];
+        this.companies = [...(approved || []), ...(reproved || []), ...(pending_evaluation || [])].map(company => ({
+          ...company,
+          name: company.name ? company.name.toUpperCase() : ''
+        }));
+  
         this.loader = false;
       },
       (error) => {
@@ -160,7 +164,7 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.loader = false;
       }
     );
-  }
+  }  
 
   applyMonetaryMask(controlName: string) {
     const control = this.updateForm.get(controlName);
@@ -240,24 +244,50 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.loadingRounds = true;
     this.id = id;
     this.isViewMode = isViewOnly;
-    this.roundService
-      .getRound(id, roundId)
-      .subscribe({
-        next: (response) => {
-          const dataForm = response.round as any;
-          this.updateForm.patchValue(dataForm);
-          this.adjustDurationDate();
-          if (isViewOnly) {
-            this.makeFormReadOnly();
+  
+    this.roundService.getRound(id, roundId).subscribe({
+      next: (response) => {
+  
+        const dataForm = response.round as any;
+        this.updateForm.patchValue(dataForm);
+        this.adjustDurationDate();
+  
+        let companyData = response.round?.company || response;
+  
+        if (companyData?.id && companyData?.name) {
+  
+          this.updateForm.patchValue({ id: companyData.id });
+  
+          if (!this.companies.some(c => c.id === companyData.id)) {
+            this.companies.push({
+              id: companyData.id,
+              name: companyData.name.toUpperCase()
+            });
           }
-          this.updateForm.patchValue({ docInvestmentContract: response.docInvestmentContract });
-          this.updateForm.patchValue({ investmentContract: response.docInvestmentContract });
-          this.updateForm.patchValue({ legalEntityContract: response.legalEntityContract})
-          this.updateForm.patchValue({ individualContract: response.individualContract})
-          this.loadingRounds = false;
+        } else {
+          console.warn("⚠️ Nenhuma empresa encontrada no payload da API!");
         }
-      });
-  }
+  
+        if (isViewOnly) {
+          this.makeFormReadOnly();
+        }
+  
+        this.updateForm.patchValue({
+          docInvestmentContract: response.docInvestmentContract,
+          investmentContract: response.docInvestmentContract,
+          legalEntityContract: response.legalEntityContract,
+          individualContract: response.individualContract
+        });
+  
+        this.loadingRounds = false;
+        this.cdRef.detectChanges();
+      },
+      error: (err) => {
+        console.error("❌ Erro ao carregar informações da rodada:", err);
+        this.loadingRounds = false;
+      }
+    });
+  }    
   
 
   getModalities() {
@@ -475,7 +505,6 @@ export class RoundCompanyPublishComponent implements OnInit {
           this.loader = false;
           return;
         }
-        console.log(response)
         this.rounds = response.companiesRounds
         this.filteredCompanies = response.companiesRounds;
         this.loader = false;
