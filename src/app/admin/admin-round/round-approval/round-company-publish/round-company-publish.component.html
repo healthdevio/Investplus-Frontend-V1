@@ -914,7 +914,7 @@
               *ngIf="round.round.status !== 'FINISHED'" 
               class="hover-background" 
               style="display: flex; gap: 16px; align-items: center; cursor: pointer; margin-top: 12px;"
-              (click)="toggleRoundStatus(round.id, round.round.id, round.round.status)">
+              (click)="toggleRoundStatus(round.round.id, round.id, round.round.status)">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="3" width="3" height="10" fill="#505050" />
                 <rect x="9" y="3" width="3" height="10" fill="#505050" />
