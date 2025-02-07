@@ -100,6 +100,7 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   selectedSession = "Geral";
   selectedUpdateSession = "Geral";
+  UpdateRoundId: number;
 
   constructor(
     private roundService: RoundService,
@@ -196,7 +197,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   public prepareSubmitData(): any {
     const formData = { ...this.updateForm.value };
     const monetaryFields = ['minimumValuation', 'maximumValuation', 'quotaValue', 'upangelCost'];
-    
+  
     monetaryFields.forEach(field => {
       if (formData[field]) {
         formData[field] = formData[field].replace(/[R$\.\,]/g, '');
@@ -243,6 +244,7 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.isUpdatePublishModalOpen = true;
     this.loadingRounds = true;
     this.id = id;
+    this.UpdateRoundId = roundId;
     this.isViewMode = isViewOnly;
   
     this.roundService.getRound(id, roundId).subscribe({
@@ -593,7 +595,13 @@ export class RoundCompanyPublishComponent implements OnInit {
         dataForm.status = this.updateForm.get('status')?.value || 'IN_PROGRESS';
       }
   
-      this.roundService.createRound(dataForm.id, dataForm, action).subscribe(
+      let roundId = dataForm.id;
+  
+      if (action === "edit") {
+        dataForm.id = this.UpdateRoundId;
+      }
+  
+      this.roundService.createRound(roundId, dataForm, action).subscribe(
         (response) => {
           bootbox.dialog({
             title: '',
@@ -621,7 +629,7 @@ export class RoundCompanyPublishComponent implements OnInit {
       this.initMask();
       toastr.error('Formulário preenchido incorretamente. Por favor revise seus dados.');
     }
-  }  
+  }
 
   public initMask(): void {
     const SPMaskBehavior = function (val: string) {
