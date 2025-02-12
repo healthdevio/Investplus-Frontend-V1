@@ -252,7 +252,7 @@ export class RoundCompanyPublishComponent implements OnInit {
   
         const dataForm = response.round as any;
         this.updateForm.patchValue(dataForm);
-        this.adjustDurationDate();
+        // this.adjustDurationDate();
   
         let companyData = response.round?.company || response;
   
@@ -324,14 +324,14 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.isSingUpPublishModalOpen = true;
   }
 
-  adjustDurationDate() {
-    const duration = this.updateForm.get('duration').value;
-    const startDate = new Date(this.updateForm.get('startedAt').value);
-    startDate.setDate(startDate.getDate() + duration);
-    const adjustedDate = startDate.toISOString().split('T')[0];
+  // adjustDurationDate() {
+  //   const duration = this.updateForm.get('duration').value;
+  //   const startDate = new Date(this.updateForm.get('startedAt').value);
+  //   startDate.setDate(startDate.getDate() + duration);
+  //   const adjustedDate = startDate.toISOString().split('T')[0];
 
-    this.updateForm.get('duration').setValue(adjustedDate);
-  }
+  //   this.updateForm.get('duration').setValue(adjustedDate);
+  // }
 
   uploadFile(evt: any, fieldName: string, fieldDoc: string) {
     const file = evt.target.files[0];
@@ -586,10 +586,10 @@ export class RoundCompanyPublishComponent implements OnInit {
       }
   
       const startedAt = new Date(dataForm.startedAt);
-      const duration = new Date(dataForm.duration);
-      const timeDifference = duration.getTime() - startedAt.getTime();
-      const daysDifference = timeDifference / (1000 * 3600 * 24);
-      dataForm.duration = daysDifference;
+      // const duration = new Date(dataForm.duration);
+      // const timeDifference = duration.getTime() - startedAt.getTime();
+      // const daysDifference = timeDifference / (1000 * 3600 * 24);
+      // dataForm.duration = daysDifference;
   
       if (!dataForm.status) {
         dataForm.status = this.updateForm.get('status')?.value || 'IN_PROGRESS';
