@@ -70,6 +70,89 @@
           </div>
         </div>
       </div>
+
+      <div *ngIf="isViewInvestmentModalOpen" class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <p class="modal-title">Detalhes do Investimento</p>
+          </div>
+      
+          <!-- Exibir loading dentro do modal enquanto os dados são carregados -->
+          <div *ngIf="loader" class="modal-loading">
+            <div class="spinner"></div>
+          </div>
+      
+          <!-- Exibir os dados do investimento apenas quando carregar -->
+          <div *ngIf="!loader">
+            <div class="modal-body">
+              <p class="section-title">Informações do Investidor</p>
+              <div class="info-grid">
+                <p><strong>Nome:</strong> {{ investment?.investor?.fullName || 'Nome não disponível' }}</p>
+                <p><strong>CPF:</strong> {{ investment?.investor?.cpf ? cpfMask.transform(investment?.investor?.cpf) : 'CPF não informado pelo investidor' }}</p>
+                <p><strong>E-mail:</strong> {{ investment?.investor?.email || 'E-mail não fornecido' }}</p>
+                <p><strong>Profissão:</strong> {{ investment?.investor?.profession || 'Profissão não cadastrada' }}</p>
+                <p><strong>Perfil:</strong> {{ investment?.investor?.investorProfileStatement ? maskPerfil(investment?.investor?.investorProfileStatement) : 'Perfil do investidor não definido' }}</p>
+                <p><strong>Total Investido:</strong> 
+                  {{ investment?.investor?.totalInvestedOthers !== undefined && investment?.investor?.totalInvestedOthers !== null 
+                    ? (investment?.investor?.totalInvestedOthers | moneyMask:true) 
+                    : 'Sem informações sobre investimentos anteriores' }}
+                </p>            
+              </div>
+      
+              <p class="section-title">Endereço</p>
+              <div class="info-grid">
+                <p><strong>Rua:</strong> 
+                  {{ investment?.investor?.address?.street && investment?.investor?.address?.number 
+                    ? investment?.investor?.address?.street + ', ' + investment?.investor?.address?.number 
+                    : 'Endereço não cadastrado' }}
+                </p>
+                <p><strong>Bairro:</strong> {{ investment?.investor?.address?.neighborhood || 'Bairro não informado' }}</p>
+                <p><strong>CEP:</strong> 
+                  {{ investment?.investor?.address?.zipCode 
+                    ? cepMask.transform(investment?.investor?.address?.zipCode) 
+                    : 'CEP não disponível' }}
+                </p>
+                <p><strong>Cidade:</strong> 
+                  {{ investment?.investor?.address?.city && investment?.investor?.address?.uf 
+                    ? investment?.investor?.address?.city + ' - ' + investment?.investor?.address?.uf 
+                    : 'Cidade não informada' }}
+                </p>
+              </div>
+      
+              <p class="section-title">Dados do Investimento</p>
+              <div class="info-grid">
+                <p><strong>Data:</strong> {{ investment?.date ? (investment?.date | date) : 'Data do investimento não disponível' }}</p>
+                <p><strong>Valor:</strong> 
+                  {{ investment?.value !== undefined && investment?.value !== null 
+                    ? (investment?.value | moneyMask:true) 
+                    : 'Valor do investimento não informado' }}
+                </p>
+                <p><strong>Parcelas:</strong> {{ investment?.installments !== undefined ? investment?.installments + 'x' : 'Parcelamento não informado' }}</p>
+                <p><strong>Cotas:</strong> {{ investment?.quotas !== undefined ? investment?.quotas : 'Quantidade de cotas não informada' }}</p>
+                <p><strong>% de Renda:</strong> 
+                  {{ investment?.roundPercent !== undefined && investment?.roundPercent !== null 
+                    ? investment?.roundPercent + '%' 
+                    : 'Percentual de renda não disponível' }}
+                </p>
+                <p><strong>Status:</strong> {{ investment?.status ? maskStatus(investment?.status) : 'Status não informado' }}</p>
+              </div>
+      
+              <p class="section-title">Contrato</p>
+              <div class="info-grid">
+                <p><strong>Status do Contrato:</strong> {{ investment?.contractStatus ? maskStatus(investment?.contractStatus) : 'Status do contrato não disponível' }}</p>
+                <p><strong>Chave Clicksign:</strong> {{ investment?.contractExternalId || 'Não disponível' }}</p>
+                <p><strong>Data de Assinatura:</strong> {{ investment?.contractSignedAt ? (investment?.contractSignedAt | date) : 'Data de assinatura não registrada' }}</p>
+                <p><strong>Data do Aporte:</strong> {{ investment?.confirmedAt ? (investment?.confirmedAt | date) : 'Data do aporte não informada' }}</p>
+              </div>
+            </div>        
+          </div>
+      
+          <div class="modal-footer">
+            <button class="btn-close" (click)="closeInvestmentModal()">Fechar</button>
+          </div>
+        </div>
+      </div>      
+
     </form>
   
     <div
@@ -185,8 +268,8 @@
                 
                   <div *ngIf="isDropdownVisible === i"
                     style="position: absolute; top: 60px; right: 20px; width: 200px; background-color: white; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 999; padding: 12px 16px;">
-                    <div (click)="getRoundInformation(round.id, round.round.id)" class="hover-background"
-                      style="display: flex; gap: 5px; align-items: center; cursor: pointer; border-bottom: 1px solid #E5E5E5; padding-bottom: 5px;">
+                    <div (click)="viewInvestment(investment.id)" class="hover-background"
+                      style="display: flex; gap: 5px; align-items: center; cursor: pointer; padding-bottom: 5px;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
                         <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />

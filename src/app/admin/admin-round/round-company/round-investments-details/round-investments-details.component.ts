@@ -22,6 +22,7 @@ declare var bootbox: any;
 })
 export class RoundInvestmentsDetailsComponent implements OnInit {
   isSingUpPublishModalOpen: boolean = false;
+  isViewInvestmentModalOpen: boolean = false;
   investments: any;
   investment: any;
   formStatus: FormGroup;
@@ -359,6 +360,27 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
           toastr.error('Ocorreu um erro ao gerar os boletos.');
         }
       })
+  }
+
+
+  viewInvestment(id: number) {
+    this.investment = null; 
+    this.isViewInvestmentModalOpen = true;
+    this.loader = true; 
+  
+    this.investmentService.getInvestment(id).pipe(
+      finalize(() => this.loader = false)
+    ).subscribe(response => {
+      this.investment = response;
+    }, error => {
+      toastr.error('Erro ao buscar os detalhes do investimento.');
+    });
+  }
+  
+
+  closeInvestmentModal() {
+    this.isViewInvestmentModalOpen = false;
+    this.investment = null;
   }
 
 }
