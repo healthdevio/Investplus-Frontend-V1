@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { InvestorService } from '../../../core/service/investor.service';
 import { ExcelService } from '../../../core/service/excel.service';
 import { TitleHeader } from '../../../core/interface/title-header';
@@ -12,15 +12,15 @@ import { TitleService } from '../../../core/service/title.service';
 export class AdminManagerInvestorsComponent implements OnInit {
 
   titleHeader: TitleHeader;
-  investors: any;
+  investors: any[] = [];
   totalInvestors: number;
   actualTotalInvestors: number = 0;
   status = 'PENDING_EVALUATION';
-  loader: boolean;
+  loader: boolean = true;
   totalPages: number;
   textRegister = 'Nenhum registro encontrado.';
-  p = 1;
   currentPage = 1;
+  itemsPerPage = 10;
   responsive = true;
   labels: any = {
     previousLabel: 'Anterior',
@@ -30,7 +30,8 @@ export class AdminManagerInvestorsComponent implements OnInit {
   constructor(
     private investorService: InvestorService, 
     private excelService: ExcelService, 
-    private data: TitleService
+    private data: TitleService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -38,14 +39,28 @@ export class AdminManagerInvestorsComponent implements OnInit {
   }
 
   changePage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+
     this.loader = true;
-    this.investorService.getAllUsers(page, 10).subscribe(
+    this.investorService.getAllUsers(page - 1, this.itemsPerPage).subscribe(
       (response) => {
         this.investors = response.content;
         this.currentPage = page;
+        this.totalPages = response.totalPages;
+        this.loader = false;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
+        console.log('Investidores carregados:', this.investors); // Verifique os dados no console
+      },
+      (error) => {
+        console.error('Erro ao mudar de página:', error);
         this.loader = false;
       }
     );
+  }
+
+  onItemsPerPageChange() {
+    this.currentPage = 1;
+    this.getAllInvestors();
   }
 
   getPaginationRange(totalPages: number): (number | string)[] {
@@ -57,14 +72,27 @@ export class AdminManagerInvestorsComponent implements OnInit {
         pages.push(i);
       }
     } else {
-      pages.push(1);
-      for (let i = 2; i <= maxVisiblePages; i++) {
-        pages.push(i);
-      }
-      if (totalPages > maxVisiblePages + 1) {
+      if (this.currentPage <= 3) {
+        for (let i = 1; i <= 3; i++) {
+          pages.push(i);
+        }
         pages.push('...');
+        pages.push(totalPages);
+      } else if (this.currentPage > totalPages - 3) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 2; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = this.currentPage - 1; i <= this.currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
       }
-      pages.push(totalPages);
     }
 
     return pages;
@@ -76,32 +104,15 @@ export class AdminManagerInvestorsComponent implements OnInit {
     this.titleHeader.title = 'Administração / Base de Investidores';
     this.data.changeTitle(this.titleHeader);
 
-    this.investorService.getAllUsers(0, 100).subscribe(
+    this.investorService.getAllUsers(0, this.itemsPerPage).subscribe(
       (response) => {
         this.totalPages = response.totalPages;
         this.totalInvestors = response.totalElements;
         this.investors = response.content;
-
-        const allInvestors = [...response.content];
-        const requests = [];
-
-        for (let page = 1; page < this.totalPages; page++) {
-          requests.push(this.investorService.getAllUsers(page, 100).toPromise());
-        }
-
-        Promise.all(requests)
-          .then((responses) => {
-            responses.forEach((res) => {
-              allInvestors.push(...res.content);
-            });
-
-            this.actualTotalInvestors = allInvestors.length;
-            this.loader = false;
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar todas as páginas de investidores:", error);
-            this.loader = false;
-          });
+        this.actualTotalInvestors = response.totalElements;
+        this.loader = false;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
+        console.log('Investidores carregados:', this.investors); // Verifique os dados no console
       },
       (error) => {
         if (error.status === 500) {
@@ -112,20 +123,6 @@ export class AdminManagerInvestorsComponent implements OnInit {
         }
       }
     );
-  }
-
-  unmaskInput(input) {
-    if (input === undefined) {
-      return input;
-    }
-    return input.replace(/[^\d]+/g, '');
-  }
-
-  unmaskMoney(input) {
-    if (input === undefined) {
-      return input;
-    }
-    return (Number(input.replace(/[^\d]+/g, '')) / 100).toFixed(2);
   }
 
   exportAsXLSX(): void {

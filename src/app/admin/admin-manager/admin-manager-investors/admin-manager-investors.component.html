@@ -2,8 +2,7 @@
 <section class="content-header" style="margin-top: 2%;">
   <div class="row" *ngIf="!loader">
     <div class="col-xs-12 col-md-12">
-      <button class="btn-upangel pull-right" (click)="exportAsXLSX()">Exportar <i
-          class="fa fa-fw fa-download"></i></button>
+      <button class="btn-upangel pull-right" (click)="exportAsXLSX()">Exportar <i class="fa fa-fw fa-download"></i></button>
     </div>
   </div>
 </section>
@@ -23,7 +22,7 @@
                 <th>Possui Investimento</th>
                 <th>Cadastro</th>
               </tr>
-              <tr *ngFor="let investor of investors | paginate: { itemsPerPage: 10, currentPage: p }">
+              <tr *ngFor="let investor of investors">
                 <td>{{ investor.fullName }}</td>
                 <td>{{ investor.email }}</td>
                 <td>{{ investor.phone | phone }}</td>
@@ -36,22 +35,22 @@
             <app-count [count]="!(investors?.length > 0)" [textContador]="textRegister"></app-count>
 
             <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px; align-items: center; gap: 32px;">
-            <p (click)="currentPage === 1 ? null : changePage(currentPage - 1)" [ngStyle]="{'cursor': currentPage === 1 ? 'not-allowed' : 'pointer'}"
-              style="font-family: Poppins, sans-serif; font-weight: 400; color: #909090; margin-bottom: 0; cursor: pointer;">
-              Anterior
-            </p>
+              <p (click)="currentPage === 1 ? null : changePage(currentPage - 1)" [ngStyle]="{'cursor': currentPage === 1 ? 'not-allowed' : 'pointer'}"
+                style="font-family: Poppins, sans-serif; font-weight: 400; color: #909090; margin-bottom: 0; cursor: pointer;">
+                Anterior
+              </p>
               <div style="display: flex; align-items: center; gap: 15px;">
-              <ng-container *ngIf="totalPages > 1">
-                <div *ngFor="let page of getPaginationRange(totalPages); let i = index" 
-                (click)="page !== '...' && changePage(page)"
-                  style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; margin: 0 2px;">
-                  <p [style.background-color]="page === currentPage ? '#035A7A' : 'transparent'"
-                    [ngStyle]="{'color': page === currentPage ? '#FFFF' : 'inherit'}"
-                    style="font-family: Poppins, sans-serif; font-weight: 400; margin-bottom: 0; width: 50px; padding: 5px; border-radius: 5px; text-align: center;">
-                    {{ page }}
-                  </p>
-                </div>
-              </ng-container>
+                <ng-container *ngIf="totalPages > 1">
+                  <div *ngFor="let page of getPaginationRange(totalPages); let i = index" 
+                    (click)="page !== '...' && changePage(page)"
+                    style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; margin: 0 2px;">
+                    <p [style.background-color]="page === currentPage ? '#035A7A' : 'transparent'"
+                      [ngStyle]="{'color': page === currentPage ? '#FFFF' : 'inherit'}"
+                      style="font-family: Poppins, sans-serif; font-weight: 400; margin-bottom: 0; width: 50px; padding: 5px; border-radius: 5px; text-align: center;">
+                      {{ page }}
+                    </p>
+                  </div>
+                </ng-container>
               </div>
               <p 
                 (click)="currentPage === totalPages ? null : changePage(currentPage + 1)"
@@ -59,6 +58,13 @@
                 style="font-family: Poppins, sans-serif; font-weight: 500; color: #035A7A; margin-bottom: 0;">
                 Próximo
               </p>
+              <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()" style="margin-left: 20px;">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
             </div>
 
             <div class="pagination-footer">
