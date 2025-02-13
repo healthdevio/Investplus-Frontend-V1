@@ -241,6 +241,17 @@ export class RoundCompanyPublishComponent implements OnInit {
     });
   }
 
+  formatCurrencyFromNumber(value: number): string {
+    if (value === null || value === undefined) return 'R$ 0,00';
+  
+    const formattedValue = (value / 1).toFixed(2).replace('.', ',');
+  
+    const parts = formattedValue.split(',');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    return `R$ ${parts.join(',')}`;
+  }
+
   getRoundInformation(id: number, roundId: number, isViewOnly: boolean = false) {
     this.isUpdatePublishModalOpen = true;
     this.loadingRounds = true;
@@ -250,15 +261,23 @@ export class RoundCompanyPublishComponent implements OnInit {
   
     this.roundService.getRound(id, roundId).subscribe({
       next: (response) => {
-  
         const dataForm = response.round as any;
+  
+        if (dataForm.maximumValuation) {
+          dataForm.maximumValuation = this.formatCurrencyFromNumber(dataForm.maximumValuation);
+        }
+        if (dataForm.minimumValuation) {
+          dataForm.minimumValuation = this.formatCurrencyFromNumber(dataForm.minimumValuation);
+        }
+        if (dataForm.quotaValue) {
+          dataForm.quotaValue = this.formatCurrencyFromNumber(dataForm.quotaValue);
+        }
+  
         this.updateForm.patchValue(dataForm);
-        // this.adjustDurationDate();
   
         let companyData = response.round?.company || response;
   
         if (companyData?.id && companyData?.name) {
-  
           this.updateForm.patchValue({ id: companyData.id });
   
           if (!this.companies.some(c => c.id === companyData.id)) {
@@ -290,9 +309,8 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.loadingRounds = false;
       }
     });
-  }    
+  }  
   
-
   getModalities() {
     this.modalities = this.modalityService.getModalities();
   }
