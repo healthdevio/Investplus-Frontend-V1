@@ -181,9 +181,9 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   formatCurrency(value: string): string {
     if (!value) return '';
-    
+  
     const onlyNumbers = value.toString().replace(/[^0-9]/g, '');
-    
+  
     if (!onlyNumbers) return 'R$ 0,00';
   
     const intPart = onlyNumbers.slice(0, -2) || '0';
@@ -193,20 +193,21 @@ export class RoundCompanyPublishComponent implements OnInit {
   
     return `R$ ${formattedIntPart},${decimalPart}`;
   }
-  
+
   public prepareSubmitData(): any {
     const formData = { ...this.updateForm.value };
     const monetaryFields = ['minimumValuation', 'maximumValuation', 'quotaValue', 'upangelCost'];
   
     monetaryFields.forEach(field => {
       if (formData[field]) {
-        formData[field] = formData[field].replace(/[R$\.\,]/g, '');
-        formData[field] = parseFloat(formData[field]) / 100;
+        const valueAsString = String(formData[field]);
+        const cleanedValue = valueAsString.replace(/[R$\.]/g, '').replace(',', '.');
+        formData[field] = parseFloat(cleanedValue);
       }
     });
   
     return formData;
-  }  
+  }
 
   toggleRoundStatus(roundId: number, companyId: number, currentStatus: string) {
     const newStatus = currentStatus === 'IN_PROGRESS' ? 'PENDING' : 'IN_PROGRESS';
@@ -572,25 +573,13 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   public onSubmit(action: string): void {
     if (this.updateForm.valid) {
-      const dataForm = { ...this.updateForm.value };
-      const monetaryFields = ['quotaValue', 'maximumValuation', 'minimumValuation'];
-  
-      monetaryFields.forEach(field => {
-        if (dataForm[field]) {
-          dataForm[field] = +dataForm[field].replace(/[R$\.\,]/g, '').replace(',', '.');
-        }
-      });
-  
+      const dataForm = this.prepareSubmitData();
       if (dataForm['upangelCost']) {
         dataForm['upangelCost'] = parseFloat(dataForm['upangelCost']);
       }
   
       const startedAt = new Date(dataForm.startedAt);
-      // const duration = new Date(dataForm.duration);
-      // const timeDifference = duration.getTime() - startedAt.getTime();
-      // const daysDifference = timeDifference / (1000 * 3600 * 24);
-      // dataForm.duration = daysDifference;
-  
+
       if (!dataForm.status) {
         dataForm.status = this.updateForm.get('status')?.value || 'IN_PROGRESS';
       }
