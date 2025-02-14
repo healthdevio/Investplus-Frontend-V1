@@ -169,26 +169,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.members.push(newMember);
   }
 
-  deleteTeamMember(id: number): void {
-    this.loading = true;
-    this.loaderService.load(this.loading);
-    this.companyService.deleteTeamMember(this.id, id).subscribe(
-      () => {
-        toastr.success('Registro excluído com sucesso.');
-        this.getTeam();
-      },
-      (error) => {
-        toastr.error('Falha ao excluir registro.');
-      },
-      () => {
-        this.loading = false;
-        this.loaderService.load(this.loading);
-      }
-    );
-  }
-
   onRemove(id: number): void {
-    const $this = this;
     bootbox.confirm({
       title: "Confirmação",
       message: "Deseja realmente excluir o registro?",
@@ -203,11 +184,30 @@ export class RoundApprovalListComponent implements OnInit {
         },
       },
       callback: (result) => {
-        if (result === true) {
-          $this.deleteTeamMember(id);
+        if (result) {
+          this.deleteTeamMember(id);
         }
       },
     });
+  }
+  
+  deleteTeamMember(id: number): void {
+    this.loading = true;
+    this.loaderService.load(this.loading);
+  
+    this.companyService.deleteTeamMember(this.id, id).subscribe(
+      () => {
+        toastr.success('Registro excluído com sucesso.');
+        this.getTeam();
+      },
+      () => {
+        toastr.error('Falha ao excluir registro.');
+      },
+      () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      }
+    );
   }
 
   public redirectTo(uri: string): void {
