@@ -1253,17 +1253,7 @@ export class RoundApprovalListComponent implements OnInit {
   }
   
   private showErrorDialog(message: string) {
-    bootbox.dialog({
-      title: "Campo incorreto",
-      message: message,
-      buttons: {
-        ok: {
-          label: "Fechar",
-          className: "bg-upangel",
-          callback: function () { },
-        },
-      },
-    });
+    toastr.error(message, "Campo incorreto");
   }
   
   async fetchAddressByCEP(cep: string): Promise<void> {
