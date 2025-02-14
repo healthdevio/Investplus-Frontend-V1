@@ -433,6 +433,7 @@ export class RoundApprovalListComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
+          console.log(response)
           this.members = response.map(member => ({ ...member, showDetails: false }));
         }
       })
