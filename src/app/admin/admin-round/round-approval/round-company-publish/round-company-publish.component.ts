@@ -16,7 +16,6 @@ import { ChangeDetectorRef } from "@angular/core";
 import { forkJoin } from "rxjs";
 
 declare var toastr: any;
-declare var bootbox: any;
 
 @Component({
   selector: "app-round-company-publish",
@@ -632,14 +631,12 @@ export class RoundCompanyPublishComponent implements OnInit {
   
       this.roundService.createRound(roundId, dataForm, action).subscribe(
         (response) => {
-          bootbox.dialog({
-            title: '',
-            message: 'Rodada atualizada com sucesso.',
-            buttons: {
-              'success': {
-                label: 'Entendi',
-                className: 'bg-upangel',
-              }
+          toastr.success('Rodada atualizada com sucesso.', 'Sucesso', {
+            timeOut: 3000, 
+            closeButton: true, 
+            progressBar: true, 
+            onHidden: () => {
+             return
             }
           });
   
@@ -772,19 +769,14 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.roundService
       .updateStatus(company, round, this.statusApproved)
       .subscribe(
-        (response) => {
-          bootbox.dialog({
-            title: "",
-            message: "A rodada foi publicada.",
-            buttons: {
-              success: {
-                label: "Entendi",
-                className: "bg-upangel",
-                callback: function () {
-                  $this.router.navigate(["/admin/rounds/incorporator/list"]);
-                },
-              },
-            },
+        () => {
+          toastr.success('A rodada foi publicada.', 'Sucesso', {
+            timeOut: 3000,
+            closeButton: true, 
+            progressBar: true,
+            onHidden: () => {
+              this.router.navigate(["/admin/rounds/incorporator/list"]);
+            }
           });
         },
         (error) => {
