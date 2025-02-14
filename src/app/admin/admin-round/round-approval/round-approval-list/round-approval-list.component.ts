@@ -34,6 +34,7 @@ declare var moment: any;
 export class RoundApprovalListComponent implements OnInit {
   titleHeader: TitleHeader;
   form: FormGroup;
+  selectedMember: Team | null = null;
   adminForm: FormGroup;
   expenseForm: FormGroup;
   valuationForm: FormGroup;
@@ -140,6 +141,56 @@ export class RoundApprovalListComponent implements OnInit {
 
   sendPartnerSession() {
     this.redirectTo('admin/rounds/company/partners/' + this.id);
+  }
+
+  toggleMemberDetails(member: Team): void {
+    member.showDetails = !member.showDetails;
+  }
+
+  editMember(member: Team): void {
+    console.log('Editar membro:', member);
+    this.router.navigate(['admin/rounds/company/team/edit', this.id, member.id]);
+  }
+
+  deleteTeamMember(id: number): void {
+    this.loading = true;
+    this.loaderService.load(this.loading);
+    this.companyService.deleteTeamMember(this.id, id).subscribe(
+      () => {
+        toastr.success('Registro excluído com sucesso.');
+        this.getTeam();
+      },
+      (error) => {
+        toastr.error('Falha ao excluir registro.');
+      },
+      () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      }
+    );
+  }
+
+  onRemove(id: number): void {
+    const $this = this;
+    bootbox.confirm({
+      title: "Confirmação",
+      message: "Deseja realmente excluir o registro?",
+      buttons: {
+        confirm: {
+          label: "Confirmar",
+          className: "bg-upangel",
+        },
+        cancel: {
+          label: "Cancelar",
+          className: "bg-upangel",
+        },
+      },
+      callback: (result) => {
+        if (result === true) {
+          $this.deleteTeamMember(id);
+        }
+      },
+    });
   }
 
   public redirectTo(uri: string): void {
@@ -382,7 +433,7 @@ export class RoundApprovalListComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          this.members = response;
+          this.members = response.map(member => ({ ...member, showDetails: false }));
         }
       })
   }
