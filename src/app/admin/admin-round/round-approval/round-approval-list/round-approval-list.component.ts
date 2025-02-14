@@ -148,8 +148,25 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   editMember(member: Team): void {
-    console.log('Editar membro:', member);
     this.router.navigate(['admin/rounds/company/team/edit', this.id, member.id]);
+  }
+
+  addNewMember() {
+    const newMemberIndex = this.members.length > 0 ? Math.max(...this.members.map(m => m.id)) + 1 : 1;
+
+    const newMember: Team = {
+      id: newMemberIndex, 
+      fullName: '',
+      email: '',
+      department: '',
+      linkedin: '',
+      activities: '',
+      role: '',
+      photo: '', 
+      showDetails: true 
+    };
+
+    this.members.push(newMember);
   }
 
   deleteTeamMember(id: number): void {
@@ -391,8 +408,6 @@ export class RoundApprovalListComponent implements OnInit {
     const currentControl = this.valuationForm.get('current');
     const shortTermControl = this.valuationForm.get('shortTerm');
     const longTermControl = this.valuationForm.get('longTerm');
-
-    console.log(currentControl, shortTermControl, longTermControl)
   
     if (currentControl.valid && shortTermControl.valid && longTermControl.valid) {
       const dataSend = this.valuationForm.value;
@@ -433,7 +448,6 @@ export class RoundApprovalListComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          console.log(response)
           this.members = response.map(member => ({ ...member, showDetails: false }));
         }
       })
@@ -821,7 +835,6 @@ export class RoundApprovalListComponent implements OnInit {
   
     this.validateRelevantFields(this.form);
   
-    console.log("Iniciando atualização de dados");
     const data = this.form.value;
   
     data.cnpj = this.unmaskCnpj(data.cnpj);
@@ -893,7 +906,6 @@ export class RoundApprovalListComponent implements OnInit {
   
     this.validateRelevantFields(this.form);
   
-    console.log("entrou de fato entrou");
     const data = this.form.value;
   
     data.cnpj = this.unmaskCnpj(data.cnpj);

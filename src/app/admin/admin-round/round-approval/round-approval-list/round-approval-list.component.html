@@ -939,18 +939,18 @@ class="content">
         <div *ngIf="selectedUpdateSession === 'Equipe Executiva'">
           <p style="margin-bottom: 0; color: #777777;">Equipe Executiva da empresa</p>
         
-          <div *ngFor="let member of members">
+          <div *ngFor="let member of members; let i = index">
             <div 
               (click)="toggleMemberDetails(member)"
               style="width: 100%; height: 60px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 10px; margin-bottom: 10px; cursor: pointer; justify-content: space-between;">
               
               <div style="display: flex; align-items: center; gap: 10px;">
                 <img 
-                  [src]="'data:image/jpeg;base64,' + member.photo" 
+                  [src]="member.photo ? 'data:image/jpeg;base64,' + member.photo : 'assets/img/default-profile_01.png'" 
                   alt="{{ member.fullName }}"
                   style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #E5E5E5;">
                 
-                <p style="margin-bottom: 0; color: #777777;">{{ member.fullName }}</p>
+                <p style="margin-bottom: 0; color: #777777;">{{ member.fullName || 'Novo Membro ' + (i + 1) }}</p>
               </div>
         
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -961,12 +961,17 @@ class="content">
             </div>
         
             <div *ngIf="member.showDetails" style="padding: 10px; border: 1px solid #E5E5E5; border-radius: 4px; margin-bottom: 10px;">
-              <p><strong>Nome completo:</strong> {{ member.fullName }}</p>
-              <p><strong>Email:</strong> {{ member.email }}</p>
-              <p><strong>Departamento:</strong> {{ member.department }}</p>
-              <p><strong>Linkedin:</strong> <a [href]="member.linkedin" target="_blank">{{ member.linkedin }}</a></p>
-              <p><strong>Atividade:</strong> {{ member.activities }}</p>
-              <p><strong>Função:</strong> {{ member.role }}</p>
+              <p><strong>Nome completo:</strong> <input type="text" [(ngModel)]="member.fullName" placeholder="Nome do membro" class="form-control"></p>
+              <p><strong>Email:</strong> <input type="email" [(ngModel)]="member.email" placeholder="Email" class="form-control"></p>
+              <p><strong>Departamento:</strong> 
+                <select [(ngModel)]="member.department" class="form-control">
+                  <option value="EXECUTIVE">Executivo</option>
+                  <option value="ADVICE">Conselho</option>
+                </select>
+              </p>
+              <p><strong>Linkedin:</strong> <input type="text" [(ngModel)]="member.linkedin" placeholder="Linkedin" class="form-control"></p>
+              <p><strong>Atividade:</strong> <input type="text" [(ngModel)]="member.activities" placeholder="Atividade" class="form-control"></p>
+              <p><strong>Função:</strong> <input type="text" [(ngModel)]="member.role" placeholder="Função" class="form-control"></p>
         
               <div style="display: flex; gap: 10px; margin-top: 10px;">
                 <button (click)="editMember(member)" style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Editar</button>
@@ -974,9 +979,12 @@ class="content">
               </div>
             </div>
           </div>
+        
+          <button (click)="addNewMember()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: block; margin-top: 10px;">
+            + Adicionar Membro
+          </button>
         </div>
         
-
         <div *ngIf="selectedUpdateSession === 'Quadro societário'">
           <p style="margin-bottom: 10px; color: #777777;">Quadro societário da empresa</p>
 
