@@ -196,7 +196,7 @@ export class RoundCompanyPublishComponent implements OnInit {
 
   public prepareSubmitData(): any {
     const formData = { ...this.updateForm.value };
-    const monetaryFields = ['minimumValuation', 'maximumValuation', 'quotaValue', 'upangelCost'];
+    const monetaryFields = ['minimumValuation', 'maximumValuation', 'quotaValue'];
   
     monetaryFields.forEach(field => {
       if (formData[field]) {
@@ -589,11 +589,33 @@ export class RoundCompanyPublishComponent implements OnInit {
     return aux;
   }
 
+  private formatNumber(value: any): number {
+    if (value === null || value === undefined) {
+      return 0;
+    }
+  
+    const valueAsString = String(value); 
+    const cleanedValue = valueAsString.replace(/,/g, '.');
+  
+    const parts = cleanedValue.split('.');
+    if (parts.length > 1) {
+      const formattedValue = parts.slice(0, -1).join('') + '.' + parts[parts.length - 1];
+      return parseFloat(formattedValue);
+    }
+  
+    return parseFloat(cleanedValue);
+  }
+
   public onSubmit(action: string): void {
     if (this.updateForm.valid) {
       const dataForm = this.prepareSubmitData();
+
       if (dataForm['upangelCost']) {
-        dataForm['upangelCost'] = parseFloat(dataForm['upangelCost']);
+        dataForm.upangelCost = this.formatNumber(dataForm.upangelCost);
+      }
+  
+      if (dataForm['partnerParticipation']) {
+        dataForm.partnerParticipation = this.formatNumber(dataForm.partnerParticipation);
       }
   
       const startedAt = new Date(dataForm.startedAt);
