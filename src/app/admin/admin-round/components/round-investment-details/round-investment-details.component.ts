@@ -829,6 +829,9 @@ export class RoundInvestmentDetailsComponent implements OnInit {
     return parseFloat(percentage) === 0 ? "<0.000001%" : `${percentage}%`;
   }
   
+  formatParticipation2(value: number): string {
+    return (value || 0).toFixed(2);
+  }  
 
   randomColors(n: number){
     const colors = [
