@@ -213,21 +213,21 @@
           
             <tbody>
               <tr *ngFor="let investment of filteredInvestments; let i = index">
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.investor.fullName}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{maskPerfil(investment.investor.investorProfileStatement)}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.investor.totalInvestedOthers | moneyMask : true}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.quotas}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.value | moneyMask : true}}</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.installments}}x</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.roundPercent}}%</td>
-                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;" [routerLink]="'/admin/rounds/company/investments/installment/' + investment.id">
+                <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   {{investment.date | date}}</td>
                 <td style="padding: 16px; font-family: Poppins, sans-serif; font-weight: 500;">
                   <div style="display: flex; gap: 5px;">
