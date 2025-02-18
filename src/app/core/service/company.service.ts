@@ -67,7 +67,7 @@ export class CompanyService {
     return this.http.post<Valuation>(`${environment.url_api}/${this.prefixService}/${id}/valuations`, datasend);
   }
 
-  createTeam(id: number, datasend: Team): Observable<Team> {
+  createTeam(id: number, datasend: Team[]): Observable<Team> {
     return this.http.post<Team>(`${environment.url_api}/${this.prefixService}/${id}/team`, datasend);
   }
 

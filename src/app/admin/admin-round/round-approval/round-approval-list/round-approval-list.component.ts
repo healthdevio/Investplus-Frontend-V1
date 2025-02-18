@@ -192,21 +192,20 @@ export class RoundApprovalListComponent implements OnInit {
     this.loading = true;
     this.loaderService.load(this.loading);
 
-    this.companyService.createTeam(this.id, member).subscribe(
+    this.companyService.createTeam(this.id, [member]).subscribe(
         (response) => {
-            if (!response) {
-                toastr.error('Erro: Resposta inválida do servidor.');
-                return;
+            if (response && response.id) {
+                member.id = response.id;
+                member.showDetails = false;
+                toastr.success('Novo membro salvo com sucesso!');
+                this.getTeam(); 
+            } else {
+                toastr.success('Novo membro salvo.');
             }
-
-            member.id = response.id ? response.id : null;
-            member.showDetails = false;
-
-            toastr.success('Novo membro salvo com sucesso!');
-            this.getTeam();
         },
         (error) => {
             toastr.error('Erro ao salvar o membro.');
+            console.error('Erro ao salvar o membro:', error);
         },
         () => {
             this.loading = false;
