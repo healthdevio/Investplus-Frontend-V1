@@ -54,7 +54,7 @@
             <li style="border-bottom: 1px solid #E5E5E5;" class="list-group-item">
               <span class="description-text">Participação total</span>
               <a class="newdetails pull-right">
-                <span *ngIf="company.round?.modality != 'SAFE'">{{company?.round?.partnerParticipation * 100}}%</span>
+                <span *ngIf="company.round?.modality != 'SAFE'">{{company?.round?.partnerParticipation}}%</span>
                 <span *ngIf="company.round?.modality == 'SAFE'" class="description-title-3">Depende do valuation da próxima rodada</span>
               </a>
             </li>
