@@ -114,19 +114,6 @@
   font-weight: 500;
 }
 
-.left-side-menu {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.left-side-menu>li {
-  border-radius: 8px;
-  padding: 9px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
 .left-side-menu>li:hover,
 .left-side-menu>li.active {
   background-color: #FFFFFF14;
@@ -145,6 +132,37 @@
   font-weight: 500;
 }
 
+.invest-buttons button.active {
+  background: #00A8E7;
+  border-radius: 4px;
+  color: #171719;
+  font-weight: 500;
+}
+
+.invest-buttons button:not(.active) {
+  background: transparent;
+  color: #E1E1E1;
+  font-weight: 400;
+}
+
+.skin-blue .treeview-menu > li.active > a,
+.skin-blue .treeview-menu > li > a:hover {
+  color: #444 !important;
+}
+
+.left-side-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.left-side-menu>li {
+  border-radius: 8px;
+  padding: 9px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
 .sidebar-dois a {
   color: #BFBFBF;
   font-size: 14px;
@@ -155,11 +173,6 @@
   line-height: 1;
   position: absolute;
   left: 55px;
-}
-
-.skin-blue .treeview-menu > li.active > a,
-.skin-blue .treeview-menu > li > a:hover {
-  color: #444 !important;
 }
 
 .slimScrollBar {
@@ -231,19 +244,6 @@
   line-height: 100%;
   cursor: pointer;
   border: none;
-}
-
-.invest-buttons button.active {
-  background: #00A8E7;
-  border-radius: 4px;
-  color: #171719;
-  font-weight: 500;
-}
-
-.invest-buttons button:not(.active) {
-  background: transparent;
-  color: #E1E1E1;
-  font-weight: 400;
 }
 
 i {

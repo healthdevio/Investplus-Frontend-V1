@@ -152,7 +152,7 @@ max-width: 17.4% !important;">
         </a>
       </li>
 
-      <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
+      <li *ngIf="scopes.ROLE_ADMIN" class="treeview" routerLinkActive="active">
         <a routerLink="/admin/investors">
           <i>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,11 +165,11 @@ max-width: 17.4% !important;">
                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </i>
-          <span class="header-menu">Investidores</span>
+          <span class="menu-text">Investidores</span>
         </a>
       </li>
 
-      <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
+      <li *ngIf="scopes.ROLE_ADMIN" class="treeview" routerLinkActive="active">
         <a routerLink="/admin/rounds/company/investments">
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -206,11 +206,11 @@ max-width: 17.4% !important;">
               </defs>
             </svg>
           </i>
-          <span class="header-menu">Investimentos</span>
+          <span class="menu-text">Investimentos</span>
         </a>
       </li>
 
-      <li (click)="companyTabs()" *ngIf="scopes.ROLE_ADMIN" class="treeview">
+      <li (click)="companyTabs()" *ngIf="scopes.ROLE_ADMIN" class="treeview" routerLinkActive="active">
         <a>
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -224,7 +224,7 @@ max-width: 17.4% !important;">
                 stroke-linejoin="round" />
             </svg>
           </i>
-          <span class="header-menu">Empresas</span>
+          <span class="menu-text">Empresas</span>
         </a>
       </li>
 
@@ -249,7 +249,7 @@ max-width: 17.4% !important;">
         </div>
       </div>
 
-      <li *ngIf="scopes.ROLE_ADMIN" class="treeview">
+      <li *ngIf="scopes.ROLE_ADMIN" class="treeview" routerLinkActive="active">
         <a routerLink="./rounds/approval/company/publish">
           <i>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,7 +280,7 @@ max-width: 17.4% !important;">
               </defs>
             </svg>
           </i>
-          <span class="header-menu">Rodadas</span>
+          <span class="menu-text">Rodadas</span>
         </a>
       </li>
 
