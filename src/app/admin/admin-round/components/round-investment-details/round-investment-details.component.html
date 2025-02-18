@@ -337,7 +337,7 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                   <div style="display: flex; align-items: center; justify-content: space-between;">
                     <p style="font-size: 16px; font-weight:500; color: #1F1F1F; margin-top: 5px;">
                       <span *ngIf="roundInvestment?.round?.modality != 'SAFE'">
-                        {{ formatParticipation(roundInvestment?.round?.partnerParticipation / roundInvestment?.round?.quotas) }}
+                        {{ roundInvestment?.round?.partnerParticipation }} %
                       </span>
                       <span *ngIf="roundInvestment?.round?.modality == 'SAFE'" class="description-title-3">
                         Depende do valuation da próxima rodada
