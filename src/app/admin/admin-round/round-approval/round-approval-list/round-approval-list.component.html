@@ -949,9 +949,9 @@ class="content">
                 
                 <div style="display: flex; align-items: center; gap: 10px;">
                   <img 
-                    [src]="member.photo ? 'data:image/jpeg;base64,' + member.photo : 'assets/img/default-profile_01.png'" 
-                    alt="{{ member.fullName }}"
-                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #E5E5E5;">
+                  [src]="member.photo ? 'data:image/jpeg;base64,' + member.photo : 'assets/img/default-profile_01.png'" 
+                  alt="{{ member.fullName }}"
+                  style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #E5E5E5;">              
                   
                   <p style="margin-bottom: 0; color: #777777;">{{ member.fullName || 'Novo Membro ' + (i + 1) }}</p>
                 </div>
@@ -975,7 +975,22 @@ class="content">
                 <p><strong>Linkedin:</strong> <input type="text" [(ngModel)]="member.linkedin" placeholder="Linkedin" class="form-control"></p>
                 <p><strong>Atividade:</strong> <input type="text" [(ngModel)]="member.activities" placeholder="Atividade" class="form-control"></p>
                 <p><strong>Função:</strong> <input type="text" [(ngModel)]="member.role" placeholder="Função" class="form-control"></p>
+                <p><strong>Foto:</strong></p>
+                <div
+                style="width: 100%; height: 30px; border-radius: 4px; border: 1px dashed #035A7A; padding: 0 10px; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                (click)="fileInputPhoto.click()">
+                <p style="margin-bottom: 0px; color: #035A7A;">{{ member.photo ? 'Foto Selecionada' : 'Anexar foto do membro' }}</p>
+                <input 
+                    type="file"
+                    #fileInputPhoto
+                    (change)="onFileSelected($event, member)" 
+                    accept="image/*" 
+                    style="display: none;" 
+                  />
+              </div>
             
+                
+
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <button *ngIf="!member.id" (click)="saveNewMember(member)" 
                         style="background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">

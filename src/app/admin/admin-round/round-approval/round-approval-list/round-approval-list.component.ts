@@ -167,6 +167,20 @@ export class RoundApprovalListComponent implements OnInit {
     );
   }
 
+  onFileSelected(event: any, member: Team) {
+      const file = event.target.files[0];
+
+      if (file) {
+          const reader = new FileReader();
+
+          reader.onload = (e: any) => {
+              member.photo = e.target.result.split(',')[1];
+          };
+
+          reader.readAsDataURL(file);
+      }
+  }
+
   addNewMember() {
       const newMember: Team = {
           id: null, 
@@ -194,13 +208,13 @@ export class RoundApprovalListComponent implements OnInit {
 
     this.companyService.createTeam(this.id, [member]).subscribe(
         (response) => {
-            if (response && response.id) {
-                member.id = response.id;
+            if (response && response[0]?.id) {
+                member.id = response[0].id;
                 member.showDetails = false;
                 toastr.success('Novo membro salvo com sucesso!');
                 this.getTeam(); 
             } else {
-                toastr.success('Novo membro salvo.');
+              toastr.success('Novo membro salvo.');
             }
         },
         (error) => {
