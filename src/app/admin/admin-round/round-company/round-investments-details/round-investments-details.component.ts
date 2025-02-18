@@ -104,11 +104,15 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
   }
 
   publishInvestment() {
+    if (this.loader) return;
+  
+    this.loader = true;
+  
     const statusUpdate = {
       contractStatus: this.formStatus.value.contractStatus,
       paymentStatus: this.formStatus.value.status
     };    
-  
+    
     this.investmentService.updateStatus(this.id, statusUpdate)
       .subscribe(
         () => {
@@ -118,9 +122,12 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
         },
         (error) => {
           toastr.error("Ocorreu um erro, entre em contato com o administrador.");
+        },
+        () => {
+          this.loader = false;
         }
       );
-  }  
+  }
 
   convertToCSV(objArray: any[]): string {
     const header = ['Nome', 'Perfil', 'Vlr. Outras Plataformas', 'Cotas', 'Total', 'Parc.', '%', 'Data', 'Contrato', 'Status'];

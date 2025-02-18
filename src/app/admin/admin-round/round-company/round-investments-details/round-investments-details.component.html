@@ -62,10 +62,16 @@
     
           <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
             <div style="width: 100%; border-top: 1px solid #E5E5E5;">
-              <button (click)="publishInvestment()"
-                style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
-                <p style="margin-bottom: 0; color: white;">Editar Investimento</p>
-              </button>
+              <button 
+              (click)="publishInvestment()"
+              [disabled]="loader"
+              style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px; position: relative;">
+              
+              <p *ngIf="!loader" style="margin-bottom: 0; color: white;">Editar Investimento</p>
+            
+              <div *ngIf="loader" class="spinner"></div>
+            
+            </button>                   
             </div>
           </div>
         </div>
