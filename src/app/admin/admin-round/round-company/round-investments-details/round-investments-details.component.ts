@@ -105,9 +105,9 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
 
   publishInvestment() {
     const statusUpdate = {
-      status: this.formStatus.value.status,
-      contractStatus: this.formStatus.value.contractStatus
-    };
+      contractStatus: this.formStatus.value.contractStatus,
+      paymentStatus: this.formStatus.value.status
+    };    
   
     this.investmentService.updateStatus(this.id, statusUpdate)
       .subscribe(
@@ -120,8 +120,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
           toastr.error("Ocorreu um erro, entre em contato com o administrador.");
         }
       );
-  }
-  
+  }  
 
   convertToCSV(objArray: any[]): string {
     const header = ['Nome', 'Perfil', 'Vlr. Outras Plataformas', 'Cotas', 'Total', 'Parc.', '%', 'Data', 'Contrato', 'Status'];
@@ -242,12 +241,12 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
   }
 
   updateStatus(investment: number) {
-    const contractStatus = (<HTMLInputElement>document.getElementById('contractExternalId')).value;
-    const statusInvestment = (<HTMLInputElement>document.getElementById('status')).value;
+    const Contractstatus = (<HTMLInputElement>document.getElementById('contractExternalId')).value;
+    const Paymentstatus = (<HTMLInputElement>document.getElementById('status')).value;
   
     const status = { 
-      status: statusInvestment, 
-      contractStatus: contractStatus
+      contractStatus: Contractstatus, 
+      paymentStatus: Paymentstatus
     };
   
     this.investmentService.updateStatus(investment, status).subscribe(
@@ -262,8 +261,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
         }
       }
     );
-  }
-  
+  }  
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
