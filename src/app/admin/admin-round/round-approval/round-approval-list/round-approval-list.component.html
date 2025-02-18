@@ -939,51 +939,56 @@ class="content">
         <div *ngIf="selectedUpdateSession === 'Equipe Executiva'">
           <p style="margin-bottom: 0; color: #777777;">Equipe Executiva da empresa</p>
         
-          <div *ngFor="let member of members; let i = index">
-            <div 
-              (click)="toggleMemberDetails(member)"
-              style="width: 100%; height: 60px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 10px; margin-bottom: 10px; cursor: pointer; justify-content: space-between;">
-              
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <img 
-                  [src]="member.photo ? 'data:image/jpeg;base64,' + member.photo : 'assets/img/default-profile_01.png'" 
-                  alt="{{ member.fullName }}"
-                  style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #E5E5E5;">
+          <app-loader *ngIf="loadingMembers" [loader]="true"></app-loader>
+        
+          <div *ngIf="!loadingMembers">
+            <div *ngFor="let member of members; let i = index">
+              <div 
+                (click)="toggleMemberDetails(member)"
+                style="width: 100%; height: 60px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 10px; margin-bottom: 10px; cursor: pointer; justify-content: space-between;">
                 
-                <p style="margin-bottom: 0; color: #777777;">{{ member.fullName || 'Novo Membro ' + (i + 1) }}</p>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <img 
+                    [src]="member.photo ? 'data:image/jpeg;base64,' + member.photo : 'assets/img/default-profile_01.png'" 
+                    alt="{{ member.fullName }}"
+                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #E5E5E5;">
+                  
+                  <p style="margin-bottom: 0; color: #777777;">{{ member.fullName || 'Novo Membro ' + (i + 1) }}</p>
+                </div>
+                
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.00004 6.66634C9.4728 6.66634 10.6667 5.47243 10.6667 3.99967C10.6667 2.52692 9.4728 1.33301 8.00004 1.33301C6.52728 1.33301 5.33337 2.52692 5.33337 3.99967C5.33337 5.47243 6.52728 6.66634 8.00004 6.66634Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M14 14.667C14 11.3533 11.3137 8.66699 8 8.66699C4.6863 8.66699 2 11.3533 2 14.667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M7.99996 14.667L9.33329 13.0003L7.99996 8.66699L6.66663 13.0003L7.99996 14.667Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </div>
-        
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.00004 6.66634C9.4728 6.66634 10.6667 5.47243 10.6667 3.99967C10.6667 2.52692 9.4728 1.33301 8.00004 1.33301C6.52728 1.33301 5.33337 2.52692 5.33337 3.99967C5.33337 5.47243 6.52728 6.66634 8.00004 6.66634Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M14 14.667C14 11.3533 11.3137 8.66699 8 8.66699C4.6863 8.66699 2 11.3533 2 14.667" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M7.99996 14.667L9.33329 13.0003L7.99996 8.66699L6.66663 13.0003L7.99996 14.667Z" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+          
+              <div *ngIf="member.showDetails" style="padding: 10px; border: 1px solid #E5E5E5; border-radius: 4px; margin-bottom: 10px;">
+                <p><strong>Nome completo:</strong> <input type="text" [(ngModel)]="member.fullName" placeholder="Nome do membro" class="form-control"></p>
+                <p><strong>Email:</strong> <input type="email" [(ngModel)]="member.email" placeholder="Email" class="form-control"></p>
+                <p><strong>Departamento:</strong> 
+                  <select [(ngModel)]="member.department" class="form-control">
+                    <option value="EXECUTIVE">Executivo</option>
+                    <option value="ADVICE">Conselho</option>
+                  </select>
+                </p>
+                <p><strong>Linkedin:</strong> <input type="text" [(ngModel)]="member.linkedin" placeholder="Linkedin" class="form-control"></p>
+                <p><strong>Atividade:</strong> <input type="text" [(ngModel)]="member.activities" placeholder="Atividade" class="form-control"></p>
+                <p><strong>Função:</strong> <input type="text" [(ngModel)]="member.role" placeholder="Função" class="form-control"></p>
+          
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                  <button (click)="editMember(member)" style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Editar</button>
+                  <button (click)="onRemove(member.id)" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+                </div>
+              </div>
             </div>
         
-            <div *ngIf="member.showDetails" style="padding: 10px; border: 1px solid #E5E5E5; border-radius: 4px; margin-bottom: 10px;">
-              <p><strong>Nome completo:</strong> <input type="text" [(ngModel)]="member.fullName" placeholder="Nome do membro" class="form-control"></p>
-              <p><strong>Email:</strong> <input type="email" [(ngModel)]="member.email" placeholder="Email" class="form-control"></p>
-              <p><strong>Departamento:</strong> 
-                <select [(ngModel)]="member.department" class="form-control">
-                  <option value="EXECUTIVE">Executivo</option>
-                  <option value="ADVICE">Conselho</option>
-                </select>
-              </p>
-              <p><strong>Linkedin:</strong> <input type="text" [(ngModel)]="member.linkedin" placeholder="Linkedin" class="form-control"></p>
-              <p><strong>Atividade:</strong> <input type="text" [(ngModel)]="member.activities" placeholder="Atividade" class="form-control"></p>
-              <p><strong>Função:</strong> <input type="text" [(ngModel)]="member.role" placeholder="Função" class="form-control"></p>
-        
-              <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button (click)="editMember(member)" style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Editar</button>
-                <button (click)="onRemove(member.id)" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
-              </div>
-            </div>
+            <button (click)="addNewMember()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: block; margin-top: 10px;">
+              + Adicionar Membro
+            </button>
           </div>
-        
-          <button (click)="addNewMember()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: block; margin-top: 10px;">
-            + Adicionar Membro
-          </button>
         </div>
+        
         
         <div *ngIf="selectedUpdateSession === 'Quadro societário'">
           <p style="margin-bottom: 10px; color: #777777;">Quadro societário da empresa</p>

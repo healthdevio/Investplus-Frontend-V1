@@ -104,6 +104,7 @@ export class RoundApprovalListComponent implements OnInit {
 
   loading: boolean = false;
   id: number;
+  loadingMembers: boolean;
 
   constructor(
     private companyService: CompanyService,
@@ -438,20 +439,23 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   getTeam() {
-    this.companyService
-      .getTeam(this.id)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-          this.loaderService.load(this.loading);
-        })
-      )
+    this.loadingMembers = true;
+  
+    this.companyService.getTeam(this.id)
+      .pipe(finalize(() => {
+        this.loadingMembers = false;
+        this.loaderService.load(this.loadingMembers);
+      }))
       .subscribe({
         next: (response) => {
           this.members = response.map(member => ({ ...member, showDetails: false }));
+        },
+        error: () => {
+          toastr.error('Erro ao carregar equipe executiva.');
         }
-      })
+      });
   }
+  
 
   getValuation(idCompany: number) {
     this.companyService.getValuation(idCompany).subscribe(
