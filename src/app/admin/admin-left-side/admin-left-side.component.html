@@ -210,7 +210,9 @@ max-width: 17.4% !important;">
         </a>
       </li>
 
-      <li (click)="companyTabs()" *ngIf="scopes.ROLE_ADMIN" class="treeview" routerLinkActive="active">
+      <li *ngIf="scopes.ROLE_ADMIN" routerLink="/admin/rounds/approval" 
+          routerLinkActive="active" 
+          [routerLinkActiveOptions]="{ exact: true }">
         <a>
           <i>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -226,7 +228,7 @@ max-width: 17.4% !important;">
           </i>
           <span class="menu-text">Empresas</span>
         </a>
-      </li>
+      </li>        
 
       <div *ngIf="isSvgRotated">
         <div *ngFor="let item of enterpriseSubItens">
