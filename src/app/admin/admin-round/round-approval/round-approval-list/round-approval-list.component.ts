@@ -149,26 +149,71 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   editMember(member: Team): void {
-    this.router.navigate(['admin/rounds/company/team/edit', this.id, member.id]);
+    this.loading = true;
+    this.loaderService.load(this.loading);
+  
+    this.companyService.updateTeamMember(this.id, member).subscribe(
+      () => {
+        toastr.success('Membro da equipe atualizado com sucesso!');
+      },
+      (error) => {
+        toastr.error('Falha ao atualizar o membro da equipe. Tente novamente.');
+        console.error('Erro ao atualizar membro da equipe:', error);
+      },
+      () => {
+        this.loading = false;
+        this.loaderService.load(this.loading);
+      }
+    );
   }
 
   addNewMember() {
-    const newMemberIndex = this.members.length > 0 ? Math.max(...this.members.map(m => m.id)) + 1 : 1;
+      const newMember: Team = {
+          id: null, 
+          fullName: '',
+          email: '',
+          department: '',
+          linkedin: '',
+          activities: '',
+          role: '',
+          photo: '', 
+          showDetails: true 
+      };
 
-    const newMember: Team = {
-      id: newMemberIndex, 
-      fullName: '',
-      email: '',
-      department: '',
-      linkedin: '',
-      activities: '',
-      role: '',
-      photo: '', 
-      showDetails: true 
-    };
-
-    this.members.push(newMember);
+      this.members.push(newMember);
   }
+
+  saveNewMember(member: Team) {
+    if (!member.fullName || !member.email || !member.department) {
+        toastr.error('Preencha todos os campos obrigatórios antes de salvar.');
+        return;
+    }
+
+    this.loading = true;
+    this.loaderService.load(this.loading);
+
+    this.companyService.createTeam(this.id, member).subscribe(
+        (response) => {
+            if (!response) {
+                toastr.error('Erro: Resposta inválida do servidor.');
+                return;
+            }
+
+            member.id = response.id ? response.id : null;
+            member.showDetails = false;
+
+            toastr.success('Novo membro salvo com sucesso!');
+            this.getTeam();
+        },
+        (error) => {
+            toastr.error('Erro ao salvar o membro.');
+        },
+        () => {
+            this.loading = false;
+            this.loaderService.load(this.loading);
+        }
+    );
+}
 
   onRemove(id: number): void {
     bootbox.confirm({
@@ -199,7 +244,7 @@ export class RoundApprovalListComponent implements OnInit {
     this.companyService.deleteTeamMember(this.id, id).subscribe(
       () => {
         toastr.success('Registro excluído com sucesso.');
-        this.getTeam();
+        this.members = this.members.filter(member => member.id !== id);
       },
       () => {
         toastr.error('Falha ao excluir registro.');
@@ -209,7 +254,7 @@ export class RoundApprovalListComponent implements OnInit {
         this.loaderService.load(this.loading);
       }
     );
-  }
+  }  
 
   public redirectTo(uri: string): void {
     this.router.navigateByUrl('/', {

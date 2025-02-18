@@ -967,20 +967,31 @@ class="content">
                 <p><strong>Nome completo:</strong> <input type="text" [(ngModel)]="member.fullName" placeholder="Nome do membro" class="form-control"></p>
                 <p><strong>Email:</strong> <input type="email" [(ngModel)]="member.email" placeholder="Email" class="form-control"></p>
                 <p><strong>Departamento:</strong> 
-                  <select [(ngModel)]="member.department" class="form-control">
-                    <option value="EXECUTIVE">Executivo</option>
-                    <option value="ADVICE">Conselho</option>
-                  </select>
+                    <select [(ngModel)]="member.department" class="form-control">
+                        <option value="EXECUTIVE">Executivo</option>
+                        <option value="ADVICE">Conselho</option>
+                    </select>
                 </p>
                 <p><strong>Linkedin:</strong> <input type="text" [(ngModel)]="member.linkedin" placeholder="Linkedin" class="form-control"></p>
                 <p><strong>Atividade:</strong> <input type="text" [(ngModel)]="member.activities" placeholder="Atividade" class="form-control"></p>
                 <p><strong>Função:</strong> <input type="text" [(ngModel)]="member.role" placeholder="Função" class="form-control"></p>
-          
+            
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
-                  <button (click)="editMember(member)" style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Editar</button>
-                  <button (click)="onRemove(member.id)" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+                    <button *ngIf="!member.id" (click)="saveNewMember(member)" 
+                        style="background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                        Salvar Novo Membro
+                    </button>
+                    <button *ngIf="member.id" (click)="editMember(member)" 
+                        style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                        Editar
+                    </button>
+                    <button (click)="deleteTeamMember(member.id)" 
+                        style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                        Excluir
+                    </button>
                 </div>
-              </div>
+            </div>
+            
             </div>
         
             <button (click)="addNewMember()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: block; margin-top: 10px;">
@@ -988,8 +999,7 @@ class="content">
             </button>
           </div>
         </div>
-        
-        
+ 
         <div *ngIf="selectedUpdateSession === 'Quadro societário'">
           <p style="margin-bottom: 10px; color: #777777;">Quadro societário da empresa</p>
 

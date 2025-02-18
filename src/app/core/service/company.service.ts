@@ -87,4 +87,8 @@ export class CompanyService {
     return this.http.post<any>(`${environment.url_api}/${this.prefixService}/${id}/documents`, datasend);
   }
 
+  updateTeamMember(companyId: number, teamMemberDTO: Team): Observable<void> {
+    return this.http.put<void>(`${environment.url_api}/${this.prefixService}/${companyId}/team`, teamMemberDTO);
+  }
+
 }
