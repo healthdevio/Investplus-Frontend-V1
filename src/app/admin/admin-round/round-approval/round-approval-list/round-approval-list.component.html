@@ -1015,34 +1015,71 @@ class="content">
           </div>
         </div>
  
-        <div *ngIf="selectedUpdateSession === 'Quadro societário'">
-          <p style="margin-bottom: 10px; color: #777777;">Quadro societário da empresa</p>
-
-          <div *ngFor="let partner of partners">
-            <div
-              style="width: 100%; height: 50px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; margin-bottom: 10px; margin-top: 10px; justify-content: space-between;">
-              <p style="margin-bottom: 0; color: #777777;">{{ partner.fullName }}</p>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M8.00004 6.66634C9.4728 6.66634 10.6667 5.47243 10.6667 3.99967C10.6667 2.52692 9.4728 1.33301 8.00004 1.33301C6.52728 1.33301 5.33337 2.52692 5.33337 3.99967C5.33337 5.47243 6.52728 6.66634 8.00004 6.66634Z"
-                  stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M14 14.667C14 11.3533 11.3137 8.66699 8 8.66699C4.6863 8.66699 2 11.3533 2 14.667" stroke="#BFBFBF"
-                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M7.99996 14.667L9.33329 13.0003L7.99996 8.66699L6.66663 13.0003L7.99996 14.667Z" stroke="#BFBFBF"
-                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+        <div *ngIf="selectedUpdateSession === 'Representantes Legais'">
+          <p style="margin-bottom: 10px; color: #777777;">Representantes Legais da empresa</p>
+        
+          <app-loader *ngIf="loadingPartners" [loader]="true"></app-loader>
+        
+          <div *ngIf="!loadingPartners">
+            <div *ngFor="let partner of partnersForm.controls; let i = index;" [formGroup]="partner">
+              <div 
+                (click)="togglePartnerDetails(i)"
+                style="width: 100%; height: 60px; border: 1px solid #E5E5E5; border-radius: 4px; display: flex; align-items: center; padding: 10px; margin-bottom: 10px; cursor: pointer; justify-content: space-between;">
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <p style="margin-bottom: 0; color: #777777;">{{ partner.value.fullName || 'Novo Representante ' + (i + 1) }}</p>
+                </div>
+        
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.00004 6.66634C9.4728 6.66634 10.6667 5.47243 10.6667 3.99967C10.6667 2.52692 9.4728 1.33301 8.00004 1.33301C6.52728 1.33301 5.33337 2.52692 5.33337 3.99967C5.33337 5.47243 6.52728 6.66634 8.00004 6.66634Z"
+                    stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M14 14.667C14 11.3533 11.3137 8.66699 8 8.66699C4.6863 8.66699 2 11.3533 2 14.667" stroke="#BFBFBF"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M7.99996 14.667L9.33329 13.0003L7.99996 8.66699L6.66663 13.0003L7.99996 14.667Z" stroke="#BFBFBF"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+        
+              <div *ngIf="partner.value.showDetails" style="padding: 10px; border: 1px solid #E5E5E5; border-radius: 4px; margin-bottom: 10px;">
+                <p><strong>Nome completo:</strong> <input type="text" formControlName="fullName" placeholder="Nome" class="form-control"></p>
+                <p><strong>Email:</strong> <input type="email" formControlName="email" placeholder="Email" class="form-control"></p>
+                <p><strong>CPF:</strong> <input type="text" formControlName="cpf" placeholder="CPF" class="form-control cpf"></p>
+                <p><strong>RG:</strong> <input type="text" formControlName="rg" placeholder="RG" class="form-control"></p>
+                <p><strong>Data de Nascimento:</strong> <input type="date" formControlName="dateOfBirth" class="form-control"></p>
+                <p><strong>Telefone:</strong> <input type="text" formControlName="phone" placeholder="Telefone" class="form-control"></p>
+                <p><strong>Profissão:</strong> <input type="text" formControlName="profession" placeholder="Profissão" class="form-control"></p>
+                <p><strong>Estado Civil:</strong> 
+                  <select formControlName="maritalStatus" class="form-control">
+                    <option value="SOLTEIRO">Solteiro(a)</option>
+                    <option value="CASADO">Casado(a)</option>
+                    <option value="DIVORCIADO">Divorciado(a)</option>
+                    <option value="VIUVO">Viúvo(a)</option>
+                  </select>
+                </p>
+        
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                  <button *ngIf="!partner.value.id" (click)="saveNewPartner(i)" 
+                    style="background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                    Salvar Novo Representante
+                  </button>
+                  <button *ngIf="partner.value.id" (click)="editPartner(i)" 
+                    style="background-color: #035A7A; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                    Editar
+                  </button>
+                  <button (click)="deletePartner(i, partner.value.id)" 
+                    style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                    Excluir
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div style="width: 100%; display: flex; align-items: end; margin-top: auto;">
-            <div style="width: 100%; border-top: 1px solid #E5E5E5;">
-              <button (click)="sendPartnerSession()"
-                style="width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; border: none; margin-top: 20px; background-color: #035A7A; border-radius: 4px;">
-                <p style="margin-bottom: 0; color: white;">Gerenciar Sócios</p>
-              </button>
-            </div>
+        
+            <button (click)="addNewPartner()" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: block; margin-top: 10px;">
+              + Adicionar Representante
+            </button>
           </div>
         </div>
+              
       </div>
     </div>
 

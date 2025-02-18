@@ -96,7 +96,7 @@ export class RoundApprovalListComponent implements OnInit {
       name: "Equipe Executiva"
     },
     {
-      name: "Quadro societário"
+      name: "Representantes Legais"
     },
   ]
 
@@ -105,6 +105,7 @@ export class RoundApprovalListComponent implements OnInit {
   loading: boolean = false;
   id: number;
   loadingMembers: boolean;
+  loadingPartners: boolean;
 
   constructor(
     private companyService: CompanyService,
@@ -288,42 +289,95 @@ export class RoundApprovalListComponent implements OnInit {
     return this.form.get("partners") as FormArray;
   }
 
-  addPartner() {
-    this.partnersForm.push(this.formBuilder.group({
+  addNewPartner() {
+    const newPartner = this.formBuilder.group({
       id: [null],
-      email: [null, [Validators.required]],
-      fullName: [null, [Validators.required]],
-      phone: [null, [Validators.required]],
-      cpf: [null, [Validators.required]],
-      rg: [null, [Validators.required]],
-      rgDate: [null, [Validators.required]],
-      maritalStatus: [null, [Validators.required]],
-      profession: [null, [Validators.required]],
-      dateOfBirth: [null, [Validators.required]],
-      address: this.formBuilder.group({
-        city: [null, [Validators.required]],
-        complement: [''],
-        neighborhood: [null, [Validators.required]],
-        number: [null, [Validators.required]],
-        street: [null, [Validators.required]],
-        uf: [null, [Validators.required]],
-        zipCode: [null, [Validators.required, Validators.minLength(8)]]
-      })
-    }));
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      cpf: ['', Validators.required],
+      rg: ['', Validators.required],
+      rgDate: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      phone: ['', Validators.required],
+      profession: ['', Validators.required],
+      maritalStatus: ['', Validators.required],
+      showDetails: [true]
+    });
+  
+    this.partnersForm.push(newPartner);
+  }
+  
+  togglePartnerDetails(index: number): void {
+    const partner = this.partnersForm.at(index);
+    partner.patchValue({ showDetails: !partner.value.showDetails });
   }
 
-  getPartners() {
-    this.partnersService.getPartner(this.id).subscribe((response) => {
-      this.partners = response;
-      this.loader = false;
-    }, (error) => {
-      const $this = this;
-      setTimeout(function () {
-        $this.initMask();
-      }, 1000);
+  saveNewPartner(index: number) {
+    const partner = this.partnersForm.at(index).value;
+  
+    this.loadingPartners = true;
+  
+    this.partnersService.createPartner(this.id, partner).subscribe(
+      (response) => {
+        if (response && response[0]?.id) {
+          this.partnersForm.at(index).patchValue({ id: response[0].id, showDetails: false });
+          toastr.success('Novo representante salvo com sucesso!');
+        }
+      },
+      () => toastr.error('Erro ao salvar o representante.'),
+      () => (this.loadingPartners = false)
+    );
+  }
 
-      this.loader = false;
-    });
+  editPartner(index: number) {
+    const partner = this.partnersForm.at(index).value;
+  
+    this.loadingPartners = true;
+  
+    this.partnersService.updatePartner(this.id, partner).subscribe(
+      () => toastr.success('Representante atualizado com sucesso!'),
+      () => toastr.error('Erro ao atualizar o representante.'),
+      () => (this.loadingPartners = false)
+    );
+  }
+
+  deletePartner(index: number, partnerId: number) {
+    if (!partnerId) {
+      this.partnersForm.removeAt(index);
+      return;
+    }
+  
+    this.partnersService.deletePartner(this.id, partnerId).subscribe(
+      () => {
+        this.partnersForm.removeAt(index);
+        toastr.success('Representante removido com sucesso.');
+      },
+      () => {
+        toastr.error('Erro ao remover o representante.');
+      }
+    );
+  }
+
+
+  getPartners() {
+    this.loadingPartners = true;
+  
+    this.partnersService.getPartner(this.id).subscribe(
+      (response) => {
+        this.partnersForm.clear();
+        response.forEach(partner => {
+          this.partnersForm.push(this.formBuilder.group({
+            ...partner,
+            showDetails: [false]
+          }));
+        });
+        this.loadingPartners = false;
+      },
+      () => {
+        toastr.error('Erro ao carregar representantes.');
+        this.loadingPartners = false;
+      }
+    );
   }
 
   ngOnInit() {
