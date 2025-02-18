@@ -14,6 +14,9 @@ export class ContractStatusPipe implements PipeTransform {
       case 'CREATED':
         output = 'EM PROCESSAMENTO';
         break;
+      case 'CONTRACT_SIGNED':
+          output = 'PAGO';
+      break;
       default:
         output = 'PENDENTE'
     }
