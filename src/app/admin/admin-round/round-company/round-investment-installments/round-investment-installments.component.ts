@@ -45,36 +45,36 @@ export class RoundInvestmentInstallmentsComponent implements OnInit {
     });
   }
 
-  public updateStatus(investment): void {
-    const contractId = ( <HTMLInputElement> document.getElementById('contractExternalId')).value;
-    const statusInvestment = ( <HTMLInputElement> document.getElementById('status')).value;
+  // public updateStatus(investment): void {
+  //   const contractId = ( <HTMLInputElement> document.getElementById('contractExternalId')).value;
+  //   const statusInvestment = ( <HTMLInputElement> document.getElementById('status')).value;
 
-    const status = { status: statusInvestment, contractExternalId: contractId };
-    const $this = this;
+  //   const status = { status: statusInvestment, contractExternalId: contractId };
+  //   const $this = this;
 
-    this.loader = true;
+  //   this.loader = true;
 
-    this.investmentService.updateStatus(investment, status).subscribe(
-      (response) => {
-        toastr.success('Status atualizado.');
-        $this.redirectTo('admin/rounds/company/investments/installment/' + investment);
-      }, (error) => {
-        this.loader = false;
-        let errorMessage = 'Ocorreu um erro, entre em contato com o administrador.';
+  //   this.investmentService.updateStatus(investment, status).subscribe(
+  //     (response) => {
+  //       toastr.success('Status atualizado.');
+  //       $this.redirectTo('admin/rounds/company/investments/installment/' + investment);
+  //     }, (error) => {
+  //       this.loader = false;
+  //       let errorMessage = 'Ocorreu um erro, entre em contato com o administrador.';
 
-        if (error.error.code === 'ILLEGAL_ARGUMENT') {
-          switch (error.error.message) {
-            case 'Round must be finished':
-              errorMessage = 'Rodada deve estar concluída.';
-              break;
-            case 'Invalid status':
-              errorMessage = 'Status inválido.';
-              break;
-          }
-        }
-        toastr.error(errorMessage);
-      });
-  }
+  //       if (error.error.code === 'ILLEGAL_ARGUMENT') {
+  //         switch (error.error.message) {
+  //           case 'Round must be finished':
+  //             errorMessage = 'Rodada deve estar concluída.';
+  //             break;
+  //           case 'Invalid status':
+  //             errorMessage = 'Status inválido.';
+  //             break;
+  //         }
+  //       }
+  //       toastr.error(errorMessage);
+  //     });
+  // }
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', {

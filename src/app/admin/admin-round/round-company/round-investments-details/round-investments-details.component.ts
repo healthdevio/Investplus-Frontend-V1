@@ -10,6 +10,7 @@ import { finalize } from 'rxjs/operators';
 import { TiposModalidades } from './../../../../core/enums/modalidades.enum';
 import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 declare var toastr: any;
@@ -103,49 +104,24 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
   }
 
   publishInvestment() {
-    const $this = this;
-    this.investmentService
-      .updateStatus(this.id, this.formStatus.value.contractStatus)
+    const statusUpdate = {
+      status: this.formStatus.value.status,
+      contractStatus: this.formStatus.value.contractStatus
+    };
+  
+    this.investmentService.updateStatus(this.id, statusUpdate)
       .subscribe(
-        (response) => {
-          bootbox.dialog({
-            title: "",
-            message: "Status do contrato atualizado com sucesso.",
-            buttons: {
-              success: {
-                label: "Entendi",
-                className: "bg-upangel",
-                callback: function () {
-                  this.isSingUpPublishModalOpen = false;
-                  $this.getUsersInvestments();
-                },
-              },
-            },
-          });
+        () => {
+          this.isSingUpPublishModalOpen = false;
+          this.getUsersInvestments();
+          toastr.success("Status do contrato atualizado com sucesso.");
         },
         (error) => {
-          const erro = "Ocorreu um erro, entre em contato com o administrador.";
-          toastr.options = {
-            closeButton: true,
-            debug: false,
-            newestOnTop: false,
-            progressBar: true,
-            positionClass: "toast-top-center",
-            preventDuplicates: true,
-            onclick: null,
-            showDuration: "300",
-            hideDuration: "1000",
-            timeOut: "10000",
-            extendedTimeOut: "1000",
-            showEasing: "swing",
-            hideEasing: "linear",
-            showMethod: "fadeIn",
-            hideMethod: "fadeOut",
-          };
-          toastr.error(erro, "Erro");
+          toastr.error("Ocorreu um erro, entre em contato com o administrador.");
         }
       );
   }
+  
 
   convertToCSV(objArray: any[]): string {
     const header = ['Nome', 'Perfil', 'Vlr. Outras Plataformas', 'Cotas', 'Total', 'Parc.', '%', 'Data', 'Contrato', 'Status'];
@@ -208,7 +184,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
 
   filterInvestments(searchTerm: string) {
     if (searchTerm) {
-      this.filteredInvestments = this.investments.filter(investment =>
+      this.filteredInvestments = this.investments.filter((investment: { investor: { fullName: string; }; }) =>
         investment.investor.fullName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else {
@@ -216,7 +192,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
     }
   }
 
-  maskPerfil(perfil) {
+  maskPerfil(perfil: any) {
     let formatedPerfil = '';
     switch (perfil) {
       case 'ABOVE_MILLION':
@@ -232,7 +208,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
     return formatedPerfil;
   }
 
-  maskStatus(status) {
+  maskStatus(status: any) {
     let formatedStatus = '';
     switch (status) {
       case 'PENDING':
@@ -251,28 +227,31 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
     return formatedStatus;
   }
 
-  unmaskInput(input) {
+  unmaskInput(input: string) {
     if (input == null) {
       return '';
     }
     return input.replace(/[^\d]+/g, '');
   }
 
-  unmaskMoney(input) {
+  unmaskMoney(input: string) {
     if (input == null) {
       return '';
     }
     return (Number(input.replace(/[^\d]+/g, '')) / 100).toFixed(2);
   }
 
-  updateStatus(investment) {
-    const contractId = (<HTMLInputElement>document.getElementById('contractExternalId')).value;
+  updateStatus(investment: number) {
+    const contractStatus = (<HTMLInputElement>document.getElementById('contractExternalId')).value;
     const statusInvestment = (<HTMLInputElement>document.getElementById('status')).value;
-
-    const status = { status: statusInvestment, contractExternalId: contractId };
-
+  
+    const status = { 
+      status: statusInvestment, 
+      contractStatus: contractStatus
+    };
+  
     this.investmentService.updateStatus(investment, status).subscribe(
-      (response) => {
+      () => {
         this.redirectTo('/admin/rounds/company/investments/' + this.round);
         toastr.success('Status atualizado.');
       }, (error) => {
@@ -281,15 +260,17 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
         } else {
           toastr.error('Ocorreu um erro, entre em contato com o administrador.');
         }
-      });
+      }
+    );
   }
+  
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }
 
-  showInvestment(investment) {
+  showInvestment(investment: { contractExternalId: null; status: string; investor: { profession: string; email: string; cnpj: string; cpf: string; publicFigure: boolean; rg: string; rgEmitter: string; dateOfBirth: string; agent: null; address: { street: string; number: string; neighborhood: string; complement: null; zipCode: string; city: string; uf: string; }; fullName: string; }; contractSignedAt: string; confirmedAt: string; id: any; }) {
     const $this = this;
 
     let form = '<div class="row"><div class="col-md-8"><div class="form-group"><label class="control-label" for="contractExternalId">Chave Clicksign</label><input value="' + (investment.contractExternalId == null ? '' : investment.contractExternalId) + '" class="form-control"  maxlength="40" type="text" id="contractExternalId"' + (investment.status === 'PENDING' ? '' : 'disabled') + '></div></div>';
@@ -340,7 +321,7 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
     this.excelService.exportAsExcelFile(this.investments, 'investors');
   }
 
-  generateBillets(investment){
+  generateBillets(investment: { loading: boolean; $sub: Subscription; id: number; }){
     
     investment.loading = true;
     investment?.$sub?.unsubscribe();

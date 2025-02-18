@@ -127,75 +127,75 @@ export class RoundInvestimentsRealStateDetailsComponent implements OnInit {
     return (Number(input.replace(/[^\d]+/g, '')) / 100).toFixed(2);
   }
 
-  updateStatus(investment) {
-    const contractId = ( < HTMLInputElement > document.getElementById('contractExternalId')).value;
-    const statusInvestment = ( < HTMLInputElement > document.getElementById('status')).value;
+  // updateStatus(investment) {
+  //   const contractId = ( < HTMLInputElement > document.getElementById('contractExternalId')).value;
+  //   const statusInvestment = ( < HTMLInputElement > document.getElementById('status')).value;
 
-    const status = { status: statusInvestment, contractExternalId: contractId };
+  //   const status = { status: statusInvestment, contractExternalId: contractId };
 
-    this.investmentService.updateStatus(investment, status).subscribe((response) => {
-      this.redirectTo('/admin/rounds/incorporator/investments/' + this.round);
-      toastr.success('Status atualizado.');
-    }, (error) => {
-      if (error.error.code === 'ILLEGAL_ARGUMENT') {
-        toastr.error('Status informado é inválido.');
-      } else {
-        toastr.error('Ocorreu um erro, entre em contato com o administrador.');
-      }
-    });
-  }
+  //   this.investmentService.updateStatus(investment, status).subscribe((response) => {
+  //     this.redirectTo('/admin/rounds/incorporator/investments/' + this.round);
+  //     toastr.success('Status atualizado.');
+  //   }, (error) => {
+  //     if (error.error.code === 'ILLEGAL_ARGUMENT') {
+  //       toastr.error('Status informado é inválido.');
+  //     } else {
+  //       toastr.error('Ocorreu um erro, entre em contato com o administrador.');
+  //     }
+  //   });
+  // }
 
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate([uri]));
   }
 
-  showInvestment(investment) {
-    const $this = this;
+  // showInvestment(investment) {
+  //   const $this = this;
 
-    let form = '<div class="row"><div class="col-md-8"><div class="form-group"><label class="control-label" for="contractExternalId">Chave Clicksign</label><input value="' + (investment.contractExternalId == null ? '' : investment.contractExternalId) + '" class="form-control"  maxlength="40" type="text" id="contractExternalId"' + (investment.status === 'PENDING' ? '' : 'disabled') + '></div></div>';
-    form += '<div class="col-md-4"><div class="form-group"><label class="control-label" for="status">Status</label><select class="form-control" id="status"><option ' + (investment.status === 'PENDING' ? 'selected' : '') + ' value="PENDING">Pendente</option><option ' + (investment.status === 'CONTRACT_SEND' ? 'selected' : '') + ' value="CONTRACT_SEND">Enviado</option><option ' + (investment.status === 'CONTRACT_SIGNED' ? 'selected' : '') + ' value="CONTRACT_SIGNED">Assinado</option><option ' + (investment.status === 'CONFIRMED' ? 'selected' : '') + ' value="CONFIRMED">Confirmado</option></select></div></div>';
+  //   let form = '<div class="row"><div class="col-md-8"><div class="form-group"><label class="control-label" for="contractExternalId">Chave Clicksign</label><input value="' + (investment.contractExternalId == null ? '' : investment.contractExternalId) + '" class="form-control"  maxlength="40" type="text" id="contractExternalId"' + (investment.status === 'PENDING' ? '' : 'disabled') + '></div></div>';
+  //   form += '<div class="col-md-4"><div class="form-group"><label class="control-label" for="status">Status</label><select class="form-control" id="status"><option ' + (investment.status === 'PENDING' ? 'selected' : '') + ' value="PENDING">Pendente</option><option ' + (investment.status === 'CONTRACT_SEND' ? 'selected' : '') + ' value="CONTRACT_SEND">Enviado</option><option ' + (investment.status === 'CONTRACT_SIGNED' ? 'selected' : '') + ' value="CONTRACT_SIGNED">Assinado</option><option ' + (investment.status === 'CONFIRMED' ? 'selected' : '') + ' value="CONFIRMED">Confirmado</option></select></div></div>';
 
-    let message = '';
-    message += '<div class="row"><div class="col-md-6"><p><b>Profissão: </b>' + investment.investor.profession + '</p></div>';
-    message += '<div class="col-md-6"><p><b>E-mail: </b>' + investment.investor.email + '</p></div>';
-    message += '<div class="col-md-6"><p>' + (investment.investor.cnpj === undefined ? '<b> CPF: </b>' + this.cpfMask.transform(investment.investor.cpf) : '<b> CNPJ: </b>' + this.cnpjMask.transform(investment.investor.cnpj)) + '</p></div>';
-    message += '<div class="col-md-6"><p><b>Politicamente exposta: </b>' + (investment.investor.publicFigure === true ? 'Sim' : 'Não') + '</p></div>';
-    message += '<div class="col-md-6"><p><b>RG: </b>' + investment.investor.rg + '</p></div>';
-    message += '<div class="col-md-6"><p><b>Orgão emissor: </b>' + investment.investor.rgEmitter + '</p></div>';
-    message += '<div class="col-md-6"><p><b>Data de aniversário: </b>' + this.dateMask.transform(investment.investor.dateOfBirth) + '</p></div>';
-    message += '<div class="col-md-6"><p><b>Agente: </b>' + (investment.investor.agent == null ? '' : investment.investor.agent) + '</p></div>';
-    message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"><p><b>Endereço: </b>' + investment.investor.address.street + ', ' + investment.investor.address.number + '</p></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>Bairro: </b>' + investment.investor.address.neighborhood + '</p></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>Complemento: </b>' + (investment.investor.address.complement == null ? '' : investment.investor.address.complement) + '</p></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>CEP: </b>' + this.cepMask.transform(investment.investor.address.zipCode) + '</p></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>Cidade: </b>' + investment.investor.address.city + ' - ' + investment.investor.address.uf + '</p></div>';
-    message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>Data Assinatura: </b>' + this.dateMask.transform(investment.contractSignedAt) + '</p></div>';
-    message += '<div class="col-xs-12 col-md-6"><p><b>Data Aporte: </b>' + this.dateMask.transform(investment.confirmedAt) + '</p></div>';
-    message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"></div></div>';
-    message += form;
-    bootbox.dialog({
-      title: '<b>' + investment.investor.fullName + '</b>',
-      message: message,
-      size: 'large',
-      buttons: {
-        cancel: {
-          label: 'Cancelar',
-          className: 'btn-default',
-          callback: function () {
-          }
-        },
-        ok: {
-          label: 'Atualizar',
-          className: 'bg-upangel',
-          callback: function () {
-            $this.updateStatus(investment.id);
-          }
-        }
-      }
-    });
-  }
+  //   let message = '';
+  //   message += '<div class="row"><div class="col-md-6"><p><b>Profissão: </b>' + investment.investor.profession + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>E-mail: </b>' + investment.investor.email + '</p></div>';
+  //   message += '<div class="col-md-6"><p>' + (investment.investor.cnpj === undefined ? '<b> CPF: </b>' + this.cpfMask.transform(investment.investor.cpf) : '<b> CNPJ: </b>' + this.cnpjMask.transform(investment.investor.cnpj)) + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>Politicamente exposta: </b>' + (investment.investor.publicFigure === true ? 'Sim' : 'Não') + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>RG: </b>' + investment.investor.rg + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>Orgão emissor: </b>' + investment.investor.rgEmitter + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>Data de aniversário: </b>' + this.dateMask.transform(investment.investor.dateOfBirth) + '</p></div>';
+  //   message += '<div class="col-md-6"><p><b>Agente: </b>' + (investment.investor.agent == null ? '' : investment.investor.agent) + '</p></div>';
+  //   message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"><p><b>Endereço: </b>' + investment.investor.address.street + ', ' + investment.investor.address.number + '</p></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>Bairro: </b>' + investment.investor.address.neighborhood + '</p></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>Complemento: </b>' + (investment.investor.address.complement == null ? '' : investment.investor.address.complement) + '</p></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>CEP: </b>' + this.cepMask.transform(investment.investor.address.zipCode) + '</p></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>Cidade: </b>' + investment.investor.address.city + ' - ' + investment.investor.address.uf + '</p></div>';
+  //   message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>Data Assinatura: </b>' + this.dateMask.transform(investment.contractSignedAt) + '</p></div>';
+  //   message += '<div class="col-xs-12 col-md-6"><p><b>Data Aporte: </b>' + this.dateMask.transform(investment.confirmedAt) + '</p></div>';
+  //   message += '<div class="col-md-12"><hr style="border-top: 1px solid #ddd;"></div></div>';
+  //   message += form;
+  //   bootbox.dialog({
+  //     title: '<b>' + investment.investor.fullName + '</b>',
+  //     message: message,
+  //     size: 'large',
+  //     buttons: {
+  //       cancel: {
+  //         label: 'Cancelar',
+  //         className: 'btn-default',
+  //         callback: function () {
+  //         }
+  //       },
+  //       ok: {
+  //         label: 'Atualizar',
+  //         className: 'bg-upangel',
+  //         callback: function () {
+  //           $this.updateStatus(investment.id);
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.investments, 'investors');
