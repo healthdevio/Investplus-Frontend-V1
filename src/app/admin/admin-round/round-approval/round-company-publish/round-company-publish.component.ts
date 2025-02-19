@@ -258,20 +258,28 @@ export class RoundCompanyPublishComponent implements OnInit {
     this.UpdateRoundId = roundId;
     this.isViewMode = isViewOnly;
   
-    this.updateForm.reset();
-  
     this.roundService.getRound(id, roundId).subscribe({
       next: (response) => {
         const dataForm = response.round as any;
   
-        dataForm.maximumValuation = dataForm.maximumValuation ? this.formatCurrencyFromNumber(dataForm.maximumValuation) : null;
-        dataForm.minimumValuation = dataForm.minimumValuation ? this.formatCurrencyFromNumber(dataForm.minimumValuation) : null;
-        dataForm.quotaValue = dataForm.quotaValue ? this.formatCurrencyFromNumber(dataForm.quotaValue) : null;
+        if (dataForm.maximumValuation) {
+          dataForm.maximumValuation = dataForm.maximumValuation ? this.formatCurrencyFromNumber(dataForm.maximumValuation) : null;
+        }
+        if (dataForm.minimumValuation) {
+          dataForm.minimumValuation = dataForm.minimumValuation ? this.formatCurrencyFromNumber(dataForm.minimumValuation) : null;
+        }
+        if (dataForm.quotaValue) {
+          dataForm.quotaValue = dataForm.quotaValue ? this.formatCurrencyFromNumber(dataForm.quotaValue) : null;
+        }
   
         this.updateForm.patchValue(dataForm);
   
-        this.updateForm.get('individualContract')?.setValue(response.individualContract ?? null);
-        this.updateForm.get('legalEntityContract')?.setValue(response.legalEntityContract ?? null);
+        if (response.individualContract) {
+          this.updateForm.get('individualContract')?.setValue(response.individualContract ?? null);
+        }
+        if (response.legalEntityContract) {
+          this.updateForm.get('legalEntityContract')?.setValue(response.legalEntityContract ?? null);
+        }
   
         let companyData = response.round?.company || response;
   
@@ -293,8 +301,8 @@ export class RoundCompanyPublishComponent implements OnInit {
         }
   
         this.updateForm.patchValue({
-          docInvestmentContract: response.docInvestmentContract ?? null,
-          investmentContract: response.docInvestmentContract ?? null,
+          docInvestmentContract: response.docInvestmentContract,
+          investmentContract: response.docInvestmentContract,
         });
   
         this.loadingRounds = false;
@@ -306,7 +314,6 @@ export class RoundCompanyPublishComponent implements OnInit {
       }
     });
   }
-
   
   
   getModalities() {
