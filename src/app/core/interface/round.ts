@@ -6,6 +6,8 @@ import {
 } from './forum';
 
 export interface Round {
+  legalEntityContract: any;
+  individualContract: any;
   name: any;
   company: Round;
   id?: number;
