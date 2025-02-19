@@ -263,23 +263,20 @@ export class RoundCompanyPublishComponent implements OnInit {
         const dataForm = response.round as any;
   
         if (dataForm.maximumValuation) {
-          dataForm.maximumValuation = dataForm.maximumValuation ? this.formatCurrencyFromNumber(dataForm.maximumValuation) : null;
+          dataForm.maximumValuation = this.formatCurrencyFromNumber(dataForm.maximumValuation);
         }
         if (dataForm.minimumValuation) {
-          dataForm.minimumValuation = dataForm.minimumValuation ? this.formatCurrencyFromNumber(dataForm.minimumValuation) : null;
+          dataForm.minimumValuation = this.formatCurrencyFromNumber(dataForm.minimumValuation);
         }
         if (dataForm.quotaValue) {
-          dataForm.quotaValue = dataForm.quotaValue ? this.formatCurrencyFromNumber(dataForm.quotaValue) : null;
+          dataForm.quotaValue = this.formatCurrencyFromNumber(dataForm.quotaValue);
         }
   
         this.updateForm.patchValue(dataForm);
   
-        if (response.individualContract) {
-          this.updateForm.get('individualContract')?.setValue(response.individualContract ?? null);
-        }
-        if (response.legalEntityContract) {
-          this.updateForm.get('legalEntityContract')?.setValue(response.legalEntityContract ?? null);
-        }
+        this.updateForm.get('individualContract').setValue(response.round.individualContract ?? null);
+        
+        this.updateForm.get('legalEntityContract').setValue(response.round.legalEntityContract ?? null);
   
         let companyData = response.round?.company || response;
   
