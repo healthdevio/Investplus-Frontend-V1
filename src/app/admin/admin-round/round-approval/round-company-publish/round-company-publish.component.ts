@@ -274,6 +274,13 @@ export class RoundCompanyPublishComponent implements OnInit {
   
         this.updateForm.patchValue(dataForm);
   
+        if (response.individualContract) {
+          this.updateForm.get('individualContract').setValue(response.individualContract);
+        }
+        if (response.legalEntityContract) {
+          this.updateForm.get('legalEntityContract').setValue(response.legalEntityContract);
+        }
+  
         let companyData = response.round?.company || response;
   
         if (companyData?.id && companyData?.name) {
@@ -296,8 +303,6 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.updateForm.patchValue({
           docInvestmentContract: response.docInvestmentContract,
           investmentContract: response.docInvestmentContract,
-          legalEntityContract: response.legalEntityContract,
-          individualContract: response.individualContract
         });
   
         this.loadingRounds = false;
@@ -308,7 +313,8 @@ export class RoundCompanyPublishComponent implements OnInit {
         this.loadingRounds = false;
       }
     });
-  }  
+  }
+  
   
   getModalities() {
     this.modalities = this.modalityService.getModalities();
