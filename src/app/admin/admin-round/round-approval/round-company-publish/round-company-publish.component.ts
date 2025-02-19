@@ -312,7 +312,6 @@ export class RoundCompanyPublishComponent implements OnInit {
     });
   }
   
-  
   getModalities() {
     this.modalities = this.modalityService.getModalities();
   }
