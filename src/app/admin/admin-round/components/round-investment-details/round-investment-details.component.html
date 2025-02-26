@@ -484,8 +484,8 @@ style="width: 100%; background-color: white; position: fixed; bottom: 0; height:
                   <div class="col-xs-12 col-md-6" style="margin-top: 5%;">
                     <p class="description-title-3">Objetivo</p>
                     <p class="description-title-4">{{ companyDataComplete?.round?.maximumValuation | moneyMask:true }}</p>
-                    <p class="description-title-3 margin-t-20">Investidos / Reservados</p>
-                    <p style="font-size: 24px; color: #035A7A;">{{ companyDataComplete?.round?.resume?.total | moneyMask:true }}</p>
+                    <p class="description-title-3 margin-t-20">Investidos</p>
+                    <p style="font-size: 24px; color: #035A7A;">{{ investidoValue | currency:'BRL':'symbol':'1.2-2' }}</p>
                   </div>
                   
                   <div 
