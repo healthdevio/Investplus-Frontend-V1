@@ -251,15 +251,17 @@ export class AdminUserPortfolioComponent implements OnInit {
     this.portfolio = false;
   
     this.investorService.getUser().subscribe((response) => {
-      this.upangel = response.companyInvestments || [];  
-      this.upimob = response.realStateInvestments || []; 
-      this.installments = response.investmentsInstallments || [];  
-    
+      this.upangel = response.companyInvestments || [];
+      this.upimob = response.realStateInvestments || [];
+      this.installments = response.investmentsInstallments || [];
+  
+      const paidInvestments = this.upangel.filter(investment => investment.status === 'PAID');
+  
       this.companyInvestments = response.companyInvestments ? response.companyInvestments.map(investment => {
         return {
           company: investment.company,
           logo: investment.logo,
-          value: investment.value,   
+          value: investment.value,
           quotas: investment.quotas,
           date: investment.date,
           roundStatus: investment.roundStatus,
@@ -269,9 +271,8 @@ export class AdminUserPortfolioComponent implements OnInit {
           contractLink: investment.contractLink
         };
       }) : [];
-    
   
-      const totalInvestedInvestplus = this.upangel
+      const totalInvestedInvestplus = paidInvestments
         .map(investment => investment.value)
         .reduce((acc, value) => acc + value, 0);
   
@@ -294,24 +295,21 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.setGraphBar();
       this.setResumeInstallments(0);
       this.getRounds();
-      this.paginateInvestments(); // Pagina os dados após recebê-los
+      this.paginateInvestments();
     });
   }
 
-  // Função para paginar os investimentos
   paginateInvestments(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedInvestments = this.companyInvestments.slice(startIndex, endIndex);
   }
 
-  // Função para mudar a página
   changePage(newPage: number): void {
     this.currentPage = newPage;
     this.paginateInvestments();
   }
 
-  // Função para obter o total de páginas
   get totalPages(): number {
     return Math.ceil(this.companyInvestments.length / this.itemsPerPage);
   }
