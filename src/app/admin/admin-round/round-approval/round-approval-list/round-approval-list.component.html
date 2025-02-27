@@ -1032,13 +1032,40 @@ class="content">
               </div>
         
               <div *ngIf="partner.value.showDetails" style="padding: 10px; border: 1px solid #E5E5E5; border-radius: 4px; margin-bottom: 10px;">
-                <p><strong>Nome completo:</strong> <input type="text" formControlName="fullName" placeholder="Nome" class="form-control"></p>
-                <p><strong>Email:</strong> <input type="email" formControlName="email" placeholder="Email" class="form-control"></p>
-                <p><strong>CPF:</strong> <input type="text" formControlName="cpf" placeholder="CPF" class="form-control cpf"></p>
-                <p><strong>RG:</strong> <input type="text" formControlName="rg" placeholder="RG" class="form-control"></p>
-                <p><strong>Data de Nascimento:</strong> <input type="date" formControlName="dateOfBirth" class="form-control"></p>
-                <p><strong>Telefone:</strong> <input type="text" formControlName="phone" placeholder="Telefone" class="form-control"></p>
-                <p><strong>Profissão:</strong> <input type="text" formControlName="profession" placeholder="Profissão" class="form-control"></p>
+                <p><strong>Nome completo:</strong> 
+                  <input type="text" formControlName="fullName" placeholder="Nome" class="form-control">
+                  <small *ngIf="partner.get('fullName').invalid && partner.get('fullName').touched" class="text-danger">Nome é obrigatório.</small>
+                </p>
+                
+                <p><strong>Email:</strong> 
+                  <input type="email" formControlName="email" placeholder="Email" class="form-control">
+                  <small *ngIf="partner.get('email').invalid && partner.get('email').touched" class="text-danger">Email válido é obrigatório.</small>
+                </p>
+                
+                <p><strong>CPF:</strong> 
+                  <input type="text" formControlName="cpf" placeholder="CPF" class="form-control cpf">
+                  <small *ngIf="partner.get('cpf').invalid && partner.get('cpf').touched" class="text-danger">CPF é obrigatório.</small>
+                </p>
+                
+                <p><strong>RG:</strong> 
+                  <input type="text" formControlName="rg" placeholder="RG" class="form-control">
+                  <small *ngIf="partner.get('rg').invalid && partner.get('rg').touched" class="text-danger">RG é obrigatório.</small>
+                </p>
+                
+                <p><strong>Data de Nascimento:</strong> 
+                  <input type="date" formControlName="dateOfBirth" class="form-control">
+                  <small *ngIf="partner.get('dateOfBirth').invalid && partner.get('dateOfBirth').touched" class="text-danger">Data de nascimento é obrigatória.</small>
+                </p>
+                
+                <p><strong>Telefone:</strong> 
+                  <input type="text" formControlName="phone" placeholder="Telefone" class="form-control">
+                  <small *ngIf="partner.get('phone').invalid && partner.get('phone').touched" class="text-danger">Telefone é obrigatório.</small>
+                </p>
+                
+                <p><strong>Profissão:</strong> 
+                  <input type="text" formControlName="profession" placeholder="Profissão" class="form-control">
+                  <small *ngIf="partner.get('profession').invalid && partner.get('profession').touched" class="text-danger">Profissão é obrigatória.</small>
+                </p>
                 <p><strong>Estado Civil:</strong> 
                   <select formControlName="maritalStatus" class="form-control">
                     <option value="SOLTEIRO">Solteiro(a)</option>
@@ -1050,12 +1077,29 @@ class="content">
         
                 <h4 style="margin-top: 20px; color: #777777;">Endereço</h4>
                 <div formGroupName="address">
-                  <p><strong>Rua:</strong> <input type="text" formControlName="street" placeholder="Rua" class="form-control" required></p>
-                  <p><strong>Número:</strong> <input type="text" formControlName="number" placeholder="Número" class="form-control" required></p>
-                  <p><strong>Bairro:</strong> <input type="text" formControlName="neighborhood" placeholder="Bairro" class="form-control" required></p>
-                  <p><strong>Cidade:</strong> <input type="text" formControlName="city" placeholder="Cidade" class="form-control" required></p>
+                  <p><strong>Rua:</strong> 
+                    <input type="text" formControlName="street" placeholder="Rua" class="form-control">
+                    <small *ngIf="partner.get('address.street').invalid && partner.get('address.street').touched" class="text-danger">Rua é obrigatória.</small>
+                  </p>
+                
+                  <p><strong>Número:</strong> 
+                    <input type="text" formControlName="number" placeholder="Número" class="form-control">
+                    <small *ngIf="partner.get('address.number').invalid && partner.get('address.number').touched" class="text-danger">Número é obrigatório.</small>
+                  </p>
+                
+                  <p><strong>Bairro:</strong> 
+                    <input type="text" formControlName="neighborhood" placeholder="Bairro" class="form-control">
+                    <small *ngIf="partner.get('address.neighborhood').invalid && partner.get('address.neighborhood').touched" class="text-danger">Bairro é obrigatório.</small>
+                  </p>
+                
+                  <p><strong>Cidade:</strong> 
+                    <input type="text" formControlName="city" placeholder="Cidade" class="form-control">
+                    <small *ngIf="partner.get('address.city').invalid && partner.get('address.city').touched" class="text-danger">Cidade é obrigatória.</small>
+                  </p>
+                
                   <p><strong>UF:</strong> 
-                    <select formControlName="uf" class="form-control" required>
+                    <select formControlName="uf" class="form-control">
+                      <option value="">Selecione</option>
                       <option value="AC">Acre</option>
                       <option value="AL">Alagoas</option>
                       <option value="AP">Amapá</option>
@@ -1084,9 +1128,17 @@ class="content">
                       <option value="SE">Sergipe</option>
                       <option value="TO">Tocantins</option>
                     </select>
+                    <small *ngIf="partner.get('address.uf').invalid && partner.get('address.uf').touched" class="text-danger">UF é obrigatória.</small>
                   </p>
-                  <p><strong>CEP:</strong> <input type="text" formControlName="zipCode" placeholder="CEP" class="form-control" required></p>
-                  <p><strong>Complemento:</strong> <input type="text" formControlName="complement" placeholder="Complemento" class="form-control" required></p>
+                
+                  <p><strong>CEP:</strong> 
+                    <input type="text" formControlName="zipCode" placeholder="CEP" class="form-control">
+                    <small *ngIf="partner.get('address.zipCode').invalid && partner.get('address.zipCode').touched" class="text-danger">CEP é obrigatório.</small>
+                  </p>
+                
+                  <p><strong>Complemento:</strong> 
+                    <input type="text" formControlName="complement" placeholder="Complemento" class="form-control">
+                  </p>
                 </div>
         
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
