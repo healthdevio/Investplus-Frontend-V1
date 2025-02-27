@@ -1050,12 +1050,12 @@ class="content">
         
                 <h4 style="margin-top: 20px; color: #777777;">Endereço</h4>
                 <div formGroupName="address">
-                  <p><strong>Rua:</strong> <input type="text" formControlName="street" placeholder="Rua" class="form-control"></p>
-                  <p><strong>Número:</strong> <input type="text" formControlName="number" placeholder="Número" class="form-control"></p>
-                  <p><strong>Bairro:</strong> <input type="text" formControlName="neighborhood" placeholder="Bairro" class="form-control"></p>
-                  <p><strong>Cidade:</strong> <input type="text" formControlName="city" placeholder="Cidade" class="form-control"></p>
+                  <p><strong>Rua:</strong> <input type="text" formControlName="street" placeholder="Rua" class="form-control" required></p>
+                  <p><strong>Número:</strong> <input type="text" formControlName="number" placeholder="Número" class="form-control" required></p>
+                  <p><strong>Bairro:</strong> <input type="text" formControlName="neighborhood" placeholder="Bairro" class="form-control" required></p>
+                  <p><strong>Cidade:</strong> <input type="text" formControlName="city" placeholder="Cidade" class="form-control" required></p>
                   <p><strong>UF:</strong> 
-                    <select formControlName="uf" class="form-control">
+                    <select formControlName="uf" class="form-control" required>
                       <option value="AC">Acre</option>
                       <option value="AL">Alagoas</option>
                       <option value="AP">Amapá</option>
@@ -1085,8 +1085,8 @@ class="content">
                       <option value="TO">Tocantins</option>
                     </select>
                   </p>
-                  <p><strong>CEP:</strong> <input type="text" formControlName="zipCode" placeholder="CEP" class="form-control"></p>
-                  <p><strong>Complemento:</strong> <input type="text" formControlName="complement" placeholder="Complemento" class="form-control"></p>
+                  <p><strong>CEP:</strong> <input type="text" formControlName="zipCode" placeholder="CEP" class="form-control" required></p>
+                  <p><strong>Complemento:</strong> <input type="text" formControlName="complement" placeholder="Complemento" class="form-control" required></p>
                 </div>
         
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
