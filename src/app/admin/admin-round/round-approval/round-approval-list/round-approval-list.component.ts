@@ -323,7 +323,15 @@ export class RoundApprovalListComponent implements OnInit {
   }
 
   saveNewPartner(index: number) {
-    const partner = this.partnersForm.at(index).value;
+    const partnerFormGroup = this.partnersForm.at(index);
+  
+    if (partnerFormGroup.invalid) {
+      partnerFormGroup.markAllAsTouched();
+      toastr.error('Preencha todos os campos obrigatórios antes de salvar.');
+      return;
+    }
+  
+    const partner = partnerFormGroup.value;
   
     this.loadingPartners = true;
   
@@ -337,7 +345,7 @@ export class RoundApprovalListComponent implements OnInit {
       () => toastr.error('Erro ao salvar o representante.'),
       () => (this.loadingPartners = false)
     );
-  }
+  }  
 
   editPartner(index: number) {
     const partner = this.partnersForm.at(index).value;
