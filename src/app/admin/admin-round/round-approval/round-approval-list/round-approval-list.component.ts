@@ -301,11 +301,21 @@ export class RoundApprovalListComponent implements OnInit {
       phone: ['', Validators.required],
       profession: ['', Validators.required],
       maritalStatus: ['', Validators.required],
-      showDetails: [true]
+      showDetails: [true],
+      address: this.formBuilder.group({
+        id: [null],
+        street: ['', Validators.required],
+        number: ['', Validators.required],
+        neighborhood: ['', Validators.required],
+        city: ['', Validators.required],
+        uf: ['', Validators.required],
+        zipCode: ['', Validators.required],
+        complement: ['']
+      })
     });
   
     this.partnersForm.push(newPartner);
-  }
+  }  
   
   togglePartnerDetails(index: number): void {
     const partner = this.partnersForm.at(index);
@@ -317,7 +327,7 @@ export class RoundApprovalListComponent implements OnInit {
   
     this.loadingPartners = true;
   
-    this.partnersService.createPartner(this.id, partner).subscribe(
+    this.partnersService.createPartner(this.id, [partner]).subscribe(
       (response) => {
         if (response && response[0]?.id) {
           this.partnersForm.at(index).patchValue({ id: response[0].id, showDetails: false });
@@ -366,10 +376,31 @@ export class RoundApprovalListComponent implements OnInit {
       (response) => {
         this.partnersForm.clear();
         response.forEach(partner => {
-          this.partnersForm.push(this.formBuilder.group({
-            ...partner,
-            showDetails: [false]
-          }));
+          this.partnersForm.push(
+            this.formBuilder.group({
+              id: [partner.id || null],
+              fullName: [partner.fullName || '', Validators.required],
+              email: [partner.email || '', [Validators.required, Validators.email]],
+              cpf: [partner.cpf || '', Validators.required],
+              rg: [partner.rg || '', Validators.required],
+              dateOfBirth: [partner.dateOfBirth || '', Validators.required],
+              phone: [partner.phone || '', Validators.required],
+              profession: [partner.profession || '', Validators.required],
+              maritalStatus: [partner.maritalStatus || '', Validators.required],
+              showDetails: [false],
+  
+              address: this.formBuilder.group({
+                id: [partner.address?.id || null],
+                street: [partner.address?.street || '', Validators.required],
+                number: [partner.address?.number || '', Validators.required],
+                neighborhood: [partner.address?.neighborhood || '', Validators.required],
+                city: [partner.address?.city || '', Validators.required],
+                uf: [partner.address?.uf || '', Validators.required],
+                zipCode: [partner.address?.zipCode || '', Validators.required],
+                complement: [partner.address?.complement || '']
+              })
+            })
+          );
         });
         this.loadingPartners = false;
       },
@@ -379,6 +410,7 @@ export class RoundApprovalListComponent implements OnInit {
       }
     );
   }
+  
 
   ngOnInit() {
     this.data.currentMessage.subscribe(titles => this.titleHeader = titles);

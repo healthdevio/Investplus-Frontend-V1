@@ -14,8 +14,11 @@ export class CompanyPartnersService {
 
   prefixService = 'companies';
 
-  createPartner(companyId: number, data: CompanyPartner): Observable<CompanyPartner> {
-    return this.http.post<any>(`${environment.url_api}/${this.prefixService}/${companyId}/partners`, data);
+  createPartner(companyId: number, data: CompanyPartner[]): Observable<CompanyPartner[]> {
+    return this.http.post<CompanyPartner[]>(
+      `${environment.url_api}/${this.prefixService}/${companyId}/partners`,
+      data
+    );
   }
 
   getPartner(companyId: number): Observable<CompanyPartner[]> {
