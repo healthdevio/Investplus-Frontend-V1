@@ -1051,6 +1051,13 @@ class="content">
                   <input type="text" formControlName="rg" placeholder="RG" class="form-control">
                   <small *ngIf="partner.get('rg').invalid && partner.get('rg').touched" class="text-danger">RG é obrigatório.</small>
                 </p>
+
+                <p><strong>Data de Emissão do RG:</strong> 
+                  <input type="date" formControlName="rgDate" class="form-control">
+                  <small *ngIf="partner.get('rgDate').invalid && partner.get('rgDate').touched" class="text-danger">
+                    Data de emissão do RG é obrigatória.
+                  </small>
+                </p>                
                 
                 <p><strong>Data de Nascimento:</strong> 
                   <input type="date" formControlName="dateOfBirth" class="form-control">

@@ -296,6 +296,7 @@ export class RoundApprovalListComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       cpf: ['', Validators.required],
       rg: ['', Validators.required],
+      rgDate: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       phone: ['', Validators.required],
       profession: ['', Validators.required],
