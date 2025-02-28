@@ -341,6 +341,9 @@ export class RoundApprovalListComponent implements OnInit {
           this.partnersForm.at(index).patchValue({ id: response[0].id, showDetails: false });
           toastr.success('Novo representante salvo com sucesso!');
         }
+        else {
+          toastr.success('Novo representante salvo com sucesso! Para adicionar mais um, basta cadastrar outro. Se estiver finalizado, basta fechar o modal.');
+        }
       },
       () => toastr.error('Erro ao salvar o representante.'),
       () => (this.loadingPartners = false)
