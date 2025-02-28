@@ -10,6 +10,7 @@ export interface AddressDTO {
 }
 
 export interface CompanyPartner {
+  rgDate: string;
   id?: number;
   fullName: string;
   email: string;

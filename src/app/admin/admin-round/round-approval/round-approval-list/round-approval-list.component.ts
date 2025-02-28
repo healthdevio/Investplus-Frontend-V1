@@ -392,6 +392,7 @@ export class RoundApprovalListComponent implements OnInit {
               cpf: [partner.cpf || '', Validators.required],
               rg: [partner.rg || '', Validators.required],
               dateOfBirth: [partner.dateOfBirth || '', Validators.required],
+              rgDate: [partner.rgDate || '', Validators.required],
               phone: [partner.phone || '', Validators.required],
               profession: [partner.profession || '', Validators.required],
               maritalStatus: [partner.maritalStatus || '', Validators.required],
