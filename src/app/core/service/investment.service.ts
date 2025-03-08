@@ -38,4 +38,8 @@ export class InvestmentService {
     return this.http.post(`${environment.url_api}/investments/${investmentId}/billets`, {});
   }
 
+  deleteInvestment(investmentId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.url_api}/${this.prefixService}/${investmentId}`);
+  }
+
 }

@@ -88,6 +88,36 @@ export class RoundInvestmentsDetailsComponent implements OnInit {
     this.id = id;
   }
 
+  deleteInvestment(investmentId: number) {
+    bootbox.confirm({
+      title: 'Deletar Investimento',
+      message: 'Tem certeza que deseja deletar este investimento?',
+      buttons: {
+        cancel: {
+          label: 'Cancelar',
+          className: 'btn-default'
+        },
+        confirm: {
+          label: 'Deletar',
+          className: 'btn-danger'
+        }
+      },
+      callback: (result: boolean) => {
+        if (result) {
+          this.investmentService.deleteInvestment(investmentId).subscribe(
+            () => {
+              toastr.success('Investimento deletado com sucesso.');
+              this.getUsersInvestments();
+            },
+            (error) => {
+              toastr.error('Erro ao deletar investimento.', error);
+            }
+          );
+        }
+      }
+    });
+  }
+
   private getInvestment(investment: number): void {
     this.searchInvestmentLoading = true;
     this.investmentService.getInvestment(investment).subscribe(
