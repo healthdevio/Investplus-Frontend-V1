@@ -178,66 +178,61 @@
         </div>
 
       </div>
-
     </div>
 
-<div *ngIf="companyInvestments.length > 0" style="width: 100%; background-color: white; border-radius: 4px; margin-top: 16px;">
-  <p style="padding: 20px 16px; font-size: 18px; font-weight: bold;">Tabela de Investimentos Detalhada</p>
-  <table style="width: 100%; border-collapse: collapse;">
-    <thead style="padding: 0 16px; background-color: #f0f0f0;">
-      <tr>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Nome</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 8%;">Data</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 6%;">Participação</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 9%;">Valor investido</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Rodada</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Status contratual</th>
-        <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Tipo de investimento</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let invest of paginatedInvestments; let i = index" 
-          [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
-          style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;">
-        <td style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
-          {{ invest.company }}
-        </td>
-        <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-          {{ invest.date ? (invest.date | date: 'dd/MM/yyyy') : 'N/A' }}
-        </td>
-        <td style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
-          {{ invest.quotas }}
-        </td>
-        <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-          {{ invest.value | currency: 'BRL' }}
-        </td>
-        <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-          {{ invest.roundStatus === 'IN_PROGRESS' ? 'Rodada em andamento' : 'Rodada concluída' }}
-        </td>
-        <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-          {{ invest.status === 'PENDING' ? 'Status Pendente' : 'Status Assinado' }}
-        </td>
-        <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
-          {{ invest.model === 'TRADITIONAL' ? 'Empresa' : 'Startup' }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div *ngIf="companyInvestments.length > 0" style="width: 100%; background-color: white; border-radius: 4px; margin-top: 16px;">
+      <p style="padding: 20px 16px; font-size: 18px; font-weight: bold;">Tabela de Investimentos Detalhada</p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead style="padding: 0 16px; background-color: #f0f0f0;">
+          <tr>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Nome</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 8%;">Data</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 6%;">Participação</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 9%;">Valor investido</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 12%;">Rodada</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Status contratual</th>
+            <th style="font-family: Poppins, sans-serif; color: #333333; text-align: left; padding: 5px; font-weight: 400; width: 10%;">Tipo de investimento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let invest of paginatedInvestments; let i = index" 
+              [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+              style="border-top: 1px solid #F1F1F1; border-bottom: 1px solid #F1F1F1;">
+            <td style="color: #000000; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
+              {{ invest.company }}
+            </td>
+            <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+              {{ invest.date ? (invest.date | date: 'dd/MM/yyyy') : 'N/A' }}
+            </td>
+            <td style="color: #035A7A; font-family: Poppins, sans-serif; font-weight: 600; padding: 8px; text-align: left;">
+              {{ invest.quotas }}
+            </td>
+            <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+              {{ invest.value | currency: 'BRL' }}
+            </td>
+            <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+              {{ invest.roundStatus === 'IN_PROGRESS' ? 'Rodada em andamento' : 'Rodada concluída' }}
+            </td>
+            <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+              {{ invest.status === 'PENDING' ? 'Status Pendente' : 'Status Assinado' }}
+            </td>
+            <td style="color: #505050; font-family: Poppins, sans-serif; padding: 8px; text-align: left;">
+              {{ invest.model === 'TRADITIONAL' ? 'Empresa' : 'Startup' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-  <div style="display: flex; justify-content: center; margin: 16px 0;">
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
-    <span style="margin: 0 16px;">Página {{ currentPage }} de {{ totalPages }}</span>
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
-  </div>
-</div>
+      <div style="display: flex; justify-content: center; margin: 16px 0;">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+        <span style="margin: 0 16px;">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
+      </div>
+    </div>
 
-<div *ngIf="companyInvestments.length === 0" style="text-align: center; padding: 20px;">
-  <p style="font-size: 14px; color: #707070;">Você não possui investimentos cadastrados no momento.</p>
-</div>
-
-    
-    
-
+    <div *ngIf="companyInvestments.length === 0" style="text-align: center; padding: 20px;">
+      <p style="font-size: 14px; color: #707070;">Você não possui investimentos cadastrados no momento.</p>
+    </div>
   </section>
 </div>
 

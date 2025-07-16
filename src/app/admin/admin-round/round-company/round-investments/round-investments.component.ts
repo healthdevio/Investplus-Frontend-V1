@@ -42,6 +42,7 @@ export class RoundInvestmentsComponent implements OnInit {
     this.roundService.getAllRounds().subscribe(
       (response) => {
         this.response = response;
+        console.log(response)
         this.rounds = response.companiesRounds;
         this.loader = false;
       }, (error) => {

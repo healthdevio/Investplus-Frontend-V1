@@ -14,6 +14,7 @@ export interface CognitoCallback {
     cognitoCallback(message: string, result: any): void;
 
     handleMFAStep?(challengeName: string, challengeParameters: ChallengeParameters, callback: (confirmationCode: string) => any): void;
+    resendConfirmationCallback?(message: string, result: any): void;
 }
 
 export interface LoggedInCallback {

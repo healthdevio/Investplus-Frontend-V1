@@ -255,7 +255,7 @@ export class AdminUserPortfolioComponent implements OnInit {
       this.upimob = response.realStateInvestments || [];
       this.installments = response.investmentsInstallments || [];
   
-      const paidInvestments = this.upangel.filter(investment => investment.status === 'PAID');
+      const paidInvestments = this.upangel.filter(investment => investment.status === "CONTRACT_SIGNED");
   
       this.companyInvestments = response.companyInvestments ? response.companyInvestments.map(investment => {
         return {
