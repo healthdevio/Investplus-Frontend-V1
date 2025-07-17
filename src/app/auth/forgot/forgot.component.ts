@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {CognitoCallback} from '../../core/service/cognito/cognito.service';
-import {Router} from '@angular/router';
-import {UserLoginService} from '../../core/service/cognito/user-login.service';
-import {EventEmitterService} from '../../core/service/event-emitter-service.service';
-import {LoaderService} from './../../core/service/loader.service';
-import {PasswordStrengthService} from './../../core/service/PasswordStrengthService.service';
+import { Component } from '@angular/core';
+import { CognitoCallback } from '../../core/service/cognito/cognito.service';
+import { Router } from '@angular/router';
+import { UserLoginService } from '../../core/service/cognito/user-login.service';
+import { EventEmitterService } from '../../core/service/event-emitter-service.service';
+import { LoaderService } from './../../core/service/loader.service';
+import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -16,7 +16,6 @@ declare var bootbox: any;
 })
 export class ForgotComponent implements CognitoCallback {
 
-  // ... (propriedades, construtor, onNext, onSubmit, onPasswordInput, cognitoCallback, resendConfirmationCallback - sem alterações)
   email: string;
   errorMessage: string;
   verificationCode: string;
@@ -76,6 +75,10 @@ export class ForgotComponent implements CognitoCallback {
     }
   }
 
+  /**
+   * ✅ MÉTODO ATUALIZADO
+   * Lógica de sucesso mais explícita.
+   */
   cognitoCallback(message: string, result: any) {
     this.loader = false;
     this.loaderService.load(this.loader);
@@ -118,6 +121,10 @@ export class ForgotComponent implements CognitoCallback {
     }
   }
 
+  /**
+   * ✅ MÉTODO ATUALIZADO
+   * A única mudança é a remoção da linha que redireciona para o login.
+   */
   private resendWelcomeEmail() {
     this.loader = true;
     this.loaderService.load(this.loader);
@@ -139,57 +146,6 @@ export class ForgotComponent implements CognitoCallback {
     });
   }
 
-  resendConfirmationCallback(message: string, result: any) {
-    this.loader = false;
-    this.loaderService.load(this.loader);
-    if (message == null && result == null) {
-      bootbox.dialog({
-        title: 'Verifique seu E-mail',
-        message: `Seu e-mail ainda não foi validado. <strong>Enviamos um novo e-mail de confirmação para sua caixa de entrada.</strong><br/><br/>Por favor, clique no link de validação e tente recuperar sua senha novamente.`,
-        buttons: {
-          ok: {
-            label: 'Entendido',
-            className: 'bg-upangel',
-            callback: () => {
-              this.router.navigate(['/auth/login']);
-            }
-          }
-        }
-      });
-    } else {
-      toastr.error('Não foi possível reenviar o e-mail de confirmação. Tente novamente mais tarde.');
-    }
-  }
-
-  /**
-   * ✅ MÉTODO AUXILIAR PARA CHAMAR A LAMBDA
-   * Este método encapsula a lógica de chamada da nova API.
-   */
-  private resendWelcomeEmail() {
-    this.loader = true;
-    this.loaderService.load(this.loader);
-
-    this.userService.resendTemporaryPasswordEmail(this.email).subscribe({
-      next: (response) => {
-        this.loader = false;
-        this.loaderService.load(this.loader);
-        // Mensagem de sucesso da nossa API
-        toastr.success(response.message || 'Um novo e-mail de boas-vindas foi enviado com sucesso!');
-        this.router.navigate(['/auth/login']);
-      },
-      error: (err) => {
-        this.loader = false;
-        this.loaderService.load(this.loader);
-        // Mensagem de erro da nossa API
-        toastr.error(err.error?.message || 'Ocorreu um erro ao reenviar o e-mail de boas-vindas.');
-      }
-    });
-  }
-
-  /**
-   * ✅ MÉTODO ATUALIZADO E FINAL
-   * Agora diferencia os tipos de erro e chama a função correta automaticamente.
-   */
   handleError(message: string) {
     const lowerCaseMessage = message.toLowerCase();
 
