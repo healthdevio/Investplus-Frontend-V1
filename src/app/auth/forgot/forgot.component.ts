@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { CognitoCallback } from '../../core/service/cognito/cognito.service';
-import { Router } from '@angular/router';
-import { UserLoginService } from '../../core/service/cognito/user-login.service';
-import { EventEmitterService } from '../../core/service/event-emitter-service.service';
-import { LoaderService } from './../../core/service/loader.service';
-import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service';
+import {Component} from '@angular/core';
+import {CognitoCallback} from '../../core/service/cognito/cognito.service';
+import {Router} from '@angular/router';
+import {UserLoginService} from '../../core/service/cognito/user-login.service';
+import {EventEmitterService} from '../../core/service/event-emitter-service.service';
+import {LoaderService} from './../../core/service/loader.service';
+import {PasswordStrengthService} from './../../core/service/PasswordStrengthService.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -79,27 +79,64 @@ export class ForgotComponent implements CognitoCallback {
   cognitoCallback(message: string, result: any) {
     this.loader = false;
     this.loaderService.load(this.loader);
+
     if (message == null && result == null) {
-      if (this.statusForgot === false) {
+      // Este callback foi chamado com sucesso pelo `forgotPassword` (após onNext)
+      if (this.statusForgot === true) {
+        this.statusForgot = false; // Troca a tela para mostrar os campos de código/senha
+        toastr.info('Enviamos um código de verificação para o seu e--mail.');
+      }
+      // Este callback foi chamado com sucesso pelo `confirmNewPassword` (após onSubmit)
+      else {
         this.router.navigate(['/auth/login']);
-        toastr.success('Nova senha gerada com sucesso!');
-      } else {
-        this.statusForgot = false;
-        bootbox.dialog({
-          title: 'Código Enviado',
-          message: 'Um código de alteração de senha foi enviado para seu e-mail.',
-          buttons: {
-            ok: {
-              label: 'Fechar',
-              className: 'bg-upangel',
-              callback: function () { }
-            }
-          }
-        });
+        toastr.success('Nova senha alterada com sucesso!');
       }
     } else {
       this.handleError(message);
     }
+  }
+
+  resendConfirmationCallback(message: string, result: any) {
+    this.loader = false;
+    this.loaderService.load(this.loader);
+    if (message == null && result == null) {
+      bootbox.dialog({
+        title: 'Verifique seu E-mail',
+        message: `Seu e-mail ainda não foi validado. <strong>Enviamos um novo e-mail de confirmação para sua caixa de entrada.</strong><br/><br/>Por favor, clique no link de validação e tente recuperar sua senha novamente.`,
+        buttons: {
+          ok: {
+            label: 'Entendido',
+            className: 'bg-upangel',
+            callback: () => {
+              this.router.navigate(['/auth/login']);
+            }
+          }
+        }
+      });
+    } else {
+      toastr.error('Não foi possível reenviar o e-mail de confirmação. Tente novamente mais tarde.');
+    }
+  }
+
+  private resendWelcomeEmail() {
+    this.loader = true;
+    this.loaderService.load(this.loader);
+
+    this.userService.resendTemporaryPasswordEmail(this.email).subscribe({
+      next: (response) => {
+        this.loader = false;
+        this.loaderService.load(this.loader);
+        // Apenas mostramos a mensagem de sucesso, sem redirecionar.
+        toastr.success(response.message || 'Um novo e-mail de boas-vindas foi enviado com sucesso!');
+        // A LINHA ABAIXO FOI REMOVIDA:
+        // this.router.navigate(['/auth/login']);
+      },
+      error: (err) => {
+        this.loader = false;
+        this.loaderService.load(this.loader);
+        toastr.error(err.error?.message || 'Ocorreu um erro ao reenviar o e-mail de boas-vindas.');
+      }
+    });
   }
 
   resendConfirmationCallback(message: string, result: any) {
@@ -159,7 +196,7 @@ export class ForgotComponent implements CognitoCallback {
     // Cenário 1: Usuário criado pelo admin (FORCE_CHANGE_PASSWORD)
     if (lowerCaseMessage.includes('user password cannot be reset in the current state')) {
       this.resendWelcomeEmail();
-      return; // Finaliza a execução aqui
+      return;
     }
 
     // Cenário 2: Usuário não verificado (UNCONFIRMED)
@@ -170,7 +207,7 @@ export class ForgotComponent implements CognitoCallback {
       this.loader = true;
       this.loaderService.load(this.loader);
       this.userService.resendConfirmationCode(this.email, this);
-      return; // Finaliza a execução aqui
+      return;
     }
 
     // Cenário 3: Outros erros
