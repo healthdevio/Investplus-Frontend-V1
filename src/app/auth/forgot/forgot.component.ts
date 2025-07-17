@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {CognitoCallback} from '../../core/service/cognito/cognito.service';
-import {Router} from '@angular/router';
-import {UserLoginService} from '../../core/service/cognito/user-login.service';
-import {EventEmitterService} from '../../core/service/event-emitter-service.service';
-import {LoaderService} from './../../core/service/loader.service';
-import {PasswordStrengthService} from './../../core/service/PasswordStrengthService.service';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { CognitoCallback } from '../../core/service/cognito/cognito.service';
+import { Router } from '@angular/router';
+import { UserLoginService } from '../../core/service/cognito/user-login.service';
+import { EventEmitterService } from '../../core/service/event-emitter-service.service';
+import { LoaderService } from './../../core/service/loader.service';
+import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service';
 
 declare var toastr: any;
 declare var bootbox: any;
@@ -32,7 +32,8 @@ export class ForgotComponent implements CognitoCallback {
       public userService: UserLoginService,
       private eventEmitter: EventEmitterService,
       private loaderService: LoaderService,
-      private passwordStrengthService: PasswordStrengthService
+      private passwordStrengthService: PasswordStrengthService,
+      private cdRef: ChangeDetectorRef
   ) {
     this.statusForgot = true;
   }
@@ -75,17 +76,20 @@ export class ForgotComponent implements CognitoCallback {
     }
   }
 
+  private showVerificationScreen(message: string) {
+    this.statusForgot = false;
+    toastr.info(message);
+    this.cdRef.detectChanges(); // Força a atualização da tela
+  }
+
   cognitoCallback(message: string, result: any) {
     this.loader = false;
     this.loaderService.load(this.loader);
 
     if (message == null && result == null) {
-      // Este callback foi chamado com sucesso pelo `forgotPassword` (após onNext)
       if (this.statusForgot === true) {
-        this.statusForgot = false; // Troca a tela para mostrar os campos de código/senha
-        toastr.info('Enviamos um código de verificação para o seu e--mail.');
+        this.showVerificationScreen('Enviamos um código de verificação para o seu e-mail.');
       }
-      // Este callback foi chamado com sucesso pelo `confirmNewPassword` (após onSubmit)
       else {
         this.router.navigate(['/auth/login']);
         toastr.success('Nova senha alterada com sucesso!');
@@ -115,6 +119,7 @@ export class ForgotComponent implements CognitoCallback {
     } else {
       toastr.error('Não foi possível reenviar o e-mail de confirmação. Tente novamente mais tarde.');
     }
+    this.cdRef.detectChanges();
   }
 
   private resendWelcomeEmail() {
@@ -125,15 +130,14 @@ export class ForgotComponent implements CognitoCallback {
       next: (response) => {
         this.loader = false;
         this.loaderService.load(this.loader);
-        // Apenas mostramos a mensagem de sucesso, sem redirecionar.
-        toastr.success(response.message || 'Um novo e-mail de boas-vindas foi enviado com sucesso!');
-        // A LINHA ABAIXO FOI REMOVIDA:
-        // this.router.navigate(['/auth/login']);
+
+        this.showVerificationScreen(response.message || 'Um novo e-mail de boas-vindas foi enviado.');
       },
       error: (err) => {
         this.loader = false;
         this.loaderService.load(this.loader);
         toastr.error(err.error?.message || 'Ocorreu um erro ao reenviar o e-mail de boas-vindas.');
+        this.cdRef.detectChanges();
       }
     });
   }
@@ -141,13 +145,11 @@ export class ForgotComponent implements CognitoCallback {
   handleError(message: string) {
     const lowerCaseMessage = message.toLowerCase();
 
-    // Cenário 1: Usuário criado pelo admin (FORCE_CHANGE_PASSWORD)
     if (lowerCaseMessage.includes('user password cannot be reset in the current state')) {
       this.resendWelcomeEmail();
       return;
     }
 
-    // Cenário 2: Usuário não verificado (UNCONFIRMED)
     const isUserNotConfirmedError = lowerCaseMessage.includes('user is not confirmed') ||
         lowerCaseMessage.includes('no registered/verified');
 
@@ -158,7 +160,6 @@ export class ForgotComponent implements CognitoCallback {
       return;
     }
 
-    // Cenário 3: Outros erros
     this.loader = false;
     this.loaderService.load(this.loader);
     if (lowerCaseMessage.includes('user not found')) {
@@ -169,5 +170,6 @@ export class ForgotComponent implements CognitoCallback {
       toastr.error('Sua solicitação não pode ser completada. Tente novamente mais tarde.');
       this.errorMessage = message;
     }
+    this.cdRef.detectChanges();
   }
 }
