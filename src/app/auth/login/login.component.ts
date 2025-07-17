@@ -4,6 +4,7 @@ import { UserLoginService } from '../../core/service/cognito/user-login.service'
 import { ChallengeParameters, CognitoCallback, LoggedInCallback } from '../../core/service/cognito/cognito.service';
 import { UserRegistrationService } from '../../core/service/cognito/user-registration.service';
 import { InvestorService } from '../../core/service/investor.service';
+import { RedirectService } from '../../core/service/redirect.service';
 import { LoaderService } from './../../core/service/loader.service';
 import { PasswordStrengthService } from './../../core/service/PasswordStrengthService.service'; 
 
@@ -52,6 +53,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     public userRegistration: UserRegistrationService,
     private investorService: InvestorService,
     private loadService: LoaderService,
+    private redirectService: RedirectService,
     private passwordStrengthService: PasswordStrengthService,
 
   ) {
@@ -123,7 +125,12 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
         return;
       }
     } else {
-      this.router.navigate(['/admin']);
+      const redirectUrl = this.redirectService.getAndClearRedirectUrl();
+      if (redirectUrl) {
+        this.router.navigateByUrl(redirectUrl);
+      } else {
+        this.router.navigate(['/admin']);
+      }
       this.statusError = false;
     }
   }
@@ -145,7 +152,12 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     if (isLoggedIn) {
       this.loading = false;
       this.loadService.load(this.loading);
-      this.router.navigate(['/admin']);
+      const redirectUrl = this.redirectService.getAndClearRedirectUrl();
+      if (redirectUrl) {
+        this.router.navigateByUrl(redirectUrl);
+      } else {
+        this.router.navigate(['/admin']);
+      }
     }
   }
 
