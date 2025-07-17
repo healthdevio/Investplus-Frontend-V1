@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {CognitoCallback, CognitoUtil, LoggedInCallback} from './cognito.service';
 import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import * as AWS from 'aws-sdk/global';
@@ -29,7 +29,8 @@ export class UserLoginService {
 
     constructor(
         public cognitoUtil: CognitoUtil,
-        private http: HttpClient
+        private http: HttpClient,
+        private zone: NgZone
     ) { }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
@@ -65,16 +66,24 @@ export class UserLoginService {
             Username: username,
             Pool: this.cognitoUtil.getUserPool()
         };
+
         const cognitoUser = new CognitoUser(userData);
+
         cognitoUser.forgotPassword({
             onSuccess: () => {
                 console.log('Solicitação de recuperação de senha enviada com sucesso.');
             },
             onFailure: (err) => {
-                callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                // Força a execução dentro da zona do Angular
+                this.zone.run(() => {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                });
             },
             inputVerificationCode: () => {
-                callback.cognitoCallback(null, null);
+                // Força a execução dentro da zona do Angular
+                this.zone.run(() => {
+                    callback.cognitoCallback(null, null);
+                });
             }
         });
     }
@@ -87,10 +96,14 @@ export class UserLoginService {
         const cognitoUser = new CognitoUser(userData);
         cognitoUser.confirmPassword(verificationCode, password, {
             onSuccess: () => {
-                callback.cognitoCallback(null, null);
+                this.zone.run(() => {
+                    callback.cognitoCallback(null, null);
+                });
             },
             onFailure: (err) => {
-                callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                this.zone.run(() => {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                });
             }
         });
     }
@@ -100,17 +113,20 @@ export class UserLoginService {
             Username: email,
             Pool: this.cognitoUtil.getUserPool()
         });
+
         cognitoUser.resendConfirmationCode((err, result) => {
-            if (err) {
-                callback.cognitoCallback(err.message || JSON.stringify(err), null);
-            } else {
-                if (callback.resendConfirmationCallback) {
-                    callback.resendConfirmationCallback(null, result);
+            this.zone.run(() => {
+                if (err) {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
                 } else {
-                    console.error('O callback resendConfirmationCallback não foi implementado no componente.');
-                    callback.cognitoCallback('Erro de implementação: resendConfirmationCallback ausente.', null);
+                    if (callback.resendConfirmationCallback) {
+                        callback.resendConfirmationCallback(null, result);
+                    } else {
+                        console.error('O callback resendConfirmationCallback não foi implementado no componente.');
+                        callback.cognitoCallback('Erro de implementação: resendConfirmationCallback ausente.', null);
+                    }
                 }
-            }
+            });
         });
     }
 
