@@ -16,27 +16,23 @@ import { CommonModule } from "@angular/common";
 import { AdminUserComponent } from "./admin-user/admin-user.component";
 import { ShareModule } from "../share/share.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { AuthModule } from "../auth/auth.module";
 import { TokenInterceptor } from "../interceptors/token.interceptor";
-import { RefreshTokenInterceptor } from "../interceptors/refresh-token.interceptor";
-import { AuthGuard } from "../guards/auth.guard";
 import { AdminUserPortfolioComponent } from "./admin-user/admin-user-portfolio/admin-user-portfolio.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { AdminUserValuationComponent } from "./admin-user/admin-user-valuation/admin-user-valuation.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AdminManagerComponent } from "./admin-manager/admin-manager.component";
 import { AdminManagerInvestorsComponent } from "./admin-manager/admin-manager-investors/admin-manager-investors.component";
-import { RouteGuard } from "../guards/route.guard";
 import { AdminUserIncommingComponent } from "./admin-user/admin-user-incomming/admin-user-incomming.component";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { AdminUserStatementComponent } from "./admin-user/admin-user-statement/admin-user-statement.component";
-import { CoreModule } from "../core/core.module";
 import { PipesModule } from "../core/pipes/pipes.module";
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
@@ -69,7 +65,6 @@ defineLocale('pt-br', ptBrLocale);
     AdminUserTrocarSenhaComponent
   ],
   providers: [
-    RouteGuard,
     MoneyMaskPipe,
     CpfMaskPipe,
     CepMaskPipe,

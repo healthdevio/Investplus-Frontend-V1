@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+import {AuthGuard} from "./guards/auth.guard";
 // import { TokenInterceptor } from './interceptors/token.interceptor';
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -47,8 +48,8 @@ registerLocaleData(localePt);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
-    // AuthGuard,
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
+    AuthGuard,
     // { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     // LoggedInGuard
