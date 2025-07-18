@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CognitoCallback } from '../../core/service/cognito/cognito.service';
 import { Router } from '@angular/router';
 import { UserLoginService } from '../../core/service/cognito/user-login.service';
@@ -23,24 +23,28 @@ export class ForgotComponent implements CognitoCallback {
   confirmPassword: string;
   statusForgot: boolean;
   loader: boolean = false;
-
-  senhaStrength: string = ''; 
+  senhaStrength: string = '';
   senhaScore: number = 0;
   senhaSuggestions: string[] = [];
 
   constructor(
-    public router: Router,
-    public userService: UserLoginService,
-    private eventEmitter: EventEmitterService,
-    private loaderService: LoaderService,
-    private passwordStrengthService: PasswordStrengthService  
+      public router: Router,
+      public userService: UserLoginService,
+      private eventEmitter: EventEmitterService,
+      private loaderService: LoaderService,
+      private passwordStrengthService: PasswordStrengthService,
+      private cdRef: ChangeDetectorRef
   ) {
     this.statusForgot = true;
   }
 
   onNext() {
+    this.loader = true;
+    this.loaderService.load(this.loader);
     if (this.email == null || this.email.length < 8) {
       toastr.error('O e-mail precisa ser preenchido');
+      this.loader = false;
+      this.loaderService.load(this.loader);
       return;
     }
     this.userService.forgotPassword(this.email, this);
@@ -72,40 +76,100 @@ export class ForgotComponent implements CognitoCallback {
     }
   }
 
+  private showVerificationScreen(message: string) {
+    this.statusForgot = false;
+    toastr.info(message);
+    this.cdRef.detectChanges(); // Força a atualização da tela
+  }
+
   cognitoCallback(message: string, result: any) {
     this.loader = false;
     this.loaderService.load(this.loader);
+
     if (message == null && result == null) {
-      if (this.statusForgot === false) {
+      if (this.statusForgot === true) {
+        this.showVerificationScreen('Enviamos um código de verificação para o seu e-mail.');
+      }
+      else {
         this.router.navigate(['/auth/login']);
-        toastr.success('Nova senha gerada com sucesso!');
-      } else {
-        this.statusForgot = false;
-        bootbox.dialog({
-          title: 'Aviso',
-          message: 'Um codigo de alteração de senha foi enviada por e-mail.',
-          buttons: {
-            ok: {
-              label: 'Fechar',
-              className: 'bg-upangel',
-              callback: function () { }
-            }
-          }
-        });
+        toastr.success('Nova senha alterada com sucesso!');
       }
     } else {
       this.handleError(message);
     }
   }
 
+  resendConfirmationCallback(message: string, result: any) {
+    this.loader = false;
+    this.loaderService.load(this.loader);
+    if (message == null && result == null) {
+      bootbox.dialog({
+        title: 'Verifique seu E-mail',
+        message: `Seu e-mail ainda não foi validado. <strong>Enviamos um novo e-mail de confirmação para sua caixa de entrada.</strong><br/><br/>Por favor, clique no link de validação e tente recuperar sua senha novamente.`,
+        buttons: {
+          ok: {
+            label: 'Entendido',
+            className: 'bg-upangel',
+            callback: () => {
+              this.router.navigate(['/auth/login']);
+            }
+          }
+        }
+      });
+    } else {
+      toastr.error('Não foi possível reenviar o e-mail de confirmação. Tente novamente mais tarde.');
+    }
+    this.cdRef.detectChanges();
+  }
+
+  private resendWelcomeEmail() {
+    this.loader = true;
+    this.loaderService.load(this.loader);
+
+    this.userService.resendTemporaryPasswordEmail(this.email).subscribe({
+      next: (response) => {
+        this.loader = false;
+        this.loaderService.load(this.loader);
+
+        this.showVerificationScreen(response.message || 'Um novo e-mail de boas-vindas foi enviado.');
+      },
+      error: (err) => {
+        this.loader = false;
+        this.loaderService.load(this.loader);
+        toastr.error(err.error?.message || 'Ocorreu um erro ao reenviar o e-mail de boas-vindas.');
+        this.cdRef.detectChanges();
+      }
+    });
+  }
+
   handleError(message: string) {
-    if (message === 'Username/client id combination not found.') {
-      toastr.error('E-mail inválido');
+    const lowerCaseMessage = message.toLowerCase();
+
+    if (lowerCaseMessage.includes('user password cannot be reset in the current state')) {
+      this.resendWelcomeEmail();
+      return;
+    }
+
+    const isUserNotConfirmedError = lowerCaseMessage.includes('user is not confirmed') ||
+        lowerCaseMessage.includes('no registered/verified');
+
+    if (isUserNotConfirmedError) {
+      this.loader = true;
+      this.loaderService.load(this.loader);
+      this.userService.resendConfirmationCode(this.email, this);
+      return;
+    }
+
+    this.loader = false;
+    this.loaderService.load(this.loader);
+    if (lowerCaseMessage.includes('user not found')) {
+      toastr.error('Usuário não encontrado.');
     } else if (message.includes('Password')) {
-      toastr.error(message);  
+      toastr.error(message);
     } else {
       toastr.error('Sua solicitação não pode ser completada. Tente novamente mais tarde.');
       this.errorMessage = message;
     }
+    this.cdRef.detectChanges();
   }
 }

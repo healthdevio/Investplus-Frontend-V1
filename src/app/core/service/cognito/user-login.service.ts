@@ -1,35 +1,23 @@
-import { Injectable } from '@angular/core';
-// import { DynamoDBService } from "./ddb.service";
-import { CognitoCallback, CognitoUtil, LoggedInCallback } from './cognito.service';
-import { AuthenticationDetails, CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
+import {Injectable, NgZone} from '@angular/core';
+import {CognitoCallback, CognitoUtil, LoggedInCallback} from './cognito.service';
+import {AuthenticationDetails, CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import * as AWS from 'aws-sdk/global';
 import * as STS from 'aws-sdk/clients/sts';
-import { environment } from '../../../../environments/environment';
-import { Router } from '@angular/router';
+import {environment} from '../../../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class UserLoginService {
 
     private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
-
-        // console.log('In authenticateUser onSuccess callback');
-
         AWS.config.credentials = this.cognitoUtil.buildCognitoCreds(session.getIdToken().getJwtToken());
-
-        // So, when CognitoIdentity authenticates a user, it doesn't actually hand us the IdentityID,
-        // used by many of our other handlers. This is handled by some sly underhanded calls to AWS Cognito
-        // API's by the SDK itself, automatically when the first AWS SDK request is made that requires our
-        // security credentials. The identity is then injected directly into the credentials object.
-        // If the first SDK call we make wants to use our IdentityID, we have a
-        // chicken and egg problem on our hands. We resolve this problem by "priming" the AWS SDK by calling a
-        // very innocuous API call that forces this behavior.
         const clientParams: any = {};
         if (environment.sts_endpoint) {
             clientParams.endpoint = environment.sts_endpoint;
         }
         const sts = new STS(clientParams);
-        sts.getCallerIdentity(function (err, data) {
-            // console.log('UserLoginService: Successfully set the AWS credentials');
+        sts.getCallerIdentity((err, data) => {
             callback.cognitoCallback(null, session);
         });
     }
@@ -38,33 +26,26 @@ export class UserLoginService {
         callback.cognitoCallback(err.message, null);
     }
 
+
     constructor(
-        // public ddb: DynamoDBService,
-        public cognitoUtil: CognitoUtil
+        public cognitoUtil: CognitoUtil,
+        private http: HttpClient,
+        private zone: NgZone
     ) { }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
-        // console.log('UserLoginService: starting the authentication');
-
         const authenticationData = {
             Username: username,
             Password: password,
         };
         const authenticationDetails = new AuthenticationDetails(authenticationData);
-
         const userData = {
             Username: username,
             Pool: this.cognitoUtil.getUserPool()
         };
-
-        // console.log('UserLoginService: Params set...Authenticating the user');
         const cognitoUser = new CognitoUser(userData);
-        // console.log('UserLoginService: config is ' + AWS.config);
         cognitoUser.authenticateUser(authenticationDetails, {
             newPasswordRequired: ((userAttributes, requiredAttributes) => {
-                // console.log('-------  RETORNO ATRIBUTOS AWS --------');
-                // console.log(userAttributes);
-                // console.log(requiredAttributes);
                 callback.cognitoCallback(`User needs to set password.`, userAttributes);
             }),
             onSuccess: result => this.onLoginSuccess(callback, result),
@@ -89,14 +70,20 @@ export class UserLoginService {
         const cognitoUser = new CognitoUser(userData);
 
         cognitoUser.forgotPassword({
-            onSuccess: function () {
-
+            onSuccess: () => {
+                console.log('Solicitação de recuperação de senha enviada com sucesso.');
             },
-            onFailure: function (err) {
-                callback.cognitoCallback(err.message, null);
+            onFailure: (err) => {
+                // Força a execução dentro da zona do Angular
+                this.zone.run(() => {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                });
             },
-            inputVerificationCode() {
-                callback.cognitoCallback(null, null);
+            inputVerificationCode: () => {
+                // Força a execução dentro da zona do Angular
+                this.zone.run(() => {
+                    callback.cognitoCallback(null, null);
+                });
             }
         });
     }
@@ -108,18 +95,53 @@ export class UserLoginService {
         };
         const cognitoUser = new CognitoUser(userData);
         cognitoUser.confirmPassword(verificationCode, password, {
-            onSuccess: function () {
-                callback.cognitoCallback(null, null);
+            onSuccess: () => {
+                this.zone.run(() => {
+                    callback.cognitoCallback(null, null);
+                });
             },
-            onFailure: function (err) {
-                callback.cognitoCallback(err.message, null);
+            onFailure: (err) => {
+                this.zone.run(() => {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                });
             }
         });
     }
 
+    resendConfirmationCode(email: string, callback: CognitoCallback): void {
+        const cognitoUser = new CognitoUser({
+            Username: email,
+            Pool: this.cognitoUtil.getUserPool()
+        });
+
+        cognitoUser.resendConfirmationCode((err, result) => {
+            this.zone.run(() => {
+                if (err) {
+                    callback.cognitoCallback(err.message || JSON.stringify(err), null);
+                } else {
+                    if (callback.resendConfirmationCallback) {
+                        callback.resendConfirmationCallback(null, result);
+                    } else {
+                        console.error('O callback resendConfirmationCallback não foi implementado no componente.');
+                        callback.cognitoCallback('Erro de implementação: resendConfirmationCallback ausente.', null);
+                    }
+                }
+            });
+        });
+    }
+
+    resendTemporaryPasswordEmail(email: string): Observable<any> {
+        const apiUrl = 'https://f95fnir3hl.execute-api.us-east-2.amazonaws.com/v1/resend-welcome-email';
+
+        const headers = new HttpHeaders({
+            'x-api-key': 'oKxjVV7umQ5FCcbdT8CHJa8ztW1uxa1j54TftZGg'
+        });
+
+        return this.http.post(apiUrl, { email }, { headers: headers });
+    }
+
     logout() {
         console.log('UserLoginService: Logging out');
-        // this.ddb.writeLogEntry('logout');
         this.cognitoUtil.getCurrentUser().signOut();
     }
 
